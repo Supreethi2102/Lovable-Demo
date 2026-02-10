@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { Header, Hero, Footer, CaseStudies, Publications, About, Testimonials, Contact, Destinations, ColorSwatches, PublicationDetail } from './components';
+import { Header, Hero, Footer, CaseStudies, Publications, PublicationDetail, About, Testimonials, Contact, Destinations, ColorSwatches } from './components';
 import './App.css';
 
 const AppRoutes: React.FC = () => {
@@ -94,19 +94,19 @@ const HomePage: React.FC = () => {
   );
 };
 
-const PublicationDetailPage: React.FC = () => {
-  return (
-    <div className="app">
-      <Header />
-      <PublicationDetail />
-    </div>
-  );
-};
-
 export const App: React.FC = () => {
   return (
     <BrowserRouter>
       <AppRoutes />
     </BrowserRouter>
+  );
+};
+
+const PublicationDetailPage: React.FC = () => {
+  return (
+    <div className="app app--detail">
+      <Header />
+      <PublicationDetail />
+    </div>
   );
 };

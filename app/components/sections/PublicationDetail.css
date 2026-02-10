@@ -1,444 +1,510 @@
-/* Publication Detail Page - From Figma Design */
+/* Publication Detail – based on Figma: Publications / Photo gallery */
 
 .publication-detail {
-  min-height: 100vh;
-  background: #ffffff;
-  padding: 40px 64px 44px 64px;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-}
-
-.publication-detail__container {
-  max-width: 1104px;
+  /* Match homepage background */
+  background: #f7f8f9;
   width: 100%;
+  /* Extra top padding requested (below fixed header) */
+  padding-top: calc(var(--header-height, 0px) + var(--publication-detail-top-padding, 60px));
+  padding-bottom: 44px;
+  /* Dynamic padding: grows on screens larger than 1440px */
+  padding-left: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
+  padding-right: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
+  box-sizing: border-box;
+}
+
+.publication-detail__inner {
+  max-width: var(--content-max-width, 1220px);
   margin: 0 auto;
+  width: 100%;
+}
+
+.publication-detail__grid {
+  display: grid;
+  /* Figma: left column 284px, right column 832px */
+  grid-template-columns: 284px minmax(0, 832px);
+  gap: 100px;
+  /* Stretch both columns to equal height so left can bottom-align */
+  align-items: stretch;
+}
+
+.publication-detail__meta {
+  padding-top: 40px;
   display: flex;
   flex-direction: column;
-  gap: 0;
+  /* Center left column now that Listen is removed */
+  justify-content: center;
 }
 
-/* Header with breadcrumb */
-.publication-detail__header {
-  display: flex;
-  align-items: center;
-  justify-content: flex-start;
-  margin-bottom: 0;
-}
-
-.publication-detail__breadcrumb {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
-  letter-spacing: 0;
-  color: #3c3f43;
-  margin: 0;
-}
-
-
-/* Main content - two columns */
-.publication-detail__body {
-  display: flex;
-  flex-direction: row;
-  gap: 56px;
-  margin-top: 40px;
-  flex: 1;
-  min-height: 0;
-}
-
-/* Left column - Text content */
-.publication-detail__text-col {
-  flex: 0 1 440px;
-  min-width: 0;
+.publication-detail__heading {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 0;
+  gap: 4px; /* tighter title → subtitle */
+  margin: 0 0 32px 0;
 }
 
 .publication-detail__title {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 24px;
+  margin: 0;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 20px;
   font-weight: 600;
-  line-height: 32px;
-  letter-spacing: 0.32px;
+  line-height: 24px;
+  letter-spacing: 0.8px;
   color: #111213;
-  margin: 0 0 8px 0;
 }
 
 .publication-detail__subtitle {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  margin: 0;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
   color: #3c3f43;
-  margin: 0 0 16px 0;
 }
 
-.publication-detail__intro {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+.publication-detail__copy {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  /* Was reserving space for Listen button */
+  margin: 0;
+}
+
+.publication-detail__paragraph {
+  margin: 0;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  color: #3c3f43;
-  margin: 0 0 12px 0;
+  color: #111213;
 }
 
 .publication-detail__bullets {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  margin: 0;
+  padding-left: 18px;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
-  color: #3c3f43;
-  margin: 0 0 0 0;
-  padding-left: 20px;
-  list-style: disc;
+  color: #111213;
+  list-style-position: outside;
 }
 
-.publication-detail__bullets li {
-  margin-bottom: 4px;
+.publication-detail__bullets ::marker {
+  /* Figma bullets read slightly smaller than browser default */
+  font-size: 1.2em;
 }
 
-.publication-detail__bullets li:last-child {
-  margin-bottom: 0;
+.publication-detail__bullet {
+  margin: 0;
+  padding-left: -4px;
 }
 
-.publication-detail__conclusion {
-  margin: 100px 0 24px 0;
-}
-
-.publication-detail__conclusion p {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
-  color: #3c3f43;
-  margin: 0 0 12px 0;
-}
-
-.publication-detail__conclusion p:last-child {
-  margin-bottom: 0;
-}
-
-/* Listen button */
-.publication-detail__listen-btn {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0;
-  width: 77px;
-  padding: 12px 16px 0;
+/* Listen button (Figma: W fixed 76, H hug 104, padding 16) */
+.publication-detail__listen {
+  width: 76px;
+  height: 104px;
   background: #f7f9fa;
   border: 1px solid #7150e5;
   border-radius: 8px;
+  padding: 16px 16px 0 16px; /* Figma: pt 16, px 16 */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
   cursor: pointer;
+  box-sizing: border-box;
+  /* Push to bottom of the left column */
   margin-top: auto;
-  transition: background 0.2s ease, border-color 0.2s ease;
 }
 
-.publication-detail__listen-btn:hover {
-  background: rgba(113, 80, 229, 0.08);
+.publication-detail__listen:focus-visible {
+  outline: 2px solid #7150e5;
+  outline-offset: 3px;
 }
 
 .publication-detail__listen-icon {
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+}
+
+.publication-detail__listen-bottom {
+  width: 100%;
+  border-top: 1px solid #d3d6da;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 24px;
-  height: 24px;
-  margin-bottom: 0;
-  padding: 0;
+  padding: 16px 0; /* Figma: py 16 */
+  box-sizing: border-box;
 }
 
-.publication-detail__listen-icon svg {
-  width: 24px;
-  height: 24px;
-}
-
-.publication-detail__listen-divider {
-  width: 100%;
-  height: 1px;
-  background: #d3d6da;
-  margin-top: 16px;
-}
-
-.publication-detail__listen-text {
-  font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+.publication-detail__listen-label {
+  text-align: center;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
   font-weight: 400;
-  line-height: 24px;
+  /* Helps match Figma's 104px hug height in browser */
+  line-height: 16px;
   color: #7150e5;
-  padding: 16px 0;
-  text-align: center;
 }
 
-/* Right column - Image gallery */
-.publication-detail__gallery-col {
-  flex: 1;
-  min-width: 0;
+/* Gallery */
+.publication-detail__gallery {
   display: flex;
   flex-direction: column;
-  gap: 0;
+  gap: 20px;
+  width: 100%;
+  max-width: 832px;
+
+  /* Used to align counter + thumbnails with stage edges */
+  --publication-detail-control-size: 52px; /* 24px icon + 14px padding each side */
+  --publication-detail-control-gap: 32px;
+  --publication-detail-stage-inset: calc(var(--publication-detail-control-size) + var(--publication-detail-control-gap)); /* 84px */
 }
 
-/* Image counter */
+/* Counter should start at the stage's left edge (per your request) */
 .publication-detail__counter {
-  display: block;
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: var(--publication-detail-stage-inset);
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
   color: #3c3f43;
-  margin: 0 0 8px 0;
 }
 
-/* Main image container */
-.publication-detail__main-image-wrap {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 4/3;
-  max-height: 400px;
-  margin-bottom: 44px;
-  border-radius: 12px;
-  overflow: hidden;
-  background: #e0e4e8;
-  border: 1px solid #b8bcc4;
-  display: flex;
+.publication-detail__counter-text {
+  white-space: nowrap;
+}
+
+.publication-detail__counter-label {
+  margin-left: 6px; /* add breathing room before “images” */
+}
+
+.publication-detail__counter strong {
+  font-weight: 600;
+  color: #111213;
+}
+
+.publication-detail__carousel {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  justify-content: center;
-}
-
-.publication-detail__main-image {
+  gap: 32px;
   width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center;
 }
 
-/* Navigation buttons */
-.publication-detail__nav-btn {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.publication-detail__nav {
   background: #f7f9fa;
   border: 1px solid #7150e5;
-  border-radius: 8px;
+  border-radius: 12px;
+  padding: 14px;
+  width: var(--publication-detail-control-size);
+  height: var(--publication-detail-control-size);
+  box-sizing: border-box;
   cursor: pointer;
-  z-index: 2;
-  transition: background 0.2s ease;
-  color: #7150e5;
+  display: grid;
+  place-items: center;
 }
 
-.publication-detail__nav-btn:hover {
-  background: rgba(113, 80, 229, 0.12);
+.publication-detail__nav:focus-visible {
+  outline: 2px solid #7150e5;
+  outline-offset: 3px;
 }
 
-.publication-detail__nav-btn--prev {
-  left: 16px;
+.publication-detail__stage {
+  position: relative;
+  background: #e5eff2;
+  border: 1px solid #b0b3b8;
+  border-radius: 24px;
+  overflow: hidden; /* keep rounded corners for image */
+  /* Subtle elevation like a card */
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
+  height: 520px;
+  width: 100%;
+  display: grid;
+  place-items: center;
 }
 
-.publication-detail__nav-btn--next {
-  right: 16px;
-}
-
-/* Fullscreen button */
-.publication-detail__expand-btn {
-  position: absolute;
-  bottom: 16px;
-  right: 16px;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: #F7F9FA;
-  border: 1px solid #7150e5;
-  border-radius: 8px;
-  cursor: pointer;
-  z-index: 2;
-  transition: background 0.2s ease;
-  color: #7150e5;
-}
-
-.publication-detail__expand-btn:hover {
-  background: rgba(113, 80, 229, 0.12);
-}
-
-/* Thumbnail carousel */
-.publication-detail__thumbnails {
-  display: flex;
-  flex-wrap: nowrap;
-  gap: 12px;
-  overflow-x: auto;
-  padding-bottom: 4px;
-}
-
-.publication-detail__thumb {
-  flex: 0 0 72px;
-  width: 72px;
-  height: 72px;
-  border-radius: 8px;
-  overflow: hidden;
-  background: #e0e4e8;
-  border: 1px solid #b8bcc4;
-  cursor: pointer;
-  padding: 0;
-  transition: box-shadow 0.2s ease, border-color 0.2s ease;
-}
-
-.publication-detail__thumb img {
+.publication-detail__image {
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
+  display: block;
 }
 
-/* Selected thumbnail */
-.publication-detail__thumb--selected {
-  border: 2px solid #7150e5;
-  box-shadow: 0 0 0 2px #7150e5, 0 4px 16px rgba(113, 80, 229, 0.35);
+.publication-detail__image-placeholder {
+  width: 100%;
+  height: 100%;
+  background: #e5eff2;
 }
 
-.publication-detail__thumb:hover:not(.publication-detail__thumb--selected) {
-  border-color: #b0b3b8;
+.publication-detail__expand {
+  position: absolute;
+  right: 32px;
+  bottom: 32px;
+  background: #f7f9fa;
+  border: 1px solid #7150e5;
+  border-radius: 12px;
+  padding: 14px;
+  width: var(--publication-detail-control-size);
+  height: var(--publication-detail-control-size);
+  box-sizing: border-box;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
 }
 
-/* Fullscreen overlay */
-.publication-detail__fullscreen-overlay {
+.publication-detail__expand:focus-visible {
+  outline: 2px solid #7150e5;
+  outline-offset: 3px;
+}
+
+/* Thumbnails row (scrollable; no intentional clipping of shadows) */
+.publication-detail__thumbs-wrap {
+  /* Provide an internal gutter so the first thumb shadow isn't clipped */
+  --publication-detail-thumb-gutter: 16px;
+  /* Keep the same total inset (so the strip still matches the stage width),
+     but bias the gutter to the LEFT so the first shadow isn't clipped. */
+  padding-left: calc(var(--publication-detail-stage-inset) - var(--publication-detail-thumb-gutter));
+  /* Right edge should match the stage edge exactly */
+  padding-right: var(--publication-detail-stage-inset);
+}
+
+.publication-detail__thumbs-clip {
+  width: 100%;
+  /* Clip horizontally to match the large image width,
+     but keep vertical overflow so shadows/glow aren't cut */
+  overflow-x: hidden;
+  overflow-y: visible;
+}
+
+.publication-detail__thumbs {
+  width: 100%;
+  overflow-x: auto;
+  /* Allow thumb glow/shadows to render (avoid clipped shadow) */
+  overflow-y: visible;
+  display: flex;
+  gap: 20px;
+  /* Extra bottom padding so active highlight isn't clipped */
+  /* No fixed left gutter (it creates a permanent blank area while scrolling) */
+  padding: 20px 0 64px 0;
+  box-sizing: border-box;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none; /* Firefox */
+  /* Keep left edge "fixed" on scroll (no half thumbnails) */
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: var(--publication-detail-thumb-gutter);
+  overscroll-behavior-x: contain;
+}
+
+.publication-detail__thumbs::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
+
+.publication-detail__thumbs > .publication-detail__thumb:first-child {
+  /* Gutter for the first thumb shadow that scrolls away naturally */
+  margin-left: var(--publication-detail-thumb-gutter);
+}
+
+.publication-detail__thumb {
+  flex: 0 0 auto;
+  width: 168px;
+  height: 116px;
+  border-radius: 12px;
+  border: 1px solid #b0b3b8;
+  background: #e5eff2;
+  padding: 0;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+}
+
+.publication-detail__thumb.is-active {
+  border-color: #7150e5;
+  box-shadow: 0px 4px 4px 0px rgba(76, 60, 172, 0.25), 0px 1px 25px 0px rgba(76, 60, 172, 0.75);
+  z-index: 1;
+}
+
+.publication-detail__thumb:focus-visible {
+  outline: 2px solid #7150e5;
+  outline-offset: 3px;
+}
+
+.publication-detail__thumb-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.publication-detail__thumb-placeholder {
+  display: block;
+  width: 100%;
+  height: 100%;
+  background: #e5eff2;
+}
+
+/* Enlarged (Figma: Publications / Photo gallery / Enlarged — 1620:133)
+   Modal overlay above the detail page. */
+.publication-detail-enlarged__overlay {
   position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.85);
-  z-index: 1001;
+  /* Keep top navigation visible while enlarged */
+  top: var(--header-height, 0px);
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 90; /* header is 100 */
+  /* Match homepage background (no extra white sheet) */
+  background: #F7F8F9;
+  /* Figma: px 180, py 32; keep centered on smaller screens */
+  padding-top: var(--publication-detail-top-padding, 60px);
+  padding-bottom: 32px;
+  padding-left: max(24px, calc((100vw - 1078px) / 2));
+  padding-right: max(24px, calc((100vw - 1078px) / 2));
+  box-sizing: border-box;
+  overflow: auto;
   display: flex;
-  align-items: center;
   justify-content: center;
-  padding: 48px;
 }
 
-.publication-detail__fullscreen-close {
-  position: absolute;
-  top: 24px;
-  right: 24px;
-  width: 48px;
-  height: 48px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
-  color: #fff;
-  cursor: pointer;
-  z-index: 10;
-  transition: background 0.2s ease;
-}
-
-.publication-detail__fullscreen-close:hover {
-  background: rgba(255, 255, 255, 0.2);
-}
-
-.publication-detail__fullscreen-image {
+.publication-detail-enlarged__panel-inner {
+  width: 1078px; /* Figma container */
   max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: flex-end;
+  outline: none;
 }
 
-.publication-detail__fullscreen-nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 56px;
-  height: 56px;
+.publication-detail-enlarged__counter {
+  width: 100%;
+  padding-left: var(--publication-detail-stage-inset, 84px);
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #3c3f43;
   display: flex;
   align-items: center;
-  justify-content: center;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  border-radius: 8px;
+  justify-content: flex-start;
+  white-space: nowrap;
+}
+
+.publication-detail-enlarged__counter strong {
+  font-weight: 600;
+  color: #111213;
+}
+
+.publication-detail-enlarged__carousel {
+  width: 1076px; /* Figma row width */
+  max-width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.publication-detail-enlarged__stage {
+  width: 908px;  /* Figma */
+  height: 668px; /* Figma */
+  max-width: 100%;
+  background: #e5eff2;
+  border: 1px solid #b0b3b8;
+  border-radius: 24px;
+  overflow: hidden;
+  /* Match the same elevation as the detail stage */
+  box-shadow:
+    -10px 12px 28px rgba(0, 0, 0, 0.12),
+    10px 12px 28px rgba(0, 0, 0, 0.10),
+    0px 2px 10px rgba(0, 0, 0, 0.06);
+  position: relative;
+  display: grid;
+  place-items: center;
+  box-sizing: border-box;
+}
+
+.publication-detail-enlarged__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.publication-detail-enlarged__restore {
+  position: absolute;
+  right: 32px;
+  bottom: 32px;
+  background: #f7f9fa;
+  border: 1px solid #7150e5;
+  border-radius: 12px;
+  padding: 14px;
+  width: var(--publication-detail-control-size, 52px);
+  height: var(--publication-detail-control-size, 52px);
+  box-sizing: border-box;
   cursor: pointer;
-  z-index: 10;
-  transition: background 0.2s ease;
-  color: #fff;
+  display: grid;
+  place-items: center;
 }
 
-.publication-detail__fullscreen-nav:hover {
-  background: rgba(255, 255, 255, 0.2);
+.publication-detail-enlarged__restore:focus-visible {
+  outline: 2px solid #7150e5;
+  outline-offset: 3px;
 }
 
-.publication-detail__fullscreen-nav--prev {
-  left: 24px;
+.publication-detail-enlarged__caption {
+  width: 100%;
+  /* Align caption with stage edge like the top card */
+  padding-left: var(--publication-detail-stage-inset, 84px);
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #3c3f43;
 }
 
-.publication-detail__fullscreen-nav--next {
-  right: 24px;
-}
+/* Responsive */
+@media (max-width: 1100px) {
+  .publication-detail__grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
 
-/* Responsive - Tablet */
-@media (max-width: 960px) {
-  .publication-detail {
-    padding: 32px 32px 44px 32px;
+  .publication-detail__meta {
+    padding-top: 0;
+  }
+
+  .publication-detail__thumbs-wrap {
+    padding-left: 0;
+    padding-right: 0;
   }
 
   .publication-detail__counter {
-    margin-top: 24px;
-  }
-
-  .publication-detail__body {
-    flex-direction: column;
-    gap: 32px;
-    margin-top: 24px;
-  }
-
-  .publication-detail__text-col {
-    flex: none;
-    width: 100%;
-    max-width: 100%;
-  }
-
-  .publication-detail__title {
-    font-size: 22px;
-  }
-
-  .publication-detail__main-image-wrap {
-    max-height: 320px;
+    padding-left: 0;
   }
 }
 
-/* Responsive - Mobile */
-@media (max-width: 480px) {
-  .publication-detail {
-    padding: 24px 24px 44px 24px;
+@media (max-width: 720px) {
+  .publication-detail__carousel {
+    gap: 16px;
   }
 
-  .publication-detail__close {
-    font-size: 14px;
-  }
-
-  .publication-detail__counter {
-    margin-top: 16px;
-  }
-
-  .publication-detail__body {
-    margin-top: 20px;
-  }
-
-  .publication-detail__title {
-    font-size: 20px;
-  }
-
-  .publication-detail__listen-btn {
-    width: 77px;
+  .publication-detail__stage {
+    height: 380px;
   }
 
   .publication-detail__thumb {
-    flex: 0 0 56px;
-    width: 56px;
-    height: 56px;
+    width: 140px;
+    height: 96px;
   }
 }
+

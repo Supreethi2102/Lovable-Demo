@@ -132,6 +132,11 @@ a:focus-visible {
   overflow: visible;
 }
 
+/* Non-home pages background (avoid white showing) */
+.app--detail {
+  background: #F7F8F9;
+}
+
 /* Hero Section Wrapper */
 .hero-section {
   min-height: 100vh;

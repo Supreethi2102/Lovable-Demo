@@ -197,15 +197,9 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
             onMouseEnter={() => setHoveredBtn('viewDesign')}
             onMouseLeave={() => setHoveredBtn(null)}
             onClick={() => {
-              // Map case study ID to publication ID
-              // Case study ID 1 -> Publication ID 13 (NZ Weddings Planner)
-              const publicationIdMap: Record<number, number> = {
-                1: 13, // NZ Weddings Planner
-                2: 1,  // Map other case studies as needed
-                3: 1,  // Map other case studies as needed
-              };
-              const publicationId = publicationIdMap[study.id] || study.id;
-              navigate(`/publications/${publicationId}`);
+              // Publication detail page removed: scroll to Publications section instead
+              const el = document.getElementById('publications');
+              el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }}
             aria-label={`View the design for ${study.subtitle}`}
           >

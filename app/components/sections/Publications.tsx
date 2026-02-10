@@ -12,20 +12,16 @@ interface PublicationCardProps {
 const PublicationCard: React.FC<PublicationCardProps> = ({ publication }) => {
   const navigate = useNavigate();
 
-  const handleClick = () => {
-    navigate(`/publications/${publication.id}`);
-  };
-
   return (
-    <div 
+    <div
       className="publication-card"
-      onClick={handleClick}
+      onClick={() => navigate(`/publications/${publication.id}`)}
       role="button"
       tabIndex={0}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
           e.preventDefault();
-          handleClick();
+          navigate(`/publications/${publication.id}`);
         }
       }}
       aria-label={`${publication.title} - ${publication.subtitle}`}

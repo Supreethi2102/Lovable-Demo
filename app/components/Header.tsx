@@ -1,14 +1,37 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Palette, User, ChatCircleDots, Sun, SunHorizon, MoonStars, CloudMoon, Moon, Phone, PaintBrush, Megaphone, Package, BookOpen, Ruler, PencilSimple } from '@phosphor-icons/react';
 import './Header.css';
 
 export const Header: React.FC = () => {
+  const headerRef = useRef<HTMLElement | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
   const [activeTheme, setActiveTheme] = useState('light');
+
+  // Expose the fixed header height as a CSS variable so pages can pad correctly.
+  useEffect(() => {
+    const el = headerRef.current;
+    if (!el) return;
+
+    const setHeaderHeightVar = () => {
+      const h = el.getBoundingClientRect().height;
+      document.documentElement.style.setProperty('--header-height', `${Math.round(h)}px`);
+    };
+
+    setHeaderHeightVar();
+
+    const ro = typeof ResizeObserver !== 'undefined' ? new ResizeObserver(() => setHeaderHeightVar()) : null;
+    ro?.observe(el);
+    window.addEventListener('resize', setHeaderHeightVar);
+
+    return () => {
+      window.removeEventListener('resize', setHeaderHeightVar);
+      ro?.disconnect();
+    };
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -71,6 +94,7 @@ export const Header: React.FC = () => {
 
   return (
     <header 
+      ref={headerRef}
       className={`header ${isScrolled ? 'header--scrolled' : ''}`}
       role="banner"
     >
@@ -155,10 +179,8 @@ export const Header: React.FC = () => {
                 <ul className="mega-menu__list">
                   <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>Architecture New Zealand Magazine</a></li>
                   <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>Houses Magazine</a></li>
-                  <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>Life Pharmacy Lookbook</a></li>
                   <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>Life Pharmacy Mailer</a></li>
                   <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>NZW Grooms Guide Booklet</a></li>
-                  <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>New Zealand Weddings Magazine</a></li>
                   <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>New Zealand Weddings Planner</a></li>
                   <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>Pumpkin Patch Catalogue</a></li>
                   <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>Superlife Booklet</a></li>

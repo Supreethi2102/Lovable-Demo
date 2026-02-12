@@ -1,4 +1,4 @@
-import React, { useState, useId } from 'react';
+import React, { useEffect, useMemo, useRef, useState, useId } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   SelectionAll, 
@@ -16,6 +16,7 @@ import {
   IconWeight,
   Icon
 } from '@phosphor-icons/react';
+import { gsap } from 'gsap';
 import './CaseStudies.css';
 
 // UX logo: Phosphor pencil + ruler
@@ -90,10 +91,109 @@ interface CaseStudyCardProps {
 
 const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('challenge');
+  const prefersReducedMotion = typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const [activeTab, setActiveTab] = useState<'challenge' | 'focus' | 'impact'>('challenge');
+  const [contentTab, setContentTab] = useState<'challenge' | 'focus' | 'impact'>('challenge');
+  const [imageFrontSlot, setImageFrontSlot] = useState<0 | 1>(0);
+  const isTabAnimatingRef = useRef(false);
+  const copyRef = useRef<HTMLDivElement>(null);
+  const imgARef = useRef<HTMLDivElement>(null);
+  const imgBRef = useRef<HTMLDivElement>(null);
   const [hoveredBtn, setHoveredBtn] = useState<string | null>(null);
   const tabPanelId = useId();
   const cardTitleId = useId();
+
+  const tabLabel = useMemo(() => {
+    switch (contentTab) {
+      case 'challenge':
+        return 'Challenge';
+      case 'focus':
+        return 'Focus';
+      case 'impact':
+        return 'Impact';
+      default:
+        return 'Challenge';
+    }
+  }, [contentTab]);
+
+  const tabDescription = useMemo(() => study.description, [study.description]);
+
+  const getTabImage = (tab: 'challenge' | 'focus' | 'impact') => {
+    // Placeholder: use the same image until per-tab images are provided.
+    void tab;
+    return study.image;
+  };
+
+  const setLayerBg = (el: HTMLDivElement | null, url: string) => {
+    if (!el) return;
+    el.style.backgroundImage = `url(${url})`;
+  };
+
+  useEffect(() => {
+    // Reset per-card when the card study changes (stacked cards)
+    setActiveTab('challenge');
+    setContentTab('challenge');
+    setImageFrontSlot(0);
+    isTabAnimatingRef.current = false;
+
+    setLayerBg(imgARef.current, getTabImage('challenge'));
+    setLayerBg(imgBRef.current, getTabImage('challenge'));
+
+    gsap.set(imgARef.current, { x: '0%', opacity: 1 });
+    gsap.set(imgBRef.current, { x: '-120%', opacity: 1 });
+    gsap.set(copyRef.current, { x: 0, opacity: 1 });
+  }, [study.id]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  const animateToTab = (nextTab: 'challenge' | 'focus' | 'impact') => {
+    if (isTabAnimatingRef.current) return;
+    if (nextTab === activeTab) return;
+
+    setActiveTab(nextTab);
+
+    if (prefersReducedMotion) {
+      setContentTab(nextTab);
+      setLayerBg(imgARef.current, getTabImage(nextTab));
+      setLayerBg(imgBRef.current, getTabImage(nextTab));
+      gsap.set(imgARef.current, { x: '0%', opacity: 1 });
+      gsap.set(imgBRef.current, { x: '-120%', opacity: 1 });
+      return;
+    }
+
+    const copyEl = copyRef.current;
+    const frontEl = (imageFrontSlot === 0 ? imgARef.current : imgBRef.current) as HTMLDivElement | null;
+    const backEl = (imageFrontSlot === 0 ? imgBRef.current : imgARef.current) as HTMLDivElement | null;
+    if (!copyEl || !frontEl || !backEl) return;
+
+    isTabAnimatingRef.current = true;
+
+    setLayerBg(backEl, getTabImage(nextTab));
+    gsap.set(backEl, { x: '-120%', opacity: 1 });
+    gsap.set(frontEl, { x: '0%', opacity: 1 });
+
+    const tl = gsap.timeline({
+      defaults: { ease: 'power2.out' },
+      onComplete: () => {
+        // Keep new image as the "front"
+        setImageFrontSlot((s) => (s === 0 ? 1 : 0));
+        isTabAnimatingRef.current = false;
+      },
+    });
+
+    // Copy slides in from the divider; CTA stays pinned below.
+    tl.to(copyEl, { duration: 0.12, x: 8, opacity: 0 }, 0);
+    tl.to(frontEl, { duration: 0.45, x: '120%', opacity: 0, force3D: true }, 0);
+    tl.to(backEl, { duration: 0.5, x: '0%', opacity: 1, ease: 'power3.out', force3D: true }, 0.08);
+
+    tl.add(() => {
+      setContentTab(nextTab);
+      requestAnimationFrame(() => {
+        const el = copyRef.current;
+        if (!el) return;
+        gsap.set(el, { x: -16, opacity: 0 });
+        gsap.to(el, { duration: 0.25, x: 0, opacity: 1, ease: 'power2.out' });
+      });
+    }, 0.12);
+  };
 
   return (
     <article className="case-study-card" aria-labelledby={cardTitleId}>
@@ -128,7 +228,7 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               aria-selected={activeTab === 'challenge'}
               aria-controls={tabPanelId}
               className={`tab ${activeTab === 'challenge' ? 'tab--active' : ''}`}
-              onClick={() => setActiveTab('challenge')}
+              onClick={() => animateToTab('challenge')}
               onMouseEnter={() => setHoveredBtn('challenge')}
               onMouseLeave={() => setHoveredBtn(null)}
             >
@@ -147,7 +247,7 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               aria-selected={activeTab === 'focus'}
               aria-controls={tabPanelId}
               className={`tab ${activeTab === 'focus' ? 'tab--active' : ''}`}
-              onClick={() => setActiveTab('focus')}
+              onClick={() => animateToTab('focus')}
               onMouseEnter={() => setHoveredBtn('focus')}
               onMouseLeave={() => setHoveredBtn(null)}
             >
@@ -166,7 +266,7 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               aria-selected={activeTab === 'impact'}
               aria-controls={tabPanelId}
               className={`tab ${activeTab === 'impact' ? 'tab--active' : ''}`}
-              onClick={() => setActiveTab('impact')}
+              onClick={() => animateToTab('impact')}
               onMouseEnter={() => setHoveredBtn('impact')}
               onMouseLeave={() => setHoveredBtn(null)}
             >
@@ -188,9 +288,12 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
           role="tabpanel"
           aria-labelledby={`tab-${activeTab}-${study.id}`}
         >
-          <p className="case-study-card__subtitle">{study.subtitle}</p>
-          <h3 id={cardTitleId} className="case-study-card__title">{study.title}</h3>
-          <p className="case-study-card__description">{study.description}</p>
+          <div ref={copyRef} className="case-study-card__copy">
+            <p className="case-study-card__subtitle">{study.subtitle}</p>
+            <p className="case-study-card__tab-label" aria-hidden="true">{tabLabel}</p>
+            <h3 id={cardTitleId} className="case-study-card__title">{study.title}</h3>
+            <p className="case-study-card__description">{tabDescription}</p>
+          </div>
           <button 
             type="button"
             className="view-design-btn"
@@ -214,12 +317,10 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
         <div className="case-study-card__duration" aria-label={`Project duration: ${study.duration}`}>
           Duration: {study.duration}
         </div>
-        <div 
-          className="case-study-card__image-bg"
-          style={{ backgroundImage: `url(${study.image})` }}
-          role="img"
-          aria-label={`${study.subtitle} project preview`}
-        />
+        <div className="case-study-card__image-viewport" role="img" aria-label={`${study.subtitle} project preview`}>
+          <div ref={imgARef} className="case-study-card__image-layer" aria-hidden="true" />
+          <div ref={imgBRef} className="case-study-card__image-layer" aria-hidden="true" />
+        </div>
         {/* Listen button – commented out for now, will use in future */}
         {/* <button 
           type="button"

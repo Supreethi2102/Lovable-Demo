@@ -21,6 +21,59 @@
   min-height: 851px; /* matches the card height so absolute cards don't cause layout shift */
 }
 
+/* Sent dialog overlay for full-card transition */
+.contact-sent-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  z-index: 5;
+  opacity: 0;
+  visibility: hidden;
+}
+
+.contact-sent-overlay__panel {
+  width: min(520px, calc(100% - 48px));
+  padding: 26px 26px;
+  border-radius: 20px;
+  background: rgba(247, 249, 250, 0.82);
+  border: 1px solid rgba(176, 179, 184, 0.55);
+  box-shadow:
+    0px 1px 2px rgba(17, 18, 19, 0.06),
+    0px 10px 26px rgba(17, 18, 19, 0.08),
+    0px 0px 0px 1px rgba(113, 80, 229, 0.06);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  text-align: center;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+.contact-sent-overlay__panel {
+  position: relative;
+}
+
+.contact-sent-overlay__title {
+  font-family: 'Romie Trial', Georgia, serif;
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.4px;
+  color: #111213;
+  margin: 0 0 10px;
+}
+
+.contact-sent-overlay__subtitle {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #3c3f43;
+  margin: 0;
+}
+
 .contact-card {
   position: absolute;
   top: 0;
@@ -345,45 +398,44 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 520px; /* Keep height so layout doesn’t jump */
+  min-height: 660px; /* Must fit stamp + address + button (avoid top/bottom clipping) */
 }
 
-/* Single postcard (stamp + address + button) – slides out/in */
+/* Stack that allows front/back postcard animation */
+.contact__postcard-stack {
+  position: relative;
+  width: 100%;
+  max-width: 420px; /* keep postcard visuals within the right column */
+  min-height: 660px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Postcard layer (stamp + address + button) */
 .contact__postcard {
+  position: absolute;
+  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 56px;
   width: 100%;
-  flex-shrink: 0;
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform, opacity;
+  transform: translateZ(0);
 }
 
-.contact__postcard--out {
-  transform: translateX(120%);
+.contact__postcard--front {
+  z-index: 2;
+  pointer-events: auto;
+  transform: translateX(0) translateZ(0);
 }
 
-.contact__postcard--at-left {
-  transform: translateX(-120%);
-  transition: none;
-}
-
-.contact__postcard--animate-to-center {
-  transform: translateX(0);
-  transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-  animation: postcardSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-@keyframes postcardSlideIn {
-  from {
-    transform: translateX(-120%);
-    opacity: 0;
-  }
-  to {
-    transform: translateX(0);
-    opacity: 1;
-  }
+.contact__postcard--back {
+  z-index: 1;
+  pointer-events: none;
+  transform: translateX(-120%) translateZ(0);
 }
 
 /* “Sent” message box – appears after postcard slides out */
@@ -397,16 +449,9 @@
   gap: 16px;
   padding: 32px;
   text-align: center;
-  animation: contactSentFadeIn 0.35s ease forwards;
-}
-
-@keyframes contactSentFadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(8px) scale(0.98);
 }
 
 .contact__sent-box-title {
@@ -418,7 +463,7 @@
   margin: 0;
 }
 
-.contact__sent-box-text {
+.contact__sent-box-subtitle {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
   font-weight: 400;

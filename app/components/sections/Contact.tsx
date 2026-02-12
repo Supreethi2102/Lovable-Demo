@@ -1,14 +1,17 @@
 import React, { useState, useId, useRef, useEffect } from 'react';
 import { PaperPlaneTilt, CheckCircle, WarningCircle } from '@phosphor-icons/react';
 import { gsap } from 'gsap';
-import { toPng } from 'html-to-image';
+// import { toPng } from 'html-to-image'; // Legacy snapshot-fold experiment (kept for future)
 import emailjs from '@emailjs/browser';
 import { emailjsConfig } from '../../config/emailjs';
 import './Contact.css';
 
 // Character limit for message field
 const MESSAGE_MAX_LENGTH = 2000;
-// Animation testing mode: keep EmailJS OFF until explicitly re-enabled.
+// Submission mode:
+// - Validation ON: require user to fill fields before sending
+// - EmailJS ON: actually send the email
+const ENABLE_FORM_VALIDATION = true;
 const ENABLE_EMAILJS = true;
 
 export const Contact: React.FC = () => {
@@ -26,11 +29,14 @@ export const Contact: React.FC = () => {
   const [cardKey, setCardKey] = useState(0); // Track which card is active
   const [activeSlot, setActiveSlot] = useState<0 | 1>(0);
   const [showValidationErrors, setShowValidationErrors] = useState(false);
+  // Postcard animation: which of the two postcards is currently "front"
+  const [postcardFrontSlot, setPostcardFrontSlot] = useState<0 | 1>(0);
   
   // Refs for GSAP animations
   const wrapperRef = useRef<HTMLElement>(null);
   const cardARef = useRef<HTMLDivElement>(null);
   const cardBRef = useRef<HTMLDivElement>(null);
+  const sentOverlayRef = useRef<HTMLDivElement>(null);
   const isAnimatingRef = useRef(false);
   
   // Generate unique IDs for form fields
@@ -86,6 +92,10 @@ export const Contact: React.FC = () => {
       zIndex: 2,
     });
     b.style.display = 'none';
+
+    if (sentOverlayRef.current) {
+      gsap.set(sentOverlayRef.current, { autoAlpha: 0, y: 8, scale: 0.98, pointerEvents: 'none' });
+    }
   }, []);
 
   const validateEmail = (email: string) => {
@@ -264,64 +274,85 @@ export const Contact: React.FC = () => {
       {/* Right Side - Postcard */}
       <aside className="contact__postcard-side" aria-label="Postcard decoration">
         <div className="contact__postcard-slot">
-          <div className="contact__postcard">
-            <div className="contact__stamp-area">
-              <img
-                src="/about/postage-stamp-textured 2.png"
-                alt=""
-                className="contact__stamp"
-                role="presentation"
-              />
-            </div>
-            <address className="contact__address-area">
-              <img
-                src="/about/postal address 6.png"
-                alt="Contact address: Samantha Smith, 123 Pixel Parade, Design District, Imagination NZ"
-                className="contact__address"
-              />
-            </address>
-            <button
-              type="submit"
-              form={isActive ? formDomId : undefined}
-              className={`contact__submit-btn send-message ${cardIsSubmitting ? 'contact__submit-btn--loading' : ''} ${cardSubmitStatus === 'success' ? 'contact__submit-btn--success' : ''}`}
-              onMouseEnter={() => setIsSendHovered(true)}
-              onMouseLeave={() => setIsSendHovered(false)}
-              disabled={!isActive || cardIsSubmitting || isAnimatingRef.current}
-              aria-busy={cardIsSubmitting}
-              aria-label={
-                cardIsSubmitting
-                  ? 'Sending message...'
-                  : cardSubmitStatus === 'success'
-                    ? 'Message sent successfully'
-                    : 'Send message'
-              }
-            >
-                {cardIsSubmitting ? (
-                  <>
-                    <span className="contact__spinner" aria-hidden="true" />
-                    <span>Sending...</span>
-                  </>
-                ) : cardSubmitStatus === 'success' ? (
-                  <>
-                    <CheckCircle size={24} weight="fill" color="#F6F7F8" aria-hidden="true" />
-                    <span>Message sent!</span>
-                  </>
-                ) : (
-                  <>
-                    <PaperPlaneTilt size={24} weight={isSendHovered ? 'fill' : 'regular'} color={isSendHovered ? '#F6F7F8' : '#7150E5'} aria-hidden="true" />
-                    <span>Send message</span>
-                  </>
-                )}
-              </button>
+          <div className="contact__postcard-stack">
+            {[0, 1].map((slot) => {
+              const isFront = postcardFrontSlot === slot;
+              const postcardClass = `contact__postcard ${isFront ? 'contact__postcard--front' : 'contact__postcard--back'}`;
+
+              return (
+                <div
+                  key={slot}
+                  className={postcardClass}
+                  data-postcard-slot={slot}
+                  aria-hidden={isFront ? 'false' : 'true'}
+                >
+                  <div className="contact__stamp-area">
+                    <img
+                      src="/about/postage-stamp-textured 2.png"
+                      alt=""
+                      className="contact__stamp"
+                      role="presentation"
+                    />
+                  </div>
+                  <address className="contact__address-area">
+                    <img
+                      src="/about/postal address 6.png"
+                      alt="Contact address: Samantha Smith, 123 Pixel Parade, Design District, Imagination NZ"
+                      className="contact__address"
+                    />
+                  </address>
+                  <button
+                    type="submit"
+                    form={isFront && isActive ? formDomId : undefined}
+                    className={`contact__submit-btn send-message ${cardIsSubmitting ? 'contact__submit-btn--loading' : ''} ${cardSubmitStatus === 'success' ? 'contact__submit-btn--success' : ''}`}
+                    onMouseEnter={() => setIsSendHovered(true)}
+                    onMouseLeave={() => setIsSendHovered(false)}
+                    disabled={!isFront || !isActive || cardIsSubmitting || isAnimatingRef.current}
+                    tabIndex={!isFront ? -1 : 0}
+                    aria-hidden={!isFront}
+                    aria-busy={cardIsSubmitting}
+                    aria-label={
+                      cardIsSubmitting
+                        ? 'Sending message...'
+                        : cardSubmitStatus === 'success'
+                          ? 'Message sent successfully'
+                          : 'Send message'
+                    }
+                  >
+                    {cardIsSubmitting ? (
+                      <>
+                        <span className="contact__spinner" aria-hidden="true" />
+                        <span>Sending...</span>
+                      </>
+                    ) : cardSubmitStatus === 'success' ? (
+                      <>
+                        <CheckCircle size={24} weight="fill" color="#F6F7F8" aria-hidden="true" />
+                        <span>Message sent!</span>
+                      </>
+                    ) : (
+                      <>
+                        <PaperPlaneTilt size={24} weight={isSendHovered ? 'fill' : 'regular'} color={isSendHovered ? '#F6F7F8' : '#7150E5'} aria-hidden="true" />
+                        <span>Send message</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              );
+            })}
+
+            <div className="contact__sent-box" aria-hidden="true">
+              <h3 className="contact__sent-box-title">It’s been sent</h3>
+              <p className="contact__sent-box-subtitle">Thanks for reaching out. I’ll get back to you soon.</p>
             </div>
           </div>
+        </div>
 
-          {submitStatus === 'error' && (
-            <p className="contact__submit-error" role="alert">
-              <WarningCircle size={16} weight="fill" aria-hidden="true" />
-              {errorMessage || 'Something went wrong. Please try again.'}
-            </p>
-          )}
+        {cardSubmitStatus === 'error' && (
+          <p className="contact__submit-error" role="alert">
+            <WarningCircle size={16} weight="fill" aria-hidden="true" />
+            {errorMessage || 'Something went wrong. Please try again.'}
+          </p>
+        )}
       </aside>
     </div>
   );
@@ -331,25 +362,25 @@ export const Contact: React.FC = () => {
     
     if (isAnimatingRef.current) return;
 
-    // Validate all fields
-    setShowValidationErrors(true);
-    const newErrors: Record<string, string> = {};
-    Object.entries(formData).forEach(([key, value]) => {
-      const error = validateField(key, String(value));
-      if (error) newErrors[key] = error;
-    });
-    
-    if (Object.keys(newErrors).length > 0) {
-      setErrors(newErrors);
-      setTouched({ name: true, email: true, message: true });
-      return;
-    }
+    if (ENABLE_FORM_VALIDATION) {
+      // Validate all fields
+      setShowValidationErrors(true);
+      const newErrors: Record<string, string> = {};
+      Object.entries(formData).forEach(([key, value]) => {
+        const error = validateField(key, String(value));
+        if (error) newErrors[key] = error;
+      });
 
-    if (!emailjsConfig.publicKey || !emailjsConfig.serviceId || !emailjsConfig.templateId) {
-      console.error('EmailJS is not configured.');
-      setSubmitStatus('error');
-      setErrorMessage('Email service is not configured.');
-      return;
+      if (Object.keys(newErrors).length > 0) {
+        setErrors(newErrors);
+        setTouched({ name: true, email: true, message: true });
+        return;
+      }
+    } else {
+      // Testing mode: allow empty submit so we can review animation.
+      setShowValidationErrors(false);
+      setErrors({});
+      setTouched({});
     }
 
     setIsSubmitting(true);
@@ -362,6 +393,15 @@ export const Contact: React.FC = () => {
 
     try {
       if (ENABLE_EMAILJS) {
+        if (!emailjsConfig.publicKey || !emailjsConfig.serviceId || !emailjsConfig.templateId) {
+          console.error('EmailJS is not configured.');
+          setSubmitStatus('error');
+          setErrorMessage('Email service is not configured.');
+          isAnimatingRef.current = false;
+          if (active) active.style.pointerEvents = '';
+          return;
+        }
+
         if (emailjsConfig.publicKey && emailjsConfig.publicKey !== 'YOUR_PUBLIC_KEY_HERE') {
           emailjs.init(emailjsConfig.publicKey);
         }
@@ -383,13 +423,16 @@ export const Contact: React.FC = () => {
           templateParams
         );
         console.log('Email sent successfully:', response);
+      } else {
+        // Simulate a small delay so the button shows "Sending..." briefly.
+        await new Promise((r) => window.setTimeout(r, 250));
       }
 
       setSubmitStatus('success');
       setErrorMessage('');
       
       // Start GSAP animation
-      void animateCardTransition();
+      void animateSectionSlideTransition();
       
     } catch (error: any) {
       console.error('Failed:', error);
@@ -409,6 +452,197 @@ export const Contact: React.FC = () => {
     }
   };
 
+  const animateSectionSlideTransition = () => {
+    const a = cardARef.current;
+    const b = cardBRef.current;
+    const overlay = sentOverlayRef.current;
+    if (!a || !b || !overlay) return;
+
+    const active = activeSlot === 0 ? a : b;
+    const next = activeSlot === 0 ? b : a;
+
+    const activeRect = active.getBoundingClientRect();
+    const offscreenX = Math.ceil(window.innerWidth + activeRect.width + 120);
+
+    // Ensure baseline
+    gsap.set(overlay, { autoAlpha: 0, y: 8, scale: 0.98, pointerEvents: 'none' });
+
+    next.style.display = 'none';
+    gsap.set(next, { x: -offscreenX, opacity: 1 });
+    gsap.set(active, { x: 0, opacity: 1 });
+
+    const finalizeSwap = () => {
+      // Hide overlay
+      gsap.set(overlay, { clearProps: 'all' });
+
+      // Reset old active
+      gsap.set(active, { clearProps: 'all', x: 0, opacity: 1 });
+      active.style.pointerEvents = '';
+      active.style.display = 'none';
+
+      // Clean next
+      gsap.set(next, { clearProps: 'all', x: 0, opacity: 1 });
+      next.style.display = 'block';
+      next.style.pointerEvents = '';
+
+      // Fresh form state + reset statuses
+      setFormData({ name: '', email: '', message: '' });
+      setTouched({});
+      setErrors({});
+      setShowValidationErrors(false);
+      setSubmitStatus('idle');
+      setErrorMessage('');
+      setCardKey((k) => k + 1);
+
+      // Promote next to active via state
+      setActiveSlot((s) => (s === 0 ? 1 : 0));
+      isAnimatingRef.current = false;
+    };
+
+    if (prefersReducedMotion) {
+      const tl = gsap.timeline({ onComplete: finalizeSwap });
+      tl.to(active, { opacity: 0, duration: 0.18, ease: 'power2.out' })
+        .to(overlay, { autoAlpha: 1, y: 0, scale: 1, duration: 0.18, ease: 'power2.out' }, 0)
+        .set(next, { display: 'block' }, 0.1)
+        .fromTo(next, { x: '-12px', opacity: 0 }, { x: 0, opacity: 1, duration: 0.22, ease: 'power2.out' }, 0.1)
+        .to(overlay, { autoAlpha: 0, y: 8, scale: 0.98, duration: 0.14, ease: 'power2.out' }, 0.95);
+      return;
+    }
+
+    const tl = gsap.timeline({ defaults: { ease: 'power2.out' }, onComplete: finalizeSwap });
+
+    // Continuous flow (no pause):
+    // - Active card slides out right
+    // - Popup fades in quickly and stays readable while the new card comes in
+    // - New card slides in from left (overlapping with slide-out)
+    tl.to(active, { duration: 0.52, x: offscreenX, opacity: 0.98, ease: 'power2.inOut', force3D: true }, 0);
+
+    tl.to(overlay, { duration: 0.2, autoAlpha: 1, y: 0, scale: 1, ease: 'power2.out' }, 0.06);
+
+    tl.set(next, { display: 'block' }, 0.18);
+    tl.fromTo(
+      next,
+      { x: -offscreenX, opacity: 1 },
+      { duration: 0.58, x: 0, opacity: 1, ease: 'power3.out', force3D: true },
+      0.18
+    );
+
+    // Keep popup visible for reading, but do not block card motion
+    tl.to(overlay, { duration: 0.18, autoAlpha: 0, y: 8, scale: 0.98, ease: 'power2.out' }, 1.65);
+  };
+
+  // LEGACY (kept for future): postcard-only animation (postcard shoots right, message, new postcard slides in).
+  // NOTE: Currently unused; we now animate the entire contact card section.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const animatePostcardTransition = () => {
+    const a = cardARef.current;
+    const b = cardBRef.current;
+    if (!a || !b) return;
+
+    const active = activeSlot === 0 ? a : b;
+    const front = active.querySelector<HTMLElement>('.contact__postcard--front');
+    const back = active.querySelector<HTMLElement>('.contact__postcard--back');
+    const sentBox = active.querySelector<HTMLElement>('.contact__sent-box');
+    if (!front || !back || !sentBox) {
+      isAnimatingRef.current = false;
+      active.style.pointerEvents = '';
+      return;
+    }
+
+    // Baseline
+    gsap.set(front, { x: '0%', rotateZ: 0, opacity: 1, zIndex: 2, clearProps: 'filter' });
+    gsap.set(back, { x: '-120%', rotateZ: 0, opacity: 1, zIndex: 1 });
+    gsap.set(sentBox, { opacity: 0, y: 8, scale: 0.98 });
+    sentBox.setAttribute('aria-hidden', 'true');
+
+    const finalize = () => {
+      // Clear inline transform/opacity so class-based layout stays consistent after swap
+      gsap.set(front, { clearProps: 'transform,opacity,filter' });
+      gsap.set(back, { clearProps: 'transform,opacity,filter' });
+      gsap.set(sentBox, { clearProps: 'transform,opacity' });
+
+      // Flip which postcard is in front for the next send
+      setPostcardFrontSlot((s) => (s === 0 ? 1 : 0));
+
+      // Fresh form state + reset statuses
+      setFormData({ name: '', email: '', message: '' });
+      setTouched({});
+      setErrors({});
+      setShowValidationErrors(false);
+      setSubmitStatus('idle');
+      setErrorMessage('');
+      setCardKey((k) => k + 1);
+
+      isAnimatingRef.current = false;
+      active.style.pointerEvents = '';
+    };
+
+    if (prefersReducedMotion) {
+      const tl = gsap.timeline({ onComplete: finalize });
+      tl.to(front, { opacity: 0, duration: 0.2, ease: 'power2.out' })
+        .to(back, { x: '0%', duration: 0.25, ease: 'power2.out' }, '<')
+        .to(
+          sentBox,
+          {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 0.2,
+            ease: 'power2.out',
+            onStart: () => sentBox.setAttribute('aria-hidden', 'false'),
+          },
+          '<'
+        )
+        .to(sentBox, { opacity: 0, duration: 0.15, onComplete: () => sentBox.setAttribute('aria-hidden', 'true') }, '+=0.6');
+      return;
+    }
+
+    const tl = gsap.timeline({
+      defaults: { ease: 'power2.out' },
+      onComplete: finalize,
+    });
+
+    // Postcard shoots/slides off to the right
+    tl.to(front, {
+      duration: 0.45,
+      x: '120%',
+      rotateZ: 6,
+      opacity: 0,
+      force3D: true,
+    });
+
+    // Fresh postcard slides in from the left (behind)
+    tl.to(
+      back,
+      {
+        duration: 0.5,
+        x: '0%',
+        ease: 'power3.out',
+        force3D: true,
+      },
+      0.12
+    );
+
+    // "Sent" box appears
+    tl.to(
+      sentBox,
+      {
+        duration: 0.25,
+        opacity: 1,
+        y: 0,
+        scale: 1,
+        onStart: () => sentBox.setAttribute('aria-hidden', 'false'),
+      },
+      '>-0.18'
+    );
+
+    // Brief hold, then fade it away
+    tl.to(sentBox, { duration: 0.2, opacity: 0, onComplete: () => sentBox.setAttribute('aria-hidden', 'true') }, '+=0.65');
+  };
+
+  // LEGACY ANIMATION (kept for future): paper-fold "rocket" throw of the entire contact card.
+  // NOTE: This is intentionally unused while the simpler postcard shoot animation is active.
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const animateCardTransition = () => {
     const a = cardARef.current;
     const b = cardBRef.current;
@@ -594,6 +828,12 @@ export const Contact: React.FC = () => {
       </div>
 
       <div className="contact-stage">
+        <div ref={sentOverlayRef} className="contact-sent-overlay" aria-hidden="true">
+          <div className="contact-sent-overlay__panel" role="status" aria-live="polite" aria-atomic="true">
+            <h3 className="contact-sent-overlay__title">It’s been sent</h3>
+            <p className="contact-sent-overlay__subtitle">Thanks for reaching out. I’ll get back to you soon.</p>
+          </div>
+        </div>
         {/* Active card */}
         <div ref={cardARef} className={`contact-card ${activeSlot === 0 ? 'is-active' : 'is-next'}`}>
           {renderContactCard(

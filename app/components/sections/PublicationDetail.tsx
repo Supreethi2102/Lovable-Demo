@@ -1,6 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
-import { ArrowsIn, ArrowsOut, CaretLeft, CaretRight, SpeakerHigh } from '@phosphor-icons/react';
+import { ArrowsIn, ArrowsOut, CaretLeft, CaretRight, ArrowLeft, SpeakerHigh } from '@phosphor-icons/react';
 import { getGalleryImages, getPublicationById, getPublicationCopy } from '../../data/publications';
 import './PublicationDetail.css';
 
@@ -145,6 +145,15 @@ export const PublicationDetail: React.FC = () => {
           aria-label="Enlarged photo gallery"
         >
           <div ref={enlargedDialogRef} className="publication-detail-enlarged__panel-inner" tabIndex={-1}>
+            <button
+              type="button"
+              className="publication-detail-enlarged__back"
+              onClick={closeEnlarged}
+              aria-label="Back to publication"
+            >
+              <ArrowLeft size={24} weight="regular" color="#7150E5" aria-hidden="true" />
+              <span>Back</span>
+            </button>
             <div className="publication-detail-enlarged__counter" aria-live="polite" aria-atomic="true">
               <span>{activeIndex + 1}/</span>
               <strong>{Math.max(totalImages, 1)}</strong>
@@ -198,6 +207,15 @@ export const PublicationDetail: React.FC = () => {
       )}
 
       <div className="publication-detail__inner">
+        <button
+          type="button"
+          className="publication-detail__back"
+          onClick={() => navigate(-1)}
+          aria-label="Go back"
+        >
+          <ArrowLeft size={24} weight="regular" color="#7150E5" aria-hidden="true" />
+          <span>Back</span>
+        </button>
         <div className="publication-detail__grid">
           <aside className="publication-detail__meta">
             <header className="publication-detail__heading">
@@ -240,14 +258,6 @@ export const PublicationDetail: React.FC = () => {
           </aside>
 
           <div className="publication-detail__gallery" aria-label="Publication image gallery">
-            <div className="publication-detail__counter" aria-live="polite" aria-atomic="true">
-              <div className="publication-detail__counter-text">
-                <span>{activeIndex + 1}/</span>
-                <strong>{Math.max(totalImages, 1)}</strong>
-                <span className="publication-detail__counter-label">images</span>
-              </div>
-            </div>
-
             <div className="publication-detail__carousel">
               <button
                 type="button"
@@ -286,7 +296,15 @@ export const PublicationDetail: React.FC = () => {
               </button>
             </div>
 
-            <div className="publication-detail__thumbs-wrap" aria-label="Image thumbnails">
+            <div className="publication-detail__counter-thumbs">
+              <div className="publication-detail__counter" aria-live="polite" aria-atomic="true">
+                <div className="publication-detail__counter-text">
+                  <span>{activeIndex + 1}/</span>
+                  <strong>{Math.max(totalImages, 1)}</strong>
+                  <span className="publication-detail__counter-label">images</span>
+                </div>
+              </div>
+              <div className="publication-detail__thumbs-wrap" aria-label="Image thumbnails">
               <div className="publication-detail__thumbs-clip">
                 <div
                   ref={thumbsScrollerRef}
@@ -316,6 +334,7 @@ export const PublicationDetail: React.FC = () => {
                   })}
                 </div>
               </div>
+            </div>
             </div>
           </div>
         </div>

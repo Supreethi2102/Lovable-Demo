@@ -3,7 +3,7 @@
 .contact-wrapper {
   background: #eceef2; /* Figma outer background */
   padding-top: 80px; /* Reduced gap from Testimonials */
-  padding-bottom: 112px; /* More bottom padding */
+  padding-bottom: 146px; /* Increased - combined with Destinations top (88) to match visual spacing above About */
   /* Dynamic padding: grows on screens larger than 1440px */
   padding-left: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
   padding-right: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
@@ -11,14 +11,14 @@
   scroll-margin-top: 100px;
   position: relative;
   overflow: hidden; /* Hidden for proper clipping during animation */
-  min-height: 851px; /* Ensure section has height */
+  min-height: 720px; /* Trimmed - matches card */
   perspective: 1200px; /* Critical: perspective must be on parent for 3D transforms */
 }
 
 /* Contact card wrapper - handles animation */
 .contact-stage {
   position: relative;
-  min-height: 851px; /* matches the card height so absolute cards don't cause layout shift */
+  min-height: 720px; /* matches the card height */
 }
 
 /* Sent dialog overlay for full-card transition */
@@ -103,13 +103,13 @@
   background: #f7f9fa; /* Figma card background */
   border: 1px solid #b0b3b8; /* Figma border */
   border-radius: 24px; /* Figma border radius */
-  padding: 64px 56px; /* Slightly less horizontal padding for better balance */
+  padding: 48px 56px 48px 56px; /* Reduced bottom padding */
   max-width: var(--content-max-width, 1220px);
-  min-height: 851px; /* Figma height */
+  min-height: 720px; /* Trimmed from 851px */
   margin: 0 auto;
   display: flex;
   gap: 64px; /* Reduced gap between form and postcard */
-  align-items: center;
+  align-items: flex-start; /* Align from top */
   position: relative;
   /* GPU acceleration - GSAP will handle transforms */
   will-change: transform, opacity;
@@ -370,12 +370,12 @@
 /* Divider */
 .contact__divider {
   width: 1px;
-  height: 724px; /* Figma height */
+  height: 620px; /* Trimmed to reduce bottom height */
   background: #b0b3b8;
   flex-shrink: 0;
 }
 
-/* Right Side - Postcard - single centered column */
+/* Right Side - Postcard - middle aligned */
 .contact__postcard-side {
   flex: 1;
   display: flex;
@@ -398,7 +398,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 660px; /* Must fit stamp + address + button (avoid top/bottom clipping) */
+  min-height: 600px; /* Fits stamp(129) + address(300) + button(48) + gaps */
 }
 
 /* Stack that allows front/back postcard animation */
@@ -406,7 +406,7 @@
   position: relative;
   width: 100%;
   max-width: 420px; /* keep postcard visuals within the right column */
-  min-height: 660px;
+  min-height: 600px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -523,7 +523,6 @@
   border-radius: 8px;
   cursor: pointer;
   transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
-  margin: 0 auto;
 }
 
 .contact__submit-btn:hover:not(:disabled):not(.contact__submit-btn--loading):not(.contact__submit-btn--success) {

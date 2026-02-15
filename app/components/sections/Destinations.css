@@ -312,7 +312,7 @@
   animation-name: slideInImageRight;
 }
 
-.destination-expanded--image-right .destination-expanded__image {
+.destination-expanded--image-right .destination-expanded__image-clip {
   border: none;
 }
 
@@ -327,22 +327,32 @@
   }
 }
 
-.destination-expanded__image {
+/* Wrapper for clean stroke rendering - avoids img+border-radius anti-aliasing artifacts */
+.destination-expanded__image-clip {
   width: 742px;
   height: 624px;
-  object-fit: cover;
   border-radius: 12px;
   border: 1px solid #B0B3B8;
+  overflow: hidden;
+  flex-shrink: 0;
 }
 
-.destination-expanded__image--no-border {
+.destination-expanded__image-clip--no-border {
   border: none;
 }
 
-.destination-expanded__image--no-border.destination-expanded__image--stroke-top {
+.destination-expanded__image-clip--no-border.destination-expanded__image-clip--stroke-top {
   border: none;
   border-top: 1px solid #B0B3B8;
-  border-radius: 12px 12px 12px 12px;
+  border-radius: 12px;
+}
+
+.destination-expanded__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  vertical-align: bottom; /* Removes img baseline gap */
 }
 
 .destination-expanded__credit {
@@ -789,10 +799,16 @@
     margin-top: 0;
   }
 
-  .destination-expanded__image {
+  .destination-expanded__image-clip {
     width: 100%;
     height: auto;
     aspect-ratio: 742 / 624;
+  }
+
+  .destination-expanded__image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   .destination-expanded__content {
@@ -936,7 +952,7 @@
     font-size: 14px;
   }
 
-  .destination-expanded__image {
+  .destination-expanded__image-clip {
     aspect-ratio: 4 / 3;
   }
 

@@ -88,6 +88,7 @@
 }
 
 .header__nav-link {
+  position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
@@ -102,15 +103,39 @@
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s ease;
+  transition: color 0.2s ease;
+}
+
+.header__nav-link::after {
+  content: '';
+  position: absolute;
+  left: 12px;
+  right: 6px;
+  bottom: 6px;
+  height: 2px;
+  background: #7150E5;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+  border-radius: 1px;
+}
+
+.header__nav-link:hover::after,
+.header__nav-item--has-mega:hover .header__nav-link::after {
+  transform: scaleX(1);
 }
 
 .header__nav-link:hover {
-  background-color: rgba(113, 80, 229, 0.1);
   color: #7150E5;
 }
 
-.header__nav-link:hover .header__nav-icon {
+.header__nav-link:hover .header__nav-icon,
+.header__nav-item--has-mega:hover .header__nav-link .header__nav-icon {
+  color: #7150E5;
+}
+
+/* When mega menu is open (hovering nav item), show underline on the nav link */
+.header__nav-item--has-mega:hover .header__nav-link {
   color: #7150E5;
 }
 
@@ -365,6 +390,7 @@
 }
 
 .mega-menu__list a {
+  position: relative;
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
   font-weight: 400;
@@ -372,13 +398,30 @@
   color: #3c3f43;
   text-decoration: none;
   transition: color 0.2s ease;
-  display: block;
+  display: inline-block;
   padding: 4px 0;
   white-space: nowrap;
 }
 
+.mega-menu__list a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2px;
+  height: 2px;
+  background: #7150e5;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .mega-menu__list a:hover {
   color: #7150e5;
+}
+
+.mega-menu__list a:hover::after {
+  transform: scaleX(1);
 }
 
 /* Contact Button */

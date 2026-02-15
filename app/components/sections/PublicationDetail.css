@@ -4,7 +4,7 @@
   /* Match homepage background */
   background: #f7f8f9;
   width: 100%;
-  /* Extra top padding requested (below fixed header) */
+  /* Extra top padding (below fixed header) */
   padding-top: calc(var(--header-height, 0px) + var(--publication-detail-top-padding, 60px));
   padding-bottom: 44px;
   /* Dynamic padding: grows on screens larger than 1440px */
@@ -17,6 +17,32 @@
   max-width: var(--content-max-width, 1220px);
   margin: 0 auto;
   width: 100%;
+  position: relative;
+}
+
+.publication-detail__back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  margin-bottom: 16px;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #7150E5;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.publication-detail__back:hover {
+  color: #5E3EC9;
+}
+
+.publication-detail__back:focus-visible {
+  outline: 2px solid #7150E5;
+  outline-offset: 3px;
 }
 
 .publication-detail__grid {
@@ -24,15 +50,14 @@
   /* Figma: left column 284px, right column 832px */
   grid-template-columns: 284px minmax(0, 832px);
   gap: 100px;
-  /* Stretch both columns to equal height so left can bottom-align */
-  align-items: stretch;
+  /* Mid-align left and right sections vertically */
+  align-items: center;
 }
 
 .publication-detail__meta {
-  padding-top: 40px;
+  padding-top: 0;
   display: flex;
   flex-direction: column;
-  /* Center left column now that Listen is removed */
   justify-content: center;
 }
 
@@ -45,11 +70,11 @@
 
 .publication-detail__title {
   margin: 0;
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 20px;
-  font-weight: 600;
-  line-height: 24px;
-  letter-spacing: 0.8px;
+  font-family: 'Romie Trial', Georgia, serif;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: 0.5px;
   color: #111213;
 }
 
@@ -157,6 +182,7 @@
   gap: 20px;
   width: 100%;
   max-width: 832px;
+  align-items: stretch;
 
   /* Used to align counter + thumbnails with stage edges */
   --publication-detail-control-size: 52px; /* 24px icon + 14px padding each side */
@@ -164,12 +190,19 @@
   --publication-detail-stage-inset: calc(var(--publication-detail-control-size) + var(--publication-detail-control-gap)); /* 84px */
 }
 
-/* Counter should start at the stage's left edge (per your request) */
+/* Counter + thumbs: 4px gap between them */
+.publication-detail__counter-thumbs {
+  display: flex;
+  flex-direction: column;
+  gap: 0px;
+}
+
+/* Counter above thumbnail list - align with first thumb's left edge */
 .publication-detail__counter {
   display: flex;
   align-items: center;
   justify-content: flex-start;
-  padding-left: var(--publication-detail-stage-inset);
+  padding-left: calc(var(--publication-detail-stage-inset) + 4px);
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
   font-weight: 400;
@@ -265,21 +298,15 @@
   outline-offset: 3px;
 }
 
-/* Thumbnails row (scrollable; no intentional clipping of shadows) */
+/* Thumbnails row (scrollable) */
 .publication-detail__thumbs-wrap {
-  /* Provide an internal gutter so the first thumb shadow isn't clipped */
   --publication-detail-thumb-gutter: 16px;
-  /* Keep the same total inset (so the strip still matches the stage width),
-     but bias the gutter to the LEFT so the first shadow isn't clipped. */
   padding-left: calc(var(--publication-detail-stage-inset) - var(--publication-detail-thumb-gutter));
-  /* Right edge should match the stage edge exactly */
   padding-right: var(--publication-detail-stage-inset);
 }
 
 .publication-detail__thumbs-clip {
   width: 100%;
-  /* Clip horizontally to match the large image width,
-     but keep vertical overflow so shadows/glow aren't cut */
   overflow-x: hidden;
   overflow-y: visible;
 }
@@ -287,17 +314,14 @@
 .publication-detail__thumbs {
   width: 100%;
   overflow-x: auto;
-  /* Allow thumb glow/shadows to render (avoid clipped shadow) */
   overflow-y: visible;
   display: flex;
   gap: 20px;
-  /* Extra bottom padding so active highlight isn't clipped */
-  /* No fixed left gutter (it creates a permanent blank area while scrolling) */
-  padding: 20px 0 64px 0;
+  /* Space for shadow: top 24px, left 24px so active glow isn't clipped */
+  padding: 24px 0 64px 24px;
   box-sizing: border-box;
   -webkit-overflow-scrolling: touch;
-  scrollbar-width: none; /* Firefox */
-  /* Keep left edge "fixed" on scroll (no half thumbnails) */
+  scrollbar-width: none;
   scroll-snap-type: x mandatory;
   scroll-padding-left: var(--publication-detail-thumb-gutter);
   overscroll-behavior-x: contain;
@@ -329,7 +353,8 @@
 
 .publication-detail__thumb.is-active {
   border-color: #7150e5;
-  box-shadow: 0px 4px 4px 0px rgba(76, 60, 172, 0.25), 0px 1px 25px 0px rgba(76, 60, 172, 0.75);
+  /* Reduced blur (12px) so shadow fits within padded area and isn't clipped */
+  box-shadow: 0px 2px 4px 0px rgba(76, 60, 172, 0.3), 0px 0px 12px 0px rgba(76, 60, 172, 0.6);
   z-index: 1;
 }
 
@@ -353,36 +378,67 @@
   background: #e5eff2;
 }
 
-/* Enlarged (Figma: Publications / Photo gallery / Enlarged — 1620:133)
-   Modal overlay above the detail page. */
+/* Enlarged modal – images take max width of screen */
 .publication-detail-enlarged__overlay {
   position: fixed;
-  /* Keep top navigation visible while enlarged */
   top: var(--header-height, 0px);
   left: 0;
   right: 0;
   bottom: 0;
-  z-index: 90; /* header is 100 */
-  /* Match homepage background (no extra white sheet) */
+  z-index: 90;
   background: #F7F8F9;
-  /* Figma: px 180, py 32; keep centered on smaller screens */
-  padding-top: var(--publication-detail-top-padding, 60px);
-  padding-bottom: 32px;
-  padding-left: max(24px, calc((100vw - 1078px) / 2));
-  padding-right: max(24px, calc((100vw - 1078px) / 2));
+  padding: 16px 24px 32px;
   box-sizing: border-box;
   overflow: auto;
   display: flex;
   justify-content: center;
+  align-items: flex-start;
+}
+
+.publication-detail-enlarged__back {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 0;
+  margin-bottom: 0;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  color: #7150E5;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  align-self: flex-start;
+  /* Align with counter, caption, and carousel stage */
+  padding-left: var(--publication-detail-stage-inset, 84px);
+}
+
+.publication-detail-enlarged__back:hover {
+  color: #5E3EC9;
+}
+
+.publication-detail-enlarged__back:focus-visible {
+  outline: 2px solid #7150E5;
+  outline-offset: 3px;
 }
 
 .publication-detail-enlarged__panel-inner {
-  width: 1078px; /* Figma container */
-  max-width: 100%;
+  width: 100%;
+  max-width: 80%;
   display: flex;
   flex-direction: column;
   gap: 16px;
-  align-items: flex-end;
+  align-items: stretch;
+  outline: none;
+  border: none;
+  --publication-detail-control-size: 52px;
+  --publication-detail-stage-inset: calc(var(--publication-detail-control-size) + 32px);
+}
+
+/* Override global *:focus-visible outline – no purple ring around dialog */
+.publication-detail-enlarged__panel-inner:focus,
+.publication-detail-enlarged__panel-inner:focus-visible {
   outline: none;
 }
 
@@ -406,22 +462,21 @@
 }
 
 .publication-detail-enlarged__carousel {
-  width: 1076px; /* Figma row width */
-  max-width: 100%;
+  width: 100%;
   display: flex;
   align-items: center;
   gap: 32px;
 }
 
 .publication-detail-enlarged__stage {
-  width: 908px;  /* Figma */
-  height: 668px; /* Figma */
-  max-width: 100%;
+  flex: 1;
+  min-width: 0;
+  aspect-ratio: 4 / 3;
+  max-height: calc(100vh - var(--header-height, 0px) - 180px);
   background: #e5eff2;
   border: 1px solid #b0b3b8;
   border-radius: 24px;
   overflow: hidden;
-  /* Match the same elevation as the detail stage */
   box-shadow:
     -10px 12px 28px rgba(0, 0, 0, 0.12),
     10px 12px 28px rgba(0, 0, 0, 0.10),
@@ -435,7 +490,7 @@
 .publication-detail-enlarged__image {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   object-position: center;
   display: block;
 }

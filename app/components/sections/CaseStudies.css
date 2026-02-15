@@ -65,21 +65,28 @@
   min-width: 156px;
   flex: 1;
   height: 115px; /* Figma height */
-  background: #f7f9fa;
+  background: #ffffff;
   border: 1px solid #7150e5;
   border-radius: 16px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: background 0.2s ease, border-color 0.2s ease;
   flex-shrink: 0;
 }
 
-.category-pill--active {
-  box-shadow: 0px 1px 2.2px 0px rgba(82, 56, 168, 0.7),
-              0px 1px 25px 0px rgba(82, 56, 168, 0.7);
+.category-pill:hover {
+  background: #7150E5;
+  border-color: rgba(255, 255, 255, 0.4);
 }
 
-.category-pill:hover {
-  /* Removed jumping movement */
+.category-pill:hover .category-pill__label {
+  color: #ffffff;
+  border-top-color: rgba(255, 255, 255, 0.4);
+}
+
+.category-pill--active {
+  background: #f7f9fa;
+  box-shadow: 0px 1px 2.2px 0px rgba(82, 56, 168, 0.7),
+              0px 1px 25px 0px rgba(82, 56, 168, 0.7);
 }
 
 .category-pill__icon {
@@ -119,6 +126,7 @@
   line-height: 24px;
   color: #7150e5;
   white-space: nowrap;
+  transition: color 0.2s ease, border-color 0.2s ease;
 }
 
 /* Case Study Grid */
@@ -268,8 +276,8 @@
 .tab--active::after {
   content: '';
   position: absolute;
-  /* Align indicator flush with the sidebar divider (account for 1px border) */
-  right: calc(-32px + 1px);
+  /* Align indicator exactly on the sidebar divider line */
+  right: -32px;
   top: 50%;
   transform: translateY(-50%);
   width: 4px;

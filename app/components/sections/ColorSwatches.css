@@ -365,7 +365,8 @@ button.site-footer__link {
   height: 452px;
   max-width: calc(100vw - 48px);
   max-height: calc(100vh - 48px);
-  padding: 88px 64px 64px 64px;
+  /* 48px all sides; extra right (120px) so close button doesn't overlap image */
+  padding: 48px 120px 48px 48px;
   flex-direction: column;
   align-items: flex-start;
   gap: 0;
@@ -379,8 +380,8 @@ button.site-footer__link {
 
 .sustainability-modal__close {
   position: absolute;
-  top: 32px;
-  right: 64px;
+  top: 48px;
+  right: 48px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -496,13 +497,13 @@ button.site-footer__link {
     width: 100%;
     height: auto;
     min-height: 400px;
-    padding: 40px 32px 40px 32px;
+    padding: 40px 100px 40px 40px;
     overflow: auto;
   }
 
   .sustainability-modal__close {
-    top: 24px;
-    right: 32px;
+    top: 40px;
+    right: 40px;
   }
 
   .sustainability-modal__content {
@@ -544,12 +545,12 @@ button.site-footer__link {
 
 @media (max-width: 640px) {
   .sustainability-modal {
-    padding: 32px 24px 32px 24px;
+    padding: 32px 88px 32px 32px;
   }
 
   .sustainability-modal__close {
-    top: 20px;
-    right: 24px;
+    top: 32px;
+    right: 32px;
     font-size: 14px;
     width: auto;
     height: auto;
@@ -594,8 +595,8 @@ button.site-footer__link {
   height: 452px;
   max-width: calc(100vw - 48px);
   max-height: calc(100vh - 48px);
-  /* 32px (to close) + ~24px (close height) + 32px (gap) = 88px so 32px padding after close */
-  padding: 88px 64px 64px 64px;
+  /* Same as sustainability: 48px sides; 120px right so close doesn't overlap image */
+  padding: 48px 120px 48px 48px;
   flex-direction: column;
   align-items: flex-start;
   gap: 0;
@@ -609,8 +610,8 @@ button.site-footer__link {
 
 .privacy-cookies-modal__close {
   position: absolute;
-  top: 32px;
-  right: 64px;
+  top: 48px;
+  right: 48px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -704,12 +705,12 @@ button.site-footer__link {
     width: 100%;
     height: auto;
     min-height: 400px;
-    padding: 40px 32px 40px 32px;
+    padding: 40px 100px 40px 40px;
   }
 
   .privacy-cookies-modal__close {
-    top: 24px;
-    right: 32px;
+    top: 40px;
+    right: 40px;
   }
 
   .privacy-cookies-modal__content {
@@ -750,12 +751,12 @@ button.site-footer__link {
 
 @media (max-width: 640px) {
   .privacy-cookies-modal {
-    padding: 32px 24px 32px 24px;
+    padding: 32px 88px 32px 32px;
   }
 
   .privacy-cookies-modal__close {
-    top: 20px;
-    right: 24px;
+    top: 32px;
+    right: 32px;
     font-size: 14px;
     width: auto;
     height: auto;
@@ -803,8 +804,8 @@ button.site-footer__link {
   height: 480px;
   max-width: calc(100vw - 48px);
   max-height: calc(100vh - 48px);
-  /* 32px (to close) + ~24px (close height) + 32px (gap after close) = 88px top */
-  padding: 88px 64px 48px 64px;
+  /* Same as sustainability/privacy: 48px sides; 120px right so close doesn't overlap image */
+  padding: 48px 120px 48px 48px;
   flex-direction: column;
   align-items: stretch;
   gap: 4px;
@@ -818,8 +819,8 @@ button.site-footer__link {
 
 .accessibility-modal__close {
   position: absolute;
-  top: 32px;
-  right: 64px;
+  top: 48px;
+  right: 48px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -1037,13 +1038,13 @@ button.site-footer__link {
     width: 100%;
     height: auto;
     min-height: 400px;
-    padding: 40px 32px 40px 32px;
+    padding: 40px 100px 40px 40px;
     overflow: auto;
   }
 
   .accessibility-modal__close {
-    top: 24px;
-    right: 32px;
+    top: 40px;
+    right: 40px;
   }
 
   .accessibility-modal__content {
@@ -1086,12 +1087,12 @@ button.site-footer__link {
 
 @media (max-width: 640px) {
   .accessibility-modal {
-    padding: 32px 24px 32px 24px;
+    padding: 32px 88px 32px 32px;
   }
 
   .accessibility-modal__close {
-    top: 20px;
-    right: 24px;
+    top: 32px;
+    right: 32px;
     font-size: 14px;
   }
 

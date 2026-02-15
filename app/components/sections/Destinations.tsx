@@ -191,11 +191,15 @@ const ExpandedContent: React.FC<{ destination: Destination; titleId: string }> =
 
 const ExpandedImage: React.FC<{ destination: Destination }> = ({ destination }) => (
   <figure className="destination-expanded__image-wrapper">
-    <img 
-      src={destination.expandedImage} 
-      alt={`${destination.title} in ${destination.city}, ${destination.country}`}
-      className={`destination-expanded__image${destination.noImageBorder ? ' destination-expanded__image--no-border' : ''}${destination.imageStrokeTop ? ' destination-expanded__image--stroke-top' : ''}`}
-    />
+    <div
+      className={`destination-expanded__image-clip${destination.noImageBorder ? ' destination-expanded__image-clip--no-border' : ''}${destination.imageStrokeTop ? ' destination-expanded__image-clip--stroke-top' : ''}`}
+    >
+      <img 
+        src={destination.expandedImage} 
+        alt={`${destination.title} in ${destination.city}, ${destination.country}`}
+        className="destination-expanded__image"
+      />
+    </div>
     <figcaption className="destination-expanded__credit">
       <p className="destination-expanded__artist">{destination.artist}</p>
       <p className="destination-expanded__photographer">{destination.photographer}</p>

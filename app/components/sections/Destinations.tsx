@@ -27,6 +27,7 @@ const destinations = {
     gridImage: '/destinations/Grid Nevada.png',
     size: 'tall',
     title: 'Seven Magic Mountains',
+    noImageBorder: true,
     imageStrokeTop: true,
     artist: 'Seven Magic Mountains by Ugo Rondinone.',
     photographer: 'Photo by Erda Estremera',

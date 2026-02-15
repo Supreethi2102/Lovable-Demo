@@ -505,7 +505,7 @@ export const Contact: React.FC = () => {
         .to(overlay, { autoAlpha: 1, y: 0, scale: 1, duration: 0.18, ease: 'power2.out' }, 0)
         .set(next, { display: 'block' }, 0.1)
         .fromTo(next, { x: '-12px', opacity: 0 }, { x: 0, opacity: 1, duration: 0.22, ease: 'power2.out' }, 0.1)
-        .to(overlay, { autoAlpha: 0, y: 8, scale: 0.98, duration: 0.14, ease: 'power2.out' }, 1.45);
+        .to(overlay, { autoAlpha: 0, y: 8, scale: 0.98, duration: 0.14, ease: 'power2.out' }, 2.2);
       return;
     }
 
@@ -528,7 +528,7 @@ export const Contact: React.FC = () => {
     );
 
     // Keep popup visible for reading, but do not block card motion
-    tl.to(overlay, { duration: 0.18, autoAlpha: 0, y: 8, scale: 0.98, ease: 'power2.out' }, 2.25);
+    tl.to(overlay, { duration: 0.18, autoAlpha: 0, y: 8, scale: 0.98, ease: 'power2.out' }, 3.5);
   };
 
   // LEGACY (kept for future): postcard-only animation (postcard shoots right, message, new postcard slides in).

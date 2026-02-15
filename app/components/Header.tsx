@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Palette, User, ChatCircleDots, Sun, SunHorizon, MoonStars, CloudMoon, Moon, Phone, PaintBrush, Megaphone, Package, BookOpen, Ruler, PencilSimple } from '@phosphor-icons/react';
+import { Palette, User, ChatCircleDots, Sun, SunHorizon, CloudFog, MoonStars, CloudMoon, Moon, Phone, PaintBrush, Megaphone, Package, BookOpen, Ruler, PencilSimple } from '@phosphor-icons/react';
 import './Header.css';
 
 export const Header: React.FC = () => {
@@ -278,7 +278,7 @@ export const Header: React.FC = () => {
                 className={`theme-menu__option ${activeTheme === 'aurora' ? 'theme-menu__option--active' : ''}`}
                 onClick={() => setActiveTheme('aurora')}
               >
-                <MoonStars size={24} weight="regular" aria-hidden="true" />
+                <CloudFog size={24} weight="regular" aria-hidden="true" />
                 <span>Aurora</span>
               </button>
               <button 

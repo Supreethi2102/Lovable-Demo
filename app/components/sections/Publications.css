@@ -17,7 +17,7 @@
 }
 
 .publications__title {
-  font-family: 'Romie Trial', Georgia, serif;
+  font-family: 'Romie', Georgia, serif;
   font-size: 32px;
   font-weight: 500;
   line-height: 36px;
@@ -225,6 +225,11 @@
 }
 
 /* Figma: Close X is purple */
+.publication-modal__close:focus,
+.publication-modal__close:focus-visible {
+  outline: none;
+}
+
 .publication-modal__close {
   display: flex;
   align-items: center;

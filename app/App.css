@@ -2,7 +2,7 @@
 
 /* Fonts */
 @font-face {
-  font-family: 'Romie Trial';
+  font-family: 'Romie';
   src: url('/Fonts/ROMIE MEDIUM + ITALIC PACK/Romie Medium/Romie-Medium.woff2') format('woff2'),
        url('/Fonts/ROMIE MEDIUM + ITALIC PACK/Romie Medium/Romie-Medium.woff') format('woff');
   font-weight: 500;
@@ -26,11 +26,11 @@
   font-display: swap;
 }
 
-/* Global constants - matching Figma (1440px design) */
+/* Global constants - matching Figma (1440px design), 4pt grid */
 :root {
-  --content-max-width: 1220px;  /* Figma content width */
+  --content-max-width: 1216px;  /* 304×4 - ensures (100vw - 1216)/2 is always multiple of 4 */
   --design-width: 1440px;       /* Figma design width */
-  --padding-x: 112px;           /* Desktop horizontal padding */
+  --padding-x: 112px;           /* Desktop horizontal padding (28×4) */
   --padding-y: 56px;            /* Desktop vertical padding */
 }
 

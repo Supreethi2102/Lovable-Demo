@@ -6,11 +6,11 @@ import {
   Megaphone, 
   Package, 
   Ruler,
-  PencilSimple,
+  NotePencil,
   ArrowsClockwise,
   PuzzlePiece,
   Target,
-  ChartLineUp,
+  ChartBar,
   SpeakerHigh,
   Folders,
   IconWeight,
@@ -19,29 +19,11 @@ import {
 import { gsap } from 'gsap';
 import './CaseStudies.css';
 
-// UX logo: Phosphor pencil + ruler
-function UxIcon({ size = 24, weight = 'regular', color, className }: { size?: number; weight?: IconWeight; color?: string; className?: string }) {
-  return (
-    <span
-      className={['ux-icon', className].filter(Boolean).join(' ')}
-      style={{
-        display: 'inline-flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        gap: -4,
-      }}
-    >
-      <PencilSimple size={size} weight={weight} color={color} style={{ display: 'block', flexShrink: 0 }} />
-      <Ruler size={size} weight={weight} color={color} style={{ display: 'block', flexShrink: 0 }} />
-    </span>
-  );
-}
-
-// Category data - Phosphor icons; UX = pencil + ruler
+// Category data - Phosphor icons
 type CategoryType = {
   id: string;
   label: string;
-  Icon?: Icon | typeof UxIcon;
+  Icon?: Icon;
   svgPath?: string;
 };
 
@@ -51,7 +33,7 @@ const categories: CategoryType[] = [
   { id: 'campaigns', label: 'Campaigns', Icon: Megaphone },
   { id: 'packaging', label: 'Packaging', Icon: Package },
   { id: 'ui', label: 'UI', Icon: Ruler },
-  { id: 'ux', label: 'UX', Icon: UxIcon },
+  { id: 'ux', label: 'UX', Icon: NotePencil },
 ];
 
 // Case study data with actual images from public folder
@@ -102,19 +84,6 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
   const [hoveredBtn, setHoveredBtn] = useState<string | null>(null);
   const tabPanelId = useId();
   const cardTitleId = useId();
-
-  const tabLabel = useMemo(() => {
-    switch (contentTab) {
-      case 'challenge':
-        return 'Challenge';
-      case 'focus':
-        return 'Focus';
-      case 'impact':
-        return 'Impact';
-      default:
-        return 'Challenge';
-    }
-  }, [contentTab]);
 
   const tabDescription = useMemo(() => study.description, [study.description]);
 
@@ -270,7 +239,7 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               onMouseEnter={() => setHoveredBtn('impact')}
               onMouseLeave={() => setHoveredBtn(null)}
             >
-              <ChartLineUp 
+              <ChartBar 
                 size={24} 
                 weight={activeTab === 'impact' || hoveredBtn === 'impact' ? 'fill' : 'regular'} 
                 color={activeTab === 'impact' ? '#111213' : '#3c3f43'}
@@ -290,7 +259,6 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
         >
           <div ref={copyRef} className="case-study-card__copy">
             <p className="case-study-card__subtitle">{study.subtitle}</p>
-            <p className="case-study-card__tab-label" aria-hidden="true">{tabLabel}</p>
             <h3 id={cardTitleId} className="case-study-card__title">{study.title}</h3>
             <p className="case-study-card__description">{tabDescription}</p>
           </div>

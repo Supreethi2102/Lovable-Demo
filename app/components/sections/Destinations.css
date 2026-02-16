@@ -18,7 +18,7 @@
 }
 
 .destinations__title {
-  font-family: 'Romie Trial', Georgia, serif;
+  font-family: 'Romie', Georgia, serif;
   font-size: 32px;
   font-weight: 500;
   line-height: 36px;
@@ -429,7 +429,7 @@
 }
 
 .destination-expanded__title {
-  font-family: 'Romie Trial', Georgia, serif;
+  font-family: 'Romie', Georgia, serif;
   font-size: 32px;
   font-weight: 500;
   line-height: 40px;
@@ -595,7 +595,7 @@
 }
 
 .destinations__cta-text {
-  font-family: 'Romie Trial', Georgia, serif;
+  font-family: 'Romie', Georgia, serif;
   font-size: 32px;
   font-weight: 500;
   line-height: 52px; /* Figma line height */

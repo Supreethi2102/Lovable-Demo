@@ -49,7 +49,7 @@
 }
 
 .testimonials__title {
-  font-family: 'Romie Trial', Georgia, serif;
+  font-family: 'Romie', Georgia, serif;
   font-size: 40px; /* Figma */
   font-weight: 500;
   line-height: 56px; /* Figma */
@@ -112,7 +112,8 @@
 .testimonials__quote-wrapper {
   flex: 1;
   max-width: 65ch; /* Optimal reading width: 50-75 chars, sweet spot ~66 */
-  min-height: 180px; /* Fixed height to prevent layout shift */
+  height: 192px; /* Fixed height to prevent jumping */
+  min-height: 192px;
   display: flex;
   align-items: flex-start;
   overflow: hidden;
@@ -152,23 +153,29 @@
   color: #3c3f43;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 0;
   max-width: 65ch;
+}
+
+.testimonials__author-name,
+.testimonials__author-role,
+.testimonials__author-company {
+  font-size: 16px;
+  line-height: 24px;
+  margin: 0;
+  display: block;
 }
 
 .testimonials__author-name {
   font-weight: 600; /* SemiBold from Figma */
-  display: block;
 }
 
 .testimonials__author-role {
-  display: block;
   color: #5c5f63;
   max-width: 45ch; /* Slightly narrower for role text */
 }
 
 .testimonials__author-company {
-  display: block;
   color: #5c5f63;
   max-width: 45ch;
 }
@@ -261,6 +268,11 @@
     gap: 32px;
   }
 
+  .testimonials__quote-wrapper {
+    height: 192px;
+    min-height: 192px;
+  }
+
   .testimonials__quote {
     max-width: 100%;
   }
@@ -303,6 +315,11 @@
     gap: 24px;
   }
 
+  .testimonials__quote-wrapper {
+    height: 216px;
+    min-height: 216px;
+  }
+
   .testimonials__nav {
     display: none;
   }
@@ -338,14 +355,23 @@
     letter-spacing: 1.12px;
   }
 
+  .testimonials__quote-wrapper {
+    height: 240px;
+    min-height: 240px;
+  }
+
   .testimonials__quote {
     font-size: 14px;
     line-height: 24px;
     max-width: 40ch; /* Mobile: 30-50 chars optimal */
   }
 
-  .testimonials__author {
-    font-size: 14px;
+  .testimonials__author,
+  .testimonials__author-name,
+  .testimonials__author-role,
+  .testimonials__author-company {
+    font-size: 16px;
+    line-height: 24px;
   }
 
   .testimonials__author-role {

@@ -22,7 +22,7 @@
 }
 
 .case-studies__title {
-  font-family: 'Romie Trial', Georgia, serif;
+  font-family: 'Romie', Georgia, serif;
   font-size: 32px;
   font-weight: 500;
   line-height: 36px;
@@ -64,7 +64,7 @@
   padding: 0;
   min-width: 156px;
   flex: 1;
-  height: 115px; /* Figma height */
+  min-height: 131px;
   background: #ffffff;
   border: 1px solid #7150e5;
   border-radius: 16px;
@@ -94,7 +94,7 @@
   align-items: center;
   justify-content: center;
   width: 100%;
-  padding: 20px 16px 12px; /* Adjusted for 115px height */
+  padding: 24px 16px 16px;
 }
 
 .category-pill__icon img {
@@ -104,22 +104,13 @@
   filter: brightness(0) saturate(100%) invert(36%) sepia(68%) saturate(1352%) hue-rotate(229deg) brightness(88%) contrast(96%);
 }
 
-/* UX logo: pencil tip up, ruler vertical */
-.ux-icon svg:first-child {
-  transform: rotate(135deg);
-}
-.ux-icon svg:last-child {
-  transform: rotate(-45deg);
-  margin-left: -6px;
-}
-
 .category-pill__label {
   display: flex;
   align-items: center;
   justify-content: center;
   width: calc(100% - 32px);
   margin: 0 auto;
-  padding: 12px 0; /* Adjusted for 115px height */
+  padding: 16px 0;
   border-top: 1px solid #d3d6da;
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
@@ -298,23 +289,13 @@
   will-change: transform, opacity;
 }
 
-.case-study-card__tab-label {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  line-height: 20px;
-  letter-spacing: 0.28px;
-  color: #111213;
-  margin: -14px 0 12px;
-}
-
 .case-study-card__subtitle {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
   color: #3c3f43;
-  margin-bottom: 30px; /* Figma: title at 57.5px, subtitle at 3.5px + 24px height = 30px gap */
+  margin-bottom: 32px;
 }
 
 .case-study-card__title {
@@ -324,7 +305,7 @@
   line-height: 28px;
   letter-spacing: 0.4px;
   color: #111213;
-  margin-bottom: 12px; /* Gap to description ~12px */
+  margin-bottom: 12px;
 }
 
 .case-study-card__description {
@@ -633,12 +614,12 @@
   }
 
   .category-pill__icon {
-    padding: 20px 12px 12px;
+    padding: 24px 12px 16px;
   }
 
   .category-pill__label {
     font-size: 14px;
-    padding: 12px 0;
+    padding: 16px 0;
     width: calc(100% - 24px);
   }
 
@@ -702,12 +683,12 @@
   }
 
   .category-pill__icon {
-    padding: 16px 10px 10px;
+    padding: 20px 10px 16px;
   }
 
   .category-pill__label {
     font-size: 13px;
-    padding: 10px 0;
+    padding: 16px 0;
     width: calc(100% - 20px);
   }
 }

@@ -210,15 +210,15 @@ export const ColorSwatches: React.FC = () => {
                 <h2 id="sustainability-modal-title" className="sustainability-modal__title">Lighter digital footprint</h2>
                 <p className="sustainability-modal__p sustainability-modal__p--lines">
                   {`Sustainability shaped this site from the
-beginning. Performance has been optimised
-to reduce energy use through efficient 
-image handling, minimal code, and fast 
-loading times.
+beginning. Performance has been optimised to reduce energy use through efficient image handling, minimal code, and fast loading times.
 
 As digital standards shift, I'll keep refining.
 If you have tips for reducing impact even
-further, `}
-                  <a href="#contact" onClick={closeSustainability} className="modal__inline-link">I'd love to hear them.</a>
+further, I'd love to hear them.
+`}
+                  <span className="modal__contact-wrap">
+                    <a href="#contact" onClick={closeSustainability} className="modal__inline-link">Contact me</a>
+                  </span>
                 </p>
               </div>
               <div className="sustainability-modal__image-wrap">
@@ -264,7 +264,10 @@ further, `}
                   Your privacy matters. This site only collects the information you share through the contact form, such as your name and email address, and uses it solely to respond to your message.
                 </p>
                 <p className="privacy-cookies-modal__p">
-                  There are no tracking cookies, no third-party analytics, and no unnecessary data collection. Just a simple, respectful browsing experience. If you have any questions about how your data is handled, <a href="#contact" onClick={closePrivacyCookies} className="modal__inline-link">I'm happy to clarify.</a>
+                  There are no tracking cookies, no third-party analytics, and no unnecessary data collection. Just a simple, respectful browsing experience. If you have any questions about how your data is handled, I'm happy to clarify.
+                  <span className="modal__contact-wrap">
+                    <a href="#contact" onClick={closePrivacyCookies} className="modal__inline-link">Contact me</a>
+                  </span>
                 </p>
               </div>
               <div className="privacy-cookies-modal__image-wrap">
@@ -310,8 +313,10 @@ further, `}
                   Everyone should be able to navigate this site with ease. It was designed with accessibility in mind, including colour contrast, readable typography, keyboard navigation, and a clear content structure.
                 </p>
                 <p className="accessibility-modal__p">
-                  I continue to learn and improve as accessibility standards evolve. If there's anything that could be more inclusive, <br />
-                  <a href="#contact" onClick={closeAccessibility} className="modal__inline-link">I'd genuinely appreciate your feedback.</a>
+                  I continue to learn and improve as accessibility standards evolve. If there's anything that could be more inclusive, I'd genuinely appreciate your feedback.
+                  <span className="modal__contact-wrap">
+                    <a href="#contact" onClick={closeAccessibility} className="modal__inline-link">Contact me</a>
+                  </span>
                 </p>
                 <div className="accessibility-modal__motion">
                   <span className="accessibility-modal__motion-label">Motion</span>

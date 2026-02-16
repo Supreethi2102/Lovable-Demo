@@ -40,9 +40,9 @@
   color: #5E3EC9;
 }
 
+.publication-detail__back:focus,
 .publication-detail__back:focus-visible {
-  outline: 2px solid #7150E5;
-  outline-offset: 3px;
+  outline: none;
 }
 
 .publication-detail__grid {
@@ -70,7 +70,7 @@
 
 .publication-detail__title {
   margin: 0;
-  font-family: 'Romie Trial', Georgia, serif;
+  font-family: 'Romie', Georgia, serif;
   font-size: 28px;
   font-weight: 500;
   line-height: 1.2;
@@ -418,9 +418,9 @@
   color: #5E3EC9;
 }
 
+.publication-detail-enlarged__back:focus,
 .publication-detail-enlarged__back:focus-visible {
-  outline: 2px solid #7150E5;
-  outline-offset: 3px;
+  outline: none;
 }
 
 .publication-detail-enlarged__panel-inner {

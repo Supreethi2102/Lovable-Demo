@@ -36,7 +36,7 @@ She has a natural ability to collaborate with colleagues and clients, and she al
     id: 5,
     quote: `I had the pleasure of collaborating with Sam on several occasions during our user experience studies at the UX Design Institute. We worked closely on UX research for our diploma project, as well as on brand identity and visual direction for a client's small business. What I genuinely admire about Sam is the depth and thoughtfulness she brings to every project. She approaches design with maturity and intention, combining strong analytical thinking with refined graphic design expertise. Sam has a rare ability to translate abstract ideas into clear, compelling digital solutions, from editorial and campaign design through to website and mobile experiences.`,
     author: 'Luba Hickey',
-    role: 'UX Designer & Researcher',
+    role: 'CX & Digital Content Specialist transitioning into UX Design',
     company: 'Freelance',
   },
 ];

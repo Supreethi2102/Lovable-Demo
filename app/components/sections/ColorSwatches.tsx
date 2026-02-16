@@ -313,7 +313,9 @@ further, I'd love to hear them.
                   Everyone should be able to navigate this site with ease. It was designed with accessibility in mind, including colour contrast, readable typography, keyboard navigation, and a clear content structure.
                 </p>
                 <p className="accessibility-modal__p">
-                  I continue to learn and improve as accessibility standards evolve. If there's anything that could be more inclusive, I'd genuinely appreciate your feedback.
+                  I continue to learn and improve as accessibility standards evolve. If there's anything that could be more inclusive, I'd genuinely appreciate
+                  <br />
+                  your feedback.
                   <span className="modal__contact-wrap">
                     <a href="#contact" onClick={closeAccessibility} className="modal__inline-link">Contact me</a>
                   </span>

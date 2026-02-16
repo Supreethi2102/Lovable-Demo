@@ -361,22 +361,23 @@ button.site-footer__link {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 40px;
 }
 
 .sustainability-modal {
   display: flex;
-  width: 844px;
-  height: 452px;
-  max-width: calc(100vw - 48px);
-  max-height: calc(100vh - 48px);
-  padding: 64px;
+  width: 920px;
+  max-width: calc(100vw - 80px);
+  max-height: calc(100vh - 80px);
+  height: auto;
+  min-height: 360px;
+  padding: 72px 80px 80px;
   flex-direction: column;
   align-items: flex-start;
   gap: 0;
   border-radius: 24px;
   background: #FCFCFD;
-  overflow: visible;
+  overflow: auto;
   position: relative;
   box-sizing: border-box;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
@@ -389,8 +390,8 @@ button.site-footer__link {
 
 .sustainability-modal__close {
   position: absolute;
-  top: 48px;
-  right: 48px;
+  top: 32px;
+  right: 32px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -421,12 +422,12 @@ button.site-footer__link {
 .sustainability-modal__content {
   display: flex;
   flex-direction: row;
-  gap: 60px;
+  gap: 80px;
   align-items: center;
   flex: 1;
   min-height: 0;
   width: 100%;
-  overflow: visible;
+  padding-top: 0;
 }
 
 .sustainability-modal__text {
@@ -435,8 +436,8 @@ button.site-footer__link {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
-  max-width: 50%;
+  gap: 0;
+  max-width: 58%;
 }
 
 .sustainability-modal__title {
@@ -446,7 +447,7 @@ button.site-footer__link {
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  margin: 0 0 8px 0;
+  margin: 0 0 16px 0;
 }
 
 .sustainability-modal__p {
@@ -456,7 +457,7 @@ button.site-footer__link {
   font-style: normal;
   font-weight: 400;
   line-height: 24px;
-  margin: 0;
+  margin: 0 0 16px 0;
   max-width: 100%;
 }
 
@@ -490,20 +491,21 @@ button.site-footer__link {
 .sustainability-modal__image-wrap {
   flex: 1;
   min-width: 0;
+  max-width: 42%;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 24px 24px 24px 0;
   overflow: visible;
 }
 
 .sustainability-modal__image {
   width: 100%;
   height: auto;
-  max-height: 380px;
+  max-height: 480px;
   object-fit: contain;
   object-position: center;
-  /* Scale up so illustration overflows its box (flowers extend beyond bounds) */
-  transform: scale(1.18);
+  transform: scale(1.35);
   transform-origin: center center;
 }
 
@@ -601,16 +603,17 @@ button.site-footer__link {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 40px;
 }
 
 .privacy-cookies-modal {
   display: flex;
-  width: 844px;
-  height: 452px;
-  max-width: calc(100vw - 48px);
-  max-height: calc(100vh - 48px);
-  padding: 64px;
+  width: 920px;
+  max-width: calc(100vw - 80px);
+  max-height: calc(100vh - 80px);
+  height: auto;
+  min-height: 360px;
+  padding: 72px 80px 80px;
   flex-direction: column;
   align-items: flex-start;
   gap: 0;
@@ -629,8 +632,8 @@ button.site-footer__link {
 
 .privacy-cookies-modal__close {
   position: absolute;
-  top: 48px;
-  right: 48px;
+  top: 32px;
+  right: 32px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -661,11 +664,12 @@ button.site-footer__link {
 .privacy-cookies-modal__content {
   display: flex;
   flex-direction: row;
-  gap: 60px;
+  gap: 80px;
   align-items: center;
   flex: 1;
   min-height: 0;
   width: 100%;
+  padding-top: 0;
 }
 
 .privacy-cookies-modal__text {
@@ -674,8 +678,8 @@ button.site-footer__link {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
-  max-width: 50%;
+  gap: 0;
+  max-width: 58%;
 }
 
 .privacy-cookies-modal__title {
@@ -685,7 +689,7 @@ button.site-footer__link {
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  margin: 0 0 8px 0;
+  margin: 0 0 16px 0;
 }
 
 .privacy-cookies-modal__p {
@@ -695,7 +699,7 @@ button.site-footer__link {
   font-style: normal;
   font-weight: 400;
   line-height: 24px;
-  margin: 0 0 8px 0;
+  margin: 0 0 16px 0;
   max-width: 100%;
 }
 
@@ -706,17 +710,22 @@ button.site-footer__link {
 .privacy-cookies-modal__image-wrap {
   flex: 1;
   min-width: 0;
+  max-width: 42%;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 24px 24px 24px 0;
+  overflow: visible;
 }
 
 .privacy-cookies-modal__image {
   width: 100%;
   height: auto;
-  max-height: 320px;
+  max-height: 460px;
   object-fit: contain;
   object-position: center;
+  transform: scale(1.2);
+  transform-origin: center center;
 }
 
 @media (max-width: 960px) {
@@ -814,22 +823,23 @@ button.site-footer__link {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 24px;
+  padding: 40px;
 }
 
 .accessibility-modal {
   display: flex;
-  width: 844px;
-  height: 452px;
-  max-width: calc(100vw - 48px);
-  max-height: calc(100vh - 48px);
-  padding: 64px;
+  width: 920px;
+  max-width: calc(100vw - 80px);
+  max-height: calc(100vh - 80px);
+  height: auto;
+  min-height: 400px;
+  padding: 72px 80px 80px;
   flex-direction: column;
   align-items: flex-start;
   gap: 0;
   border-radius: 24px;
   background: #FCFCFD;
-  overflow: visible;
+  overflow: auto;
   position: relative;
   box-sizing: border-box;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
@@ -842,8 +852,8 @@ button.site-footer__link {
 
 .accessibility-modal__close {
   position: absolute;
-  top: 48px;
-  right: 48px;
+  top: 32px;
+  right: 32px;
   display: flex;
   align-items: center;
   justify-content: flex-end;
@@ -874,12 +884,12 @@ button.site-footer__link {
 .accessibility-modal__content {
   display: flex;
   flex-direction: row;
-  gap: 60px;
+  gap: 80px;
   align-items: center;
   flex: 1;
   min-height: 0;
   width: 100%;
-  overflow: visible;
+  padding-top: 0;
 }
 
 .accessibility-modal__text {
@@ -888,8 +898,8 @@ button.site-footer__link {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 8px;
-  max-width: 50%;
+  gap: 0;
+  max-width: 58%;
 }
 
 .accessibility-modal__title {
@@ -899,7 +909,7 @@ button.site-footer__link {
   font-style: normal;
   font-weight: 600;
   line-height: normal;
-  margin: 0 0 8px 0;
+  margin: 0 0 16px 0;
 }
 
 .accessibility-modal__p {
@@ -909,7 +919,7 @@ button.site-footer__link {
   font-style: normal;
   font-weight: 400;
   line-height: 24px;
-  margin: 0 0 8px 0;
+  margin: 0 0 16px 0;
   overflow-wrap: normal;
   hyphens: none;
 }
@@ -922,7 +932,7 @@ button.site-footer__link {
   display: flex;
   align-items: center;
   gap: 16px;
-  margin-top: 24px;
+  margin-top: 28px;
 }
 
 .accessibility-modal__motion-label {
@@ -1038,20 +1048,21 @@ button.site-footer__link {
 .accessibility-modal__image-wrap {
   flex: 1;
   min-width: 0;
+  max-width: 42%;
   display: flex;
   justify-content: center;
   align-items: center;
+  padding: 24px 24px 24px 0;
   overflow: visible;
 }
 
 .accessibility-modal__image {
   width: 100%;
   height: auto;
-  max-height: 380px;
+  max-height: 480px;
   object-fit: contain;
   object-position: center;
-  /* Scale up so illustration overflows layout (overflow visible) */
-  transform: scale(1.2);
+  transform: scale(1.4);
   transform-origin: center center;
 }
 

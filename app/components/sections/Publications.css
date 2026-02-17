@@ -1,4 +1,5 @@
 /* Publications Section - From Figma */
+/* 6x4 (3:2) aspect ratio, 4pt grid – all images consistent for no cropping when enlarging */
 
 .publications {
   background: #f7f9fa;
@@ -60,7 +61,7 @@
 
 .publication-card__image-container {
   width: 100%;
-  height: 362px;
+  aspect-ratio: var(--publication-aspect-ratio);
   border-radius: 12px;
   overflow: hidden;
   background: #fff;
@@ -74,11 +75,10 @@
 }
 
 .publication-card__image {
-  width: 102%;
-  height: 102%;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
   object-position: center;
-  margin: -1%;
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
@@ -401,11 +401,11 @@
   gap: 0;
 }
 
-/* Figma blue 44: 44px between main image and thumbnail strip */
+/* Figma blue 44: 44px between main image and thumbnail strip – 6x4 (3:2) ratio, 4pt grid */
 .publication-modal__main-image-wrap {
   position: relative;
   width: 100%;
-  aspect-ratio: 4/3;
+  aspect-ratio: var(--publication-aspect-ratio);
   max-height: 400px;
   margin-bottom: 44px;
   border-radius: 12px;
@@ -421,7 +421,7 @@
 .publication-modal__main-image {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
 }
 
@@ -486,10 +486,12 @@
   padding-bottom: 4px;
 }
 
+/* 6x4 (3:2) – 72×48 on 4pt grid */
 .publication-modal__thumb {
   flex: 0 0 72px;
   width: 72px;
-  height: 72px;
+  height: 48px;
+  aspect-ratio: var(--publication-aspect-ratio);
   border-radius: 8px;
   overflow: hidden;
   /* Figma: light blue-grey fill, thin light blue border when not selected */
@@ -504,6 +506,7 @@
   width: 100%;
   height: 100%;
   object-fit: cover;
+  object-position: center;
 }
 
 /* Figma: selected thumbnail has prominent purple glow and purple border */
@@ -648,10 +651,11 @@
     width: 77px;
   }
 
+  /* 6x4 (3:2) thumb – 60×40 on 4pt grid */
   .publication-modal__thumb {
-    flex: 0 0 56px;
-    width: 56px;
-    height: 56px;
+    flex: 0 0 60px;
+    width: 60px;
+    height: 40px;
   }
 }
 
@@ -670,7 +674,7 @@
   }
 
   .publication-card__image-container {
-    height: 320px;
+    aspect-ratio: var(--publication-aspect-ratio);
   }
 }
 
@@ -691,7 +695,7 @@
   }
 
   .publication-card__image-container {
-    height: 280px;
+    aspect-ratio: var(--publication-aspect-ratio);
   }
 }
 
@@ -712,7 +716,7 @@
   }
 
   .publication-card__image-container {
-    height: 240px;
+    aspect-ratio: var(--publication-aspect-ratio);
   }
 
   .publication-card__title {
@@ -741,7 +745,7 @@
   }
 
   .publication-card__image-container {
-    height: 300px;
+    aspect-ratio: var(--publication-aspect-ratio);
   }
 
   .view-publications-btn {

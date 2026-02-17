@@ -15,7 +15,7 @@
 }
 
 
-/* Pill Elements */
+/* Pill Elements – neutral white like other small elements */
 .gp-pill {
   position: absolute;
   top: 0;
@@ -24,15 +24,16 @@
   align-items: center;
   justify-content: center;
   padding: 0 24px;
-  background: #1a1b1c;
+  background: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 999px;
   font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
   font-size: 15px;
   font-weight: 600;
-  color: #ffffff;
+  color: #3c3f43;
   will-change: transform;
   backface-visibility: hidden;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
   pointer-events: none; /* Let Matter.js handle mouse events */
 }
 

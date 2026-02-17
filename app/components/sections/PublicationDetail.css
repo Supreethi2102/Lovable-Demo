@@ -1,4 +1,5 @@
 /* Publication Detail – based on Figma: Publications / Photo gallery */
+/* 6x4 (3:2) aspect ratio, 4pt grid – matches Publications for consistent cropping */
 
 .publication-detail {
   /* Match homepage background */
@@ -249,6 +250,7 @@
   outline-offset: 3px;
 }
 
+/* 6x4 (3:2) – 520px height on 4pt grid (520÷4=130) */
 .publication-detail__stage {
   position: relative;
   background: #e5eff2;
@@ -257,8 +259,9 @@
   overflow: hidden; /* keep rounded corners for image */
   /* Subtle elevation like a card */
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.08);
-  height: 520px;
   width: 100%;
+  aspect-ratio: var(--publication-aspect-ratio);
+  max-height: 520px;
   display: grid;
   place-items: center;
 }
@@ -336,10 +339,12 @@
   margin-left: var(--publication-detail-thumb-gutter);
 }
 
+/* 6x4 (3:2) – 168×112 on 4pt grid */
 .publication-detail__thumb {
   flex: 0 0 auto;
   width: 168px;
-  height: 116px;
+  height: 112px;
+  aspect-ratio: var(--publication-aspect-ratio);
   border-radius: 12px;
   border: 1px solid #b0b3b8;
   background: #e5eff2;
@@ -471,7 +476,7 @@
 .publication-detail-enlarged__stage {
   flex: 1;
   min-width: 0;
-  aspect-ratio: 4 / 3;
+  aspect-ratio: var(--publication-aspect-ratio);
   max-height: calc(100vh - var(--header-height, 0px) - 180px);
   background: #e5eff2;
   border: 1px solid #b0b3b8;
@@ -490,7 +495,7 @@
 .publication-detail-enlarged__image {
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
   object-position: center;
   display: block;
 }
@@ -554,11 +559,12 @@
   }
 
   .publication-detail__stage {
-    height: 380px;
+    max-height: 380px;
   }
 
+  /* 6x4 (3:2) – 144×96 on 4pt grid */
   .publication-detail__thumb {
-    width: 140px;
+    width: 144px;
     height: 96px;
   }
 }

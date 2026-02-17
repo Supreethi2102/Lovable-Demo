@@ -32,6 +32,7 @@
   --design-width: 1440px;       /* Figma design width */
   --padding-x: 112px;           /* Desktop horizontal padding (28×4) */
   --padding-y: 56px;            /* Desktop vertical padding */
+  --publication-aspect-ratio: 3 / 2; /* 6×4 (landscape) – consistent across section for no crop on enlarge */
 }
 
 /* Smooth scroll behavior */

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Palette, User, ChatCircleDots, Sun, SunHorizon, CloudFog, MoonStars, CloudMoon, Moon, Phone, PaintBrush, Megaphone, Package, BookOpen, Ruler, PencilSimple } from '@phosphor-icons/react';
+import { Palette, User, ChatCircleDots, Sun, SunHorizon, CloudFog, MoonStars, CloudMoon, Moon, Phone, PaintBrush, Megaphone, Package, BookOpen, Ruler, NotePencil } from '@phosphor-icons/react';
 import './Header.css';
 
 export const Header: React.FC = () => {
@@ -200,13 +200,10 @@ export const Header: React.FC = () => {
                 </ul>
               </div>
 
-              {/* UX - Phosphor pencil + ruler */}
+              {/* UX - pen and notepad */}
               <div className="mega-menu__category">
                 <div className="mega-menu__category-header">
-                  <span className="mega-menu__icon mega-menu__icon-ux" aria-hidden="true">
-                    <PencilSimple size={24} weight="regular" color="#3c3f43" />
-                    <Ruler size={24} weight="regular" color="#3c3f43" />
-                  </span>
+                  <NotePencil size={24} weight="regular" className="mega-menu__icon" aria-hidden="true" />
                   <span className="mega-menu__category-title">UX</span>
                 </div>
                 <ul className="mega-menu__list">

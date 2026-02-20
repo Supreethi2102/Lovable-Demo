@@ -342,31 +342,6 @@
   flex-shrink: 0;
 }
 
-.mega-menu__icon-ux {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0;
-  width: auto;
-  height: 24px;
-  flex-shrink: 0;
-}
-
-.mega-menu__icon-ux svg {
-  display: block;
-  flex-shrink: 0;
-  vertical-align: middle;
-}
-
-/* Pencil tip up, ruler vertical */
-.mega-menu__icon-ux svg:first-child {
-  transform: rotate(135deg);
-}
-.mega-menu__icon-ux svg:last-child {
-  transform: rotate(-45deg);
-  margin-left: -6px;
-}
-
 .mega-menu__category-title {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;

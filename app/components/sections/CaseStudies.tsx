@@ -13,6 +13,9 @@ import {
   ChartBar,
   SpeakerHigh,
   Folders,
+  MapPin,
+  Sparkle,
+  Binoculars,
   IconWeight,
   Icon
 } from '@phosphor-icons/react';
@@ -82,6 +85,8 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
   const imgARef = useRef<HTMLDivElement>(null);
   const imgBRef = useRef<HTMLDivElement>(null);
   const [hoveredBtn, setHoveredBtn] = useState<string | null>(null);
+  const [isFlipped, setIsFlipped] = useState(false);
+  const [activeBackTab, setActiveBackTab] = useState<'place' | 'influence' | 'discoveries'>('place');
   const tabPanelId = useId();
   const cardTitleId = useId();
 
@@ -103,6 +108,8 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
     setActiveTab('challenge');
     setContentTab('challenge');
     setImageFrontSlot(0);
+    setIsFlipped(false);
+    setActiveBackTab('place');
     isTabAnimatingRef.current = false;
 
     setLayerBg(imgARef.current, getTabImage('challenge'));
@@ -165,24 +172,31 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
   };
 
   return (
-    <article className="case-study-card" aria-labelledby={cardTitleId}>
-      {/* Left Content */}
-      <div className="case-study-card__content">
-        {/* Sidebar */}
-        <aside className="case-study-card__sidebar" aria-label="Case study options">
-          {/* Flip Button */}
-          <button 
-            type="button"
-            className="flip-button"
-            onMouseEnter={() => setHoveredBtn('flip')}
-            onMouseLeave={() => setHoveredBtn(null)}
-            aria-label="Flip card for design inspiration"
-          >
-            <div className="flip-button__icon">
-              <ArrowsClockwise size={24} weight={hoveredBtn === 'flip' ? 'fill' : 'regular'} color={hoveredBtn === 'flip' ? '#fbfbfb' : '#7150E5'} aria-hidden="true" />
-            </div>
-            <span className="flip-button__text">Flip for inspiration</span>
-          </button>
+    <div className="case-study-card-flip">
+      <article 
+        className={`case-study-card ${isFlipped ? 'case-study-card--flipped' : ''}`} 
+        aria-labelledby={cardTitleId}
+      >
+        {/* Front */}
+        <div className="case-study-card__face case-study-card__front">
+          {/* Left Content */}
+          <div className="case-study-card__content">
+            {/* Sidebar */}
+            <aside className="case-study-card__sidebar" aria-label="Case study options">
+              {/* Flip Button */}
+              <button 
+                type="button"
+                className="flip-button"
+                onMouseEnter={() => setHoveredBtn('flip')}
+                onMouseLeave={() => setHoveredBtn(null)}
+                onClick={() => setIsFlipped(true)}
+                aria-label="Flip card for design inspiration"
+              >
+                <div className="flip-button__icon">
+                  <ArrowsClockwise size={24} weight={hoveredBtn === 'flip' ? 'fill' : 'regular'} color={hoveredBtn === 'flip' ? '#fbfbfb' : '#7150E5'} aria-hidden="true" />
+                </div>
+                <span className="flip-button__text">Flip for inspiration</span>
+              </button>
 
           {/* Tabs */}
           <div 
@@ -289,22 +303,100 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
           <div ref={imgARef} className="case-study-card__image-layer" aria-hidden="true" />
           <div ref={imgBRef} className="case-study-card__image-layer" aria-hidden="true" />
         </div>
-        {/* Listen button – commented out for now, will use in future */}
-        {/* <button 
-          type="button"
-          className="listen-button"
-          onMouseEnter={() => setHoveredBtn('listen')}
-          onMouseLeave={() => setHoveredBtn(null)}
-          aria-label={`Listen to audio description of ${study.subtitle}`}
-        >
-          <div className="listen-button__icon">
-            <SpeakerHigh size={24} weight={hoveredBtn === 'listen' ? 'fill' : 'regular'} color="#7150E5" aria-hidden="true" />
-          </div>
-          <div className="listen-button__divider" aria-hidden="true"></div>
-          <span className="listen-button__text">Listen</span>
-        </button> */}
       </figure>
-    </article>
+        </div>
+
+        {/* Back – same layout as front, with Place, Influence, Discoveries instead of Challenge, Focus, Impact */}
+        <div className="case-study-card__face case-study-card__back">
+          <div className="case-study-card__content">
+            <aside className="case-study-card__sidebar" aria-label="Case study insights">
+              <button 
+                type="button"
+                className="flip-button"
+                onMouseEnter={() => setHoveredBtn('flipBack')}
+                onMouseLeave={() => setHoveredBtn(null)}
+                onClick={() => setIsFlipped(false)}
+                aria-label="Back to insights"
+              >
+                <div className="flip-button__icon">
+                  <ArrowsClockwise size={24} weight={hoveredBtn === 'flipBack' ? 'fill' : 'regular'} color={hoveredBtn === 'flipBack' ? '#fbfbfb' : '#7150E5'} aria-hidden="true" />
+                </div>
+                <span className="flip-button__text">Back to insights</span>
+              </button>
+              <div className="case-study-card__tabs case-study-card__back-tabs" role="tablist" aria-label="Case study insights">
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={activeBackTab === 'place'}
+                  className={`case-study-card__back-item tab ${activeBackTab === 'place' ? 'tab--active' : ''}`}
+                  onClick={() => setActiveBackTab('place')}
+                  onMouseEnter={() => setHoveredBtn('place')}
+                  onMouseLeave={() => setHoveredBtn(null)}
+                >
+                  <MapPin size={24} weight={activeBackTab === 'place' || hoveredBtn === 'place' ? 'fill' : 'regular'} color={activeBackTab === 'place' ? '#111213' : '#3c3f43'} aria-hidden="true" />
+                  <span>Place</span>
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={activeBackTab === 'influence'}
+                  className={`case-study-card__back-item tab ${activeBackTab === 'influence' ? 'tab--active' : ''}`}
+                  onClick={() => setActiveBackTab('influence')}
+                  onMouseEnter={() => setHoveredBtn('influence')}
+                  onMouseLeave={() => setHoveredBtn(null)}
+                >
+                  <Sparkle size={24} weight={activeBackTab === 'influence' || hoveredBtn === 'influence' ? 'fill' : 'regular'} color={activeBackTab === 'influence' ? '#111213' : '#3c3f43'} aria-hidden="true" />
+                  <span>Influence</span>
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={activeBackTab === 'discoveries'}
+                  className={`case-study-card__back-item tab ${activeBackTab === 'discoveries' ? 'tab--active' : ''}`}
+                  onClick={() => setActiveBackTab('discoveries')}
+                  onMouseEnter={() => setHoveredBtn('discoveries')}
+                  onMouseLeave={() => setHoveredBtn(null)}
+                >
+                  <Binoculars size={24} weight={activeBackTab === 'discoveries' || hoveredBtn === 'discoveries' ? 'fill' : 'regular'} color={activeBackTab === 'discoveries' ? '#111213' : '#3c3f43'} aria-hidden="true" />
+                  <span>Discoveries</span>
+                </button>
+              </div>
+            </aside>
+            <div className="case-study-card__main">
+              <div className="case-study-card__copy">
+                <p className="case-study-card__subtitle">{study.subtitle}</p>
+                <h3 className="case-study-card__title">Anchored in the Pacific islands</h3>
+                <p className="case-study-card__description">
+                  This design was shaped by the rhythm of the Moana, the ocean that connects us all. From Aotearoa to Hawai&apos;i, Samoa, Tonga, Fiji, Niue, the Cook Islands, Tokelau and beyond, I&apos;ve always been drawn to the connection between the islands, shores, and communities linked by the Pacific tides — and wanted that sense of belonging to ripple through Palmy.
+                </p>
+              </div>
+              <button 
+                type="button"
+                className="view-design-btn"
+                onMouseEnter={() => setHoveredBtn('viewDesignBack')}
+                onMouseLeave={() => setHoveredBtn(null)}
+                onClick={() => {
+                  const el = document.getElementById('publications');
+                  el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }}
+                aria-label={`View the design for ${study.subtitle}`}
+              >
+                <Ruler size={24} weight={hoveredBtn === 'viewDesignBack' ? 'fill' : 'regular'} color="#fbfbfb" aria-hidden="true" />
+                <span>View the design</span>
+              </button>
+            </div>
+          </div>
+          <figure className="case-study-card__image">
+            <div className="case-study-card__duration" aria-label={`Project duration: ${study.duration}`}>
+              Duration: {study.duration}
+            </div>
+            <div className="case-study-card__image-viewport" role="img" aria-label={`${study.subtitle} project preview`}>
+              <div className="case-study-card__image-layer" style={{ backgroundImage: `url(/misc/Image%20frame.png)` }} aria-hidden="true" />
+            </div>
+          </figure>
+        </div>
+      </article>
+    </div>
   );
 };
 

@@ -90,7 +90,7 @@
   pointer-events: none; /* Let Matter.js handle mouse events */
 }
 
-/* Swatch Cards - Exact match to original (100% size) */
+/* Swatch Cards – Figma: consistent padding, alignment */
 .gp-swatch {
   position: absolute;
   top: 0;
@@ -113,8 +113,8 @@
 }
 
 .gp-swatch__color {
-  width: 128px;
-  height: 100px;
+  width: 144px;
+  height: 112px;
   border-radius: 6px 6px 0 0;
   flex-shrink: 0;
 }
@@ -123,25 +123,28 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 32px;
   flex: 1;
-  padding-top: 32px;
-  padding-bottom: 12px;
+  min-height: 0;
+  /* Figma: large vertical gap between color block and first text */
+  padding-top: 28px;
+  /* Figma: bottom padding consistent with card outer padding */
+  padding-bottom: 16px;
 }
 
 .gp-swatch__text {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  /* Figma: moderate vertical gap between name and hex/icon line */
+  gap: 8px;
 }
 
 .gp-swatch__name {
   font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
-  font-size: 11px;
-  font-weight: 700;
+  font-size: 12px;
+  font-weight: 400;
   line-height: 16px;
-  letter-spacing: 0.22px;
+  letter-spacing: 0.48px;
   color: #212325;
   text-align: center;
   margin: 0;
@@ -150,32 +153,35 @@
 .gp-swatch__hex-row {
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 4px;
 }
 
 .gp-swatch__hex {
   font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 400;
-  line-height: 14px;
-  letter-spacing: 0.4px;
+  line-height: 16px;
+  letter-spacing: 0.48px;
   color: #3c3f43;
   text-transform: uppercase;
 }
 
 .gp-swatch__info-icon {
-  width: 12px;
-  height: 12px;
+  width: 16px;
+  height: 16px;
 }
 
 .gp-swatch__link {
   font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 400;
-  line-height: 14px;
-  letter-spacing: 0.4px;
+  line-height: 16px;
+  letter-spacing: 0.48px;
   color: #7150e5;
   text-align: center;
+  /* Figma: very large vertical gap above link (largest on card) – pushes to bottom */
+  margin-top: auto;
 }
 
 /* Responsive */
@@ -205,12 +211,10 @@
     font-size: 12px;
   }
 
-  .gp-swatch__name {
+  .gp-swatch__name,
+  .gp-swatch__hex,
+  .gp-swatch__link {
     font-size: 10px;
-  }
-
-  .gp-swatch__hex {
-    font-size: 9px;
   }
 }
 

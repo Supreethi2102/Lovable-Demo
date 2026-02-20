@@ -143,14 +143,67 @@
   margin-bottom: 0;
 }
 
-/* Case Study Card */
+/* Flip wrapper – subtle 3D (higher perspective = less depth) */
+.case-study-card-flip {
+  perspective: 3000px;
+  min-height: 524px;
+}
+
+/* Case Study Card – minimal flip animation */
 .case-study-card {
+  position: relative;
+  width: 100%;
+  min-height: 524px;
+  transform-style: preserve-3d;
+  transition: transform 0.45s ease-out;
+}
+
+.case-study-card--flipped {
+  transform: rotateY(180deg);
+}
+
+.case-study-card__face {
+  position: absolute;
+  inset: 0;
   display: flex;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
   background: #f7f8f9;
   border: 1px solid #b0b3b8;
   border-radius: 24px;
   overflow: hidden;
-  min-height: 524px;
+}
+
+.case-study-card__front {
+  transform: rotateY(0deg);
+}
+
+.case-study-card__back {
+  transform: rotateY(180deg);
+}
+
+/* Back – Place, Influence, Discoveries (same tab layout as front) */
+.case-study-card__back-tabs {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.case-study-card__back-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 48px;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 20px;
+  color: #3c3f43;
+}
+
+.case-study-card__back-item--primary {
+  font-weight: 700;
+  color: #111213;
 }
 
 .case-study-card__content {
@@ -529,8 +582,12 @@
     min-width: 140px;
   }
 
-  .case-study-card {
+  .case-study-card__front {
     flex-direction: column;
+  }
+
+  .case-study-card,
+  .case-study-card-flip {
     min-height: auto;
   }
 

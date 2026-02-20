@@ -70,9 +70,9 @@ interface PhysicsElement {
   icon?: string;
 }
 
-// Swatch card dimensions (original size 160x280)
-const SWATCH_WIDTH = 160;
-const SWATCH_HEIGHT = 280;
+// Swatch card dimensions (scaled up from 160×280)
+const SWATCH_WIDTH = 176;
+const SWATCH_HEIGHT = 308;
 
 // Combine all elements
 const allElements: PhysicsElement[] = [

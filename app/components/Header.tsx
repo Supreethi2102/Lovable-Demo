@@ -1,15 +1,18 @@
 import React, { useState, useEffect, useCallback, useRef } from 'react';
-import { Palette, User, ChatCircleDots, Sun, SunHorizon, CloudFog, MoonStars, CloudMoon, Moon, Phone, PaintBrush, Megaphone, Package, BookOpen, Ruler, NotePencil } from '@phosphor-icons/react';
+import { Palette, User, ChatCircleDots, Sun, SunHorizon, CloudFog, MoonStars, CloudMoon, Moon, Phone, PaintBrush, Megaphone, Package, BookOpen, Ruler, NotePencil, CaretDown } from '@phosphor-icons/react';
 import './Header.css';
 
 export const Header: React.FC = () => {
   const headerRef = useRef<HTMLElement | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobileWorkOpen, setIsMobileWorkOpen] = useState(false);
+  const [isMobileThemeOpen, setIsMobileThemeOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
   const [activeTheme, setActiveTheme] = useState('light');
+  const [isTabletViewport, setIsTabletViewport] = useState(false);
 
   // Expose the fixed header height as a CSS variable so pages can pad correctly.
   useEffect(() => {
@@ -42,11 +45,33 @@ export const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Tablet detection (769px - 1024px): click-open dropdowns only in this range.
+  useEffect(() => {
+    const mq = window.matchMedia('(min-width: 769px) and (max-width: 1024px)');
+    const update = () => setIsTabletViewport(mq.matches);
+    update();
+    mq.addEventListener('change', update);
+    return () => mq.removeEventListener('change', update);
+  }, []);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) {
+      setIsMobileWorkOpen(false);
+      setIsMobileThemeOpen(false);
+    }
+  }, [isMobileMenuOpen]);
+
   // Close mobile menu on escape key
   useEffect(() => {
     const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape' && isMobileMenuOpen) {
-        setIsMobileMenuOpen(false);
+      if (e.key === 'Escape') {
+        if (isMobileMenuOpen) {
+          setIsMobileMenuOpen(false);
+          setIsMobileWorkOpen(false);
+          setIsMobileThemeOpen(false);
+        }
+        setIsMegaMenuOpen(false);
+        setIsThemeMenuOpen(false);
       }
     };
 
@@ -54,10 +79,29 @@ export const Header: React.FC = () => {
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isMobileMenuOpen]);
 
+  // Close desktop dropdown menus when clicking outside the header
+  useEffect(() => {
+    const handleDocumentPointerDown = (e: MouseEvent) => {
+      const headerEl = headerRef.current;
+      if (!headerEl) return;
+      if (!headerEl.contains(e.target as Node)) {
+        setIsMegaMenuOpen(false);
+        setIsThemeMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleDocumentPointerDown);
+    return () => document.removeEventListener('mousedown', handleDocumentPointerDown);
+  }, []);
+
   // Smooth scroll to section using native browser behavior with scroll-padding
   const scrollToSection = useCallback((e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     e.preventDefault();
     setIsMobileMenuOpen(false);
+    setIsMobileWorkOpen(false);
+    setIsMobileThemeOpen(false);
+    setIsMegaMenuOpen(false);
+    setIsThemeMenuOpen(false);
     
     // Update URL hash - this triggers native smooth scroll with scroll-padding-top
     window.location.hash = sectionId;
@@ -70,6 +114,22 @@ export const Header: React.FC = () => {
       }
     }, 100);
   }, []);
+
+  const toggleMegaMenu = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    if (!isTabletViewport) {
+      scrollToSection(e, '#work');
+      return;
+    }
+    setIsThemeMenuOpen(false);
+    setIsMegaMenuOpen(prev => !prev);
+  }, [isTabletViewport, scrollToSection]);
+
+  const toggleThemeMenu = useCallback(() => {
+    if (!isTabletViewport) return;
+    setIsMegaMenuOpen(false);
+    setIsThemeMenuOpen(prev => !prev);
+  }, [isTabletViewport]);
 
   // Handle keyboard navigation in mobile menu
   const handleMobileMenuKeyDown = useCallback((e: React.KeyboardEvent) => {
@@ -122,15 +182,21 @@ export const Header: React.FC = () => {
       <nav className="header__nav" aria-label="Main navigation">
         <div 
           className="header__nav-item header__nav-item--has-mega"
-          onMouseEnter={() => setIsMegaMenuOpen(true)}
-          onMouseLeave={() => setIsMegaMenuOpen(false)}
+          onMouseEnter={() => {
+            if (!isTabletViewport) setIsMegaMenuOpen(true);
+          }}
+          onMouseLeave={() => {
+            if (!isTabletViewport) setIsMegaMenuOpen(false);
+          }}
         >
           <a 
             href="#work" 
             className="header__nav-link"
-            onClick={(e) => scrollToSection(e, '#work')}
+            onClick={toggleMegaMenu}
             onMouseEnter={() => setHoveredLink('work')}
             onMouseLeave={() => setHoveredLink(null)}
+            aria-expanded={isMegaMenuOpen}
+            aria-haspopup="menu"
           >
             <Palette size={24} weight={hoveredLink === 'work' || isMegaMenuOpen ? 'fill' : 'regular'} className="header__nav-icon" aria-hidden="true" />
             <span>Work</span>
@@ -235,15 +301,22 @@ export const Header: React.FC = () => {
         </a>
         <div 
           className="header__nav-item header__nav-item--has-mega"
-          onMouseEnter={() => setIsThemeMenuOpen(true)}
-          onMouseLeave={() => setIsThemeMenuOpen(false)}
+          onMouseEnter={() => {
+            if (!isTabletViewport) setIsThemeMenuOpen(true);
+          }}
+          onMouseLeave={() => {
+            if (!isTabletViewport) setIsThemeMenuOpen(false);
+          }}
         >
           <button 
             type="button"
             className="header__nav-link header__theme-toggle"
+            onClick={isTabletViewport ? toggleThemeMenu : undefined}
             onMouseEnter={() => setHoveredLink('theme')}
             onMouseLeave={() => setHoveredLink(null)}
             aria-label="Toggle theme"
+            aria-expanded={isThemeMenuOpen}
+            aria-haspopup="menu"
           >
             <Sun size={24} weight={hoveredLink === 'theme' || isThemeMenuOpen ? 'fill' : 'regular'} className="header__nav-icon" aria-hidden="true" />
             <span>Light</span>
@@ -339,10 +412,53 @@ export const Header: React.FC = () => {
         aria-hidden={!isMobileMenuOpen}
         onKeyDown={handleMobileMenuKeyDown}
       >
-        <a href="#work" className="header__mobile-link" onClick={(e) => scrollToSection(e, '#work')} tabIndex={isMobileMenuOpen ? 0 : -1}>
+        <button
+          type="button"
+          className="header__mobile-link header__mobile-parent"
+          onClick={() => setIsMobileWorkOpen(prev => !prev)}
+          tabIndex={isMobileMenuOpen ? 0 : -1}
+          aria-expanded={isMobileWorkOpen}
+          aria-controls="mobile-work-submenu"
+        >
           <Palette size={24} weight="regular" className="header__nav-icon" aria-hidden="true" />
           <span>Work</span>
-        </a>
+          <CaretDown size={16} weight="bold" className={`header__mobile-caret ${isMobileWorkOpen ? 'header__mobile-caret--open' : ''}`} aria-hidden="true" />
+        </button>
+        <div
+          id="mobile-work-submenu"
+          className={`header__mobile-submenu ${isMobileWorkOpen ? 'header__mobile-submenu--open' : ''}`}
+          aria-hidden={!isMobileWorkOpen}
+        >
+          <div className="header__mobile-subsection">
+            <p className="header__mobile-subtitle"><Megaphone size={18} weight="regular" aria-hidden="true" /> <span>Campaigns</span></p>
+            <a href="#work" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#work')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>The Warehouse Mega Toy Month</a>
+            <a href="#work" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#work')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>The Warehouse Summer Campaign</a>
+          </div>
+          <div className="header__mobile-subsection">
+            <p className="header__mobile-subtitle"><Package size={18} weight="regular" aria-hidden="true" /> <span>Packaging</span></p>
+            <a href="#work" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#work')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>Green Cross bags</a>
+          </div>
+          <div className="header__mobile-subsection">
+            <p className="header__mobile-subtitle"><BookOpen size={18} weight="regular" aria-hidden="true" /> <span>Publications</span></p>
+            <a href="#publications" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#publications')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>Architecture New Zealand Magazine</a>
+            <a href="#publications" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#publications')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>Houses Magazine</a>
+            <a href="#publications" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#publications')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>Life Pharmacy Mailer</a>
+            <a href="#publications" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#publications')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>NZW Grooms Guide Booklet</a>
+            <a href="#publications" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#publications')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>New Zealand Weddings Planner</a>
+            <a href="#publications" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#publications')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>Pumpkin Patch Catalogue</a>
+            <a href="#publications" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#publications')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>Superlife Booklet</a>
+            <a href="#publications" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#publications')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>Little Treasures Magazine</a>
+            <a href="#publications" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#publications')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>The Warehouse - Big Toy Month Mailer</a>
+          </div>
+          <div className="header__mobile-subsection">
+            <p className="header__mobile-subtitle"><Ruler size={18} weight="regular" aria-hidden="true" /> <span>UI</span></p>
+            <a href="#work" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#work')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>Palmy Bank</a>
+          </div>
+          <div className="header__mobile-subsection">
+            <p className="header__mobile-subtitle"><NotePencil size={18} weight="regular" aria-hidden="true" /> <span>UX</span></p>
+            <a href="#work" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#work')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>Āmio Airways</a>
+          </div>
+        </div>
         <a href="#about" className="header__mobile-link" onClick={(e) => scrollToSection(e, '#about')} tabIndex={isMobileMenuOpen ? 0 : -1}>
           <User size={24} weight="regular" className="header__nav-icon" aria-hidden="true" />
           <span>About</span>
@@ -351,15 +467,31 @@ export const Header: React.FC = () => {
           <ChatCircleDots size={24} weight="regular" className="header__nav-icon" aria-hidden="true" />
           <span>Testimonials</span>
         </a>
-        <button 
-          type="button" 
-          className="header__mobile-link"
-          aria-label="Toggle light mode"
+        <button
+          type="button"
+          className="header__mobile-link header__mobile-parent"
+          aria-label="Toggle light"
+          onClick={() => setIsMobileThemeOpen(prev => !prev)}
           tabIndex={isMobileMenuOpen ? 0 : -1}
+          aria-expanded={isMobileThemeOpen}
+          aria-controls="mobile-theme-submenu"
         >
           <Sun size={24} weight="regular" className="header__nav-icon" aria-hidden="true" />
-          <span>Light Mode</span>
+          <span>Light</span>
+          <CaretDown size={16} weight="bold" className={`header__mobile-caret ${isMobileThemeOpen ? 'header__mobile-caret--open' : ''}`} aria-hidden="true" />
         </button>
+        <div
+          id="mobile-theme-submenu"
+          className={`header__mobile-submenu ${isMobileThemeOpen ? 'header__mobile-submenu--open' : ''}`}
+          aria-hidden={!isMobileThemeOpen}
+        >
+          <button type="button" className="header__mobile-subitem" onClick={() => setActiveTheme('light')} tabIndex={isMobileMenuOpen && isMobileThemeOpen ? 0 : -1}><Sun size={18} weight="regular" aria-hidden="true" /> <span>Light</span></button>
+          <button type="button" className="header__mobile-subitem" onClick={() => setActiveTheme('dawn')} tabIndex={isMobileMenuOpen && isMobileThemeOpen ? 0 : -1}><SunHorizon size={18} weight="regular" aria-hidden="true" /> <span>Dawn</span></button>
+          <button type="button" className="header__mobile-subitem" onClick={() => setActiveTheme('aurora')} tabIndex={isMobileMenuOpen && isMobileThemeOpen ? 0 : -1}><CloudFog size={18} weight="regular" aria-hidden="true" /> <span>Aurora</span></button>
+          <button type="button" className="header__mobile-subitem" onClick={() => setActiveTheme('nebula')} tabIndex={isMobileMenuOpen && isMobileThemeOpen ? 0 : -1}><CloudMoon size={18} weight="regular" aria-hidden="true" /> <span>Nebula</span></button>
+          <button type="button" className="header__mobile-subitem" onClick={() => setActiveTheme('eclipse')} tabIndex={isMobileMenuOpen && isMobileThemeOpen ? 0 : -1}><MoonStars size={18} weight="regular" aria-hidden="true" /> <span>Eclipse</span></button>
+          <button type="button" className="header__mobile-subitem" onClick={() => setActiveTheme('dark')} tabIndex={isMobileMenuOpen && isMobileThemeOpen ? 0 : -1}><Moon size={18} weight="regular" aria-hidden="true" /> <span>Dark</span></button>
+        </div>
         <a 
           href="#contact" 
           className="header__contact-btn header__contact-btn--mobile" 

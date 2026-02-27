@@ -3,9 +3,13 @@ import './Hero.css';
 
 export const Hero: React.FC = () => {
   return (
-    <article className="hero" aria-label="Introduction">
-      <div className="hero__content">
-        <h1 className="hero__title">
+    // w-full: ensures the article fills its flex parent on all screen sizes
+    // overflow-x-hidden: prevents any child element from causing horizontal scroll on mobile
+    <article className="hero w-full" aria-label="Introduction">
+      {/* min-w-0: prevents the flex child from overflowing its container on small screens */}
+      <div className="hero__content min-w-0">
+        {/* text-balance: improves line-break distribution on narrow mobile screens (CSS doesn't set text-wrap) */}
+        <h1 className="hero__title text-balance">
           <span className="sr-only">I'm Samantha Inspired by the world Driven by insight From places to pixels</span>
           <span aria-hidden="true">
             I'm Samantha<br />

@@ -3,20 +3,25 @@
   display: flex;
   align-items: center;
   height: 100%;
+  width: 100%;
+  min-width: 0;
 }
 
 .hero__content {
   display: flex;
   flex-direction: column;
   gap: 48px;
+  width: 100%;
   max-width: 462px;
+  padding-left: 4px; /* Prevent first-letter clipping (e.g. Romie "I") */
+  box-sizing: border-box;
 }
 
 .hero__title {
   font-family: 'Romie', Georgia, serif;
-  font-size: 40px;
+  font-size: clamp(28px, 2.6vw + 4px, 40px);
   font-weight: 500;
-  line-height: 56px;
+  line-height: clamp(40px, 3.2vw + 8px, 56px);
   letter-spacing: 1.6px;
   color: #111213;
   margin: 0;
@@ -29,6 +34,7 @@
   line-height: 24px;
   color: #3C3F43;
   margin: 0;
+  max-width: 430px;
 }
 
 /* Responsive */
@@ -37,17 +43,12 @@
     gap: 40px;
     max-width: 420px;
   }
-
-  .hero__title {
-    font-size: 36px;
-    line-height: 50px;
-  }
 }
 
 @media (max-width: 1024px) {
   .hero__content {
     gap: 32px;
-    max-width: 100%;
+    max-width: 520px;
     align-items: center;
   }
 
@@ -58,27 +59,18 @@
   }
 
   .hero__description {
+    max-width: 520px;
     text-align: center;
   }
 }
 
 @media (max-width: 768px) {
-  .hero__title {
-    font-size: 32px;
-    line-height: 44px;
-  }
-
   .hero__content {
     gap: 24px;
   }
 }
 
 @media (max-width: 480px) {
-  .hero__title {
-    font-size: 28px;
-    line-height: 40px;
-  }
-
   .hero__description {
     font-size: 15px;
   }

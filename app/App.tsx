@@ -40,11 +40,6 @@ const HomePage: React.FC = () => {
 
   return (
     <div className="app">
-      {/* Skip to main content link for keyboard users */}
-      <a href="#main-content" className="skip-to-content">
-        Skip to main content
-      </a>
-      
       <Header />
       
       {/* Hero Section with Globe */}

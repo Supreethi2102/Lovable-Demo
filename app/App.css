@@ -59,25 +59,6 @@ a:focus-visible {
   outline-offset: 2px;
 }
 
-/* Skip to content link for accessibility */
-.skip-to-content {
-  position: absolute;
-  top: -100%;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 12px 24px;
-  background: #7150e5;
-  color: #ffffff;
-  text-decoration: none;
-  border-radius: 8px;
-  z-index: 9999;
-  transition: top 0.2s ease;
-}
-
-.skip-to-content:focus {
-  top: 16px;
-}
-
 /* Reduced motion for accessibility */
 @media (prefers-reduced-motion: reduce) {
   *,
@@ -116,10 +97,6 @@ a:focus-visible {
 
 /* High contrast mode support */
 @media (forced-colors: active) {
-  .skip-to-content:focus {
-    outline: 3px solid CanvasText;
-  }
-  
   button:focus-visible,
   a:focus-visible {
     outline: 3px solid CanvasText;
@@ -144,11 +121,12 @@ a:focus-visible {
   display: flex;
   flex-direction: column;
   background: #F7F8F9;
-  /* Dynamic padding: grows on screens larger than 1440px */
   padding-top: var(--padding-y);
   padding-bottom: var(--padding-y);
-  padding-left: max(var(--padding-x), calc((100vw - var(--content-max-width)) / 2));
-  padding-right: max(var(--padding-x), calc((100vw - var(--content-max-width)) / 2));
+  /* Smooth hero gutters: from 1400px down use more padding (min 80px). 1440→112px. */
+  --hero-gutter: clamp(80px, calc((100vw - var(--content-max-width)) / 2), 112px);
+  padding-left: var(--hero-gutter);
+  padding-right: var(--hero-gutter);
 }
 
 .main {
@@ -156,7 +134,8 @@ a:focus-visible {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 400px;
+  /* Column gap: smaller from 1400px down (see media query) */
+  gap: clamp(120px, calc(5 * var(--hero-gutter) - 160px), 400px);
   padding-top: 64px;
   overflow: visible;
   max-width: var(--content-max-width);
@@ -171,7 +150,23 @@ a:focus-visible {
   align-items: center;
   justify-content: flex-end;
   overflow: visible;
-  width: 480px;
+  /* Smooth width so 1440 and 1280 look right */
+  width: clamp(380px, 28vw + 80px, 480px);
+}
+
+/* At 1440px (design width): lock exact proportions so layout matches design */
+@media (min-width: 1430px) and (max-width: 1450px) {
+  .hero-section {
+    --hero-gutter: 112px;
+  }
+
+  .main {
+    gap: 200px;
+  }
+
+  .main__left {
+    width: 480px;
+  }
 }
 
 /* Right Side - Globe + Footer */
@@ -196,7 +191,16 @@ a:focus-visible {
   transform-origin: center center;
 }
 
-/* Responsive - Large Desktop (1400px and below) */
+/* Ultra-wide desktop centering fix */
+@media (min-width: 1920px) {
+  .hero-section {
+    --hero-gutter: max(var(--padding-x), calc((100% - var(--content-max-width)) / 2));
+    padding-left: var(--hero-gutter);
+    padding-right: var(--hero-gutter);
+  }
+}
+
+/* Responsive - Large Desktop (1400px and below): more side padding, smaller column gap */
 @media (max-width: 1400px) {
   :root {
     --padding-x: 80px;
@@ -204,11 +208,7 @@ a:focus-visible {
   }
 
   .main {
-    gap: 360px;
-  }
-
-  .main__left {
-    width: 450px;
+    gap: clamp(100px, calc(2* var(--hero-gutter) - 48px), 360px);
   }
 
   .main__globe {
@@ -224,12 +224,7 @@ a:focus-visible {
   }
 
   .main {
-    gap: 320px;
     padding-top: 56px;
-  }
-
-  .main__left {
-    width: 400px;
   }
 
   .main__right {
@@ -318,3 +313,6 @@ a:focus-visible {
     max-width: 440px;
   }
 }
+
+/* Tailwind utility layer — loaded after all custom CSS so utilities can complement without overriding base desktop styles */
+@tailwind utilities;

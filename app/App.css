@@ -1,11 +1,12 @@
 /* App Layout - 4pt Grid */
 
 /* Fonts */
+/* Romie: load for both 400 and 500 so Romie is used site-wide (no Georgia fallback) */
 @font-face {
   font-family: 'Romie';
-  src: url('/Fonts/ROMIE MEDIUM + ITALIC PACK/Romie Medium/Romie-Medium.woff2') format('woff2'),
-       url('/Fonts/ROMIE MEDIUM + ITALIC PACK/Romie Medium/Romie-Medium.woff') format('woff');
-  font-weight: 500;
+  src: url('/Fonts/ROMIE%20MEDIUM%20%2B%20ITALIC%20PACK/Romie%20Medium/Romie-Medium.woff2') format('woff2'),
+       url('/Fonts/ROMIE%20MEDIUM%20%2B%20ITALIC%20PACK/Romie%20Medium/Romie-Medium.woff') format('woff');
+  font-weight: 400 500;
   font-style: normal;
   font-display: swap;
 }

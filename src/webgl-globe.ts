@@ -28,8 +28,8 @@ export type TextureUrls = {shading: string; atmosphere: string};
 const DEFAULT_PROPS = {allowDownsampling: true};
 
 export class WebGlGlobe extends EventTarget {
-  private readonly resizeObserver: ResizeObserver;
   private readonly container: HTMLElement;
+  private readonly resizeObserver: ResizeObserver;
   private readonly scheduler: RequestScheduler<RenderTile>;
   private readonly renderer: Renderer;
   private readonly tileSelector: TileSelector;
@@ -61,7 +61,7 @@ export class WebGlGlobe extends EventTarget {
     super();
 
     this.resizeObserver = new ResizeObserver(() => {
-      this.resize();
+      this.doResize();
     });
     this.abortController = new AbortController();
 
@@ -80,7 +80,7 @@ export class WebGlGlobe extends EventTarget {
 
     this.setProps({...DEFAULT_PROPS, ...props});
 
-    this.resize();
+    this.doResize();
     this.attachEventListeners();
     this.startTileSelectorLoop();
     this.startTileUpdateLoop();
@@ -202,7 +202,7 @@ export class WebGlGlobe extends EventTarget {
     this.renderer.updateTiles(tiles);
   }
 
-  private resize() {
+  private doResize() {
     const {width, height} = this.container.getBoundingClientRect();
 
     // Resize tile selector size
@@ -210,6 +210,11 @@ export class WebGlGlobe extends EventTarget {
 
     // Resize renderer size
     this.renderer.resize(width, height);
+  }
+
+  /** Public so main.ts (or app) can trigger resize when container dimensions change (e.g. after move or viewport resize). */
+  resize() {
+    this.doResize();
   }
 
   private attachEventListeners() {

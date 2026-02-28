@@ -124,55 +124,45 @@ a:focus-visible {
   background: #F7F8F9;
   padding-top: var(--padding-y);
   padding-bottom: var(--padding-y);
-  /* Smooth hero gutters: from 1400px down use more padding (min 80px). 1440→112px. */
-  --hero-gutter: clamp(80px, calc((100vw - var(--content-max-width)) / 2), 112px);
-  padding-left: var(--hero-gutter);
-  padding-right: var(--hero-gutter);
+  padding-left: var(--padding-x);
+  padding-right: var(--padding-x);
+  overflow-x: clip;
 }
+
+/*
+  Hero row: cap width on large desktop so the gap between columns doesn’t get too large.
+  At 1440px: padding=112×2, available=1216; text=480, globe=700 → gap≈36.
+  On viewports > 1440px we cap .main so the gap doesn’t grow excessively.
+*/
 
 .main {
   flex: 1;
   display: flex;
   align-items: center;
-  justify-content: center;
-  /* Column gap: smaller from 1400px down (see media query) */
-  gap: clamp(120px, calc(5 * var(--hero-gutter) - 160px), 400px);
+  justify-content: space-between;
   padding-top: 64px;
   overflow: visible;
-  max-width: var(--content-max-width);
-  margin: 0 auto;
   width: 100%;
+  max-width: min(100%, 1440px);
+  margin-left: auto;
+  margin-right: auto;
+  min-width: 0; /* Allow shrink so content doesn’t overflow */
 }
 
-/* Left Side - Hero */
+/* Left Side - Hero text */
 .main__left {
-  flex: 0 0 auto;
+  flex: 0 0 480px;
+  min-width: 280px; /* Don’t shrink below readable width */
   display: flex;
   align-items: center;
   justify-content: flex-end;
   overflow: visible;
-  /* Smooth width so 1440 and 1280 look right */
-  width: clamp(380px, 28vw + 80px, 480px);
-}
-
-/* At 1440px (design width): lock exact proportions so layout matches design */
-@media (min-width: 1430px) and (max-width: 1450px) {
-  .hero-section {
-    --hero-gutter: 112px;
-  }
-
-  .main {
-    gap: 200px;
-  }
-
-  .main__left {
-    width: 480px;
-  }
 }
 
 /* Right Side - Globe + Footer */
 .main__right {
   flex: 0 0 auto;
+  min-width: 0; /* Allow shrink so globe column doesn’t force overflow */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -181,59 +171,81 @@ a:focus-visible {
   overflow: visible;
 }
 
+/* Globe wrapper: max-width shrinks at breakpoints; min-width 0 so it can shrink */
 .main__globe {
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: visible;
-  width: 100%;
-  max-width: 700px;
+  width: 700px;
+  max-width: 100%;
+  min-width: 0;
   transform: scale(1.15);
   transform-origin: center center;
 }
 
-/* Ultra-wide desktop centering fix */
+/* Ultra-wide: prevent layout from stretching too wide */
 @media (min-width: 1920px) {
   .hero-section {
-    --hero-gutter: max(var(--padding-x), calc((100% - var(--content-max-width)) / 2));
-    padding-left: var(--hero-gutter);
-    padding-right: var(--hero-gutter);
+    padding-left: max(var(--padding-x), calc((100% - 1660px) / 2));
+    padding-right: max(var(--padding-x), calc((100% - 1660px) / 2));
   }
 }
 
-/* Responsive - Large Desktop (1400px and below): more side padding, smaller column gap */
+/* 
+  BREAKPOINTS — gap is implicit (space-between).
+  We control visual gap by sizing globe max-width.
+  At 1440px: padding=112, available=1216, text=480, globe=700 → gap=36px layout
+    but globe scales 1.15 visually so it bleeds into the padding — that's intentional in design.
+  
+  1440px: padding 112, globe 700 ✓ (matches Figma)
+  1400px: padding 80,  available=1240, text=480, globe=650, gap=110
+  1300px: padding 80,  available=1140, text=480, globe=580, gap=80  
+  1200px: padding 64,  available=1072, text=440, globe=520, gap=112
+  1024px: stacks vertically
+*/
+
 @media (max-width: 1400px) {
   :root {
     --padding-x: 80px;
     --padding-y: 48px;
   }
-
-  .main {
-    gap: clamp(100px, calc(2* var(--hero-gutter) - 48px), 360px);
-  }
-
   .main__globe {
     max-width: 650px;
   }
 }
 
-/* Responsive - Desktop (1200px and below) */
+@media (max-width: 1300px) {
+  .main__globe {
+    max-width: 580px;
+  }
+}
+
 @media (max-width: 1200px) {
   :root {
     --padding-x: 64px;
     --padding-y: 40px;
   }
-
   .main {
     padding-top: 56px;
   }
-
+  .main__left {
+    flex: 0 0 440px;
+  }
   .main__right {
     gap: 110px;
   }
-
   .main__globe {
-    max-width: 620px;
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 1100px) {
+  .main__left {
+    flex: 0 0 400px;
+  }
+  .main__globe {
+    max-width: 460px;
   }
 }
 
@@ -244,32 +256,30 @@ a:focus-visible {
     --padding-y: 32px;
   }
 
-  .hero-section {
-    padding-left: var(--padding-x);
-    padding-right: var(--padding-x);
-  }
-
   .main {
     flex-direction: column;
+    justify-content: flex-start;
     gap: 60px;
     padding-top: 48px;
     align-items: center;
   }
 
   .main__left {
-    justify-content: center;
-    text-align: center;
+    flex: none;
     width: 100%;
     max-width: 520px;
+    justify-content: center;
+    text-align: center;
   }
 
   .main__right {
+    flex: none;
     width: 100%;
     gap: 80px;
   }
 
   .main__globe {
-    max-width: 580px;
+    max-width: 560px;
   }
 }
 

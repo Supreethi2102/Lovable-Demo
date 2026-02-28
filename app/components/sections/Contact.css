@@ -731,8 +731,8 @@
   .contact {
     padding-top: 64px;
     padding-bottom: 64px;
-    padding-left: var(--padding-x);
-    padding-right: var(--padding-x);
+    padding-left: clamp(24px, 4vw, 48px);
+    padding-right: clamp(24px, 4vw, 48px);
   }
 
   .contact__card {
@@ -903,4 +903,3 @@
     font-size: 14px;
   }
 }
-

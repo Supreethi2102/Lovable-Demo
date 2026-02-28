@@ -9,7 +9,8 @@ const distance = 20_000_000;
 // Use a single PNG image for the globe
 const customImageUrl = '/globe/Revised%20Globe%20sketch%2029th%20Jan.png';
 
-const globe = new WebGlGlobe(document.querySelector('#globe')!, {
+const globeEl = document.querySelector('#globe')! as HTMLElement;
+const globe = new WebGlGlobe(globeEl, {
   renderMode: RenderMode.GLOBE,
   layers: [
     {
@@ -25,6 +26,19 @@ const globe = new WebGlGlobe(document.querySelector('#globe')!, {
   ],
   cameraView: {lng: 155, lat: -10, altitude: distance, isAnimated: false}
 });
+
+// Notify WebGL globe when container dimensions change (e.g. responsive resize or move into hero)
+const resizeObserver = new ResizeObserver(() => {
+  const { width, height } = globeEl.getBoundingClientRect();
+  if (width > 0 && height > 0) {
+    try {
+      globe.resize();
+    } catch (e) {
+      console.warn('Globe resize error:', e);
+    }
+  }
+});
+resizeObserver.observe(globeEl);
 
 // Simple pin icon without text - sized for resized globe
 // Three concentric circles scaled to 50x50

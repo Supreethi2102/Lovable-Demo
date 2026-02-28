@@ -215,7 +215,7 @@
 /* Back to Top */
 .color-swatches__back-to-top {
   position: absolute;
-  right: -284px;
+  right: 0;
   bottom: 40px;
   display: flex;
   flex-direction: column;
@@ -223,6 +223,7 @@
   gap: 14px;
   width: 86px;
   z-index: 20;
+  transform: translateX(calc(100% + 16px)); /* Push just outside the canvas wrapper */
 }
 
 .back-to-top__btn:focus,
@@ -1182,8 +1183,9 @@ button.site-footer__link {
     height: 450px;
     transform: scale(0.95);
     transform-origin: top center;
+    /* Contain the scaled element so it doesn't cause layout overflow */
+    overflow: hidden;
   }
-
 }
 
 @media (max-width: 1200px) {
@@ -1193,12 +1195,14 @@ button.site-footer__link {
 
   .color-swatches__container {
     min-height: 400px;
+    overflow: hidden;
   }
 
   .color-swatches__grid {
     width: 600px;
     height: 420px;
     transform: scale(0.85);
+    transform-origin: top center;
   }
 
   .site-footer__inner {
@@ -1210,19 +1214,22 @@ button.site-footer__link {
 @media (max-width: 1024px) {
   .color-swatches {
     padding-top: 40px;
-    padding-left: var(--padding-x);
-    padding-right: var(--padding-x);
+    padding-left: clamp(24px, 4vw, 48px);
+    padding-right: clamp(24px, 4vw, 48px);
   }
 
   .color-swatches__container {
-    min-height: 360px;
+    min-height: 320px;
+    overflow: hidden;
   }
 
   .color-swatches__grid {
-    width: 100%;
-    max-width: 550px;
-    height: 380px;
+    /* At tablet, clamp width to viewport to avoid invisible overflow */
+    width: min(550px, 100vw - 48px);
+    max-width: 100%;
+    height: 360px;
     transform: scale(0.75);
+    transform-origin: top center;
   }
 
   .site-footer__inner {
@@ -1257,12 +1264,16 @@ button.site-footer__link {
   }
 
   .color-swatches__container {
-    min-height: 320px;
+    min-height: 280px;
+    overflow: hidden;
   }
 
   .color-swatches__grid {
-    height: 340px;
+    width: min(500px, 100vw - 32px);
+    max-width: 100%;
+    height: 300px;
     transform: scale(0.6);
+    transform-origin: top center;
   }
 
   .back-to-top__btn {
@@ -1311,12 +1322,16 @@ button.site-footer__link {
   }
 
   .color-swatches__container {
-    min-height: 280px;
+    min-height: 240px;
+    overflow: hidden;
   }
 
   .color-swatches__grid {
-    height: 300px;
+    width: min(400px, 100vw - 32px);
+    max-width: 100%;
+    height: 260px;
     transform: scale(0.45);
+    transform-origin: top center;
   }
 
   .site-footer {

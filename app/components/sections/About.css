@@ -474,8 +474,12 @@
 }
 
 @media (max-width: 900px) {
-  .about { padding: 48px; }
-  .about__card { padding: 32px; }
+  .about {
+    padding: clamp(24px, 4vw, 48px);
+  }
+  .about__card {
+    padding: 32px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -490,8 +494,8 @@
 }
 
 @media (max-width: 480px) {
-  .about { padding: 24px; }
-  .about__card { padding: 24px 20px; border-radius: 16px; }
+  .about { padding: 16px; }
+  .about__card { padding: 20px 16px; border-radius: 16px; }
   .about-block1__illustration { width: 260px; height: 260px; }
   .about-block1__title { font-size: 24px; line-height: 32px; }
   .about-block2__quote p { font-size: 18px; line-height: 30px; }

@@ -611,9 +611,9 @@
 
 @media (max-width: 1024px) {
   .case-studies {
-    padding: 48px var(--padding-x, 48px) 72px;
-    padding-left: var(--padding-x, 48px);
-    padding-right: var(--padding-x, 48px);
+    padding: 48px clamp(24px, 4vw, 48px) 72px;
+    padding-left: clamp(24px, 4vw, 48px);
+    padding-right: clamp(24px, 4vw, 48px);
   }
 
   .case-study-card__content {
@@ -650,7 +650,7 @@
 
 @media (max-width: 768px) {
   .case-studies {
-    padding: 40px var(--padding-x, 32px) 60px;
+    padding: 40px clamp(16px, 4vw, 32px) 60px;
   }
 
   .case-studies__title {
@@ -660,14 +660,17 @@
   }
 
   .case-studies__filter {
-    gap: 24px;
+    gap: 12px;
     margin-left: 0;
     margin-right: 0;
     padding: 16px 0;
+    flex-wrap: wrap;
+    justify-content: center;
   }
 
   .category-pill {
-    min-width: 120px;
+    min-width: 100px;
+    flex: 0 0 calc(50% - 8px); /* 2-column grid for pills */
   }
 
   .category-pill__icon {
@@ -710,7 +713,7 @@
 
 @media (max-width: 480px) {
   .case-studies {
-    padding: 32px var(--padding-x, 24px) 48px;
+    padding: 32px 16px 48px;
   }
 
   .case-studies__filter {
@@ -749,4 +752,3 @@
     width: calc(100% - 20px);
   }
 }
-

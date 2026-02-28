@@ -534,6 +534,11 @@
 
 /* Responsive */
 @media (max-width: 1100px) {
+  .publication-detail {
+    padding-left: clamp(24px, 4vw, 112px);
+    padding-right: clamp(24px, 4vw, 112px);
+  }
+
   .publication-detail__grid {
     grid-template-columns: 1fr;
     gap: 48px;
@@ -568,4 +573,3 @@
     height: 96px;
   }
 }
-

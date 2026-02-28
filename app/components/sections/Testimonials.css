@@ -103,7 +103,7 @@
 }
 
 .testimonials__feedback {
-  width: 616px; /* Figma */
+  width: min(616px, 100%); /* Figma */
   display: flex;
   flex-direction: column;
   gap: 28px; /* Figma */
@@ -246,7 +246,7 @@
 /* Responsive - Tablet */
 @media (max-width: 1024px) {
   .testimonials {
-    padding: 64px var(--padding-x, 48px);
+    padding: 64px clamp(24px, 4vw, 48px);
   }
 
   .testimonials__card {
@@ -289,7 +289,7 @@
 /* Responsive - Mobile */
 @media (max-width: 768px) {
   .testimonials {
-    padding: 48px var(--padding-x, 32px);
+    padding: 48px clamp(16px, 4vw, 32px);
   }
 
   .testimonials__card {
@@ -337,7 +337,7 @@
 /* Responsive - Small Mobile */
 @media (max-width: 480px) {
   .testimonials {
-    padding: 32px var(--padding-x, 24px);
+    padding: 32px clamp(12px, 4vw, 24px);
   }
 
   .testimonials__card {

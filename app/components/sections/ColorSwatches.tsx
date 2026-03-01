@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { 
-  CaretUp,
   Leaf,
   Cookie,
   PersonSimpleCircle,
@@ -12,7 +11,6 @@ import './ColorSwatches.css';
 
 export const ColorSwatches: React.FC = () => {
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
-  const [isBackToTopHovered, setIsBackToTopHovered] = useState(false);
   const [sustainabilityOpen, setSustainabilityOpen] = useState(false);
   const [accessibilityOpen, setAccessibilityOpen] = useState(false);
   const [privacyCookiesOpen, setPrivacyCookiesOpen] = useState(false);
@@ -69,15 +67,6 @@ export const ColorSwatches: React.FC = () => {
     return () => document.removeEventListener('keydown', onKeyDown);
   }, [privacyCookiesOpen]);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-    // Focus on the skip link or first focusable element
-    const mainContent = document.getElementById('main-content');
-    if (mainContent) {
-      mainContent.focus();
-    }
-  };
-
   return (
     <section className="color-swatches" aria-label="Interactive color swatches">
       {/* Header - Instructions */}
@@ -92,28 +81,13 @@ export const ColorSwatches: React.FC = () => {
         </p>
       </header>
 
-      {/* Physics Animation Canvas with Back to Top */}
+      {/* Physics Animation Canvas */}
       <div 
         className="color-swatches__canvas-wrapper"
         role="region"
         aria-label="Interactive color playground - drag swatches to explore"
       >
         <GravityPlayground />
-
-        {/* Back to Top */}
-        <nav className="color-swatches__back-to-top" aria-label="Page navigation">
-          <button 
-            type="button"
-            className={`back-to-top__btn ${isBackToTopHovered ? 'back-to-top__btn--hovered' : ''}`}
-            onClick={scrollToTop}
-            onMouseEnter={() => setIsBackToTopHovered(true)}
-            onMouseLeave={() => setIsBackToTopHovered(false)}
-            aria-label="Back to top of page"
-          >
-            <CaretUp size={24} weight="regular" color={isBackToTopHovered ? '#ffffff' : '#7150E5'} aria-hidden="true" />
-          </button>
-          <span className="back-to-top__text" aria-hidden="true">Back to top</span>
-        </nav>
       </div>
 
       {/* Footer */}

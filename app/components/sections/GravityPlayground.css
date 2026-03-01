@@ -16,6 +16,18 @@
   cursor: grabbing;
 }
 
+/* Inner wrapper: scaled on smaller viewports so cards/pills/icons shrink; physics uses scale in mouse coords */
+.gravity-playground__scene-inner {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none; /* events go to scene; coords converted in JS */
+}
+
+.gravity-playground__scene-inner > * {
+  pointer-events: auto;
+}
 
 /* Pill Elements – neutral white like other small elements */
 .gp-pill {

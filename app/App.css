@@ -111,6 +111,13 @@ a:focus-visible {
   overflow: visible;
 }
 
+/* Mobile: avoid extra gap below footer when content is shorter than viewport */
+@media (max-width: 768px) {
+  .app {
+    min-height: auto;
+  }
+}
+
 /* Non-home pages background (avoid white showing) */
 .app--detail {
   background: #F7F8F9;

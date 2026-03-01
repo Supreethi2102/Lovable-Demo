@@ -140,6 +140,15 @@ const TextElement: React.FC<{ content: string; style: React.CSSProperties }> = (
   </div>
 );
 
+/** Scale factor so swatch cards and small elements (pills, icons, text) scale down on smaller viewports */
+function getScaleFactor(): number {
+  if (typeof window === 'undefined') return 1;
+  if (window.matchMedia('(max-width: 480px)').matches) return 0.65;
+  if (window.matchMedia('(max-width: 768px)').matches) return 0.78;
+  if (window.matchMedia('(max-width: 1024px)').matches) return 0.88;
+  return 1;
+}
+
 export const GravityPlayground: React.FC = () => {
   const sceneRef = useRef<HTMLDivElement>(null);
   const engineRef = useRef<Matter.Engine | null>(null);
@@ -152,6 +161,24 @@ export const GravityPlayground: React.FC = () => {
   const dragBodyRef = useRef<Matter.Body | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const hasStartedRef = useRef(false);
+  const [scale, setScale] = useState(() => getScaleFactor());
+  const scaleRef = useRef(1);
+
+  // Keep scaleRef in sync so physics mouse coords are correct
+  scaleRef.current = scale;
+
+  // Responsive scale: update on resize so swatch cards and small elements scale down
+  useEffect(() => {
+    const update = () => {
+      const next = getScaleFactor();
+      if (next !== scaleRef.current) {
+        scaleRef.current = next;
+        setScale(next);
+      }
+    };
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
 
   // Intersection Observer for visibility detection
   useEffect(() => {
@@ -241,12 +268,13 @@ export const GravityPlayground: React.FC = () => {
 
     Matter.Composite.add(engine.world, allBodies);
 
-    // Custom mouse/touch handling
+    // Custom mouse/touch handling (convert viewport coords to physics space when scaled)
     const getMousePos = (e: MouseEvent | Touch): { x: number; y: number } => {
       const rect = scene.getBoundingClientRect();
+      const s = scaleRef.current || 1;
       return {
-        x: e.clientX - rect.left,
-        y: e.clientY - rect.top,
+        x: (e.clientX - rect.left) / s,
+        y: (e.clientY - rect.top) / s,
       };
     };
 
@@ -377,7 +405,15 @@ export const GravityPlayground: React.FC = () => {
 
   return (
     <div className="gravity-playground__scene" ref={sceneRef}>
-      {allElements.map(renderElement)}
+      <div
+        className="gravity-playground__scene-inner"
+        style={{
+          transform: `scale(${scale})`,
+          transformOrigin: '0 0',
+        }}
+      >
+        {allElements.map(renderElement)}
+      </div>
     </div>
   );
 };

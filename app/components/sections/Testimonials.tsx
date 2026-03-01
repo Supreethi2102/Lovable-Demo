@@ -90,6 +90,29 @@ export const Testimonials: React.FC = () => {
         <span className="testimonials__label">Testimonials</span>
 
         <div className="testimonials__content">
+          {/* Mobile only: chevrons centered above the heading */}
+          <div className="testimonials__nav-row-mobile" role="group" aria-label="Testimonial navigation">
+            <button
+              type="button"
+              className="testimonials__nav testimonials__nav--mobile"
+              onClick={handlePrev}
+              onMouseEnter={() => setHoveredNav('prev')}
+              onMouseLeave={() => setHoveredNav(null)}
+              aria-label="Previous testimonial"
+            >
+              <CaretLeft size={24} weight={hoveredNav === 'prev' ? 'bold' : 'regular'} color={hoveredNav === 'prev' ? '#ffffff' : '#7150E5'} aria-hidden="true" />
+            </button>
+            <button
+              type="button"
+              className="testimonials__nav testimonials__nav--mobile"
+              onClick={handleNext}
+              onMouseEnter={() => setHoveredNav('next')}
+              onMouseLeave={() => setHoveredNav(null)}
+              aria-label="Next testimonial"
+            >
+              <CaretRight size={24} weight={hoveredNav === 'next' ? 'bold' : 'regular'} color={hoveredNav === 'next' ? '#ffffff' : '#7150E5'} aria-hidden="true" />
+            </button>
+          </div>
           {/* Header */}
           <header className="testimonials__header">
             <h2 id="testimonials-title" className="testimonials__title">Global shoutout</h2>

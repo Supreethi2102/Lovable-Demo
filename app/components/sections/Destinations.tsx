@@ -482,7 +482,7 @@ export const Destinations: React.FC = () => {
 
                 {/* Row 2 stays in original grid */}
                 <div className="destinations__grid destinations__grid--compact">
-                  <div className="destinations__row">
+                  <div className="destinations__row destinations__row--reversed">
                     <DestinationCard 
                       destination={destinations.dubai} 
                       destinationKey="dubai"
@@ -628,7 +628,7 @@ export const Destinations: React.FC = () => {
             </div>
             
             {/* Row 2: Dubai (tall) + Marrakech (wide) + Jaipur/Naoshima (stacked) */}
-            <div className="destinations__row">
+            <div className="destinations__row destinations__row--reversed">
               <DestinationCard 
                 destination={destinations.dubai} 
                 destinationKey="dubai"

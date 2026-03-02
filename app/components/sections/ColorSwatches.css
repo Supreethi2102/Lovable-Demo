@@ -210,7 +210,61 @@
 .color-swatches__canvas-wrapper {
   position: relative;
   width: 100%;
-  overflow: visible;
+}
+
+/* Back to Top */
+.color-swatches__back-to-top {
+  position: absolute;
+  right: -284px;
+  bottom: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 86px;
+  z-index: 20;
+}
+
+.back-to-top__btn:focus,
+.back-to-top__btn:focus-visible {
+  outline: none;
+}
+
+.back-to-top__btn {
+  width: 48px;
+  height: 48px;
+  background: #f7f9fa;
+  border: 1px solid #7150e5;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  padding: 12px;
+  transition: all 0.2s ease;
+}
+
+.back-to-top__btn:hover {
+  background: #7150e5;
+  box-shadow: 0 4px 12px rgba(113, 80, 229, 0.35);
+}
+
+.back-to-top__btn:hover svg path {
+  stroke: #ffffff;
+}
+
+.back-to-top__btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+.back-to-top__text {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #7150e5;
+  text-align: center;
 }
 
 /* ================================
@@ -1128,9 +1182,8 @@ button.site-footer__link {
     height: 450px;
     transform: scale(0.95);
     transform-origin: top center;
-    /* Contain the scaled element so it doesn't cause layout overflow */
-    overflow: hidden;
   }
+
 }
 
 @media (max-width: 1200px) {
@@ -1140,14 +1193,12 @@ button.site-footer__link {
 
   .color-swatches__container {
     min-height: 400px;
-    overflow: hidden;
   }
 
   .color-swatches__grid {
     width: 600px;
     height: 420px;
     transform: scale(0.85);
-    transform-origin: top center;
   }
 
   .site-footer__inner {
@@ -1159,22 +1210,19 @@ button.site-footer__link {
 @media (max-width: 1024px) {
   .color-swatches {
     padding-top: 40px;
-    padding-left: clamp(24px, 4vw, 48px);
-    padding-right: clamp(24px, 4vw, 48px);
+    padding-left: var(--padding-x);
+    padding-right: var(--padding-x);
   }
 
   .color-swatches__container {
-    min-height: 320px;
-    overflow: hidden;
+    min-height: 360px;
   }
 
   .color-swatches__grid {
-    /* At tablet, clamp width to viewport to avoid invisible overflow */
-    width: min(550px, 100vw - 48px);
-    max-width: 100%;
-    height: 360px;
+    width: 100%;
+    max-width: 550px;
+    height: 380px;
     transform: scale(0.75);
-    transform-origin: top center;
   }
 
   .site-footer__inner {
@@ -1199,6 +1247,7 @@ button.site-footer__link {
   .color-swatches {
     padding-top: 32px;
     min-height: auto;
+    overflow: hidden;
   }
 
   .color-swatches__text {
@@ -1209,16 +1258,25 @@ button.site-footer__link {
   }
 
   .color-swatches__container {
-    min-height: 280px;
+    min-height: 320px;
     overflow: hidden;
   }
 
   .color-swatches__grid {
-    width: min(500px, 100vw - 32px);
+    width: 100%;
     max-width: 100%;
-    height: 300px;
+    height: 340px;
     transform: scale(0.6);
     transform-origin: top center;
+  }
+
+  .back-to-top__btn {
+    width: 44px;
+    height: 44px;
+  }
+
+  .back-to-top__text {
+    font-size: 14px;
   }
 
   .site-footer__copyright {
@@ -1242,6 +1300,7 @@ button.site-footer__link {
 @media (max-width: 480px) {
   .color-swatches {
     padding-top: 24px;
+    overflow: hidden;
   }
 
   .color-swatches__icons {
@@ -1258,14 +1317,14 @@ button.site-footer__link {
   }
 
   .color-swatches__container {
-    min-height: 240px;
+    min-height: 280px;
     overflow: hidden;
   }
 
   .color-swatches__grid {
-    width: min(400px, 100vw - 32px);
+    width: 100%;
     max-width: 100%;
-    height: 260px;
+    height: 300px;
     transform: scale(0.45);
     transform-origin: top center;
   }

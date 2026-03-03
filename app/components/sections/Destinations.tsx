@@ -389,21 +389,30 @@ export const Destinations: React.FC = () => {
     };
   }, [expandedCard]);
 
-  // Scroll to expanded card only after grow animation, and only if mostly off-screen
+  // Scroll after grow: on mobile keep card "at its own place" (where user tapped); on desktop scroll only if off-screen
   useEffect(() => {
     if (!expandedCard || !expandedCardRef.current) return;
 
     const timeoutId = setTimeout(() => {
       const el = expandedCardRef.current;
+      const origin = expandOriginRef.current;
       if (!el) return;
-      const rect = el.getBoundingClientRect();
-      const headerOffset = 80;
-      const padding = 24;
-      const inView = rect.top >= headerOffset - padding && rect.bottom <= window.innerHeight + padding;
-      if (inView) return;
 
-      const offsetPosition = rect.top + window.scrollY - headerOffset;
-      window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+      const rect = el.getBoundingClientRect();
+      const isMobile = typeof window !== 'undefined' && window.innerWidth <= 480;
+
+      if (isMobile && origin) {
+        // Mobile: scroll so expanded card stays where the user tapped (opens at its own place)
+        const scrollToY = window.scrollY + rect.top - origin.top;
+        window.scrollTo({ top: Math.max(0, scrollToY), behavior: 'smooth' });
+      } else {
+        const headerOffset = 80;
+        const padding = 24;
+        const inView = rect.top >= headerOffset - padding && rect.bottom <= window.innerHeight + padding;
+        if (inView) return;
+        const offsetPosition = rect.top + window.scrollY - headerOffset;
+        window.scrollTo({ top: offsetPosition, behavior: 'smooth' });
+      }
     }, FLIP_DURATION_MS + 80);
 
     return () => clearTimeout(timeoutId);

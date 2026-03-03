@@ -127,17 +127,17 @@
   }
   
   .header__nav-link:hover {
-    color: #7150E5;
+    color: #3c3f43;
   }
   
-  .header__nav-link:hover .header__nav-icon,
+  /* .header__nav-link:hover .header__nav-icon,
   .header__nav-item--has-mega:hover .header__nav-link .header__nav-icon {
-    color: #7150E5;
-  }
+    color: #3c3f43;
+  } */
   
   /* When mega menu is open (hovering nav item), show underline on the nav link */
   .header__nav-item--has-mega:hover .header__nav-link {
-    color: #7150E5;
+    color: #3c3f43;
   }
   
   .header__nav-icon {

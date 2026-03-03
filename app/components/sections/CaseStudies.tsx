@@ -218,7 +218,7 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               <PuzzlePiece 
                 size={24} 
                 weight={activeTab === 'challenge' || hoveredBtn === 'challenge' ? 'fill' : 'regular'} 
-                color={activeTab === 'challenge' ? '#111213' : '#3c3f43'}
+               color="currentColor"
                 aria-hidden="true"
               />
               <span>Challenge</span>
@@ -237,7 +237,7 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               <Target 
                 size={24} 
                 weight={activeTab === 'focus' || hoveredBtn === 'focus' ? 'fill' : 'regular'} 
-                color={activeTab === 'focus' ? '#111213' : '#3c3f43'}
+                color="currentColor"
                 aria-hidden="true"
               />
               <span>Focus</span>
@@ -256,7 +256,7 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               <ChartBar 
                 size={24} 
                 weight={activeTab === 'impact' || hoveredBtn === 'impact' ? 'fill' : 'regular'} 
-                color={activeTab === 'impact' ? '#111213' : '#3c3f43'}
+                color="currentColor"
                 aria-hidden="true"
               />
               <span>Impact</span>
@@ -333,7 +333,10 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
                   onMouseEnter={() => setHoveredBtn('place')}
                   onMouseLeave={() => setHoveredBtn(null)}
                 >
-                  <MapPin size={24} weight={activeBackTab === 'place' || hoveredBtn === 'place' ? 'fill' : 'regular'} color={activeBackTab === 'place' ? '#111213' : '#3c3f43'} aria-hidden="true" />
+                  <MapPin size={24} 
+                  weight={activeBackTab === 'place' || hoveredBtn === 'place' ? 'fill' : 'regular'} 
+                  color="currentColor"
+                  aria-hidden="true" />
                   <span>Place</span>
                 </button>
                 <button
@@ -345,7 +348,9 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
                   onMouseEnter={() => setHoveredBtn('influence')}
                   onMouseLeave={() => setHoveredBtn(null)}
                 >
-                  <Sparkle size={24} weight={activeBackTab === 'influence' || hoveredBtn === 'influence' ? 'fill' : 'regular'} color={activeBackTab === 'influence' ? '#111213' : '#3c3f43'} aria-hidden="true" />
+                  <Sparkle size={24} 
+                  weight={activeBackTab === 'influence' || hoveredBtn === 'influence' ? 'fill' : 'regular'} 
+                  color="currentColor" aria-hidden="true" />
                   <span>Influence</span>
                 </button>
                 <button
@@ -357,7 +362,8 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
                   onMouseEnter={() => setHoveredBtn('discoveries')}
                   onMouseLeave={() => setHoveredBtn(null)}
                 >
-                  <Binoculars size={24} weight={activeBackTab === 'discoveries' || hoveredBtn === 'discoveries' ? 'fill' : 'regular'} color={activeBackTab === 'discoveries' ? '#111213' : '#3c3f43'} aria-hidden="true" />
+                  <Binoculars size={24} weight={activeBackTab === 'discoveries' || hoveredBtn === 'discoveries' ? 'fill' : 'regular'} 
+                  color="currentColor" aria-hidden="true" />
                   <span>Discoveries</span>
                 </button>
               </div>

@@ -312,6 +312,9 @@
   letter-spacing: 0.32px;
 }
 
+.tab:hover {
+  color: #7150E5;
+}
 .tab--active img {
   /* Dark icon for active - #111213 */
   filter: brightness(0) saturate(100%) invert(5%) sepia(5%) saturate(500%) hue-rotate(180deg) brightness(95%) contrast(95%);
@@ -328,6 +331,10 @@
   height: 48px;
   background: #111213;
   border-radius: 2px;
+}
+
+.tab:hover::after {
+  background: #7150E5;
 }
 
 /* Main Content */

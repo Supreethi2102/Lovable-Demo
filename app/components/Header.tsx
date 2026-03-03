@@ -198,7 +198,7 @@ export const Header: React.FC = () => {
             aria-expanded={isMegaMenuOpen}
             aria-haspopup="menu"
           >
-            <Palette size={24} weight={hoveredLink === 'work' || isMegaMenuOpen ? 'fill' : 'regular'} className="header__nav-icon" aria-hidden="true" />
+            <Palette size={24} weight={'regular'} className="header__nav-icon" aria-hidden="true" />
             <span>Work</span>
           </a>
           
@@ -286,7 +286,7 @@ export const Header: React.FC = () => {
           onMouseEnter={() => setHoveredLink('about')}
           onMouseLeave={() => setHoveredLink(null)}
         >
-          <User size={24} weight={hoveredLink === 'about' ? 'fill' : 'regular'} className="header__nav-icon" aria-hidden="true" />
+          <User size={24} weight={'regular'} className="header__nav-icon" aria-hidden="true" />
           <span>About</span>
         </a>
         <a 
@@ -296,7 +296,7 @@ export const Header: React.FC = () => {
           onMouseEnter={() => setHoveredLink('testimonials')}
           onMouseLeave={() => setHoveredLink(null)}
         >
-          <ChatCircleDots size={24} weight={hoveredLink === 'testimonials' ? 'fill' : 'regular'} className="header__nav-icon" aria-hidden="true" />
+          <ChatCircleDots size={24} weight={'regular'} className="header__nav-icon" aria-hidden="true" />
           <span>Testimonials</span>
         </a>
         <div 
@@ -318,7 +318,7 @@ export const Header: React.FC = () => {
             aria-expanded={isThemeMenuOpen}
             aria-haspopup="menu"
           >
-            <Sun size={24} weight={hoveredLink === 'theme' || isThemeMenuOpen ? 'fill' : 'regular'} className="header__nav-icon" aria-hidden="true" />
+            <Sun size={24} weight={'regular'} className="header__nav-icon" aria-hidden="true" />
             <span>Light</span>
           </button>
 

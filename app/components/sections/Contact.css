@@ -513,44 +513,14 @@
 
 /* Send Button - outlined by default, filled on hover (like view all) */
 .contact__submit-btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  width: 230px; /* Figma width */
-  height: 48px; /* Figma height */
-  padding: 16px 24px;
+  width: 230px;
   margin: 0 auto;
-  background: #f7f9fa;
-  border: 1px solid #7150e5;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
-.contact__submit-btn:hover:not(:disabled):not(.contact__submit-btn--loading):not(.contact__submit-btn--success) {
-  background: #7150e5;
-}
 
-.contact__submit-btn:hover:not(:disabled):not(.contact__submit-btn--loading):not(.contact__submit-btn--success) span,
-.contact__submit-btn:hover:not(:disabled):not(.contact__submit-btn--loading):not(.contact__submit-btn--success) svg {
-  color: #f6f7f8;
-}
 
-.contact__submit-btn svg {
-  width: 24px;
-  height: 24px;
+.contact__submit-btn .btn__icon {
   flex-shrink: 0;
-}
-
-.contact__submit-btn span {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
-  color: #7150e5;
-  white-space: nowrap;
-  transition: color 0.2s ease;
 }
 
 /* Form validation states */

@@ -73,13 +73,15 @@ export const Publications: React.FC = () => {
         <footer className="publications__footer">
           <button 
             type="button"
-            className="view-publications-btn"
+            className="btn btn--secondary btn--icon-left view-publications-btn"
             onMouseEnter={() => setIsViewHovered(true)}
             onMouseLeave={() => setIsViewHovered(false)}
             onClick={() => setShowAll(!showAll)}
             aria-label={showAll ? 'Show fewer publications' : 'View all publications'}
           >
-            <BookOpen size={24} weight={isViewHovered ? 'fill' : 'regular'} color="#7150E5" className="view-publications-btn__icon" aria-hidden="true" />
+            <span className="btn__icon" aria-hidden="true">
+              <BookOpen size={24} weight={isViewHovered ? 'fill' : 'regular'} color="currentColor" />
+            </span>
             <span>{showAll ? 'View fewer publications' : 'View all publications'}</span>
           </button>
         </footer>

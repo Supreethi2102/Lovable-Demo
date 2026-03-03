@@ -1,0 +1,231 @@
+/**
+ * Node: 14789-14363
+ * Primary, Secondary, Tertiary with states: Default, Hovered, Active, Focused, Disabled
+ */
+
+:root {
+  --btn-primary: #7150E5;
+  --btn-primary-hover: #5E3EC9;
+  --btn-primary-active: #5238a8;
+  --btn-primary-focus: #5340c4;
+  --btn-secondary-border: #7150E5;
+  --btn-secondary-hover-border: #5E3EC9;
+  --btn-secondary-active-bg: #e8e0ff;
+  --btn-disabled-bg: #e8e9eb;
+  --btn-disabled-text: #9ca0a6;
+  --btn-disabled-border: #d3d6da;
+  --btn-white: #ffffff;
+  --btn-radius: 8px;
+  --btn-font: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --btn-focus-outline: 2px solid var(--btn-primary-focus);
+  --btn-focus-offset: 2px;
+}
+
+/* Base button reset */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 12px 24px;
+  min-height: 48px;
+  font-family: var(--btn-font);
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  border-radius: var(--btn-radius);
+  cursor: pointer;
+  border: none;
+  text-decoration: none;
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn:focus {
+  outline: none;
+}
+
+.btn:focus-visible {
+  outline: var(--btn-focus-outline);
+  outline-offset: var(--btn-focus-offset);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+}
+
+/* ========== Primary ========== */
+.btn--primary {
+  background: var(--btn-primary);
+  color: var(--btn-white);
+}
+
+.btn--primary:hover:not(:disabled) {
+  background: var(--btn-primary-hover);
+  color: var(--btn-white);
+}
+
+.btn--primary:active:not(:disabled) {
+  background: var(--btn-primary-active);
+  color: var(--btn-white);
+}
+
+.btn--primary:disabled {
+  background: var(--btn-disabled-bg);
+  color: var(--btn-disabled-text);
+}
+
+/* Primary: icon inherits text color */
+.btn--primary .btn__icon {
+  color: currentColor;
+  flex-shrink: 0;
+}
+
+/* ========== Secondary ========== */
+.btn--secondary {
+  background: var(--btn-white);
+  color: var(--btn-primary);
+  border: 1px solid var(--btn-secondary-border);
+}
+
+.btn--secondary:hover:not(:disabled) {
+  border-color: var(--btn-secondary-hover-border);
+  color: var(--btn-primary-hover);
+}
+
+.btn--secondary:hover:not(:disabled) .btn__icon {
+  color: currentColor;
+}
+
+.btn--secondary:active:not(:disabled) {
+  background: var(--btn-secondary-active-bg);
+  border-color: var(--btn-secondary-border);
+  color: var(--btn-white);
+}
+
+.btn--secondary:active:not(:disabled) .btn__icon {
+  color: var(--btn-white);
+}
+
+.btn--secondary:disabled {
+  background: var(--btn-disabled-bg);
+  border-color: var(--btn-disabled-border);
+  color: var(--btn-disabled-text);
+}
+
+.btn--secondary:disabled .btn__icon {
+  color: var(--btn-disabled-text);
+}
+
+.btn--secondary .btn__icon {
+  color: currentColor;
+  flex-shrink: 0;
+}
+
+/* ========== Tertiary (text / minimal) ========== */
+.btn--tertiary {
+  background: transparent;
+  color: var(--btn-primary);
+  border: none;
+  padding: 8px 0;
+  min-height: auto;
+}
+
+.btn--tertiary:hover:not(:disabled) {
+  color: var(--btn-primary-hover);
+}
+
+.btn--tertiary:active:not(:disabled) {
+  color: var(--btn-primary-active);
+}
+
+.btn--tertiary:focus-visible {
+  outline: none;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-underline-offset: 4px;
+}
+
+.btn--tertiary:disabled {
+  color: var(--btn-disabled-text);
+}
+
+.btn--tertiary .btn__icon {
+  color: currentColor;
+  flex-shrink: 0;
+}
+
+/* ========== Icon variants ========== */
+.btn--icon-left {
+  flex-direction: row;
+}
+
+.btn--icon-right {
+  flex-direction: row;
+}
+
+.btn--icon-right .btn__icon {
+  order: 1;
+}
+
+.btn--icon-only {
+  padding: 12px;
+  min-width: 48px;
+  min-height: 48px;
+}
+
+.btn--icon-only .btn__icon {
+  margin: 0;
+}
+
+/* Icon size */
+.btn__icon {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ========== Case study card tab style (tertiary variant) ========== */
+.btn--tab {
+  background: transparent;
+  color: var(--btn-primary);
+  border: none;
+  border-radius: 0;
+  padding: 8px 0;
+  min-height: auto;
+  border-bottom: 2px solid transparent;
+  border-radius: 0;
+}
+
+.btn--tab:hover:not(:disabled) {
+  color: var(--btn-primary-hover);
+}
+
+.btn--tab.btn--tab-active {
+  border-bottom-color: var(--btn-primary);
+  font-weight: 600;
+}
+
+.btn--tab:focus-visible {
+  outline: none;
+  text-decoration: underline;
+  text-decoration-style: dashed;
+  text-underline-offset: 4px;
+}
+
+.btn--tab:disabled {
+  color: var(--btn-disabled-text);
+}
+
+/*
+ * Usage (Figma Light mode):
+ * <button type="button" className="btn btn--primary">View the design</button>
+ * <button type="button" className="btn btn--primary btn--icon-left"><span className="btn__icon">...</span>View the design</button>
+ * <button type="button" className="btn btn--secondary">View the design</button>
+ * <button type="button" className="btn btn--secondary btn--icon-left"><span className="btn__icon">...</span>Listen</button>
+ * <a href="#" className="btn btn--tertiary">Button name</a>
+ * <button type="button" className="btn btn--primary btn--icon-only" aria-label="..."><span className="btn__icon">...</span></button>
+ * Add disabled attribute for disabled state. Focus uses :focus-visible (keyboard).
+ */

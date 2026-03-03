@@ -304,7 +304,7 @@ export const Contact: React.FC = () => {
                   <button
                     type="submit"
                     form={isFront && isActive ? formDomId : undefined}
-                    className={`contact__submit-btn send-message ${cardIsSubmitting ? 'contact__submit-btn--loading' : ''} ${cardSubmitStatus === 'success' ? 'contact__submit-btn--success' : ''}`}
+                    className={`btn btn--primary btn--icon-left contact__submit-btn send-message ${cardIsSubmitting ? 'contact__submit-btn--loading' : ''} ${cardSubmitStatus === 'success' ? 'contact__submit-btn--success' : ''}`}
                     onMouseEnter={() => setIsSendHovered(true)}
                     onMouseLeave={() => setIsSendHovered(false)}
                     disabled={!isFront || !isActive || cardIsSubmitting || isAnimatingRef.current}
@@ -331,7 +331,9 @@ export const Contact: React.FC = () => {
                       </>
                     ) : (
                       <>
-                        <PaperPlaneTilt size={24} weight={isSendHovered ? 'fill' : 'regular'} color={isSendHovered ? '#F6F7F8' : '#7150E5'} aria-hidden="true" />
+                        <span className="btn__icon" aria-hidden="true">
+                          <PaperPlaneTilt size={24} weight={isSendHovered ? 'fill' : 'regular'} color="currentColor" />
+                        </span>
                         <span>Send message</span>
                       </>
                     )}

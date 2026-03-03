@@ -123,48 +123,9 @@
   padding-top: 48px;
 }
 
+/* View publications – uses .btn .btn--secondary from ButtonStyles.css */
 .view-publications-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 16px 24px;
-  height: 48px;
   width: 224px;
-  background: #f7f9fa;
-  border: 1px solid #7150e5;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.view-publications-btn:hover {
-  background: #7150e5;
-}
-
-.view-publications-btn:hover .view-publications-btn__icon {
-  filter: brightness(0) invert(1);
-}
-
-.view-publications-btn:hover span {
-  color: #fbfbfb;
-}
-
-.view-publications-btn__icon {
-  width: 24px;
-  height: 24px;
-  flex-shrink: 0;
-  /* Purple filter for icon */
-  filter: brightness(0) saturate(100%) invert(36%) sepia(68%) saturate(1352%) hue-rotate(229deg) brightness(88%) contrast(96%);
-}
-
-.view-publications-btn span {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 24px;
-  color: #7150e5;
-  white-space: nowrap;
 }
 
 /* Publication popup – Figma 1656-172 Publications / Photo gallery */

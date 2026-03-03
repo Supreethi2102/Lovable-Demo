@@ -684,12 +684,14 @@ export const Destinations: React.FC = () => {
         </p>
         <button 
           type="button"
-          className="destinations__share-btn"
+          className="btn btn--secondary btn--icon-left destinations__share-btn"
           onMouseEnter={() => setIsShareHovered(true)}
           onMouseLeave={() => setIsShareHovered(false)}
           aria-label="Share your design inspiration with me"
         >
-          <ArrowSquareOut size={24} weight={isShareHovered ? 'fill' : 'regular'} color={isShareHovered ? '#fbfbfb' : '#7150E5'} className="destinations__share-icon" aria-hidden="true" />
+          <span className="btn__icon" aria-hidden="true">
+            <ArrowSquareOut size={24} weight={isShareHovered ? 'fill' : 'regular'} color="currentColor" />
+          </span>
           <span>Share inspiration</span>
         </button>
       </footer>

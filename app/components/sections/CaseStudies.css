@@ -378,39 +378,10 @@
   max-width: 334px;
 }
 
-/* View Design Button */
+/* View Design Button – uses .btn .btn--primary from ButtonStyles.css */
 .view-design-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 16px 24px;
-  height: 48px;
-  width: 186px;
-  background: #7150e5;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
   margin-top: auto;
-  transition: background 0.2s ease;
-}
-
-.view-design-btn:hover {
-  background: #5238a8;
-}
-
-.view-design-btn img {
-  width: 24px;
-  height: 24px;
-  filter: brightness(0) invert(1);
-}
-
-.view-design-btn span {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  color: #fbfbfb;
-  white-space: nowrap;
+  width: 186px;
 }
 
 /* Image Section */
@@ -539,44 +510,9 @@
   padding: 56px 0 0;
 }
 
-.view-all-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  padding: 16px 24px;
-  height: 48px;
-  background: #f7f8f9;
-  border: 1px solid #7150e5;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.view-all-btn:hover {
-  background: #7150e5;
-}
-
-.view-all-btn:hover img {
-  filter: brightness(0) invert(1);
-}
-
-.view-all-btn:hover span {
-  color: #fbfbfb;
-}
-
-.view-all-btn img {
-  width: 24px;
-  height: 24px;
-  filter: brightness(0) saturate(100%) invert(36%) sepia(68%) saturate(1352%) hue-rotate(229deg) brightness(88%) contrast(96%);
-}
-
-.view-all-btn span {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
-  color: #7150e5;
-  white-space: nowrap;
+/* View All – uses .btn .btn--secondary from ButtonStyles.css */
+.view-all-btn--hovered.view-all-btn .btn__icon {
+  color: inherit;
 }
 
 /* Responsive */

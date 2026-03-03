@@ -278,17 +278,18 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
           </div>
           <button 
             type="button"
-            className="view-design-btn"
+            className="btn btn--primary btn--icon-left view-design-btn"
             onMouseEnter={() => setHoveredBtn('viewDesign')}
             onMouseLeave={() => setHoveredBtn(null)}
             onClick={() => {
-              // Publication detail page removed: scroll to Publications section instead
               const el = document.getElementById('publications');
               el?.scrollIntoView({ behavior: 'smooth', block: 'start' });
             }}
             aria-label={`View the design for ${study.subtitle}`}
           >
-            <Ruler size={24} weight={hoveredBtn === 'viewDesign' ? 'fill' : 'regular'} color="#fbfbfb" aria-hidden="true" />
+            <span className="btn__icon" aria-hidden="true">
+              <Ruler size={24} weight={hoveredBtn === 'viewDesign' ? 'fill' : 'regular'} color="currentColor" />
+            </span>
             <span>View the design</span>
           </button>
         </div>
@@ -378,7 +379,7 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               </div>
               <button 
                 type="button"
-                className="view-design-btn"
+                className="btn btn--primary btn--icon-left view-design-btn"
                 onMouseEnter={() => setHoveredBtn('viewDesignBack')}
                 onMouseLeave={() => setHoveredBtn(null)}
                 onClick={() => {
@@ -387,7 +388,9 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
                 }}
                 aria-label={`View the design for ${study.subtitle}`}
               >
-                <Ruler size={24} weight={hoveredBtn === 'viewDesignBack' ? 'fill' : 'regular'} color="#fbfbfb" aria-hidden="true" />
+                <span className="btn__icon" aria-hidden="true">
+                  <Ruler size={24} weight={hoveredBtn === 'viewDesignBack' ? 'fill' : 'regular'} color="currentColor" />
+                </span>
                 <span>View the design</span>
               </button>
             </div>
@@ -489,12 +492,14 @@ export const CaseStudies: React.FC = () => {
       <footer className="case-studies__footer">
         <button 
           type="button"
-          className={`view-all-btn ${hoveredViewAll ? 'view-all-btn--hovered' : ''}`}
+          className={`btn btn--secondary btn--icon-left view-all-btn ${hoveredViewAll ? 'view-all-btn--hovered' : ''}`}
           onMouseEnter={() => setHoveredViewAll(true)}
           onMouseLeave={() => setHoveredViewAll(false)}
           aria-label="View all case studies"
         >
-          <Folders size={24} weight={hoveredViewAll ? 'fill' : 'regular'} color={hoveredViewAll ? '#ffffff' : '#7150E5'} aria-hidden="true" />
+          <span className="btn__icon" aria-hidden="true">
+            <Folders size={24} weight={hoveredViewAll ? 'fill' : 'regular'} color="currentColor" />
+          </span>
           <span>View all cases</span>
         </button>
       </footer>

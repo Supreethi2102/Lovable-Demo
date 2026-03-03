@@ -383,12 +383,14 @@ export const Header: React.FC = () => {
       {/* Contact Button */}
       <a 
         href="#contact"
-        className="header__contact-btn"
+        className="btn btn--primary btn--icon-left header__contact-btn"
         onClick={(e) => scrollToSection(e, '#contact')}
         onMouseEnter={() => setHoveredLink('contact')}
         onMouseLeave={() => setHoveredLink(null)}
       >
-        <Phone size={24} weight={hoveredLink === 'contact' ? 'fill' : 'regular'} className="header__contact-icon" aria-hidden="true" />
+        <span className="btn__icon" aria-hidden="true">
+          <Phone size={24} weight={hoveredLink === 'contact' ? 'fill' : 'regular'} color="currentColor" />
+        </span>
         <span>Contact</span>
       </a>
 
@@ -494,11 +496,13 @@ export const Header: React.FC = () => {
         </div>
         <a 
           href="#contact" 
-          className="header__contact-btn header__contact-btn--mobile" 
+          className="btn btn--primary btn--icon-left header__contact-btn header__contact-btn--mobile" 
           onClick={(e) => scrollToSection(e, '#contact')}
           tabIndex={isMobileMenuOpen ? 0 : -1}
         >
-          <Phone size={24} weight="regular" className="header__contact-icon" aria-hidden="true" />
+          <span className="btn__icon" aria-hidden="true">
+            <Phone size={24} weight="regular" color="currentColor" />
+          </span>
           <span>Contact</span>
         </a>
       </nav>

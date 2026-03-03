@@ -2,6 +2,7 @@ import React, { useEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Header, Hero, Footer, CaseStudies, Publications, PublicationDetail, About, Testimonials, Contact, Destinations, ColorSwatches } from './components';
 import './App.css';
+import './ButtonStyles.css';
 
 const AppRoutes: React.FC = () => {
   const location = useLocation();

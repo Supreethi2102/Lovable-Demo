@@ -104,19 +104,55 @@
   pointer-events: none; /* Let Matter.js handle mouse events */
 }
 
-/* Swatch Cards – Figma: consistent padding, alignment */
+/* Swatch Cards – Figma: front + back (colour mood) with flip */
 .gp-swatch {
   position: absolute;
   top: 0;
   left: 0;
-  background: #f9fafb;
-  border: 1px solid #76797f;
+  width: 176px;
+  height: 308px;
   border-radius: 12px;
-  padding: 16px;
-  overflow: hidden;
+  overflow: visible;
   will-change: transform;
+  pointer-events: none;
+  perspective: 800px;
+}
+
+.gp-swatch__flip-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+  transition: transform 0.45s ease;
+}
+
+.gp-swatch--flipped .gp-swatch__flip-inner {
+  transform: rotateY(180deg);
+}
+
+.gp-swatch__face {
+  position: absolute;
+  inset: 0;
   backface-visibility: hidden;
-  pointer-events: none; /* Let Matter.js handle mouse events */
+  -webkit-backface-visibility: hidden;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.gp-swatch__face--front {
+  transform: rotateY(0deg);
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+}
+
+.gp-swatch__face--back {
+  transform: rotateY(180deg);
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  padding: 16px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
 }
 
 .gp-swatch__inner {
@@ -127,10 +163,12 @@
 }
 
 .gp-swatch__color {
-  width: 144px;
+  width: 100%;
   height: 112px;
-  border-radius: 6px 6px 0 0;
+  border-radius: 8px 8px 0 0;
   flex-shrink: 0;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-sizing: border-box;
 }
 
 .gp-swatch__content {
@@ -139,9 +177,7 @@
   align-items: center;
   flex: 1;
   min-height: 0;
-  /* Figma: large vertical gap between color block and first text */
   padding-top: 28px;
-  /* Figma: bottom padding consistent with card outer padding */
   padding-bottom: 16px;
 }
 
@@ -149,14 +185,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* Figma: moderate vertical gap between name and hex/icon line */
   gap: 8px;
 }
 
 .gp-swatch__name {
   font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
   font-size: 12px;
-  font-weight: 400;
+  font-weight: 600;
   line-height: 16px;
   letter-spacing: 0.48px;
   color: #212325;
@@ -184,6 +219,7 @@
 .gp-swatch__info-icon {
   width: 16px;
   height: 16px;
+  flex-shrink: 0;
 }
 
 .gp-swatch__link {
@@ -194,8 +230,117 @@
   letter-spacing: 0.48px;
   color: #7150e5;
   text-align: center;
-  /* Figma: very large vertical gap above link (largest on card) – pushes to bottom */
   margin-top: auto;
+}
+
+/* Back face – colour mood (left-aligned per Figma) */
+.gp-swatch__back-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 12px;
+  padding: 0;
+}
+
+.gp-swatch__text--back-header {
+  flex-shrink: 0;
+  align-items: flex-start;
+  text-align: left;
+}
+
+.gp-swatch__text--back-header .gp-swatch__name,
+.gp-swatch__text--back-header .gp-swatch__hex-row {
+  text-align: left;
+  justify-content: flex-start;
+}
+
+.gp-swatch__text--back-header .gp-swatch__name {
+  text-align: left;
+}
+
+.gp-swatch__description {
+  font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 15px;
+  letter-spacing: 0.2px;
+  color: #3c3f43;
+  margin: 0;
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  text-align: left;
+}
+
+.gp-swatch__contrast-bar {
+  display: flex;
+  width: 100%;
+  height: 28px;
+  border-radius: 8px;
+  overflow: hidden;
+  flex-shrink: 0;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+.gp-swatch__contrast-left,
+.gp-swatch__contrast-right {
+  flex: 1;
+  min-width: 0;
+}
+
+.gp-swatch__contrast-divider {
+  width: 1px;
+  flex-shrink: 0;
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.gp-swatch__ideal {
+  font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 14px;
+  letter-spacing: 0.2px;
+  color: #3c3f43;
+  flex-shrink: 0;
+  text-align: left;
+}
+
+.gp-swatch__ideal-line {
+  margin: 0 0 2px 0;
+}
+
+.gp-swatch__ideal-label {
+  color: #212325;
+}
+
+.gp-swatch__ideal-hex {
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.gp-swatch__ideal-name {
+  margin: 0;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 14px;
+  color: #3c3f43;
+}
+
+.gp-swatch__contrast-ratio {
+  font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  line-height: 14px;
+  letter-spacing: 0.2px;
+  color: #3c3f43;
+  margin: 0;
+  flex-shrink: 0;
+  text-align: left;
+}
+
+.gp-swatch__link--hide {
+  margin-top: auto;
+  padding-top: 4px;
 }
 
 /* Responsive */
@@ -229,6 +374,16 @@
   .gp-swatch__hex,
   .gp-swatch__link {
     font-size: 10px;
+  }
+
+  .gp-swatch__description {
+    font-size: 10px;
+    line-height: 14px;
+  }
+
+  .gp-swatch__ideal,
+  .gp-swatch__contrast-ratio {
+    font-size: 9px;
   }
 }
 

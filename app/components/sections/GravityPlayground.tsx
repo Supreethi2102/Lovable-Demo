@@ -13,16 +13,136 @@ import {
 } from '@phosphor-icons/react';
 import './GravityPlayground.css';
 
-// Swatch cards (exact same as original, scaled to 90%)
-const swatchCards = [
-  { id: 'swatch-nympheas', name: 'Nymphéas Blue', hex: '#5A87E8', color: '#618eb6' },
-  { id: 'swatch-gaudi', name: 'Gaudí Cathedral Blue', hex: '#060591', color: '#060591' },
-  { id: 'swatch-flamingo', name: 'Sunlit Flamingo Pink', hex: '#FC95B1', color: '#fc95b1' },
-  { id: 'swatch-orange', name: 'Studio Orange', hex: '#C25A35', color: '#c25a35' },
-  { id: 'swatch-turquoise', name: 'Gilded Turquoise', hex: '#5ED0BF', color: '#5ed0bf' },
-  { id: 'swatch-yellow', name: 'Paradise Tipani Yellow', hex: '#F6E067', color: '#f6e067' },
-  { id: 'swatch-red', name: 'Royal Red', hex: '#D7263D', color: '#d7263d' },
-  { id: 'swatch-teal', name: 'Sunshade Teal', hex: '#188974', color: '#188974' },
+// Mood (back of card) data per swatch – Figma colour mood
+interface SwatchMood {
+  description: string;
+  contrastColor: string;   // paired color for contrast bar
+  idealMatchHex: string;
+  idealMatchName: string;
+  contrastRatio: string;   // e.g. "7:1"
+  contrastRating: string;  // e.g. "AAA" or "AA"
+}
+
+// Swatch cards with front + back (colour mood) data
+const swatchCards: Array<{
+  id: string;
+  name: string;
+  hex: string;
+  color: string;
+  mood: SwatchMood;
+}> = [
+  {
+    id: 'swatch-nympheas',
+    name: 'Nymphéas Blue',
+    hex: '#B3CDE2',
+    color: '#B3CDE2',
+    mood: {
+      description: "Monet's Water Lilies at the Musée de l'Orangerie unveiled a blue in motion, designed to shift with light, space, and calm reflection.",
+      contrastColor: '#4F5421',
+      idealMatchHex: '#F5E1A4',
+      idealMatchName: 'Sydney Eve Indigo',
+      contrastRatio: '4.86:1',
+      contrastRating: 'AA',
+    },
+  },
+  {
+    id: 'swatch-gaudi',
+    name: 'Gaudí Cathedral Blue',
+    hex: '#060591',
+    color: '#060591',
+    mood: {
+      description: "At the Basilica Sagrada Família, blue light from stained-glass windows bathed me in awe, the blue dancing across stonework.",
+      contrastColor: '#FC95B1',
+      idealMatchHex: '#FC95B1',
+      idealMatchName: 'Sunlit Flamingo Pink',
+      contrastRatio: '7:1',
+      contrastRating: 'AAA',
+    },
+  },
+  {
+    id: 'swatch-flamingo',
+    name: 'Sunlit Flamingo Pink',
+    hex: '#FC95B1',
+    color: '#FC95B1',
+    mood: {
+      description: "The San Diego Zoo brought a pop of joy. Sunlight, the flamingos' feathers, and a vivid, bright pink that knew how to make an entrance.",
+      contrastColor: '#060591',
+      idealMatchHex: '#060591',
+      idealMatchName: 'Gaudí Cathedral Blue',
+      contrastRatio: '7',
+      contrastRating: 'AAA',
+    },
+  },
+  {
+    id: 'swatch-orange',
+    name: 'Studio Orange',
+    hex: '#C25A35',
+    color: '#C25A35',
+    mood: {
+      description: "At Warner Bros. Studio, the Friends sofa's burnt orange wrapped me in warmth and memory. A hue of laughter, comfort, and endless reruns.",
+      contrastColor: '#2B2B2B',
+      idealMatchHex: '#2B2B2B',
+      idealMatchName: 'Gaudí Cathedral Blue',
+      contrastRatio: '4.63:1',
+      contrastRating: 'AA',
+    },
+  },
+  {
+    id: 'swatch-turquoise',
+    name: 'Gilded Turquoise',
+    hex: '#5ED0BF',
+    color: '#5ed0bf',
+    mood: {
+      description: "Caribbean water at noon — clear, cool, and the kind of turquoise that makes you want to dive in.",
+      contrastColor: '#1a3d36',
+      idealMatchHex: '#1a3d36',
+      idealMatchName: 'Deep Teal',
+      contrastRatio: '4.5:1',
+      contrastRating: 'AA',
+    },
+  },
+  {
+    id: 'swatch-yellow',
+    name: 'Paradise Tipani Yellow',
+    hex: '#F6E067',
+    color: '#f6e067',
+    mood: {
+      description: "Pacific island frangipani and sunshine — bright, optimistic yellow that feels like a permanent summer.",
+      contrastColor: '#2c2a1f',
+      idealMatchHex: '#2c2a1f',
+      idealMatchName: 'Nightfall',
+      contrastRatio: '4.52:1',
+      contrastRating: 'AA',
+    },
+  },
+  {
+    id: 'swatch-red',
+    name: 'Royal Red',
+    hex: '#C91435',
+    color: '#C91435',
+    mood: {
+      description: "Eating fresh strawberries at Buckingham Palace gardens, this vivid red captures their sweetness, joy, and the irresistible burst of colour.",
+      contrastColor: '#F1E1F7',
+      idealMatchHex: '#F1E1F7',
+      idealMatchName: 'Boardwalk Amethyst',
+      contrastRatio: '4.63:1',
+      contrastRating: 'AA',
+    },
+  },
+  {
+    id: 'swatch-teal',
+    name: 'Boardwalk Amethyst',
+    hex: '#F1E1F7',
+    color: '#F1E1F7',
+    mood: {
+      description: "At Venice Beach, LA's crystal stalls glowed in soft pastels. A haze of amethyst trinkets, easy surf charm, and that laid-back bohemian drift.",
+      contrastColor: '#C91435',
+      idealMatchHex: '#C91435',
+      idealMatchName: 'Royal Red',
+      contrastRatio: '4.63:1',
+      contrastRating: 'AA',
+    },
+  },
 ];
 
 // Skill pills
@@ -90,20 +210,64 @@ const allElements: PhysicsElement[] = [
   ...textCards.map(t => ({ ...t, type: 'text' as ElementType })),
 ];
 
-// Render components - Swatch card matching original design (100% size)
-const SwatchElement: React.FC<{ color: string; hex: string; name: string; style: React.CSSProperties }> = ({ color, hex, name, style }) => (
-  <div className="gp-swatch" style={style}>
-    <div className="gp-swatch__inner">
-      <div className="gp-swatch__color" style={{ backgroundColor: color }} />
-      <div className="gp-swatch__content">
-        <div className="gp-swatch__text">
-          <p className="gp-swatch__name">{name}</p>
-          <div className="gp-swatch__hex-row">
-            <span className="gp-swatch__hex">{hex}</span>
-            <Info size={16} weight="regular" color="#7150E5" className="gp-swatch__info-icon" />
+const swatchMoodById = new Map(swatchCards.map(s => [s.id, s.mood]));
+
+// Swatch card: front (colour + View colour mood) and back (colour mood info + Hide button)
+const SwatchElement: React.FC<{
+  id: string;
+  color: string;
+  hex: string;
+  name: string;
+  mood: SwatchMood;
+  isFlipped: boolean;
+  style: React.CSSProperties;
+}> = ({ id, color, hex, name, mood, isFlipped, style }) => (
+  <div className={`gp-swatch ${isFlipped ? 'gp-swatch--flipped' : ''}`} style={style} data-swatch-id={id}>
+    <div className="gp-swatch__flip-inner">
+      {/* Front */}
+      <div className="gp-swatch__face gp-swatch__face--front">
+        <div className="gp-swatch__inner">
+          <div className="gp-swatch__color" style={{ backgroundColor: color }} />
+          <div className="gp-swatch__content">
+            <div className="gp-swatch__text">
+              <p className="gp-swatch__name">{name}</p>
+              <div className="gp-swatch__hex-row">
+                <span className="gp-swatch__hex">{hex}</span>
+                <Info size={16} weight="regular" color="#7150E5" className="gp-swatch__info-icon" aria-hidden="true" />
+              </div>
+            </div>
+            <span className="gp-swatch__link">View colour mood</span>
           </div>
         </div>
-        <span className="gp-swatch__link">View colour mood</span>
+      </div>
+      {/* Back – colour mood */}
+      <div className="gp-swatch__face gp-swatch__face--back">
+        <div className="gp-swatch__inner gp-swatch__back-inner">
+          <div className="gp-swatch__text gp-swatch__text--back-header">
+            <p className="gp-swatch__name">{name}</p>
+            <div className="gp-swatch__hex-row">
+              <span className="gp-swatch__hex">{hex}</span>
+              <Info size={16} weight="regular" color="#7150E5" className="gp-swatch__info-icon" aria-hidden="true" />
+            </div>
+          </div>
+          <p className="gp-swatch__description">{mood.description}</p>
+          <div className="gp-swatch__contrast-bar" aria-hidden="true">
+            <span className="gp-swatch__contrast-left" style={{ backgroundColor: color }} />
+            <span className="gp-swatch__contrast-divider" />
+            <span className="gp-swatch__contrast-right" style={{ backgroundColor: mood.contrastColor }} />
+          </div>
+          <div className="gp-swatch__ideal">
+            <p className="gp-swatch__ideal-line">
+              <span className="gp-swatch__ideal-label">My ideal match: </span>
+              <span className="gp-swatch__ideal-hex">{mood.idealMatchHex}</span>
+            </p>
+            <p className="gp-swatch__ideal-name">{mood.idealMatchName}</p>
+          </div>
+          <p className="gp-swatch__contrast-ratio">
+            Contrast: {mood.contrastRatio} – ({mood.contrastRating})
+          </p>
+          <span className="gp-swatch__link gp-swatch__link--hide">Hide colour mood</span>
+        </div>
       </div>
     </div>
   </div>
@@ -163,9 +327,21 @@ export const GravityPlayground: React.FC = () => {
   const hasStartedRef = useRef(false);
   const [scale, setScale] = useState(() => getScaleFactor());
   const scaleRef = useRef(1);
+  const [flippedSwatchIds, setFlippedSwatchIds] = useState<Set<string>>(new Set());
+  const dragStartPosRef = useRef<{ x: number; y: number } | null>(null);
+  const CLICK_THRESHOLD_PX = 8;
 
   // Keep scaleRef in sync so physics mouse coords are correct
   scaleRef.current = scale;
+
+  const toggleSwatchFlip = (swatchId: string) => {
+    setFlippedSwatchIds(prev => {
+      const next = new Set(prev);
+      if (next.has(swatchId)) next.delete(swatchId);
+      else next.add(swatchId);
+      return next;
+    });
+  };
 
   // Responsive scale: update on resize so swatch cards and small elements scale down
   useEffect(() => {
@@ -298,24 +474,25 @@ export const GravityPlayground: React.FC = () => {
     const handleStart = (e: MouseEvent | TouchEvent) => {
       e.preventDefault();
       const point = e instanceof MouseEvent ? getMousePos(e) : getMousePos(e.touches[0]);
+      dragStartPosRef.current = point;
       const body = findBodyAtPoint(point);
-      
+
       if (body) {
         dragBodyRef.current = body;
         Matter.Body.setPosition(dragPoint, point);
-        
+
         const constraint = Matter.Constraint.create({
           bodyA: dragPoint,
           bodyB: body,
-          pointB: { 
-            x: point.x - body.position.x, 
-            y: point.y - body.position.y 
+          pointB: {
+            x: point.x - body.position.x,
+            y: point.y - body.position.y
           },
           stiffness: 0.1,
           damping: 0.3,
           length: 0,
         });
-        
+
         dragConstraintRef.current = constraint;
         Matter.Composite.add(engine.world, constraint);
         scene.style.cursor = 'grabbing';
@@ -329,22 +506,36 @@ export const GravityPlayground: React.FC = () => {
       Matter.Body.setPosition(dragPoint, point);
     };
 
-    const handleEnd = () => {
+    const handleEnd = (e?: MouseEvent | TouchEvent) => {
+      const body = dragBodyRef.current;
       if (dragConstraintRef.current) {
         Matter.Composite.remove(engine.world, dragConstraintRef.current);
         dragConstraintRef.current = null;
         dragBodyRef.current = null;
         scene.style.cursor = 'grab';
       }
+      // Click-vs-drag: if we didn't move much and this is a swatch, toggle flip
+      if (body && body.label && String(body.label).startsWith('swatch-') && dragStartPosRef.current && e) {
+        const touch = (e as TouchEvent).changedTouches?.[0];
+        const endPoint = e instanceof MouseEvent ? getMousePos(e) : touch ? getMousePos(touch) : null;
+        if (endPoint) {
+          const dx = endPoint.x - dragStartPosRef.current.x;
+          const dy = endPoint.y - dragStartPosRef.current.y;
+          if (Math.hypot(dx, dy) < CLICK_THRESHOLD_PX) {
+            toggleSwatchFlip(String(body.label));
+          }
+        }
+      }
+      dragStartPosRef.current = null;
     };
 
     scene.addEventListener('mousedown', handleStart);
     scene.addEventListener('mousemove', handleMove);
-    scene.addEventListener('mouseup', handleEnd);
-    scene.addEventListener('mouseleave', handleEnd);
+    scene.addEventListener('mouseup', (e) => handleEnd(e));
+    scene.addEventListener('mouseleave', () => handleEnd());
     scene.addEventListener('touchstart', handleStart, { passive: false });
     scene.addEventListener('touchmove', handleMove, { passive: false });
-    scene.addEventListener('touchend', handleEnd);
+    scene.addEventListener('touchend', (e) => handleEnd(e));
 
     // Run engine
     const runner = Matter.Runner.create();
@@ -390,8 +581,22 @@ export const GravityPlayground: React.FC = () => {
     };
 
     switch (el.type) {
-      case 'swatch':
-        return <SwatchElement key={el.id} color={el.color!} hex={el.hex!} name={el.name!} style={style} />;
+      case 'swatch': {
+        const mood = swatchMoodById.get(el.id);
+        if (!mood) return null;
+        return (
+          <SwatchElement
+            key={el.id}
+            id={el.id}
+            color={el.color!}
+            hex={el.hex!}
+            name={el.name!}
+            mood={mood}
+            isFlipped={flippedSwatchIds.has(el.id)}
+            style={style}
+          />
+        );
+      }
       case 'pill':
         return <PillElement key={el.id} content={el.content!} style={style} />;
       case 'icon':

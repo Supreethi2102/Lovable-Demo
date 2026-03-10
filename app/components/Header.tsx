@@ -45,9 +45,10 @@ export const Header: React.FC = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Tablet detection (769px - 1024px): click-open dropdowns only in this range.
+  // Tablet detection (768px - 1025px): click-open dropdowns when desktop nav is visible but viewport is tablet.
+  // Use 1025px so 1024px is included; 768px is the breakpoint below which desktop nav is hidden.
   useEffect(() => {
-    const mq = window.matchMedia('(min-width: 769px) and (max-width: 1024px)');
+    const mq = window.matchMedia('(min-width: 768px) and (max-width: 1025px)');
     const update = () => setIsTabletViewport(mq.matches);
     update();
     mq.addEventListener('change', update);
@@ -117,13 +118,17 @@ export const Header: React.FC = () => {
 
   const toggleMegaMenu = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
     e.preventDefault();
-    if (!isTabletViewport) {
+    e.stopPropagation();
+    // Check viewport at click time so tablet behavior works even if state was stale (e.g. after resize)
+    const w = typeof window !== 'undefined' ? window.innerWidth : 0;
+    const isTablet = w >= 768 && w <= 1025;
+    if (!isTablet) {
       scrollToSection(e, '#work');
       return;
     }
     setIsThemeMenuOpen(false);
     setIsMegaMenuOpen(prev => !prev);
-  }, [isTabletViewport, scrollToSection]);
+  }, [scrollToSection]);
 
   const toggleThemeMenu = useCallback(() => {
     if (!isTabletViewport) return;

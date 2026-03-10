@@ -1107,8 +1107,17 @@
     line-height: 22px;
   }
 
+  /* Bottom three cards: tighter gap and full width so they match other breakpoints */
   .destinations__small-grid {
     margin-top: 24px;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .destination-small {
+    min-width: 0;
   }
 
   .destinations__cta {

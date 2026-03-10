@@ -475,9 +475,11 @@
   margin: 0;
 }
 
+/* Stamp and address scale proportionally: same aspect ratios at all breakpoints */
 .contact__stamp-area {
   width: 384px; /* Figma width */
   height: 129px; /* Figma height */
+  aspect-ratio: 384 / 129;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -494,8 +496,9 @@
 }
 
 .contact__address-area {
-  width: 340px; /* Scaled down */
-  height: 300px; /* Scaled down */
+  width: 340px; /* Figma proportion */
+  height: 300px;
+  aspect-ratio: 340 / 300;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -513,14 +516,44 @@
 
 /* Send Button - outlined by default, filled on hover (like view all) */
 .contact__submit-btn {
-  width: 230px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 230px; /* Figma width */
+  height: 48px; /* Figma height */
+  padding: 16px 24px;
   margin: 0 auto;
+  background: #f7f9fa;
+  border: 1px solid #7150e5;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
+.contact__submit-btn:hover:not(:disabled):not(.contact__submit-btn--loading):not(.contact__submit-btn--success) {
+  background: #7150e5;
+}
 
+.contact__submit-btn:hover:not(:disabled):not(.contact__submit-btn--loading):not(.contact__submit-btn--success) span,
+.contact__submit-btn:hover:not(:disabled):not(.contact__submit-btn--loading):not(.contact__submit-btn--success) svg {
+  color: #f6f7f8;
+}
 
-.contact__submit-btn .btn__icon {
+.contact__submit-btn svg {
+  width: 24px;
+  height: 24px;
   flex-shrink: 0;
+}
+
+.contact__submit-btn span {
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  color: #7150e5;
+  white-space: nowrap;
+  transition: color 0.2s ease;
 }
 
 /* Form validation states */
@@ -623,13 +656,18 @@
    Responsive - Same breakpoints as other sections
    ================================ */
 
+/* Mobile button hidden on desktop by default */
+.contact__submit-btn--mobile {
+  display: none;
+}
+
+/* Desktop button visible on desktop */
+.contact__submit-btn--desktop {
+  display: flex;
+}
+
 /* Large Desktop - 1400px */
 @media (max-width: 1400px) {
-  .contact {
-    padding-top: 96px;
-    padding-bottom: 96px;
-  }
-
   .contact__card {
     --contact-card-gap: 60px;
     padding: 48px;
@@ -642,234 +680,257 @@
     padding: 0 24px;
   }
 
-  .contact__divider {
-    align-self: stretch;
-  }
-
   .contact__stamp-area {
-    width: 340px;
+    width: min(340px, 100%);
+    height: auto;
+    aspect-ratio: 384 / 129;
   }
 
   .contact__address-area {
-    width: 300px;
-    height: 260px;
+    width: min(300px, 100%);
+    height: auto;
+    aspect-ratio: 340 / 300;
   }
 }
 
-/* Desktop - 1200px */
+/* Desktop - 1024px to 1200px: postcard side must scale fluidly */
 @media (max-width: 1200px) {
-  .contact {
-    padding-top: 80px;
-    padding-bottom: 80px;
-  }
-
   .contact__card {
     --contact-card-gap: 48px;
     padding: 40px;
   }
 
   .contact__form-side {
-    flex: 0 0 420px;
+    flex: 0 0 400px;
     gap: 32px;
-    padding: 0 24px;
+    padding: 0 16px;
   }
 
   .contact__title {
     font-size: 28px;
   }
 
-  .contact__divider {
-    align-self: stretch;
-  }
-
   .contact__postcard-side {
+    flex: 1;
+    min-width: 0;
     gap: 40px;
   }
 
+  /* Postcard stack fills right column fluidly */
+  .contact__postcard-stack {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  /* Fluid scaling 1024–1200: grow with viewport so no sudden jump */
   .contact__stamp-area {
-    width: 300px;
+    width: 100%;
+    max-width: clamp(260px, 25vw, 340px);
+    height: auto;
+    aspect-ratio: 384 / 129;
   }
 
   .contact__address-area {
-    width: 280px;
-    height: 240px;
+    width: 100%;
+    max-width: clamp(230px, 22vw, 300px);
+    height: auto;
+    aspect-ratio: 340 / 300;
+  }
+
+  .contact__submit-btn--desktop {
+    width: 100%;
+    max-width: 260px;
   }
 }
 
-/* Tablet Landscape - 1024px */
+/* ── Tablet & Mobile (≤1024px): single-column stacked layout ── */
 @media (max-width: 1024px) {
-  .contact {
+  /* Wrapper */
+  .contact-wrapper {
     padding-top: 64px;
     padding-bottom: 64px;
-    padding-left: clamp(24px, 4vw, 48px);
-    padding-right: clamp(24px, 4vw, 48px);
+    padding-left: var(--padding-x);
+    padding-right: var(--padding-x);
   }
 
+  .contact-stage {
+    min-height: unset;
+    /* Let active card's natural height drive the stage */
+    display: block;
+  }
+
+  /* Active card: back in flow so it gives height to stage */
+  .contact-card.is-active {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+  }
+
+  /* Next card stays absolute/offscreen */
+  .contact-card.is-next {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  /* Card stacks vertically */
   .contact__card {
-    --contact-card-gap: 40px;
     flex-direction: column;
-    align-items: center;
-    padding: 32px;
+    align-items: stretch;
+    padding: 40px 36px;
+    min-height: unset;
+    gap: 0; /* gaps managed individually below */
   }
 
+  /* ── Form side ── */
   .contact__form-side {
     flex: none;
     width: 100%;
-    max-width: 540px;
-    padding: 0 24px;
+    padding: 0;
+    gap: 28px;
+    order: 1;
   }
 
+  /* ── Mobile button: full-width, same visual style as desktop ── */
+  .contact__submit-btn--mobile {
+    display: flex;
+    width: 100%;
+    height: 48px;
+    margin-top: 8px;
+    order: 2;
+  }
+
+  /* ── Horizontal divider ── */
   .contact__divider {
     width: 100%;
     height: 1px;
-    max-width: 540px;
+    align-self: auto;
+    margin: 32px 0;
+    order: 3;
   }
 
+  /* ── Postcard side: left-aligned decoration ── */
   .contact__postcard-side {
+    flex: none;
     width: 100%;
-    max-width: 540px;
-    gap: 32px;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 0;
     padding: 0;
+    order: 4;
   }
 
+  /* Slot/stack: give enough height for stamp + address + gap */
   .contact__postcard-slot {
     min-height: 420px;
+    overflow: hidden;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: flex-start;
   }
 
+  .contact__postcard-stack {
+    position: relative;
+    min-height: 420px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  /* Postcard inner: stamp on top, address below, left-aligned */
   .contact__postcard {
-    gap: 32px;
+    position: absolute;
+    inset: 0;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 24px;
+    width: 100%;
   }
 
+  /* Same proportions as desktop: stamp 384:129, address 340:300 */
   .contact__stamp-area {
     width: 100%;
-    max-width: 340px;
+    max-width: 280px;
+    height: auto;
+    aspect-ratio: 384 / 129;
+    flex-shrink: 0;
+    margin: 0;
   }
 
   .contact__address-area {
     width: 100%;
-    max-width: 300px;
-    height: 240px;
+    max-width: 248px;
+    height: auto;
+    aspect-ratio: 340 / 300;
+    margin: 0;
+  }
+
+  /* Hide desktop button */
+  .contact__submit-btn--desktop {
+    display: none;
   }
 }
 
-/* Tablet Portrait - 768px */
+/* Tablet Portrait - 768px: same scaling as desktop (proportional max-widths) */
 @media (max-width: 768px) {
-  .contact {
+  .contact-wrapper {
     padding-top: 48px;
     padding-bottom: 48px;
   }
 
   .contact__card {
-    --contact-card-gap: 32px;
-    padding: 24px;
-  }
-
-  .contact__form-side {
-    gap: 24px;
-    padding: 0 20px;
-  }
-
-  .contact__label {
-    font-size: 18px;
-  }
-
-  .contact__title {
-    font-size: 24px;
-    letter-spacing: 0.96px;
-  }
-
-  .contact__form {
-    gap: 24px;
-  }
-
-  .contact__input {
-    height: 48px;
-  }
-
-  .contact__textarea {
-    height: 160px;
-  }
-
-  .contact__postcard-side {
-    gap: 24px;
+    padding: 32px 28px;
   }
 
   .contact__stamp-area {
-    height: 100px;
+    width: 100%;
+    max-width: 240px;
+    height: auto;
+    aspect-ratio: 384 / 129;
   }
 
   .contact__address-area {
-    height: 200px;
+    width: 100%;
+    max-width: 212px;
+    height: auto;
+    aspect-ratio: 340 / 300;
   }
 
-  .contact__submit-btn {
-    width: 200px;
-    height: 44px;
+  .contact__divider {
+    margin: 28px 0;
   }
 }
 
-/* Mobile - 480px */
+/* Mobile - 480px: same scaling as desktop (proportional max-widths) */
 @media (max-width: 480px) {
-  .contact {
+  .contact-wrapper {
     padding-top: 40px;
     padding-bottom: 40px;
   }
 
   .contact__card {
-    --contact-card-gap: 24px;
-    padding: 20px 16px;
-    border-radius: 16px;
+    padding: 24px 20px;
+    min-height: unset;
   }
 
-  .contact__form-side {
-    gap: 20px;
-    padding: 0 16px;
-  }
-
-  .contact__label {
-    font-size: 16px;
-  }
-
-  .contact__title {
-    font-size: 22px;
-  }
-
-  .contact__form {
-    gap: 20px;
-  }
-
-  .contact__field-label {
-    font-size: 14px;
-  }
-
-  .contact__input,
-  .contact__textarea {
-    font-size: 14px;
-    padding: 10px 12px;
-  }
-
-  .contact__input {
-    height: 44px;
-  }
-
-  .contact__textarea {
-    height: 140px;
+  .contact__divider {
+    margin: 24px 0;
   }
 
   .contact__stamp-area {
-    height: 80px;
+    width: 100%;
+    max-width: 160px;
+    height: auto;
+    aspect-ratio: 384 / 129;
   }
 
   .contact__address-area {
-    height: 160px;
-  }
-
-  .contact__submit-btn {
     width: 100%;
-    max-width: 200px;
-  }
-
-  .contact__submit-btn span {
-    font-size: 14px;
+    max-width: 140px;
+    height: auto;
+    aspect-ratio: 340 / 300;
   }
 }

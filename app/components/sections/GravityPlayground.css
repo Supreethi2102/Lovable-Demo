@@ -104,7 +104,7 @@
   pointer-events: none; /* Let Matter.js handle mouse events */
 }
 
-/* Swatch Cards – Figma: front + back (colour mood) with flip */
+/* Swatch Cards – content slides up/down within card; button fixed at bottom */
 .gp-swatch {
   position: absolute;
   top: 0;
@@ -112,56 +112,78 @@
   width: 176px;
   height: 308px;
   border-radius: 12px;
-  overflow: visible;
+  overflow: hidden;
   will-change: transform;
   pointer-events: none;
-  perspective: 800px;
-}
-
-.gp-swatch__flip-inner {
-  position: relative;
-  width: 100%;
-  height: 100%;
-  transform-style: preserve-3d;
-  transition: transform 0.45s ease;
-}
-
-.gp-swatch--flipped .gp-swatch__flip-inner {
-  transform: rotateY(180deg);
 }
 
 .gp-swatch__face {
   position: absolute;
   inset: 0;
-  backface-visibility: hidden;
-  -webkit-backface-visibility: hidden;
   border-radius: 12px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
+  padding: 20px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
   overflow: hidden;
 }
 
-.gp-swatch__face--front {
-  transform: rotateY(0deg);
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  padding: 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-}
-
-.gp-swatch__face--back {
-  transform: rotateY(180deg);
-  background: #ffffff;
-  border: 1px solid #e5e7eb;
-  padding: 16px 16px 8px 16px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
-  overflow-x: hidden;
-  overflow-y: auto; /* scroll when content is long so full description is visible */
-}
-
-.gp-swatch__inner {
+.gp-swatch__body {
+  flex: 1;
+  min-height: 0;
   display: flex;
   flex-direction: column;
-  height: 100%;
+  overflow: hidden;
+}
+
+.gp-swatch__viewport {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.gp-swatch__track {
   width: 100%;
+  height: 200%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.45s ease;
+}
+
+.gp-swatch--flipped .gp-swatch__track {
+  transform: translateY(-50%);
+}
+
+.gp-swatch__panel {
+  height: 50%;
+  flex-shrink: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.gp-swatch__panel--front {
+  overflow: hidden;
+}
+
+.gp-swatch__panel--back {
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.gp-swatch__footer {
+  flex-shrink: 0;
+  padding-top: 4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.gp-swatch__footer .gp-swatch__link {
+  margin-top: 0;
+  text-align: center;
 }
 
 .gp-swatch__color {
@@ -341,11 +363,7 @@
   text-align: left;
 }
 
-.gp-swatch__link--hide {
-  margin-top: auto;
-  padding-top: 4px;
-  margin-bottom: 12px; /* move "Hide colour mood" up a bit from bottom edge */
-}
+/* Footer link (View / Hide colour mood) – no extra margin; footer has padding-top */
 
 /* Responsive */
 @media (max-width: 1200px) {

@@ -212,7 +212,7 @@ const allElements: PhysicsElement[] = [
 
 const swatchMoodById = new Map(swatchCards.map(s => [s.id, s.mood]));
 
-// Swatch card: front (colour + View colour mood) and back (colour mood info + Hide button)
+// Swatch card: content slides up/down within the card; button stays fixed at bottom
 const SwatchElement: React.FC<{
   id: string;
   color: string;
@@ -223,50 +223,56 @@ const SwatchElement: React.FC<{
   style: React.CSSProperties;
 }> = ({ id, color, hex, name, mood, isFlipped, style }) => (
   <div className={`gp-swatch ${isFlipped ? 'gp-swatch--flipped' : ''}`} style={style} data-swatch-id={id}>
-    <div className="gp-swatch__flip-inner">
-      {/* Front */}
-      <div className="gp-swatch__face gp-swatch__face--front">
-        <div className="gp-swatch__inner">
-          <div className="gp-swatch__color" style={{ backgroundColor: color }} />
-          <div className="gp-swatch__content">
-            <div className="gp-swatch__text">
-              <p className="gp-swatch__name">{name}</p>
-              <div className="gp-swatch__hex-row">
-                <span className="gp-swatch__hex">{hex}</span>
-                <Info size={16} weight="regular" color="#7150E5" className="gp-swatch__info-icon" aria-hidden="true" />
+    <div className="gp-swatch__face">
+      <div className="gp-swatch__body">
+        <div className="gp-swatch__viewport">
+          <div className="gp-swatch__track">
+            {/* Panel 1: colour block + name (slides up when opened) */}
+            <div className="gp-swatch__panel gp-swatch__panel--front">
+              <div className="gp-swatch__color" style={{ backgroundColor: color }} />
+              <div className="gp-swatch__content">
+                <div className="gp-swatch__text">
+                  <p className="gp-swatch__name">{name}</p>
+                  <div className="gp-swatch__hex-row">
+                    <span className="gp-swatch__hex">{hex}</span>
+                    <Info size={16} weight="regular" color="#7150E5" className="gp-swatch__info-icon" aria-hidden="true" />
+                  </div>
+                </div>
               </div>
             </div>
-            <span className="gp-swatch__link">View colour mood</span>
-          </div>
-        </div>
-      </div>
-      {/* Back – colour mood */}
-      <div className="gp-swatch__face gp-swatch__face--back">
-        <div className="gp-swatch__inner gp-swatch__back-inner">
-          <div className="gp-swatch__text gp-swatch__text--back-header">
-            <p className="gp-swatch__name">{name}</p>
-            <div className="gp-swatch__hex-row">
-              <span className="gp-swatch__hex">{hex}</span>
-              <Info size={16} weight="regular" color="#7150E5" className="gp-swatch__info-icon" aria-hidden="true" />
+            {/* Panel 2: colour mood (slides up into view when opened) */}
+            <div className="gp-swatch__panel gp-swatch__panel--back">
+              <div className="gp-swatch__back-inner">
+                <div className="gp-swatch__text gp-swatch__text--back-header">
+                  <p className="gp-swatch__name">{name}</p>
+                  <div className="gp-swatch__hex-row">
+                    <span className="gp-swatch__hex">{hex}</span>
+                    <Info size={16} weight="regular" color="#7150E5" className="gp-swatch__info-icon" aria-hidden="true" />
+                  </div>
+                </div>
+                <p className="gp-swatch__description">{mood.description}</p>
+                <div className="gp-swatch__contrast-bar" aria-hidden="true">
+                  <span className="gp-swatch__contrast-left" style={{ backgroundColor: color }} />
+                  <span className="gp-swatch__contrast-divider" />
+                  <span className="gp-swatch__contrast-right" style={{ backgroundColor: mood.contrastColor }} />
+                </div>
+                <div className="gp-swatch__ideal">
+                  <p className="gp-swatch__ideal-line">
+                    <span className="gp-swatch__ideal-label">My ideal match: </span>
+                    <span className="gp-swatch__ideal-hex">{mood.idealMatchHex}</span>
+                  </p>
+                  <p className="gp-swatch__ideal-name">{mood.idealMatchName}</p>
+                </div>
+                <p className="gp-swatch__contrast-ratio">
+                  Contrast: {mood.contrastRatio} – ({mood.contrastRating})
+                </p>
+              </div>
             </div>
           </div>
-          <p className="gp-swatch__description">{mood.description}</p>
-          <div className="gp-swatch__contrast-bar" aria-hidden="true">
-            <span className="gp-swatch__contrast-left" style={{ backgroundColor: color }} />
-            <span className="gp-swatch__contrast-divider" />
-            <span className="gp-swatch__contrast-right" style={{ backgroundColor: mood.contrastColor }} />
-          </div>
-          <div className="gp-swatch__ideal">
-            <p className="gp-swatch__ideal-line">
-              <span className="gp-swatch__ideal-label">My ideal match: </span>
-              <span className="gp-swatch__ideal-hex">{mood.idealMatchHex}</span>
-            </p>
-            <p className="gp-swatch__ideal-name">{mood.idealMatchName}</p>
-          </div>
-          <p className="gp-swatch__contrast-ratio">
-            Contrast: {mood.contrastRatio} – ({mood.contrastRating})
-          </p>
-          <span className="gp-swatch__link gp-swatch__link--hide">Hide colour mood</span>
+        </div>
+        {/* Button stays in same place; label toggles */}
+        <div className="gp-swatch__footer">
+          <span className="gp-swatch__link">{isFlipped ? 'Hide colour mood' : 'View colour mood'}</span>
         </div>
       </div>
     </div>

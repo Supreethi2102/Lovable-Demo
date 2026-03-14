@@ -279,6 +279,7 @@
   flex-direction: column;
   gap: 12px;
   width: 100%;
+  margin-top: 6px; /* push Challenge / Focus / Impact section down a bit */
 }
 
 .tab {

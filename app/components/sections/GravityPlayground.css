@@ -151,8 +151,10 @@
   transform: rotateY(180deg);
   background: #ffffff;
   border: 1px solid #e5e7eb;
-  padding: 16px;
+  padding: 16px 16px 8px 16px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  overflow-x: hidden;
+  overflow-y: auto; /* scroll when content is long so full description is visible */
 }
 
 .gp-swatch__inner {
@@ -240,22 +242,24 @@
   align-items: stretch;
   gap: 12px;
   padding: 0;
+  height: auto;
+  min-height: 100%; /* fill card when content is short; grow to show full description when long */
 }
 
 .gp-swatch__text--back-header {
   flex-shrink: 0;
-  align-items: flex-start;
-  text-align: left;
+  align-items: center;
+  text-align: center;
 }
 
 .gp-swatch__text--back-header .gp-swatch__name,
 .gp-swatch__text--back-header .gp-swatch__hex-row {
-  text-align: left;
-  justify-content: flex-start;
+  text-align: center;
+  justify-content: center;
 }
 
 .gp-swatch__text--back-header .gp-swatch__name {
-  text-align: left;
+  text-align: center;
 }
 
 .gp-swatch__description {
@@ -263,23 +267,21 @@
   font-size: 11px;
   font-weight: 400;
   line-height: 15px;
-  letter-spacing: 0.2px;
+  letter-spacing: 0px;
   color: #3c3f43;
-  margin: 0;
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
+  margin: 0 0 12px 0; /* 12px + 12px gap = 24px between description and contrast bar */
+  flex-shrink: 0;
   text-align: left;
 }
 
 .gp-swatch__contrast-bar {
   display: flex;
   width: 100%;
-  height: 28px;
+  height: 12px;
   border-radius: 8px;
   overflow: hidden;
   flex-shrink: 0;
-  border: 1px solid rgba(0, 0, 0, 0.08);
+  border: 1px solid #76797F;
 }
 
 .gp-swatch__contrast-left,
@@ -299,7 +301,7 @@
   font-size: 10px;
   font-weight: 400;
   line-height: 14px;
-  letter-spacing: 0.2px;
+  letter-spacing: 0px;
   color: #3c3f43;
   flex-shrink: 0;
   text-align: left;
@@ -331,9 +333,10 @@
   font-size: 10px;
   font-weight: 400;
   line-height: 14px;
-  letter-spacing: 0.2px;
+  letter-spacing: 0px;
   color: #3c3f43;
   margin: 0;
+  margin-top: -10px; /* reduce space above Contrast line */
   flex-shrink: 0;
   text-align: left;
 }
@@ -341,6 +344,7 @@
 .gp-swatch__link--hide {
   margin-top: auto;
   padding-top: 4px;
+  margin-bottom: 12px; /* move "Hide colour mood" up a bit from bottom edge */
 }
 
 /* Responsive */

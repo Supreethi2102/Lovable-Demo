@@ -36,11 +36,16 @@
   --publication-aspect-ratio: 3 / 2; /* 6×4 (landscape) – consistent across section for no crop on enlarge */
 }
 
-/* Smooth scroll behavior */
+/* Smooth scroll behavior – use clip (not hidden) so position:sticky works in descendants */
+html,
+body {
+  overflow-x: clip;
+  max-width: 100%;
+}
+
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 100px; /* Account for fixed header */
-  overflow-x: hidden; /* Prevent horizontal scroll from scaled elements */
 }
 
 /* Global focus styles for keyboard navigation */
@@ -109,7 +114,7 @@ a:focus-visible {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  overflow: visible;
+  overflow-x: clip;
 }
 
 /* Non-home pages background (avoid white showing) */

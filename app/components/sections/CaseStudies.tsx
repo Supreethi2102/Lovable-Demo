@@ -179,6 +179,24 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
       >
         {/* Front */}
         <div className="case-study-card__face case-study-card__front">
+          {/* Tablet portrait / mobile: action row at top (hidden on desktop) */}
+          <div className="case-study-card__actions-row case-study-card__actions-row--top" aria-hidden="true">
+            <button type="button" className="flip-button case-study-card__actions-row-btn" onClick={() => setIsFlipped(true)} aria-label="Flip for inspiration">
+              <div className="flip-button__icon">
+                <ArrowsClockwise size={24} weight="regular" color="#7150E5" aria-hidden="true" />
+              </div>
+              <span className="flip-button__text">Flip for inspiration</span>
+            </button>
+            <button
+              type="button"
+              className="btn btn--primary btn--icon-left case-study-card__actions-row-btn"
+              onClick={() => document.getElementById('publications')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+              aria-label={`View the design for ${study.subtitle}`}
+            >
+              <span className="btn__icon" aria-hidden="true"><Ruler size={24} weight="regular" color="currentColor" /></span>
+              <span>View the design</span>
+            </button>
+          </div>
           {/* Left Content */}
           <div className="case-study-card__content">
             {/* Sidebar */}
@@ -186,7 +204,7 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               {/* Flip Button */}
               <button 
                 type="button"
-                className="flip-button"
+                className="flip-button flip-button--desktop"
                 onMouseEnter={() => setHoveredBtn('flip')}
                 onMouseLeave={() => setHoveredBtn(null)}
                 onClick={() => setIsFlipped(true)}
@@ -278,7 +296,7 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
           </div>
           <button 
             type="button"
-            className="btn btn--primary btn--icon-left view-design-btn"
+            className="btn btn--primary btn--icon-left view-design-btn view-design-btn--desktop"
             onMouseEnter={() => setHoveredBtn('viewDesign')}
             onMouseLeave={() => setHoveredBtn(null)}
             onClick={() => {
@@ -305,6 +323,24 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
           <div ref={imgBRef} className="case-study-card__image-layer" aria-hidden="true" />
         </div>
       </figure>
+          {/* Tablet portrait / mobile: action row at bottom (hidden on desktop) */}
+          <div className="case-study-card__actions-row case-study-card__actions-row--bottom" aria-hidden="true">
+            <button type="button" className="flip-button case-study-card__actions-row-btn" onClick={() => setIsFlipped(true)} aria-label="Flip for inspiration">
+              <div className="flip-button__icon">
+                <ArrowsClockwise size={24} weight="regular" color="#7150E5" aria-hidden="true" />
+              </div>
+              <span className="flip-button__text">Flip for inspiration</span>
+            </button>
+            <button
+              type="button"
+              className="btn btn--primary btn--icon-left case-study-card__actions-row-btn"
+              onClick={() => document.getElementById('publications')?.scrollIntoView({ behavior: 'smooth', block: 'start' })}
+              aria-label={`View the design for ${study.subtitle}`}
+            >
+              <span className="btn__icon" aria-hidden="true"><Ruler size={24} weight="regular" color="currentColor" /></span>
+              <span>View the design</span>
+            </button>
+          </div>
         </div>
 
         {/* Back – same layout as front, with Place, Influence, Discoveries instead of Challenge, Focus, Impact */}

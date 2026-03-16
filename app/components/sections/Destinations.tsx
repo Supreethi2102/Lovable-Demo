@@ -23,6 +23,7 @@ const destinations = {
     country: 'USA', 
     city: 'Nevada', 
     image: '/destinations/e-3Qf1QyJFs30-unsplash 6.png',
+    mobileTabletImage: '/destinations/Nevada%20(%20Mobile%20and%20Tablet).png',
     expandedImage: '/destinations/Opened Nevada.png',
     gridImage: '/destinations/Grid Nevada.png',
     size: 'tall',
@@ -70,6 +71,7 @@ const destinations = {
     country: 'United Arab Emirates', 
     city: 'Dubai', 
     image: '/destinations/e-3Qf1QyJFs30-unsplash 7.png',
+    mobileTabletImage: '/destinations/Dubai(Mobile,Tablet).png',
     expandedImage: '/destinations/Opened Creek Harbour.png',
     gridImage: '/destinations/Grid Creek Harbour.png',
     size: 'tall',
@@ -140,6 +142,8 @@ interface Destination {
   country: string;
   city: string;
   image: string;
+  /** Optional image for tablet and mobile (max-width: 1024px) */
+  mobileTabletImage?: string;
   expandedImage: string;
   gridImage?: string;
   size: string;
@@ -273,11 +277,16 @@ const DestinationCard: React.FC<DestinationCardProps> = ({
       aria-expanded="false"
     >
       <div className="destination-card__image-wrapper">
-        <img 
-          src={destination.image} 
-          alt={`Photo of ${destination.city}, ${destination.country}`}
-          className="destination-card__image"
-        />
+        <picture>
+          {destination.mobileTabletImage && (
+            <source media="(max-width: 1024px)" srcSet={destination.mobileTabletImage} />
+          )}
+          <img 
+            src={destination.image} 
+            alt={`Photo of ${destination.city}, ${destination.country}`}
+            className="destination-card__image"
+          />
+        </picture>
       </div>
       <div className="destination-card__info">
         <p className="destination-card__city">{destination.city}</p>
@@ -312,11 +321,16 @@ const SmallCard: React.FC<SmallCardProps> = ({ destination, onClick }) => (
     aria-label={`${destination.city}, ${destination.country}. Click to view details`}
   >
     <div className="destination-small__image-wrapper">
-      <img 
-        src={destination.gridImage ?? destination.image} 
-        alt={`Photo of ${destination.city}, ${destination.country}`}
-        className="destination-small__image"
-      />
+      <picture>
+        {destination.mobileTabletImage && (
+          <source media="(max-width: 1024px)" srcSet={destination.mobileTabletImage} />
+        )}
+        <img 
+          src={destination.gridImage ?? destination.image} 
+          alt={`Photo of ${destination.city}, ${destination.country}`}
+          className="destination-small__image"
+        />
+      </picture>
     </div>
     <div className="destination-small__info">
       <p className="destination-small__city">{destination.city}</p>

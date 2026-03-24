@@ -361,6 +361,9 @@
 
 .case-study-card__copy {
   will-change: transform, opacity;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .case-study-card__subtitle {
@@ -370,6 +373,9 @@
   line-height: 1.5rem;
   color: #3c3f43;
   margin-bottom: 32px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .case-study-card__title {
@@ -380,6 +386,9 @@
   letter-spacing: 0.4px;
   color: #111213;
   margin-bottom: 12px;
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 .case-study-card__description {
@@ -389,7 +398,10 @@
   line-height: 1.5rem;
   color: #3c3f43;
   margin-bottom: auto;
-  max-width: 334px;
+  /* Width follows .case-study-card__main only — never a narrower max-width than the title */
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
 }
 
 /* View Design Button – uses .btn .btn--primary from ButtonStyles.css */
@@ -737,32 +749,45 @@
     display: flex;
     flex-direction: column;
     min-width: 0;
-    max-width: none;
+    /* Cap line length so body copy doesn’t span the full card width on wide tablets/laptops */
+    max-width: min(42rem, 100%);
     align-self: stretch;
   }
 
   .case-study-card__copy {
     flex: 0 1 auto;
     min-height: 0;
+    width: 100%;
+    max-width: 100%;
   }
 
+  /* Same face + weight as desktop card title (avoid Romie here vs Atkinson on narrow) */
   .case-study-card__title {
-    font-family: 'Romie', Georgia, serif;
+    font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
     font-size: clamp(1.375rem, 2.75vw, 1.875rem);
-    font-weight: 500;
+    font-weight: 600;
     line-height: 1.2;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.025em;
     margin-bottom: 16px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .case-study-card__subtitle {
+    width: 100%;
+    max-width: 100%;
   }
 
   .case-study-card__description {
-    max-width: none;
     margin-bottom: 24px;
+    width: 100%;
+    max-width: 100%;
   }
 
   .view-design-btn {
     margin-top: auto;
     align-self: flex-start;
+    max-width: 100%;
   }
 }
 
@@ -845,27 +870,31 @@
     width: calc(100% - 24px);
   }
 
-  /* Figma mobile: bold sans headline, comfortable body */
+  /* Match desktop/tablet card title (semibold sans, not extra-bold) */
   .case-study-card__title {
     font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-    font-size: clamp(1.375rem, 5.4vw, 1.625rem);
-    font-weight: 700;
-    line-height: 1.25;
+    font-size: clamp(1.25rem, 4.8vw, 1.5rem);
+    font-weight: 600;
+    line-height: 1.3;
     letter-spacing: 0.02em;
     color: #111213;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
+    max-width: 100%;
   }
 
   .case-study-card__subtitle {
-    margin-bottom: 16px;
+    margin-bottom: 12px;
     font-size: clamp(0.875rem, 0.45vw + 0.8375rem, 1rem);
     line-height: clamp(1.25rem, 0.65vw + 1.1875rem, 1.5rem);
+    max-width: 100%;
   }
 
   .case-study-card__description {
     margin-bottom: 0;
-    line-height: 1.55;
-    font-size: clamp(0.875rem, 0.45vw + 0.8375rem, 1rem);
+    line-height: 1.6;
+    font-size: clamp(0.9375rem, 0.5vw + 0.85rem, 1.0625rem);
+    width: 100%;
+    max-width: 100%;
   }
 
   /* Stack: tab bar (full width) → thin gray rule → padded text + stacked CTAs */
@@ -1072,14 +1101,17 @@
     display: flex;
     flex-direction: column;
     gap: 0;
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
   }
 
-  /* Body → CTA spacing aligned to reference (no huge empty band) */
+  /* Body → CTA: tight enough that copy doesn’t feel “cut off” from the actions */
   .view-design-btn {
     width: 100%;
     max-width: none;
     height: 48px;
-    margin-top: clamp(28px, 8vw, 40px);
+    margin-top: clamp(20px, 5vw, 28px);
     justify-content: center;
   }
 
@@ -1136,19 +1168,20 @@
     background-position: center;
   }
 
+  /* Flush to image top like stacked tablet/desktop (was top: 8px + pill) */
   .case-study-card__duration {
     left: 12px;
     right: auto;
-    top: 8px;
+    top: 0;
     width: auto;
     min-width: auto;
     padding: 8px 12px;
     height: auto;
     min-height: 40px;
     font-size: 0.8125rem;
-    border-radius: 8px;
     border: 1px solid #b0b3b8;
-    border-top: 1px solid #b0b3b8;
+    border-top: none;
+    border-radius: 0 0 8px 8px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
     justify-content: flex-start;
     text-align: left;

@@ -57,7 +57,7 @@ export function getMarkerHtml(title: string): string {
                 color: white;
                 padding: 6px 16px;
                 font-family: sans-serif;
-                font-size: 11px;
+                font-size: 0.6875rem;
                 letter-spacing: 0.6px;
                 text-transform: uppercase;
                 background-color: #30404d;

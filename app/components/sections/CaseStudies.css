@@ -23,9 +23,9 @@
 
 .case-studies__title {
   font-family: 'Romie', Georgia, serif;
-  font-size: 32px;
+  font-size: 2rem;
   font-weight: 500;
-  line-height: 36px;
+  line-height: 2.25rem;
   letter-spacing: 1.28px;
   color: #111213;
   display: flex;
@@ -36,22 +36,31 @@
 
 .case-studies__subtitle {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #3c3f43;
   letter-spacing: 0;
 }
 
-/* Category Filter - From Figma */
+/* Category Filter - From Figma (desktop: row fills content width, equal columns) */
+.case-studies__filter-wrap {
+  margin-bottom: 24px;
+  width: 100%;
+  min-width: 0;
+}
+
 .case-studies__filter {
   display: flex;
   gap: 56px;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
   padding: 21px 16px;
   margin-left: -16px;
   margin-right: -16px;
-  margin-bottom: 24px;
-  align-items: center;
+  margin-bottom: 0;
+  align-items: stretch;
   flex-wrap: nowrap;
 }
 
@@ -62,15 +71,15 @@
   justify-content: flex-start;
   gap: 0;
   padding: 0;
-  min-width: 156px;
-  flex: 1;
+  /* Equal-width columns across the row (Figma); min-width 0 allows flex to shrink into gaps */
+  flex: 1 1 0%;
+  min-width: 0;
   min-height: 131px;
   background: #ffffff;
   border: 1px solid #7150e5;
   border-radius: 16px;
   cursor: pointer;
   transition: background 0.2s ease, border-color 0.2s ease;
-  flex-shrink: 0;
 }
 
 .category-pill:hover {
@@ -113,8 +122,8 @@
   padding: 16px 0;
   border-top: 1px solid #d3d6da;
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 1rem;
+  line-height: 1.5rem;
   color: #7150e5;
   white-space: nowrap;
   transition: color 0.2s ease, border-color 0.2s ease;
@@ -195,9 +204,9 @@
   gap: 8px;
   height: 48px;
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 20px;
+  line-height: 1.25rem;
   color: #3c3f43;
 }
 
@@ -255,22 +264,27 @@
 
 .flip-button__text {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 1rem;
+  line-height: 1.5rem;
   color: #7150e5;
   text-align: center;
   transition: color 0.2s ease;
 }
 
-.flip-button:hover .flip-button__icon {
+.flip-button:not(.flip-button--footer):hover .flip-button__icon {
   background: #7150e5;
   border-color: #7150e5;
 }
 
-.flip-button:hover .flip-button__icon img,
-.flip-button:hover .flip-button__icon svg {
+.flip-button:not(.flip-button--footer):hover .flip-button__icon img,
+.flip-button:not(.flip-button--footer):hover .flip-button__icon svg {
   filter: brightness(0) invert(1);
   color: #fbfbfb;
+}
+
+/* Second flip control — only shown on mobile (full-width outline under CTA) */
+.flip-button--footer {
+  display: none;
 }
 
 /* Tabs */
@@ -292,9 +306,9 @@
   cursor: pointer;
   color: #3c3f43;
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 20px;
+  line-height: 1.25rem;
   transition: color 0.2s ease;
   width: 100%;
   position: relative;
@@ -351,18 +365,18 @@
 
 .case-study-card__subtitle {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #3c3f43;
   margin-bottom: 32px;
 }
 
 .case-study-card__title {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 600;
-  line-height: 28px;
+  line-height: 1.75rem;
   letter-spacing: 0.4px;
   color: #111213;
   margin-bottom: 12px;
@@ -370,9 +384,9 @@
 
 .case-study-card__description {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #3c3f43;
   margin-bottom: auto;
   max-width: 334px;
@@ -424,8 +438,8 @@
   justify-content: center;
   width: 167px;
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 1rem;
+  line-height: 1.5rem;
   color: #3c3f43;
   text-align: center;
   z-index: 1;
@@ -496,8 +510,8 @@
 
 .listen-button__text {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 1rem;
+  line-height: 1.5rem;
   color: #7150e5;
   padding: 16px 0;
   text-align: center;
@@ -518,25 +532,45 @@
 /* Responsive */
 @media (max-width: 1200px) {
   .case-studies__filter {
-    gap: 40px;
+    gap: clamp(16px, 3vw, 40px);
   }
 
   .category-pill {
-    min-width: 140px;
+    /* Still share row equally down to laptop widths */
+    flex: 1 1 0%;
+    min-width: 0;
+  }
+}
+
+/* Stacked card (image on top): up to large tablets / small laptops in landscape — not only ≤1200 */
+@media (max-width: 1366px) {
+  .case-study-card__front,
+  .case-study-card__back {
+    flex-direction: column;
   }
 
-  .case-study-card__front {
-    flex-direction: column;
+  .case-study-card__front .case-study-card__image,
+  .case-study-card__back .case-study-card__image {
+    order: -1;
+    width: 100%;
+    max-width: none;
+    flex: 0 0 48%;
+    min-height: 0;
+    align-self: stretch;
   }
 
   .case-study-card,
   .case-study-card-flip {
-    min-height: auto;
+    min-height: 920px;
   }
 
   .case-study-card__content {
-    flex: 1;
-    padding: 40px 32px;
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    max-width: 100%;
+    padding: 40px clamp(36px, 6vw, 52px);
+    box-sizing: border-box;
   }
 
   .case-study-card__sidebar {
@@ -547,8 +581,13 @@
     width: auto;
   }
 
-  .case-study-card__image {
-    flex: 0 0 300px;
+  /* Stacked hero: duration on the left (desktop wide layout keeps top-right) */
+  .case-study-card__duration {
+    left: clamp(16px, 3.5vw, 28px);
+    right: auto;
+    top: 0;
+    justify-content: flex-start;
+    text-align: left;
   }
 }
 
@@ -559,61 +598,241 @@
     padding-right: clamp(24px, 4vw, 48px);
   }
 
-  .case-study-card__content {
-    flex-direction: column;
-    gap: 32px;
+  /* Tablet + mobile: horizontal scroll so each pill can stay ~Figma width (not squeezed skinny columns) */
+  .case-studies__filter-wrap {
+    margin-left: calc(-1 * clamp(12px, 3vw, 28px));
+    margin-right: calc(-1 * clamp(12px, 3vw, 28px));
+    padding-left: clamp(12px, 3vw, 28px);
+    padding-right: clamp(12px, 3vw, 28px);
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: -20px;
+    margin-bottom: 24px;
+    overflow-x: auto;
+    overflow-y: visible;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
   }
 
-  .case-study-card__sidebar {
-    flex-direction: row;
-    width: 100%;
-    border-right: none;
-    border-bottom: 1px solid #b0b3b8;
-    padding-right: 0;
-    padding-bottom: 24px;
-    gap: 32px;
-    justify-content: space-between;
+  .case-studies__filter-wrap::-webkit-scrollbar {
+    height: 6px;
   }
 
-  .case-study-card__tabs {
-    flex-direction: row;
-    gap: 24px;
+  .case-studies__filter-wrap::-webkit-scrollbar-thumb {
+    background: rgba(60, 63, 67, 0.35);
+    border-radius: 3px;
   }
 
-  .tab--active::after {
-    right: auto;
-    bottom: -24px;
-    top: auto;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 48px;
-    height: 4px;
+  .case-studies__filter {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: clamp(12px, 2vw, 18px);
+    width: max-content;
+    max-width: none;
+    min-width: 100%;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 12px clamp(20px, 3vw, 28px);
+    box-sizing: border-box;
+  }
+
+  .case-studies__filter .category-pill {
+    flex: 0 0 auto;
+    min-width: 152px;
+    min-height: 136px;
   }
 }
 
-@media (max-width: 768px) {
+/*
+ * Tablet + small laptop (768–1366px): Figma-style two-column copy under image.
+ * Covers portrait tablets, iPad landscape, and many “other tablet” widths past 1200px.
+ * Phones: ≤767px. Image height: 48% from ≤1366; 28% on phones via ≤767 override.
+ */
+@media (min-width: 768px) and (max-width: 1366px) {
+  .case-study-card__front,
+  .case-study-card__back {
+    align-items: stretch;
+    min-height: 0;
+  }
+
+  .case-study-card__content {
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: clamp(32px, 5vw, 56px);
+    /* Generous horizontal inset like Figma (rail + copy clear of card edges) */
+    padding: clamp(36px, 5vw, 52px) clamp(44px, 8vw, 72px);
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .case-study-card__sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-self: stretch;
+    width: 160px;
+    min-width: 160px;
+    max-width: 160px;
+    flex-shrink: 0;
+    border-right: 1px solid #b0b3b8;
+    border-bottom: none;
+    padding-right: 32px;
+    padding-bottom: 0;
+    margin: 0;
+    gap: 0;
+    box-sizing: border-box;
+  }
+
+  .flip-button {
+    width: 100%;
+    max-width: 128px;
+    align-self: flex-start;
+  }
+
+  .case-study-card__tabs,
+  .case-study-card__back-tabs {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .case-study-card__tabs .tab,
+  .case-study-card__back-tabs .case-study-card__back-item {
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  /* Vertical accent flush to column rule (desktop geometry) */
+  .tab--active::after,
+  .case-study-card__back-item.tab--active::after {
+    right: -32px;
+    top: 50%;
+    bottom: auto;
+    left: auto;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 48px;
+  }
+
+  .tab:hover::after,
+  .case-study-card__back-item.tab:hover::after {
+    right: -32px;
+    top: 50%;
+    bottom: auto;
+    left: auto;
+    transform: translateY(-50%);
+    width: 4px;
+    height: 48px;
+  }
+
+  .case-study-card__main {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    max-width: none;
+    align-self: stretch;
+  }
+
+  .case-study-card__copy {
+    flex: 0 1 auto;
+    min-height: 0;
+  }
+
+  .case-study-card__title {
+    font-family: 'Romie', Georgia, serif;
+    font-size: clamp(1.375rem, 2.75vw, 1.875rem);
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: 0.03em;
+    margin-bottom: 16px;
+  }
+
+  .case-study-card__description {
+    max-width: none;
+    margin-bottom: 24px;
+  }
+
+  .view-design-btn {
+    margin-top: auto;
+    align-self: flex-start;
+  }
+}
+
+/* Narrow tablets / mini portrait — tighter rail + padding so the row doesn’t crowd */
+@media (min-width: 768px) and (max-width: 900px) {
+  .case-study-card__content {
+    padding: clamp(28px, 4vw, 40px) clamp(28px, 6vw, 48px);
+    gap: clamp(20px, 4vw, 36px);
+  }
+
+  .case-study-card__sidebar {
+    width: 148px;
+    min-width: 148px;
+    max-width: 148px;
+    padding-right: 24px;
+  }
+
+  .tab--active::after,
+  .case-study-card__back-item.tab--active::after,
+  .tab:hover::after,
+  .case-study-card__back-item.tab:hover::after {
+    right: -24px;
+  }
+}
+
+/* Large tablets & landscape (1025–1366): more horizontal breathing room under wide image */
+@media (min-width: 1025px) and (max-width: 1366px) {
+  .case-study-card__content {
+    padding: clamp(40px, 5vw, 56px) clamp(52px, 8vw, 96px);
+    gap: clamp(40px, 5vw, 64px);
+  }
+}
+
+/* Phone — layout + 28% image (≤767 so 768px tablets use rules above) */
+@media (max-width: 767px) {
   .case-studies {
     padding: 40px clamp(16px, 4vw, 32px) 60px;
   }
 
   .case-studies__title {
-    font-size: 28px;
+    font-size: clamp(1.5rem, 6.2vw, 1.75rem);
+    line-height: clamp(1.875rem, 7.5vw, 2.125rem);
     flex-direction: column;
     gap: 4px;
   }
 
-  .case-studies__filter {
-    gap: 12px;
-    margin-left: 0;
-    margin-right: 0;
-    padding: 16px 0;
-    flex-wrap: wrap;
-    justify-content: center;
+  .case-studies__subtitle {
+    font-size: clamp(0.875rem, 0.45vw + 0.8375rem, 1rem);
+    line-height: clamp(1.25rem, 0.65vw + 1.1875rem, 1.5rem);
   }
 
-  .category-pill {
-    min-width: 100px;
-    flex: 0 0 calc(50% - 8px); /* 2-column grid for pills */
+  .case-studies__grid {
+    padding-top: 24px;
+  }
+
+  .case-studies__stack-item {
+    top: 80px;
+  }
+
+  /* Slightly tighter strip on phones; pills stay wide (inherits 152px min-width from 1024) */
+  .case-studies__filter-wrap {
+    margin-left: calc(-1 * clamp(16px, 4vw, 28px));
+    margin-right: calc(-1 * clamp(16px, 4vw, 28px));
+    padding-left: clamp(16px, 4vw, 28px);
+    padding-right: clamp(16px, 4vw, 28px);
+  }
+
+  .case-studies__filter {
+    gap: 12px;
+    padding: 12px 26px;
   }
 
   .category-pill__icon {
@@ -621,20 +840,318 @@
   }
 
   .category-pill__label {
-    font-size: 14px;
+    font-size: 0.875rem;
     padding: 16px 0;
     width: calc(100% - 24px);
   }
 
-  .case-study-card__image {
-    flex: 0 0 250px;
+  /* Figma mobile: bold sans headline, comfortable body */
+  .case-study-card__title {
+    font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: clamp(1.375rem, 5.4vw, 1.625rem);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: 0.02em;
+    color: #111213;
+    margin-bottom: 10px;
+  }
+
+  .case-study-card__subtitle {
+    margin-bottom: 16px;
+    font-size: clamp(0.875rem, 0.45vw + 0.8375rem, 1rem);
+    line-height: clamp(1.25rem, 0.65vw + 1.1875rem, 1.5rem);
+  }
+
+  .case-study-card__description {
+    margin-bottom: 0;
+    line-height: 1.55;
+    font-size: clamp(0.875rem, 0.45vw + 0.8375rem, 1rem);
+  }
+
+  /* Stack: tab bar (full width) → thin gray rule → padded text + stacked CTAs */
+  .case-study-card__content {
+    flex-direction: column;
+    gap: 0;
+    flex: 1 1 auto;
+    min-height: 0;
+    padding: 0;
+    width: 100%;
+  }
+
+  .case-study-card__sidebar {
+    flex-direction: column;
+    width: 100%;
+    min-width: 0;
+    border-right: none;
+    border-bottom: none;
+    padding: 12px clamp(20px, 5vw, 24px) 0;
+    gap: 0;
+    justify-content: flex-start;
+    align-items: stretch;
+    box-sizing: border-box;
+  }
+
+  /*
+   * Tabs: pack to the left like desktop rail (not stretched across width); scroll if overflow.
+   * Grey rule sits directly under the 3px selection bar (no gap — no extra row padding below tabs).
+   */
+  .case-study-card__tabs,
+  .case-study-card__back-tabs {
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: flex-end;
+    gap: clamp(10px, 3.2vw, 20px);
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    overflow-x: auto;
+    overflow-y: hidden;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
+    scrollbar-width: thin;
+    border-bottom: 1px solid #d3d6da;
+    padding: 6px 0 0;
+    margin: 0;
+    position: relative;
+  }
+
+  .case-study-card__tabs::-webkit-scrollbar,
+  .case-study-card__back-tabs::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .case-study-card__tabs::-webkit-scrollbar-thumb,
+  .case-study-card__back-tabs::-webkit-scrollbar-thumb {
+    background: rgba(60, 63, 67, 0.35);
+    border-radius: 2px;
+  }
+
+  .case-study-card__tabs .tab,
+  .case-study-card__back-tabs .case-study-card__back-item {
+    flex: 0 0 auto;
+    width: auto;
+    max-width: none;
+    justify-content: flex-start;
+    min-width: 0;
+    font-size: 0.8125rem;
+    font-weight: 400;
+    gap: 6px;
+    height: auto;
+    min-height: 44px;
+    /* 3px band for ::after underline; grey border is flush on the row below */
+    padding: 0 clamp(2px, 1.2vw, 8px) 3px;
+    box-sizing: border-box;
+    position: relative;
+    color: #6b6e73;
+  }
+
+  .case-study-card__tabs .tab.tab--active,
+  .case-study-card__back-tabs .case-study-card__back-item.tab--active {
+    color: #111213;
+    font-weight: 600;
+  }
+
+  .case-study-card__tabs .tab svg,
+  .case-study-card__back-tabs .case-study-card__back-item svg {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+  }
+
+  .case-study-card__tabs .tab.tab--active svg,
+  .case-study-card__back-tabs .case-study-card__back-item.tab--active svg {
+    color: #111213;
+  }
+
+  .case-study-card__tabs .tab--active::after,
+  .case-study-card__back-item.tab--active::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: auto;
+    width: auto;
+    height: 3px;
+    transform: none;
+    background: #111213;
+    border-radius: 1px;
+    z-index: 1;
+  }
+
+  .case-study-card__tabs .tab:not(.tab--active):hover::after,
+  .case-study-card__back-item.tab:not(.tab--active):hover::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: auto;
+    height: 3px;
+    transform: none;
+    border-radius: 1px;
+    background: #7150e5;
+    z-index: 1;
+  }
+
+  .case-study-card__tabs .tab.tab--active:hover::after,
+  .case-study-card__back-item.tab.tab--active:hover::after {
+    background: #111213;
+  }
+
+  .flip-button--sidebar {
+    display: none !important;
+  }
+
+  .flip-button--footer {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: none;
+    gap: 10px;
+    margin: 0;
+    margin-top: 12px;
+    padding: 14px 20px;
+    box-sizing: border-box;
+    background: #ffffff;
+    border: 1px solid #7150e5;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.2s ease, border-color 0.2s ease;
+  }
+
+  .flip-button--footer .flip-button__icon {
+    width: auto;
+    height: auto;
+    padding: 0;
+    border: none;
+    background: transparent;
+  }
+
+  .flip-button--footer .flip-button__icon svg {
+    color: #7150e5;
+    filter: none;
+  }
+
+  .flip-button--footer .flip-button__text {
+    color: #7150e5;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 400;
+  }
+
+  .flip-button--footer:hover {
+    background: rgba(113, 80, 229, 0.08);
+    border-color: #7150e5;
+  }
+
+  .flip-button--footer:hover .flip-button__icon svg {
+    color: #5a3dc4;
+    filter: none;
+  }
+
+  .flip-button--footer:hover .flip-button__text {
+    color: #5a3dc4;
+  }
+
+  .case-study-card__main {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    padding: 36px clamp(20px, 5vw, 24px) 28px;
+    box-sizing: border-box;
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+  }
+
+  .case-study-card__copy {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  /* Body → CTA spacing aligned to reference (no huge empty band) */
+  .view-design-btn {
+    width: 100%;
+    max-width: none;
+    height: 48px;
+    margin-top: clamp(28px, 8vw, 40px);
+    justify-content: center;
+  }
+
+  /*
+   * Intrinsic card height (like Figma): front face in flow, no 900px+ min-height.
+   * Hero uses aspect-ratio (taller band on phone); layers use cover edge-to-edge.
+   */
+  .case-study-card-flip {
+    min-height: 0;
+    height: auto;
+  }
+
+  .case-study-card-flip > .case-study-card {
+    min-height: 0;
+    height: auto;
+  }
+
+  .case-study-card__face.case-study-card__front {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    min-height: 0;
+  }
+
+  .case-study-card__face.case-study-card__back {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+  }
+
+  .case-study-card__front .case-study-card__content,
+  .case-study-card__back .case-study-card__content {
+    flex: 0 0 auto;
+    flex-grow: 0;
+  }
+
+  /* Mobile: taller hero than 3:2 (~390×260) so the image carries more of the card */
+  .case-study-card__front .case-study-card__image,
+  .case-study-card__back .case-study-card__image {
+    flex: 0 0 auto;
+    flex-shrink: 0;
+    width: 100%;
+    aspect-ratio: 390 / 320;
+  }
+
+  .case-study-card__image-layer {
+    background-size: cover;
+    background-position: center;
   }
 
   .case-study-card__duration {
-    right: 24px;
+    left: 12px;
+    right: auto;
+    top: 8px;
     width: auto;
-    padding: 12px;
-    font-size: 14px;
+    min-width: auto;
+    padding: 8px 12px;
+    height: auto;
+    min-height: 40px;
+    font-size: 0.8125rem;
+    border-radius: 8px;
+    border: 1px solid #b0b3b8;
+    border-top: 1px solid #b0b3b8;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    justify-content: flex-start;
+    text-align: left;
   }
 
   .listen-button {
@@ -650,7 +1167,7 @@
 
   .listen-button__text {
     padding: 12px 0;
-    font-size: 14px;
+    font-size: 0.875rem;
   }
 }
 
@@ -660,29 +1177,21 @@
   }
 
   .case-studies__filter {
-    gap: 16px;
+    gap: 12px;
+    padding: 12px 24px;
   }
 
-  .case-study-card__content {
-    padding: 24px 20px;
+  /* Card height comes from content (see ≤767); no extra min-height here */
+
+  /* Keep same mobile card pattern as ≤767 (horizontal tabs + underlines); only tighten type */
+  .case-study-card__main {
+    padding: 20px 16px 24px;
   }
 
-  .case-study-card__sidebar {
-    flex-direction: column;
-    gap: 24px;
-  }
-
-  .case-study-card__tabs {
-    flex-direction: column;
-    gap: 8px;
-  }
-
-  .tab--active::after {
-    display: none;
-  }
-
-  .category-pill {
-    min-width: 100px;
+  .case-study-card__tabs .tab,
+  .case-study-card__back-tabs .case-study-card__back-item {
+    font-size: 0.75rem;
+    gap: 4px;
   }
 
   .category-pill__icon {
@@ -690,7 +1199,7 @@
   }
 
   .category-pill__label {
-    font-size: 13px;
+    font-size: 0.8125rem;
     padding: 16px 0;
     width: calc(100% - 20px);
   }

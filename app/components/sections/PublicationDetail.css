@@ -28,7 +28,7 @@
   padding: 8px 0;
   margin-bottom: 16px;
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
   color: #7150E5;
   background: none;
@@ -74,8 +74,8 @@
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
   font-weight: 600;
   font-style: normal;
-  font-size: 20px;
-  line-height: 24px;
+  font-size: 1.25rem;
+  line-height: 1.5rem;
   letter-spacing: 0.04em; /* 4% */
   color: #111213;
   white-space: nowrap; /* heading on one line */
@@ -84,9 +84,9 @@
 .publication-detail__subtitle {
   margin: 0;
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #3c3f43;
 }
 
@@ -101,9 +101,9 @@
 .publication-detail__paragraph {
   margin: 0;
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #111213;
 }
 
@@ -111,16 +111,16 @@
   margin: 0;
   padding-left: 18px;
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #111213;
   list-style-position: outside;
 }
 
 .publication-detail__bullets ::marker {
   /* Figma bullets read slightly smaller than browser default */
-  font-size: 1.2em;
+  font-size: 1.2rem;
 }
 
 .publication-detail__bullet {
@@ -171,10 +171,10 @@
 .publication-detail__listen-label {
   text-align: center;
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
   /* Helps match Figma's 104px hug height in browser */
-  line-height: 16px;
+  line-height: 1rem;
   color: #7150e5;
 }
 
@@ -207,9 +207,9 @@
   justify-content: flex-start;
   padding-left: calc(var(--publication-detail-stage-inset) + 4px);
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #3c3f43;
 }
 
@@ -409,7 +409,7 @@
   padding: 8px 0;
   margin-bottom: 0;
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
   color: #7150E5;
   background: none;
@@ -453,9 +453,9 @@
   width: 100%;
   padding-left: var(--publication-detail-stage-inset, 84px);
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #3c3f43;
   display: flex;
   align-items: center;
@@ -528,9 +528,9 @@
   /* Align caption with stage edge like the top card */
   padding-left: var(--publication-detail-stage-inset, 84px);
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #3c3f43;
 }
 

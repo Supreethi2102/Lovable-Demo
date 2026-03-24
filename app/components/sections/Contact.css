@@ -57,7 +57,7 @@
 
 .contact-sent-overlay__title {
   font-family: 'Romie', Georgia, serif;
-  font-size: 26px;
+  font-size: 1.625rem;
   font-weight: 500;
   line-height: 1.2;
   letter-spacing: 0.4px;
@@ -67,9 +67,9 @@
 
 .contact-sent-overlay__subtitle {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #3c3f43;
   margin: 0;
 }
@@ -250,7 +250,7 @@
 
 .contact__label {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 20px; /* Figma */
+  font-size: 1.25rem; /* Figma */
   font-weight: 400;
   line-height: normal;
   color: #3c3f43;
@@ -258,7 +258,7 @@
 
 .contact__title {
   font-family: 'Romie', Georgia, serif;
-  font-size: 32px; /* Figma */
+  font-size: 2rem; /* Figma */
   font-weight: 500;
   line-height: normal;
   letter-spacing: 1.28px; /* Figma */
@@ -283,9 +283,9 @@
 
 .contact__field-label {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 600; /* SemiBold from Figma */
-  line-height: 20px;
+  line-height: 1.25rem;
   color: #111213;
 }
 
@@ -298,9 +298,9 @@
   border-radius: 8px; /* Figma border radius */
   box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05); /* Figma shadow */
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #111213;
   outline: none;
   transition: border-color 0.2s ease;
@@ -327,9 +327,9 @@
   border: 1px solid #76797f; /* Figma border */
   border-radius: 8px; /* Figma border radius */
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #111213;
   resize: none;
   outline: none;
@@ -352,10 +352,10 @@
 
 .contact__char-count {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 400;
   color: #76797f;
-  line-height: 20px;
+  line-height: 1.25rem;
 }
 
 .contact__char-count--warning {
@@ -459,7 +459,7 @@
 
 .contact__sent-box-title {
   font-family: 'Romie', Georgia, serif;
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 500;
   line-height: 1.3;
   color: #111213;
@@ -468,9 +468,9 @@
 
 .contact__sent-box-subtitle {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #3c3f43;
   margin: 0;
 }
@@ -514,6 +514,31 @@
   image-rendering: crisp-edges;
 }
 
+/* Desktop: stamp + address participate in postcard flex as direct children */
+.contact__postcard-split {
+  display: contents;
+}
+
+/* Figma tablet/phone composites from public/contact (hidden on desktop) */
+.contact__postcard-composite {
+  display: none;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+.contact__postcard-composite-img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+  object-position: center top;
+  display: block;
+}
+
 /* Send Button - outlined by default, filled on hover (like view all) */
 .contact__submit-btn {
   display: flex;
@@ -548,9 +573,9 @@
 
 .contact__submit-btn span {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #7150e5;
   white-space: nowrap;
   transition: color 0.2s ease;
@@ -571,7 +596,7 @@
 
 .contact__error {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 400;
   color: #dc2626;
   margin-top: 4px;
@@ -646,7 +671,7 @@
   align-items: center;
   gap: 6px;
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 14px;
+  font-size: 0.875rem;
   color: #dc2626;
   margin-top: 12px;
   animation: slideIn 0.2s ease;
@@ -707,7 +732,7 @@
   }
 
   .contact__title {
-    font-size: 28px;
+    font-size: 1.75rem;
   }
 
   .contact__postcard-side {
@@ -745,12 +770,34 @@
 
 /* ── Tablet & Mobile (≤1024px): single-column stacked layout ── */
 @media (max-width: 1024px) {
+  /* Figma tablet: use composite stamp+address asset */
+  .contact__postcard-split {
+    display: none;
+  }
+
+  /* Compound selector beats base .contact__postcard-composite { display: none } */
+  .contact__postcard-composite.contact__postcard-composite--tablet {
+    display: flex;
+  }
+
+  .contact__postcard-composite.contact__postcard-composite--phone {
+    display: none;
+  }
+
+  /* Full width of postcard column – no artificial cap that crops Figma art */
+  .contact__postcard-composite-img {
+    max-width: 100%;
+    width: 100%;
+  }
+
   /* Wrapper */
   .contact-wrapper {
     padding-top: 64px;
     padding-bottom: 64px;
     padding-left: var(--padding-x);
     padding-right: var(--padding-x);
+    overflow: visible; /* don’t clip tall postcard composite */
+    min-height: unset;
   }
 
   .contact-stage {
@@ -775,11 +822,11 @@
     right: 0;
   }
 
-  /* Card stacks vertically */
+  /* Card stacks vertically (Figma tablet: generous horizontal padding) */
   .contact__card {
     flex-direction: column;
     align-items: stretch;
-    padding: 40px 36px;
+    padding: 40px clamp(28px, 5vw, 48px);
     min-height: unset;
     gap: 0; /* gaps managed individually below */
   }
@@ -811,61 +858,71 @@
     order: 3;
   }
 
-  /* ── Postcard side: left-aligned decoration ── */
+  /* ── Postcard side: centered like Figma mobile/tablet ── */
   .contact__postcard-side {
     flex: none;
     width: 100%;
     flex-direction: column;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
     gap: 0;
     padding: 0;
     order: 4;
   }
 
-  /* Slot/stack: give enough height for stamp + address + gap */
+  /* Slot/stack: height follows content so composite image is never clipped */
   .contact__postcard-slot {
-    min-height: 420px;
-    overflow: hidden;
+    min-height: unset;
+    overflow: visible;
     width: 100%;
-    align-items: flex-start;
+    align-items: center;
     justify-content: flex-start;
   }
 
   .contact__postcard-stack {
     position: relative;
-    min-height: 420px;
+    min-height: unset;
     width: 100%;
     max-width: 100%;
-  }
-
-  /* Postcard inner: stamp on top, address below, left-aligned */
-  .contact__postcard {
-    position: absolute;
-    inset: 0;
+    height: auto;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 24px;
-    width: 100%;
+    align-items: stretch;
+    justify-content: flex-start;
   }
 
-  /* Same proportions as desktop: stamp 384:129, address 340:300 */
-  .contact__stamp-area {
+  /* Front card in document flow → stack gets full image height; back overlays */
+  .contact__postcard--front {
+    position: relative !important;
+    inset: auto !important;
     width: 100%;
-    max-width: 280px;
     height: auto;
-    aspect-ratio: 384 / 129;
-    flex-shrink: 0;
-    margin: 0;
+    min-height: unset;
   }
 
+  .contact__postcard--back {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    min-height: 100%;
+  }
+
+  /* Postcard inner: composite art + button */
+  .contact__postcard {
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 28px;
+    width: 100%;
+  }
+
+  /* Split assets hidden; composites use .contact__postcard-composite-img */
+  .contact__stamp-area,
   .contact__address-area {
-    width: 100%;
-    max-width: 248px;
-    height: auto;
-    aspect-ratio: 340 / 300;
-    margin: 0;
+    display: none;
   }
 
   /* Hide desktop button */
@@ -874,7 +931,14 @@
   }
 }
 
-/* Tablet Portrait - 768px: same scaling as desktop (proportional max-widths) */
+/* Tablet landscape (769–1024px): typography only – composite height stays intrinsic */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .contact__title {
+    font-size: clamp(1.625rem, 2.8vw, 2rem);
+  }
+}
+
+/* Tablet portrait (≤768px): still tablet composite; tighter card padding */
 @media (max-width: 768px) {
   .contact-wrapper {
     padding-top: 48px;
@@ -882,21 +946,7 @@
   }
 
   .contact__card {
-    padding: 32px 28px;
-  }
-
-  .contact__stamp-area {
-    width: 100%;
-    max-width: 240px;
-    height: auto;
-    aspect-ratio: 384 / 129;
-  }
-
-  .contact__address-area {
-    width: 100%;
-    max-width: 212px;
-    height: auto;
-    aspect-ratio: 340 / 300;
+    padding: 32px clamp(20px, 4vw, 32px);
   }
 
   .contact__divider {
@@ -904,7 +954,7 @@
   }
 }
 
-/* Mobile - 480px: same scaling as desktop (proportional max-widths) */
+/* Mobile (≤480px): Figma phone composite from public/contact */
 @media (max-width: 480px) {
   .contact-wrapper {
     padding-top: 40px;
@@ -920,17 +970,15 @@
     margin: 24px 0;
   }
 
-  .contact__stamp-area {
-    width: 100%;
-    max-width: 160px;
-    height: auto;
-    aspect-ratio: 384 / 129;
+  .contact__postcard-composite.contact__postcard-composite--tablet {
+    display: none !important;
   }
 
-  .contact__address-area {
-    width: 100%;
-    max-width: 140px;
-    height: auto;
-    aspect-ratio: 340 / 300;
+  .contact__postcard-composite.contact__postcard-composite--phone {
+    display: flex;
+  }
+
+  .contact__postcard {
+    gap: 24px;
   }
 }

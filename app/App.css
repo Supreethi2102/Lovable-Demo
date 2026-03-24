@@ -46,6 +46,8 @@ body {
 html {
   scroll-behavior: smooth;
   scroll-padding-top: 100px; /* Account for fixed header */
+  /* 1rem scales slightly on narrow viewports (UA-relative rems inside clamp) */
+  font-size: clamp(0.875rem, 0.45vw + 0.8375rem, 1rem);
 }
 
 /* Global focus styles for keyboard navigation */

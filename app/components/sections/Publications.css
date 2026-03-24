@@ -19,9 +19,9 @@
 
 .publications__title {
   font-family: 'Romie', Georgia, serif;
-  font-size: 32px;
+  font-size: 2rem;
   font-weight: 500;
-  line-height: 36px;
+  line-height: 2.25rem;
   letter-spacing: 1.28px;
   color: #111213;
   margin: 0 0 40px 0;
@@ -33,9 +33,9 @@
 
 .publications__subtitle {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #3c3f43;
   letter-spacing: 0;
 }
@@ -99,9 +99,9 @@
 
 .publication-card__title {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 600; /* SemiBold from Figma */
-  line-height: 24px;
+  line-height: 1.5rem;
   letter-spacing: 0.32px;
   color: #111213;
   margin: 0 0 0 0;
@@ -109,9 +109,9 @@
 
 .publication-card__subtitle {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400; /* Regular from Figma */
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #3c3f43;
   margin: 0;
 }
@@ -167,9 +167,9 @@
 
 .publication-modal__breadcrumb {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   letter-spacing: 0;
   color: #3c3f43;
   margin: 0;
@@ -177,9 +177,9 @@
 
 .publication-modal__heading {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 600;
-  line-height: 28px;
+  line-height: 1.75rem;
   letter-spacing: 0.32px;
   color: #111213;
   margin: 0;
@@ -201,9 +201,9 @@
   cursor: pointer;
   padding: 0;
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   letter-spacing: 0;
   color: #7150e5;
   z-index: 10;
@@ -233,9 +233,9 @@
 .publication-modal__counter {
   display: block;
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #3c3f43;
   margin: 0 0 8px 0;
 }
@@ -253,9 +253,9 @@
 /* Publication title – bold, large (Figma) */
 .publication-modal__title {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 24px;
+  font-size: 1.5rem;
   font-weight: 600;
-  line-height: 32px;
+  line-height: 2rem;
   letter-spacing: 0.32px;
   color: #111213;
   margin: 0 0 8px 0;
@@ -263,27 +263,27 @@
 
 .publication-modal__modal-subtitle {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #3c3f43;
   margin: 0 0 16px 0;
 }
 
 .publication-modal__intro {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #3c3f43;
   margin: 0 0 12px 0;
 }
 
 .publication-modal__bullets {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #3c3f43;
   margin: 0 0 0 0;
   padding-left: 20px;
@@ -305,9 +305,9 @@
 
 .publication-modal__conclusion p {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #3c3f43;
   margin: 0 0 12px 0;
 }
@@ -347,9 +347,9 @@
 
 .publication-modal__listen-text {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #7150e5;
 }
 
@@ -555,7 +555,7 @@
   }
 
   .publication-modal__heading {
-    font-size: 18px;
+    font-size: 1.125rem;
   }
 
   .publication-modal__counter {
@@ -575,7 +575,7 @@
   }
 
   .publication-modal__title {
-    font-size: 22px;
+    font-size: 1.375rem;
   }
 
   .publication-modal__main-image-wrap {
@@ -589,11 +589,11 @@
   }
 
   .publication-modal__heading {
-    font-size: 16px;
+    font-size: 1rem;
   }
 
   .publication-modal__close {
-    font-size: 14px;
+    font-size: 0.875rem;
   }
 
   .publication-modal__counter {
@@ -605,7 +605,7 @@
   }
 
   .publication-modal__title {
-    font-size: 20px;
+    font-size: 1.25rem;
   }
 
   .publication-modal__listen-btn {
@@ -647,13 +647,13 @@
   }
 
   .publications__title {
-    font-size: 28px;
-    line-height: 32px;
+    font-size: 1.75rem;
+    line-height: 2rem;
     margin-bottom: 40px;
   }
 
   .publications__subtitle {
-    font-size: 15px;
+    font-size: 0.9375rem;
   }
 
   .publications__grid {
@@ -682,13 +682,13 @@
   }
 
   .publications__title {
-    font-size: 26px;
-    line-height: 30px;
+    font-size: 1.625rem;
+    line-height: 1.875rem;
     margin-bottom: 32px;
   }
 
   .publications__subtitle {
-    font-size: 14px;
+    font-size: 0.875rem;
   }
 
   .publications__grid {
@@ -702,13 +702,13 @@
   }
 
   .publication-card__title {
-    font-size: 14px;
-    line-height: 20px;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
   }
 
   .publication-card__subtitle {
-    font-size: 14px;
-    line-height: 20px;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
   }
 
   .publications__footer {
@@ -726,13 +726,13 @@
   }
 
   .publications__title {
-    font-size: 22px;
-    line-height: 28px;
+    font-size: 1.375rem;
+    line-height: 1.75rem;
     margin-bottom: 24px;
   }
 
   .publications__subtitle {
-    font-size: 14px;
+    font-size: 0.875rem;
   }
 
   .publications__grid {
@@ -746,13 +746,13 @@
   }
 
   .publication-card__title {
-    font-size: 15px;
-    line-height: 22px;
+    font-size: 0.9375rem;
+    line-height: 1.375rem;
   }
 
   .publication-card__subtitle {
-    font-size: 14px;
-    line-height: 22px;
+    font-size: 0.875rem;
+    line-height: 1.375rem;
   }
 
   .publications__footer {

@@ -14,6 +14,10 @@ const MESSAGE_MAX_LENGTH = 2000;
 const ENABLE_FORM_VALIDATION = true;
 const ENABLE_EMAILJS = true;
 
+/** Figma tablet / phone composites – use BASE_URL so paths work with Vite base: './' */
+const CONTACT_ART_TABLET = `${import.meta.env.BASE_URL}contact/tablet-composite.png`;
+const CONTACT_ART_PHONE = `${import.meta.env.BASE_URL}contact/phone-composite.png`;
+
 export const Contact: React.FC = () => {
   const [formData, setFormData] = useState({
     name: '',
@@ -321,21 +325,42 @@ export const Contact: React.FC = () => {
                   data-postcard-slot={slot}
                   aria-hidden={isFront ? 'false' : 'true'}
                 >
-                  <div className="contact__stamp-area">
+                  {/* Desktop: separate stamp + address (Figma desktop) */}
+                  <div className="contact__postcard-split">
+                    <div className="contact__stamp-area">
+                      <img
+                        src="/about/postage-stamp-textured 2.png"
+                        alt=""
+                        className="contact__stamp"
+                        role="presentation"
+                      />
+                    </div>
+                    <address className="contact__address-area">
+                      <img
+                        src="/about/postal address 6.png"
+                        alt="Contact address: Samantha Smith, 123 Pixel Parade, Design District, Imagination NZ"
+                        className="contact__address"
+                      />
+                    </address>
+                  </div>
+                  {/* Tablet (≤1024, >480): single composite from Figma / public/contact */}
+                  <div className="contact__postcard-composite contact__postcard-composite--tablet">
                     <img
-                      src="/about/postage-stamp-textured 2.png"
-                      alt=""
-                      className="contact__stamp"
-                      role="presentation"
+                      src={CONTACT_ART_TABLET}
+                      alt="Postage stamp and postal address"
+                      className="contact__postcard-composite-img"
+                      decoding="async"
                     />
                   </div>
-                  <address className="contact__address-area">
+                  {/* Phone (≤480): composite from public/contact */}
+                  <div className="contact__postcard-composite contact__postcard-composite--phone">
                     <img
-                      src="/about/postal address 6.png"
-                      alt="Contact address: Samantha Smith, 123 Pixel Parade, Design District, Imagination NZ"
-                      className="contact__address"
+                      src={CONTACT_ART_PHONE}
+                      alt="Postage stamp and postal address"
+                      className="contact__postcard-composite-img"
+                      decoding="async"
                     />
-                  </address>
+                  </div>
                   {/* Desktop button - hidden on mobile/tablet */}
                   <button
                     type="submit"

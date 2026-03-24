@@ -49,9 +49,9 @@
 
 .color-swatches__text {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #3c3f43;
   text-align: center;
   margin: 0;
@@ -157,9 +157,9 @@
 
 .swatch-card__name {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: 700;
-  line-height: 16px;
+  line-height: 1rem;
   letter-spacing: 0.22px;
   color: #212325;
   text-align: center;
@@ -174,9 +174,9 @@
 
 .swatch-card__hex {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 10px;
+  font-size: 0.625rem;
   font-weight: 400;
-  line-height: 14px;
+  line-height: 0.875rem;
   letter-spacing: 0.4px;
   color: #3c3f43;
   text-transform: uppercase;
@@ -190,9 +190,9 @@
 
 .swatch-card__link {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 10px;
+  font-size: 0.625rem;
   font-weight: 400;
-  line-height: 14px;
+  line-height: 0.875rem;
   letter-spacing: 0.4px;
   color: #7150e5;
   text-align: center;
@@ -260,9 +260,9 @@
 
 .back-to-top__text {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #7150e5;
   text-align: center;
 }
@@ -302,7 +302,7 @@
 
 .site-footer__copyright {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
   line-height: normal;
   color: #3c3f43;
@@ -322,7 +322,7 @@
   text-decoration: none;
   color: #3c3f43;
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
   line-height: normal;
   transition: color 0.2s ease;
@@ -401,9 +401,9 @@ button.site-footer__link {
   cursor: pointer;
   padding: 0;
   font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   letter-spacing: 0;
   color: #000000;
   z-index: 10;
@@ -443,7 +443,7 @@ button.site-footer__link {
 .sustainability-modal__title {
   color: #111213;
   font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 20px;
+  font-size: 1.25rem;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -453,10 +453,10 @@ button.site-footer__link {
 .sustainability-modal__p {
   color: #3C3F43;
   font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-style: normal;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   margin: 0 0 16px 0;
   max-width: 100%;
 }
@@ -568,7 +568,7 @@ button.site-footer__link {
   .sustainability-modal__close {
     top: 32px;
     right: 32px;
-    font-size: 14px;
+    font-size: 0.875rem;
     width: auto;
     height: auto;
   }
@@ -578,14 +578,14 @@ button.site-footer__link {
   }
 
   .sustainability-modal__title {
-    font-size: 18px;
-    line-height: 24px;
+    font-size: 1.125rem;
+    line-height: 1.5rem;
     margin-bottom: 8px;
   }
 
   .sustainability-modal__p {
-    font-size: 14px;
-    line-height: 20px;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
     margin-bottom: 12px;
   }
 
@@ -643,9 +643,9 @@ button.site-footer__link {
   cursor: pointer;
   padding: 0;
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   letter-spacing: 0;
   color: #000000;
   z-index: 10;
@@ -685,7 +685,7 @@ button.site-footer__link {
 .privacy-cookies-modal__title {
   color: #111213;
   font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 20px;
+  font-size: 1.25rem;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -695,10 +695,10 @@ button.site-footer__link {
 .privacy-cookies-modal__p {
   color: #3C3F43;
   font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-style: normal;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   margin: 0 0 16px 0;
   max-width: 100%;
 }
@@ -785,7 +785,7 @@ button.site-footer__link {
   .privacy-cookies-modal__close {
     top: 32px;
     right: 32px;
-    font-size: 14px;
+    font-size: 0.875rem;
     width: auto;
     height: auto;
   }
@@ -795,14 +795,14 @@ button.site-footer__link {
   }
 
   .privacy-cookies-modal__title {
-    font-size: 18px;
-    line-height: 24px;
+    font-size: 1.125rem;
+    line-height: 1.5rem;
     margin-bottom: 8px;
   }
 
   .privacy-cookies-modal__p {
-    font-size: 14px;
-    line-height: 20px;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
     margin-bottom: 12px;
   }
 
@@ -863,9 +863,9 @@ button.site-footer__link {
   cursor: pointer;
   padding: 0;
   font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   letter-spacing: 0;
   color: #000000;
   z-index: 10;
@@ -905,7 +905,7 @@ button.site-footer__link {
 .accessibility-modal__title {
   color: #111213;
   font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 20px;
+  font-size: 1.25rem;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -915,10 +915,10 @@ button.site-footer__link {
 .accessibility-modal__p {
   color: #3C3F43;
   font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-style: normal;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   margin: 0 0 16px 0;
   overflow-wrap: normal;
   hyphens: none;
@@ -938,7 +938,7 @@ button.site-footer__link {
 .accessibility-modal__motion-label {
   color: #3C3F43;
   font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-style: normal;
   font-weight: 400;
   line-height: 1;
@@ -958,10 +958,10 @@ button.site-footer__link {
   position: relative;
   /* Establish typography so "On" text inherits (overrides browser button defaults) */
   font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-style: normal;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #FFF;
 }
 
@@ -990,7 +990,7 @@ button.site-footer__link {
   transform: translateY(-50%);
   color: #FFF !important;
   font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-  font-size: 16px !important;
+  font-size: 1rem !important;
   font-weight: 400;
   line-height: 1 !important;
   opacity: 0;
@@ -1011,7 +1011,7 @@ button.site-footer__link {
   transform: translateY(-50%);
   color: #3C3F43 !important;
   font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-  font-size: 16px !important;
+  font-size: 1rem !important;
   font-weight: 400;
   line-height: 1 !important;
   opacity: 1;
@@ -1132,7 +1132,7 @@ button.site-footer__link {
   .accessibility-modal__close {
     top: 32px;
     right: 32px;
-    font-size: 14px;
+    font-size: 0.875rem;
   }
 
   .accessibility-modal__content {
@@ -1140,15 +1140,15 @@ button.site-footer__link {
   }
 
   .accessibility-modal__title {
-    font-size: 18px;
+    font-size: 1.125rem;
     line-height: normal;
     margin-bottom: 8px;
     max-width: 100%;
   }
 
   .accessibility-modal__p {
-    font-size: 14px;
-    line-height: 22px;
+    font-size: 0.875rem;
+    line-height: 1.375rem;
     margin-bottom: 8px;
     max-width: 100%;
   }
@@ -1251,7 +1251,7 @@ button.site-footer__link {
   }
 
   .color-swatches__text {
-    font-size: 14px;
+    font-size: 0.875rem;
     max-width: 100%;
     padding: 0 16px;
     white-space: normal;
@@ -1276,15 +1276,15 @@ button.site-footer__link {
   }
 
   .back-to-top__text {
-    font-size: 14px;
+    font-size: 0.875rem;
   }
 
   .site-footer__copyright {
-    font-size: 12px;
+    font-size: 0.75rem;
   }
 
   .site-footer__link {
-    font-size: 12px;
+    font-size: 0.75rem;
   }
 
   .site-footer__link span {
@@ -1313,7 +1313,7 @@ button.site-footer__link {
   }
 
   .color-swatches__text {
-    font-size: 13px;
+    font-size: 0.8125rem;
   }
 
   .color-swatches__container {

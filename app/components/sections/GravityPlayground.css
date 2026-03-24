@@ -42,7 +42,7 @@
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 999px;
   font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
-  font-size: 15px;
+  font-size: 0.9375rem;
   font-weight: 600;
   color: #3c3f43;
   will-change: transform;
@@ -93,7 +93,7 @@
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 12px;
   font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
-  font-size: 14px;
+  font-size: 0.875rem;
   font-weight: 600;
   color: #3c3f43;
   text-transform: uppercase;
@@ -214,9 +214,9 @@
 
 .gp-swatch__name {
   font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 600;
-  line-height: 16px;
+  line-height: 1rem;
   letter-spacing: 0.48px;
   color: #212325;
   text-align: center;
@@ -232,9 +232,9 @@
 
 .gp-swatch__hex {
   font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 400;
-  line-height: 16px;
+  line-height: 1rem;
   letter-spacing: 0.48px;
   color: #3c3f43;
   text-transform: uppercase;
@@ -248,9 +248,9 @@
 
 .gp-swatch__link {
   font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 400;
-  line-height: 16px;
+  line-height: 1rem;
   letter-spacing: 0.48px;
   color: #7150e5;
   text-align: center;
@@ -286,9 +286,9 @@
 
 .gp-swatch__description {
   font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
-  font-size: 11px;
+  font-size: 0.6875rem;
   font-weight: 400;
-  line-height: 15px;
+  line-height: 0.9375rem;
   letter-spacing: 0px;
   color: #3c3f43;
   margin: 0 0 12px 0; /* 12px + 12px gap = 24px between description and contrast bar */
@@ -320,9 +320,9 @@
 
 .gp-swatch__ideal {
   font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
-  font-size: 10px;
+  font-size: 0.625rem;
   font-weight: 400;
-  line-height: 14px;
+  line-height: 0.875rem;
   letter-spacing: 0px;
   color: #3c3f43;
   flex-shrink: 0;
@@ -344,17 +344,17 @@
 
 .gp-swatch__ideal-name {
   margin: 0;
-  font-size: 10px;
+  font-size: 0.625rem;
   font-weight: 400;
-  line-height: 14px;
+  line-height: 0.875rem;
   color: #3c3f43;
 }
 
 .gp-swatch__contrast-ratio {
   font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
-  font-size: 10px;
+  font-size: 0.625rem;
   font-weight: 400;
-  line-height: 14px;
+  line-height: 0.875rem;
   letter-spacing: 0px;
   color: #3c3f43;
   margin: 0;
@@ -384,28 +384,28 @@
   }
 
   .gp-pill {
-    font-size: 13px;
+    font-size: 0.8125rem;
     padding: 0 18px;
   }
 
   .gp-text {
-    font-size: 12px;
+    font-size: 0.75rem;
   }
 
   .gp-swatch__name,
   .gp-swatch__hex,
   .gp-swatch__link {
-    font-size: 10px;
+    font-size: 0.625rem;
   }
 
   .gp-swatch__description {
-    font-size: 10px;
-    line-height: 14px;
+    font-size: 0.625rem;
+    line-height: 0.875rem;
   }
 
   .gp-swatch__ideal,
   .gp-swatch__contrast-ratio {
-    font-size: 9px;
+    font-size: 0.5625rem;
   }
 }
 

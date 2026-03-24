@@ -186,7 +186,7 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               {/* Flip Button */}
               <button 
                 type="button"
-                className="flip-button"
+                className="flip-button flip-button--sidebar"
                 onMouseEnter={() => setHoveredBtn('flip')}
                 onMouseLeave={() => setHoveredBtn(null)}
                 onClick={() => setIsFlipped(true)}
@@ -292,6 +292,19 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
             </span>
             <span>View the design</span>
           </button>
+          <button
+            type="button"
+            className="flip-button flip-button--footer"
+            onMouseEnter={() => setHoveredBtn('flip')}
+            onMouseLeave={() => setHoveredBtn(null)}
+            onClick={() => setIsFlipped(true)}
+            aria-label="Flip card for design inspiration"
+          >
+            <div className="flip-button__icon">
+              <ArrowsClockwise size={24} weight={hoveredBtn === 'flip' ? 'fill' : 'regular'} color="currentColor" aria-hidden="true" />
+            </div>
+            <span className="flip-button__text">Flip for inspiration</span>
+          </button>
         </div>
       </div>
 
@@ -313,7 +326,7 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
             <aside className="case-study-card__sidebar" aria-label="Case study insights">
               <button 
                 type="button"
-                className="flip-button"
+                className="flip-button flip-button--sidebar"
                 onMouseEnter={() => setHoveredBtn('flipBack')}
                 onMouseLeave={() => setHoveredBtn(null)}
                 onClick={() => setIsFlipped(false)}
@@ -393,6 +406,19 @@ const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
                 </span>
                 <span>View the design</span>
               </button>
+              <button
+                type="button"
+                className="flip-button flip-button--footer"
+                onMouseEnter={() => setHoveredBtn('flipBack')}
+                onMouseLeave={() => setHoveredBtn(null)}
+                onClick={() => setIsFlipped(false)}
+                aria-label="Back to insights"
+              >
+                <div className="flip-button__icon">
+                  <ArrowsClockwise size={24} weight={hoveredBtn === 'flipBack' ? 'fill' : 'regular'} color="currentColor" aria-hidden="true" />
+                </div>
+                <span className="flip-button__text">Back to insights</span>
+              </button>
             </div>
           </div>
           <figure className="case-study-card__image">
@@ -437,35 +463,37 @@ export const CaseStudies: React.FC = () => {
         </h2>
       </header>
 
-      {/* Category Filter */}
-      <nav 
-        className="case-studies__filter" 
-        role="tablist" 
-        aria-label="Filter case studies by category"
-      >
-        {categories.map(cat => (
-          <button
-            key={cat.id}
-            type="button"
-            role="tab"
-            aria-selected={activeCategory === cat.id}
-            aria-controls="case-studies-grid"
-            className={`category-pill ${activeCategory === cat.id ? 'category-pill--active' : ''}`}
-            onClick={() => setActiveCategory(cat.id)}
-            onMouseEnter={() => setHoveredCategory(cat.id)}
-            onMouseLeave={() => setHoveredCategory(null)}
-          >
-            <div className="category-pill__icon" aria-hidden="true">
-              {cat.Icon ? (
-                <cat.Icon size={24} weight={getIconWeight(cat.id)} color={hoveredCategory === cat.id ? '#ffffff' : '#7150E5'} />
-              ) : cat.svgPath ? (
-                <img src={cat.svgPath} alt="" />
-              ) : null}
-            </div>
-            <span className="category-pill__label">{cat.label}</span>
-          </button>
-        ))}
-      </nav>
+      {/* Category Filter – outer wrap allows horizontal scroll + padding so active shadow is not clipped */}
+      <div className="case-studies__filter-wrap">
+        <nav
+          className="case-studies__filter"
+          role="tablist"
+          aria-label="Filter case studies by category"
+        >
+          {categories.map((cat) => (
+            <button
+              key={cat.id}
+              type="button"
+              role="tab"
+              aria-selected={activeCategory === cat.id}
+              aria-controls="case-studies-grid"
+              className={`category-pill ${activeCategory === cat.id ? 'category-pill--active' : ''}`}
+              onClick={() => setActiveCategory(cat.id)}
+              onMouseEnter={() => setHoveredCategory(cat.id)}
+              onMouseLeave={() => setHoveredCategory(null)}
+            >
+              <div className="category-pill__icon" aria-hidden="true">
+                {cat.Icon ? (
+                  <cat.Icon size={24} weight={getIconWeight(cat.id)} color={hoveredCategory === cat.id ? '#ffffff' : '#7150E5'} />
+                ) : cat.svgPath ? (
+                  <img src={cat.svgPath} alt="" />
+                ) : null}
+              </div>
+              <span className="category-pill__label">{cat.label}</span>
+            </button>
+          ))}
+        </nav>
+      </div>
 
       {/* Case Study Cards - Stacking */}
       <div 

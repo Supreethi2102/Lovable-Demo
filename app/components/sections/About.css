@@ -23,7 +23,7 @@
 .about__label {
   display: block;
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 400;
   line-height: normal;
   color: #3c3f43;
@@ -79,7 +79,7 @@
 
 .about-block1__title {
   font-family: 'Romie', Georgia, serif;
-  font-size: 32px;
+  font-size: 2rem;
   font-weight: 500;
   line-height: normal;
   letter-spacing: 1.28px;
@@ -89,9 +89,9 @@
 
 .about-block1__text {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   letter-spacing: 0.64px;
   color: rgba(0, 0, 0, 0.7);
 }
@@ -101,14 +101,14 @@
 }
 
 .about-block1__spacer {
-  line-height: 32px;
+  line-height: 2rem;
 }
 
 .about-block1__subtitle {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 600;
-  line-height: 24px;
+  line-height: 1.5rem;
   letter-spacing: 0.4px;
   color: #111213;
 }
@@ -122,15 +122,15 @@
 
 .about-block1__list li {
   margin: 0;
-  line-height: 24px;
+  line-height: 1.5rem;
 }
 
 .about-block1__more-link {
   display: inline-block;
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 500;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #7150e5;
   text-decoration: none;
   margin-top: 16px;
@@ -153,9 +153,9 @@
 .about-block3__collapse-link {
   display: inline-block;
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 500;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #7150e5;
   text-decoration: none;
   margin-top: 16px;
@@ -195,9 +195,9 @@
 
 .about-block2__quote p {
   font-family: 'Romie', Georgia, serif;
-  font-size: 28px;
+  font-size: 1.75rem;
   font-weight: 500;
-  line-height: 48px;
+  line-height: 3rem;
   letter-spacing: 1.12px;
   color: #111213;
   margin: 0;
@@ -346,9 +346,9 @@
 
 .about-color-card__name {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 600;
-  line-height: 18px;
+  line-height: 1.125rem;
   letter-spacing: 0.24px;
   color: #111213;
   text-align: center;
@@ -363,9 +363,9 @@
 
 .about-color-card__hex {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 400;
-  line-height: 18px;
+  line-height: 1.125rem;
   letter-spacing: 0.48px;
   color: #3c3f43;
   text-transform: uppercase;
@@ -373,9 +373,9 @@
 
 .about-color-card__link {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 12px;
+  font-size: 0.75rem;
   font-weight: 400;
-  line-height: 16px;
+  line-height: 1rem;
   letter-spacing: 0.48px;
   color: #5238a8;
   text-align: center;
@@ -409,9 +409,9 @@
   width: 100%;
   max-width: 464px;
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   letter-spacing: 0.64px;
   color: rgba(0, 0, 0, 0.7);
 }
@@ -434,15 +434,15 @@
 
 .about-block3__title {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 600;
-  line-height: 24px;
+  line-height: 1.5rem;
   letter-spacing: 0.4px;
   color: #111213;
 }
 
 .about-block3__spacer {
-  line-height: 16px;
+  line-height: 1rem;
 }
 
 .about-block3__signature {
@@ -483,22 +483,22 @@
 }
 
 @media (max-width: 768px) {
-  .about__label { font-size: 20px; margin-bottom: 24px; }
+  .about__label { font-size: 1.25rem; margin-bottom: 24px; }
   .about-block1__illustration { width: 320px; height: 320px; }
-  .about-block1__title { font-size: 28px; line-height: 36px; }
-  .about-block1__text { font-size: 14px; line-height: 22px; }
-  .about-block2__quote p { font-size: 22px; line-height: 36px; }
+  .about-block1__title { font-size: 1.75rem; line-height: 2.25rem; }
+  .about-block1__text { font-size: 0.875rem; line-height: 1.375rem; }
+  .about-block2__quote p { font-size: 1.375rem; line-height: 2.25rem; }
   .about-block3__cards { width: 340px; height: 460px; }
-  .about-block3__title { font-size: 18px; }
-  .about-block3__text-block { font-size: 14px; line-height: 22px; }
+  .about-block3__title { font-size: 1.125rem; }
+  .about-block3__text-block { font-size: 0.875rem; line-height: 1.375rem; }
 }
 
 @media (max-width: 480px) {
   .about { padding: 16px; }
   .about__card { padding: 20px 16px; border-radius: 16px; }
   .about-block1__illustration { width: 260px; height: 260px; }
-  .about-block1__title { font-size: 24px; line-height: 32px; }
-  .about-block2__quote p { font-size: 18px; line-height: 30px; }
+  .about-block1__title { font-size: 1.5rem; line-height: 2rem; }
+  .about-block2__quote p { font-size: 1.125rem; line-height: 1.875rem; }
   .about-block3__cards { width: 280px; height: 380px; }
   .about-block3__signature { width: 200px; height: auto; }
 }

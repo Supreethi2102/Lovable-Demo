@@ -37,7 +37,7 @@
 
 .footer__link {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
   color: #7150E5;
   text-decoration: none !important;
@@ -61,9 +61,9 @@
 
 .footer__text {
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
+  font-size: 1rem;
   font-weight: 400;
-  line-height: 24px;
+  line-height: 1.5rem;
   color: #3C3F43;
   margin: 0;
   padding: 0;
@@ -104,7 +104,7 @@
   }
   
   .footer__text {
-    font-size: 15px;
+    font-size: 0.9375rem;
   }
 }
 

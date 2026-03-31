@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useCallback, useRef } from 'react';
 import { Palette, User, ChatCircleDots, Sun, SunHorizon, CloudFog, MoonStars, CloudMoon, Moon, Phone, PaintBrush, Megaphone, Package, BookOpen, Ruler, NotePencil, CaretDown } from '@phosphor-icons/react';
 import './Header.css';
 
@@ -15,7 +15,8 @@ export const Header: React.FC = () => {
   const [isTabletViewport, setIsTabletViewport] = useState(false);
 
   // Expose the fixed header height as a CSS variable so pages can pad correctly.
-  useEffect(() => {
+  /* useLayoutEffect: set before paint so hero padding-top matches real header (avoids clipped headline). */
+  useLayoutEffect(() => {
     const el = headerRef.current;
     if (!el) return;
 

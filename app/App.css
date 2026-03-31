@@ -130,8 +130,6 @@ a:focus-visible {
   display: flex;
   flex-direction: column;
   background: #F7F8F9;
-  padding-top: var(--padding-y);
-  padding-bottom: var(--padding-y);
   /* Smooth hero gutters: from 1400px down use more padding (min 80px). 1440→112px. */
   --hero-gutter: clamp(80px, calc((100vw - var(--content-max-width)) / 2), 112px);
   padding-left: var(--hero-gutter);
@@ -145,7 +143,8 @@ a:focus-visible {
   justify-content: center;
   /* Column gap: smaller from 1400px down (see media query) */
   gap: clamp(120px, calc(5 * var(--hero-gutter) - 160px), 400px);
-  padding-top: 64px;
+  /* Vertical offset from fixed header is on .hero-section (Hero.css) via --header-height */
+  padding-top: 0;
   overflow: visible;
   max-width: var(--content-max-width);
   margin: 0 auto;
@@ -232,10 +231,6 @@ a:focus-visible {
     --padding-y: 40px;
   }
 
-  .main {
-    padding-top: 56px;
-  }
-
   .main__right {
     gap: 110px;
   }
@@ -259,25 +254,29 @@ a:focus-visible {
 
   .main {
     flex-direction: column;
-    gap: 60px;
-    padding-top: 48px;
+    gap: 40px;
+    padding-top: 0;
     align-items: center;
   }
 
   .main__left {
     justify-content: center;
-    text-align: center;
+    text-align: left;
     width: 100%;
     max-width: 520px;
+    margin-inline: auto;
+    overflow: visible;
   }
 
   .main__right {
     width: 100%;
-    gap: 80px;
+    gap: 56px;
   }
 
   .main__globe {
-    max-width: 580px;
+    max-width: min(460px, 92vw);
+    transform: scale(1);
+    overflow: hidden;
   }
 }
 
@@ -289,8 +288,8 @@ a:focus-visible {
   }
 
   .main {
-    gap: 32px;
-    padding-top: 40px;
+    gap: 24px;
+    padding-top: 0;
   }
 
   .main__left {
@@ -298,11 +297,12 @@ a:focus-visible {
   }
 
   .main__right {
-    gap: 64px;
+    gap: 48px;
   }
 
   .main__globe {
-    max-width: 500px;
+    max-width: min(380px, 92vw);
+    transform: scale(1);
   }
 }
 
@@ -314,12 +314,13 @@ a:focus-visible {
   }
 
   .main {
-    gap: 28px;
-    padding-top: 32px;
+    gap: 20px;
+    padding-top: 0;
   }
 
   .main__globe {
-    max-width: 440px;
+    max-width: min(330px, 90vw);
+    transform: scale(1);
   }
 }
 

@@ -7,16 +7,16 @@ export const Hero: React.FC = () => {
     // overflow-x-hidden: prevents any child element from causing horizontal scroll on mobile
     <article className="hero w-full" aria-label="Introduction">
       {/* min-w-0: prevents the flex child from overflowing its container on small screens */}
-      <div className="hero__content min-w-0">
-        {/* text-balance: improves line-break distribution on narrow mobile screens (CSS doesn't set text-wrap) */}
-        <h1 className="hero__title text-balance">
-          <span className="sr-only">I'm Samantha Inspired by the world Driven by insight From places to pixels</span>
-          <span aria-hidden="true">
-            I'm Samantha<br />
-            Inspired by the world<br />
-            Driven by insight<br />
-            From places to pixels
-          </span>
+      <div className="hero__content">
+        {/* Plain h1 (no text-wrap: balance + no sr-only/aria-hidden) so every line, including the first, paints reliably on mobile */}
+        <h1 className="hero__title" id="hero-heading">
+          I&rsquo;m Samantha
+          <br />
+          Inspired by the world
+          <br />
+          Driven by insight
+          <br />
+          From places to pixels
         </h1>
         
         <p className="hero__description">

@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { Header, Hero, Footer, CaseStudies, Publications, PublicationDetail, About, Testimonials, Contact, Destinations, ColorSwatches } from './components';
+import { Header, Hero, Footer, CaseStudies, Publications, PublicationDetail, CaseStudyDetail, About, Testimonials, Contact, Destinations, ColorSwatches } from './components';
 import './App.css';
 import './ButtonStyles.css';
 
@@ -19,6 +19,7 @@ const AppRoutes: React.FC = () => {
     <Routes>
       <Route path="/" element={<HomePage />} />
       <Route path="/publications/:id" element={<PublicationDetailPage />} />
+      <Route path="/case-studies/:id" element={<CaseStudyDetailPage />} />
     </Routes>
   );
 };
@@ -103,6 +104,15 @@ const PublicationDetailPage: React.FC = () => {
     <div className="app app--detail">
       <Header />
       <PublicationDetail />
+    </div>
+  );
+};
+
+const CaseStudyDetailPage: React.FC = () => {
+  return (
+    <div className="app app--detail">
+      <Header />
+      <CaseStudyDetail />
     </div>
   );
 };

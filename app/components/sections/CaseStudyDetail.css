@@ -1,0 +1,1574 @@
+.case-study-detail {
+  background: #eceff1;
+  width: 100%;
+  padding-top: calc(var(--header-height, 0px) + 44px);
+  padding-bottom: 0;
+  padding-left: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
+  padding-right: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
+  box-sizing: border-box;
+}
+
+.case-study-detail__inner {
+  max-width: var(--content-max-width, 1220px);
+  margin: 0 auto;
+}
+
+.case-study-detail__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  color: #3c3f43;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.case-study-detail__layout {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 985px);
+  gap: 51px;
+  align-items: start;
+}
+
+.case-study-detail__sidebar {
+  position: sticky;
+  top: calc(var(--header-height, 0px) + 16px);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: 102px;
+  min-height: 0;
+  width: 170px;
+}
+
+.case-study-detail__sidebar-top {
+  display: flex;
+  flex-direction: column;
+  gap: 65px;
+}
+
+.case-study-detail__back-wrap {
+  width: 170px;
+  min-height: 38px;
+  padding-bottom: 14px;
+  box-sizing: border-box;
+}
+
+.case-study-detail__tabs {
+  position: relative;
+  width: 170px;
+  border-right: 4px solid #d1d1d1;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding-right: 0;
+}
+
+.case-study-detail__tab {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  height: 48px;
+  border: none;
+  margin-right: 0;
+  background: transparent;
+  color: #3c3f43;
+  cursor: pointer;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1rem;
+  text-align: left;
+}
+
+.case-study-detail__tab.is-active {
+  color: #111213;
+}
+
+.case-study-detail__tab.is-active::after {
+  content: '';
+  position: absolute;
+  right: -4px;
+  top: 0;
+  width: 4px;
+  height: 100%;
+  background: #111213;
+}
+
+.case-study-detail__listen {
+  width: 126px;
+  height: 72px;
+  border: 1px solid #7150e5;
+  border-radius: 8px;
+  background: #f7f9fa;
+  padding: 22px 16px;
+  display: flex;
+  flex-direction: row;
+  gap: 8px;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  align-self: flex-end;
+}
+
+.case-study-detail__listen-icon {
+  display: grid;
+  place-items: center;
+}
+
+.case-study-detail__listen-label {
+  border-left: 1px solid #d3d6da;
+  color: #7150e5;
+  text-align: center;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  padding: 0 0 0 8px;
+  height: 16px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.case-study-detail__content {
+  display: flex;
+  flex-direction: column;
+  gap: 52px;
+  width: 985px;
+}
+
+.case-study-detail__content > * {
+  margin: 0;
+}
+
+.case-study-detail__top {
+  display: grid;
+  grid-template-columns: 592px 352px;
+  column-gap: 40px;
+  width: 984px;
+  align-items: start;
+}
+
+.case-study-detail__hero-card {
+  background: #f7f8f9;
+  border: 1px solid #b0b3b8;
+  border-radius: 24px;
+  overflow: hidden;
+  width: 592px;
+  height: 748px;
+  display: flex;
+  flex-direction: column;
+}
+
+.case-study-detail__hero-image-wrap {
+  width: 592px;
+  height: 398px;
+  margin: 0;
+  flex: 0 0 398px;
+  position: relative;
+  overflow: hidden;
+}
+
+.case-study-detail__hero-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.case-study-detail__hero-image--figma {
+  position: absolute;
+  width: 135.64%;
+  height: 131.22%;
+  max-width: none;
+  left: -18.92%;
+  top: -31.3%;
+}
+
+.case-study-detail__hero-copy {
+  width: 592px;
+  height: 350px;
+  padding: 52px;
+  box-sizing: border-box;
+}
+
+.case-study-detail__hero-subtitle {
+  margin: 0 0 16px;
+  width: 202px;
+  height: 19px;
+  color: #3c3f43;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.case-study-detail__hero-title {
+  margin: 0 0 16px;
+  width: 488px;
+  height: 56px;
+  color: #111213;
+  font-family: 'Romie Trial', 'Romie', Georgia, serif;
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 1.6px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.case-study-detail__hero-body {
+  margin: 0 0 16px;
+  width: 488px;
+  min-height: 84px;
+  color: #3c3f43;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0.4px;
+}
+
+.case-study-detail__hero-meta {
+  margin: 0;
+  width: 460px;
+  min-height: 24px;
+  color: #111213;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  display: flex;
+  align-items: center;
+}
+
+.case-study-detail__summary {
+  width: 352px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-right: 28px;
+  box-sizing: border-box;
+}
+
+.case-study-detail__summary h2 {
+  margin: 0;
+  color: #000;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.4px;
+  height: 28px;
+  align-self: stretch;
+}
+
+.case-study-detail__summary-item {
+  padding: 0;
+}
+
+.case-study-detail__summary-item.summary-item--72 {
+  min-height: 72px;
+}
+
+.case-study-detail__summary-item.summary-item--48 {
+  min-height: 48px;
+}
+
+.case-study-detail__summary-item.summary-item--24 {
+  min-height: 24px;
+}
+
+.case-study-detail__summary-item.summary-item--auto {
+  min-height: 0;
+}
+
+.case-study-detail__summary-item p {
+  margin: 0;
+  color: #3c3f43;
+  font-family: 'GT Walsheim Trial', 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+  width: 324px;
+}
+
+.case-study-detail__summary-divider {
+  width: 301px;
+  height: 0;
+  border-top: 1px dashed rgba(0, 0, 0, 0.5);
+}
+
+.case-study-detail__summary-item strong {
+  color: #111213;
+  font-weight: 600;
+  letter-spacing: 0.32px;
+}
+
+.case-study-detail__split-card,
+.case-study-detail__panel,
+.case-study-detail__text-panel,
+.case-study-detail__two-up {
+  width: 100%;
+}
+
+.case-study-detail__split-card {
+  background: #f7f8f9;
+  border: 1px solid #b0b3b8;
+  border-radius: 24px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 492px 492px;
+}
+
+.case-study-detail__split-card--brief {
+  grid-template-columns: 492px 491px;
+  height: 556px;
+}
+
+.case-study-detail__split-card--reverse {
+  grid-template-columns: 492px 492px;
+}
+
+.case-study-detail__split-card--solution {
+  min-height: 504px;
+}
+
+.case-study-detail__split-card--digital {
+  min-height: 630px;
+  width: 984px;
+  grid-template-columns: 492px 492px;
+}
+
+.case-study-detail__split-card--digital .text-side {
+  padding: 52px 52px 48px;
+}
+
+.case-study-detail__split-card--digital .media-side {
+  width: 492px;
+  min-height: 100%;
+}
+
+.case-study-detail__split-card--impact {
+  min-height: 588px;
+}
+
+.case-study-detail__split-card--reflection {
+  grid-template-columns: 467px 517px;
+  min-height: 470px;
+}
+
+.case-study-detail__split-card--sources {
+  grid-template-columns: 532px 449px;
+  min-height: 952px;
+}
+
+.case-study-detail__split-card--reverse .text-side {
+  order: 1;
+}
+
+.case-study-detail__split-card--reverse .media-side {
+  order: 2;
+}
+
+.media-side {
+  margin: 0;
+  min-height: 428px;
+  position: relative;
+  overflow: hidden;
+}
+
+.media-side img {
+  width: 100%;
+  height: 100%;
+  min-height: inherit;
+  object-fit: cover;
+  display: block;
+}
+
+.media-side--tall {
+  min-height: 720px;
+}
+
+.case-study-detail__solution-media {
+  min-height: 504px;
+}
+
+.case-study-detail__digital-media {
+  min-height: 630px;
+  height: 100%;
+  width: 492px;
+}
+
+/* Must beat `.media-side img` (0,1,1) or the Figma crop + overlay are destroyed */
+.case-study-detail__digital-media img.case-study-detail__digital-background {
+  position: absolute;
+  width: 179.43%;
+  height: 100%;
+  max-width: none;
+  min-height: 0;
+  left: -24.04%;
+  top: 0;
+  display: block;
+  object-fit: fill;
+  object-position: center;
+}
+
+.case-study-detail__digital-overlay {
+  position: absolute;
+  width: 216.357px;
+  height: 385.588px;
+  left: 128.175px;
+  top: 135.53px;
+  overflow: hidden;
+  z-index: 1;
+  display: block;
+}
+
+.case-study-detail__digital-media img.case-study-detail__digital-overlay-image {
+  position: absolute;
+  inset: -1px;
+  width: calc(100% + 2px);
+  height: calc(100% + 2px);
+  max-width: none;
+  min-height: 0;
+  display: block;
+  object-fit: cover;
+  object-position: center;
+  transform: translateY(1px);
+}
+
+.case-study-detail__digital-text {
+  width: 388px;
+}
+
+.case-study-detail__digital-text > h4,
+.case-study-detail__digital-text > p,
+.case-study-detail__digital-text > ul {
+  width: 375px;
+}
+
+.case-study-detail__digital-text > h4 + p {
+  margin-top: 4px;
+}
+
+.case-study-detail__digital-text > p + p {
+  margin-top: 16px;
+}
+
+.case-study-detail__digital-text > p + ul {
+  margin-top: 16px;
+}
+
+.case-study-detail__digital-text ul + p {
+  margin-top: 16px;
+}
+
+.case-study-detail__impact-media {
+  min-height: 588px;
+}
+
+.case-study-detail__impact-media img {
+  position: absolute;
+  width: 209.4%;
+  height: 125.09%;
+  max-width: none;
+  left: -57.98%;
+  top: -2.35%;
+}
+
+.case-study-detail__reflection-media {
+  min-height: 470px;
+}
+
+.case-study-detail__reflection-media img {
+  position: absolute;
+  width: 241.37%;
+  height: 152.01%;
+  max-width: none;
+  left: -83.15%;
+  top: -18.88%;
+}
+
+.case-study-detail__sources-media {
+  min-height: 952px;
+}
+
+.case-study-detail__sources-media img {
+  position: absolute;
+  width: 388.65%;
+  height: 134.58%;
+  max-width: none;
+  left: -203.58%;
+  top: -32.95%;
+}
+
+.text-side {
+  padding: 52px;
+}
+
+.case-study-detail__text-stack {
+  display: flex;
+  flex-direction: column;
+}
+
+.case-study-detail__text-stack > h3,
+.case-study-detail__text-stack > h4,
+.case-study-detail__text-stack > p,
+.case-study-detail__text-stack > ul {
+  margin: 0;
+}
+
+.case-study-detail__text-stack > * + * {
+  margin-top: 28px;
+}
+
+.case-study-detail__text-stack > h3 + h4,
+.case-study-detail__text-stack > h3 + p {
+  margin-top: 16px;
+}
+
+.case-study-detail__text-stack > h4 + p,
+.case-study-detail__text-stack > h4 + ul {
+  margin-top: 4px;
+}
+
+.case-study-detail__text-stack > p + h4,
+.case-study-detail__text-stack > ul + h4 {
+  margin-top: 28px;
+}
+
+.case-study-detail__text-stack > p + p {
+  margin-top: 12px;
+}
+
+.case-study-detail__brief-media {
+  min-height: 556px;
+}
+
+.case-study-detail__brief-text {
+  height: 556px;
+  padding: 52px;
+  box-sizing: border-box;
+}
+
+.case-study-detail__brief-content {
+  width: 397px;
+  height: 456px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.case-study-detail__brief-top-group {
+  width: 397px;
+  height: 284px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.case-study-detail__brief-intro {
+  width: 399px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.case-study-detail__brief-business {
+  width: 397px;
+  height: 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.case-study-detail__brief-priorities {
+  width: 397px;
+  height: 112px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.case-study-detail__brief-question {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.case-study-detail__brief-text.text-side h3 {
+  margin: 0;
+  color: #111213;
+  font-family: 'Romie Trial', 'Romie', Georgia, serif;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 1.28px;
+  width: 399px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.case-study-detail__brief-text.text-side h4 {
+  margin: 0;
+  color: #111213;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.32px;
+}
+
+.case-study-detail__brief-text.text-side p {
+  margin: 0;
+  color: #3c3f43;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.case-study-detail__brief-text.text-side ul {
+  margin: 0;
+  padding-left: 24px;
+  color: #3c3f43;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.case-study-detail__brief-text.text-side li {
+  margin-bottom: 8px;
+}
+
+.case-study-detail__brief-text.text-side li:last-child {
+  margin-bottom: 0;
+}
+
+.case-study-detail__brief-text.text-side li::marker {
+  font-size: 1.25em;
+  color: #3c3f43;
+}
+
+.case-study-detail__brief-question-title {
+  width: 355px;
+  min-height: 48px;
+}
+
+.case-study-detail__text-stack h3 {
+  color: #111213;
+  font-family: 'Romie Trial', 'Romie', Georgia, serif;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 1.28px;
+  min-height: 32px;
+  display: flex;
+  align-items: center;
+}
+
+.case-study-detail__text-stack h4 {
+  color: #111213;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  line-height: 24px;
+  letter-spacing: 0.32px;
+  font-weight: 600;
+}
+
+.case-study-detail__text-stack p,
+.case-study-detail__text-stack li {
+  color: #3c3f43;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.case-study-detail__text-stack ul {
+  padding-left: 24px;
+}
+
+.case-study-detail__text-stack li {
+  margin-bottom: 8px;
+}
+
+.case-study-detail__text-stack li:last-child {
+  margin-bottom: 0;
+}
+
+.case-study-detail__text-stack li::marker {
+  font-size: 1.25em;
+  color: #3c3f43;
+}
+
+.case-study-detail__panel {
+  background: #f7f8f9;
+  border: 1px solid #b0b3b8;
+  border-radius: 24px;
+  overflow: hidden;
+  position: relative;
+  box-sizing: border-box;
+}
+
+.case-study-detail__composite-panel {
+  height: 680px;
+  background: #fffff8;
+}
+
+.full-bleed-media {
+  width: 100%;
+  min-height: 420px;
+  object-fit: cover;
+  display: block;
+}
+
+.case-study-detail__composite-panel--typography {
+  position: relative;
+}
+
+.case-study-detail__typography-specimen {
+  margin: 0;
+  position: absolute;
+  left: 122px;
+  top: 65px;
+  width: 710px;
+  height: 302px;
+  border-radius: 24px;
+  overflow: hidden;
+  display: block;
+  box-sizing: border-box;
+}
+
+.case-study-detail__typography-specimen-image {
+  position: absolute;
+  width: 121.12%;
+  height: 161.05%;
+  max-width: none;
+  left: -7.1%;
+  top: -4.75%;
+  display: block;
+}
+
+.case-study-detail__typography-banner {
+  margin: 0;
+  position: absolute;
+  left: 88px;
+  top: 403px;
+  width: 802px;
+  height: 197px;
+  border: 1px solid #b0b3b8;
+  border-radius: 16px;
+  overflow: hidden;
+  display: block;
+  box-sizing: border-box;
+}
+
+.case-study-detail__typography-banner-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.case-study-detail__color-panel {
+  height: 680px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  padding: 0 96px 41px;
+  box-sizing: border-box;
+}
+
+.case-study-detail__color-bars {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  width: 792px;
+}
+
+.case-study-detail__color-bars span {
+  display: block;
+  width: 52px;
+  height: 639px;
+  border: 1px solid #b0b3b8;
+  border-bottom: none;
+  border-radius: 0 0 32px 32px;
+  box-sizing: border-box;
+  justify-self: center;
+}
+
+.case-study-detail__color-bars span:nth-child(1) {
+  background: #ef1515;
+}
+
+.case-study-detail__color-bars span:nth-child(2) {
+  background: #e0d237;
+}
+
+.case-study-detail__color-bars span:nth-child(3) {
+  background: #ffbcd9;
+}
+
+.case-study-detail__color-bars span:nth-child(4) {
+  background: #ecae50;
+}
+
+.case-study-detail__color-bars span:nth-child(5) {
+  background: #a8d9c9;
+}
+
+.case-study-detail__color-bars span:nth-child(6) {
+  background: #b3dde5;
+}
+
+.case-study-detail__color-bars span:nth-child(7) {
+  background: #c350ac;
+}
+
+.case-study-detail__color-bars span:nth-child(8) {
+  background: #32159b;
+}
+
+.case-study-detail__text-panel {
+  background: #f7f8f9;
+  border: 1px solid #b0b3b8;
+  border-radius: 24px;
+  padding: 52px 180px;
+  box-sizing: border-box;
+}
+
+.case-study-detail__text-panel h4 {
+  margin: 0 0 8px;
+  color: #111213;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5rem;
+  letter-spacing: 0.32px;
+}
+
+.case-study-detail__text-panel p {
+  margin: 0 0 12px;
+  color: #3c3f43;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.case-study-detail__text-panel--scaling {
+  min-height: 348px;
+}
+
+.case-study-detail__text-panel--scaling h4,
+.case-study-detail__text-panel--scaling p,
+.case-study-detail__text-panel--scaling ul {
+  width: 624px;
+}
+
+.case-study-detail__text-panel--scaling h4 {
+  margin: 0 0 4px;
+}
+
+.case-study-detail__text-panel--scaling p {
+  margin: 0 0 16px;
+}
+
+.case-study-detail__text-panel--scaling ul {
+  margin: 0 0 16px;
+  padding-left: 24px;
+  color: #3c3f43;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.case-study-detail__text-panel--scaling li {
+  margin-bottom: 8px;
+}
+
+.case-study-detail__text-panel--scaling li:last-child {
+  margin-bottom: 0;
+}
+
+.case-study-detail__text-panel--scaling li::marker {
+  font-size: 1.25em;
+  color: #3c3f43;
+}
+
+.case-study-detail__two-up {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 52px;
+}
+
+.case-study-detail__two-up-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 52px;
+}
+
+.case-study-detail__two-up img {
+  width: 100%;
+  min-height: 476px;
+  object-fit: cover;
+  border: 1px solid #b0b3b8;
+  border-radius: 24px;
+  display: block;
+}
+
+.case-study-detail__two-up--featured {
+  grid-template-columns: 466px 466px;
+  align-items: end;
+}
+
+.case-study-detail__two-up--featured img:first-child {
+  width: 466px;
+  height: 666px;
+  min-height: 666px;
+  border-radius: 16px;
+  object-position: center center;
+}
+
+.case-study-detail__two-up--featured img:last-child {
+  width: 466px;
+  height: 665px;
+  min-height: 665px;
+  border-radius: 16px;
+  object-position: center center;
+}
+
+.case-study-detail__two-up--posters {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.case-study-detail__two-up--posters .case-study-detail__two-up-row {
+  grid-template-columns: 466px 466px;
+}
+
+.case-study-detail__two-up--posters img {
+  width: 466px;
+  height: 668px;
+  min-height: 668px;
+  border-radius: 16px;
+  object-position: center center;
+}
+
+.case-study-detail__two-up-caption {
+  margin: 0;
+  width: 988px;
+  color: #3c3f43;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.case-study-detail__store-image {
+  min-height: 732px;
+  height: auto;
+  position: static;
+  width: 100%;
+  max-width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.case-study-detail__retail-display-image {
+  min-height: 672px;
+  height: auto;
+  position: static;
+  width: 100%;
+  max-width: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+.case-study-detail__panel--retail-display {
+  position: relative;
+}
+
+.case-study-detail__four-up {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 100%;
+}
+
+.case-study-detail__four-up-grid {
+  display: grid;
+  grid-template-columns: 468px 468px;
+  gap: 40px 52px;
+}
+
+.case-study-detail__four-up-tile {
+  margin: 0;
+  width: 468px;
+  height: 476px;
+  border: 1px solid #b0b3b8;
+  border-radius: 24px;
+  overflow: hidden;
+  position: relative;
+  background: #f7f8f9;
+}
+
+.case-study-detail__four-up-image {
+  position: absolute;
+  max-width: none;
+  display: block;
+}
+
+.case-study-detail__four-up-image--1 {
+  width: 147.06%;
+  height: 137.05%;
+  left: -29.84%;
+  top: -2.56%;
+}
+
+.case-study-detail__four-up-image--2,
+.case-study-detail__four-up-image--3 {
+  width: 106.84%;
+  height: 105.04%;
+  left: -0.21%;
+  top: -2.1%;
+}
+
+.case-study-detail__four-up-image--4 {
+  width: 110.06%;
+  height: 179.16%;
+  left: -10.06%;
+  top: -79.16%;
+}
+
+.case-study-detail__four-up-caption {
+  margin: 0;
+  width: 100%;
+  color: #3c3f43;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}
+
+.case-study-detail__panel--commercial-bay {
+  height: 696px;
+  position: relative;
+}
+
+.case-study-detail__commercial-bay-image {
+  position: absolute;
+  width: 124.06%;
+  height: 131.51%;
+  max-width: none;
+  left: -12.69%;
+  top: -20.44%;
+  min-height: 696px;
+}
+
+.case-study-detail__commercial-bay-poster {
+  position: absolute;
+  left: 369px;
+  top: 119px;
+  width: 227px;
+  height: 404px;
+  object-fit: cover;
+  display: block;
+}
+
+.credits-list {
+  margin: 16px 0 0;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.credits-list p {
+  margin: 0;
+}
+
+.credits-list p:last-child {
+  margin-bottom: 0;
+}
+
+.case-study-detail > .site-footer {
+  margin-top: 90px;
+  background: #F7F8F9;
+}
+
+.case-study-detail__testimonials {
+  position: relative;
+  width: 984px;
+  height: 582px;
+}
+
+.case-study-detail__testimonial-card {
+  position: absolute;
+  padding: 0;
+  box-sizing: border-box;
+  text-align: center;
+}
+
+.case-study-detail__testimonial-bubble {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.case-study-detail__testimonial-content {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  padding: 48px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.case-study-detail__testimonial-card--top-left {
+  left: 0;
+  top: 2px;
+  width: 520px;
+  height: 208px;
+}
+
+.case-study-detail__testimonial-card--top-right {
+  left: 653px;
+  top: 0;
+  width: 329px;
+  height: 284px;
+}
+
+.case-study-detail__testimonial-card--bottom-left {
+  left: 0;
+  top: 274px;
+  width: 332px;
+  height: 308px;
+}
+
+.case-study-detail__testimonial-card--bottom-right {
+  left: 472px;
+  top: 366px;
+  width: 508px;
+  height: 216px;
+}
+
+.case-study-detail__testimonial-quote {
+  margin: 0;
+  color: #111213;
+  font-family: 'Romie Trial', 'Romie', Georgia, serif;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 36px;
+  letter-spacing: 0.96px;
+}
+
+.case-study-detail__testimonial-author {
+  margin: 0;
+  color: #3c3f43;
+  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.64px;
+}
+
+.case-study-detail__more-projects {
+  width: 1220px;
+  max-width: 100%;
+  margin: 104px auto 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.case-study-detail__more-projects-rule {
+  width: 100%;
+  max-width: 1212px;
+  height: 24px;
+  margin: 0 auto;
+  border: 1px solid #b0b3b8;
+  border-radius: 100px;
+  background: #f3f5f6;
+}
+
+.case-study-detail__more-projects h2 {
+  margin: 94px 0 28px;
+  color: #111213;
+  font-family: 'Romie Trial', 'Romie', Georgia, serif;
+  font-size: 32px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 1.28px;
+}
+
+.case-study-detail__more-projects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.case-study-detail__more-projects-list .case-study-card-flip {
+  width: 100%;
+}
+
+.case-study-detail__view-all {
+  width: 1220px;
+  height: 48px;
+  margin-top: 37px;
+  border: 1px solid #7150e5;
+  border-radius: 8px;
+  background: #f7f9fa;
+  color: #7150e5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+@media (max-width: 1300px) {
+  .case-study-detail {
+    padding-left: var(--padding-x);
+    padding-right: var(--padding-x);
+  }
+
+  .case-study-detail__layout {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .case-study-detail__sidebar {
+    position: static;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+    min-height: 0;
+    width: 100%;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    justify-content: flex-start;
+  }
+
+  .case-study-detail__sidebar-top {
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .case-study-detail__tabs {
+    width: auto;
+    border-right: none;
+    border-bottom: 1px solid #b0b3b8;
+    flex-direction: row;
+    min-width: max-content;
+  }
+
+  .case-study-detail__tab {
+    border-right: none;
+    border-bottom: 3px solid transparent;
+    margin-right: 0;
+    margin-bottom: -1px;
+    padding: 0 12px;
+    white-space: nowrap;
+  }
+
+  .case-study-detail__tab.is-active {
+    border-bottom-color: #111213;
+  }
+
+  .case-study-detail__tab.is-active::after {
+    display: none;
+  }
+
+  .case-study-detail__listen {
+    width: 106px;
+    height: 56px;
+    padding: 12px;
+  }
+
+  .case-study-detail__top {
+    display: grid;
+    width: 100%;
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .case-study-detail__hero-card,
+  .case-study-detail__hero-image-wrap,
+  .case-study-detail__hero-copy,
+  .case-study-detail__hero-subtitle,
+  .case-study-detail__hero-title,
+  .case-study-detail__hero-body,
+  .case-study-detail__hero-meta,
+  .case-study-detail__summary {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .case-study-detail__content {
+    width: 100%;
+  }
+
+  .case-study-detail__testimonials,
+  .case-study-detail__more-projects,
+  .case-study-detail__view-all {
+    width: 100%;
+    margin-left: 0;
+  }
+
+  .case-study-detail__testimonials {
+    height: auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .case-study-detail__testimonial-card {
+    position: relative;
+    inset: auto;
+    width: 100%;
+    height: auto;
+    min-height: 220px;
+  }
+
+  .case-study-detail__hero-card {
+    height: auto;
+  }
+
+  .case-study-detail__hero-copy {
+    height: auto;
+  }
+
+  .case-study-detail__split-card,
+  .case-study-detail__split-card--reverse {
+    grid-template-columns: 1fr;
+  }
+
+  .case-study-detail__split-card--brief {
+    height: auto;
+  }
+
+  .case-study-detail__split-card--reflection,
+  .case-study-detail__split-card--sources {
+    grid-template-columns: 1fr;
+  }
+
+  .case-study-detail__brief-media,
+  .case-study-detail__brief-text {
+    min-height: 0;
+    height: auto;
+  }
+
+  .case-study-detail__split-card--reverse .text-side,
+  .case-study-detail__split-card--reverse .media-side {
+    order: initial;
+  }
+
+  .case-study-detail__text-panel {
+    padding: 32px 28px;
+  }
+
+  .case-study-detail__two-up {
+    gap: 20px;
+  }
+
+  .case-study-detail__two-up-row {
+    gap: 20px;
+  }
+
+  .case-study-detail__two-up--featured {
+    grid-template-columns: 1fr 1fr;
+    align-items: stretch;
+  }
+
+  .case-study-detail__two-up--featured img:first-child,
+  .case-study-detail__two-up--featured img:last-child {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    border-radius: 24px;
+  }
+
+  .case-study-detail__two-up--posters .case-study-detail__two-up-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .case-study-detail__two-up--posters img {
+    width: 100%;
+    height: auto;
+    min-height: 0;
+    border-radius: 24px;
+  }
+
+  .case-study-detail__two-up-caption {
+    width: 100%;
+  }
+
+  .case-study-detail__store-image {
+    position: static;
+    width: 100%;
+    height: auto;
+    min-height: 260px;
+  }
+
+  .case-study-detail__composite-panel,
+  .case-study-detail__color-panel,
+  .case-study-detail__panel--commercial-bay {
+    height: auto;
+  }
+
+  .case-study-detail__typography-specimen,
+  .case-study-detail__typography-banner,
+  .case-study-detail__retail-display-image,
+  .case-study-detail__commercial-bay-image {
+    position: static;
+    width: 100%;
+    height: auto;
+    min-height: 260px;
+  }
+
+  .case-study-detail__typography-specimen-image {
+    position: static;
+    width: 100%;
+    height: auto;
+    max-width: 100%;
+  }
+
+  .case-study-detail__composite-panel--typography {
+    padding: 32px;
+  }
+
+  .case-study-detail__typography-banner {
+    margin-top: 24px;
+    min-height: 0;
+  }
+
+  .case-study-detail__commercial-bay-poster {
+    left: 50%;
+    top: 50%;
+    width: min(32vw, 180px);
+    height: auto;
+    max-height: 60%;
+    transform: translate(-50%, -50%);
+  }
+
+  .case-study-detail__color-panel {
+    padding: 32px 28px 0;
+    align-items: stretch;
+  }
+
+  .case-study-detail__color-bars {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 20px;
+    width: 100%;
+  }
+
+  .case-study-detail__color-bars span {
+    width: 100%;
+    height: 220px;
+    border-radius: 24px 24px 0 0;
+  }
+
+  .case-study-detail__four-up-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .case-study-detail__four-up-tile {
+    width: 100%;
+    min-height: 260px;
+    height: auto;
+    aspect-ratio: 468 / 476;
+  }
+
+}
+
+@media (max-width: 768px) {
+  .case-study-detail {
+    padding-top: calc(var(--header-height, 0px) + 24px);
+    padding-bottom: 36px;
+  }
+
+  .case-study-detail__hero-copy,
+  .text-side {
+    padding: 24px;
+  }
+
+  .case-study-detail__hero-image-wrap {
+    height: 270px;
+  }
+
+  .case-study-detail__hero-title {
+    font-size: 2rem;
+  }
+
+  .case-study-detail__hero-body {
+    font-size: 1.25rem;
+    line-height: 1.45;
+  }
+
+  .full-bleed-media {
+    min-height: 260px;
+  }
+
+  .case-study-detail__two-up {
+    grid-template-columns: 1fr;
+  }
+
+  .case-study-detail__testimonials {
+    grid-template-columns: 1fr;
+  }
+
+  .case-study-detail__two-up img {
+    min-height: 260px;
+  }
+
+  .case-study-detail__color-bars,
+  .case-study-detail__four-up-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .case-study-detail {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+}

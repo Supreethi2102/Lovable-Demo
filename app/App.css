@@ -188,15 +188,22 @@ a:focus-visible {
   overflow: visible;
 }
 
+/* Globe column: max width from breakpoints below; #globe sizes live in index.html.
+   Never use transform: scale here — it visually enlarges WebGL past layout and breaks canvas sync. */
 .main__globe {
   display: flex;
   align-items: center;
   justify-content: center;
   overflow: visible;
   width: 100%;
-  max-width: 700px;
-  transform: scale(1.15);
-  transform-origin: center center;
+  max-width: 740px;
+  min-width: 0;
+  transform: none !important;
+}
+
+.main__globe #globe {
+  box-sizing: border-box;
+  max-width: 100%;
 }
 
 /* Ultra-wide desktop centering fix */
@@ -220,7 +227,7 @@ a:focus-visible {
   }
 
   .main__globe {
-    max-width: 650px;
+    max-width: 690px;
   }
 }
 
@@ -236,7 +243,7 @@ a:focus-visible {
   }
 
   .main__globe {
-    max-width: 620px;
+    max-width: 660px;
   }
 }
 
@@ -274,8 +281,7 @@ a:focus-visible {
   }
 
   .main__globe {
-    max-width: min(460px, 92vw);
-    transform: scale(1);
+    max-width: min(500px, 93vw);
     overflow: hidden;
   }
 }
@@ -301,8 +307,7 @@ a:focus-visible {
   }
 
   .main__globe {
-    max-width: min(380px, 92vw);
-    transform: scale(1);
+    max-width: min(410px, 93vw);
   }
 }
 
@@ -319,8 +324,7 @@ a:focus-visible {
   }
 
   .main__globe {
-    max-width: min(330px, 90vw);
-    transform: scale(1);
+    max-width: min(360px, 91vw);
   }
 }
 

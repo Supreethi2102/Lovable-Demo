@@ -1,17 +1,28 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
 import { Header, Hero, Footer, CaseStudies, Publications, PublicationDetail, CaseStudyDetail, About, Testimonials, Contact, Destinations, ColorSwatches } from './components';
 import './App.css';
 import './ButtonStyles.css';
 
+function scheduleGlobeLayoutResize() {
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      window.__portfolioGlobeResize?.();
+    });
+  });
+}
+
 const AppRoutes: React.FC = () => {
   const location = useLocation();
   const isHome = location.pathname === '/';
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const globe = document.getElementById('globe');
     if (globe) {
       globe.style.display = isHome ? '' : 'none';
+    }
+    if (isHome) {
+      scheduleGlobeLayoutResize();
     }
   }, [isHome]);
 
@@ -27,11 +38,12 @@ const AppRoutes: React.FC = () => {
 const HomePage: React.FC = () => {
   const globeContainerRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     const globeElement = document.getElementById('globe');
     if (globeElement && globeContainerRef.current) {
       globeContainerRef.current.appendChild(globeElement);
     }
+    scheduleGlobeLayoutResize();
     return () => {
       const globe = document.getElementById('globe');
       if (globe && document.body) {

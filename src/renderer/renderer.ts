@@ -154,6 +154,10 @@ export class Renderer extends EventTarget {
   }
 
   resize(width: number, height: number) {
+    if (width <= 0 || height <= 0 || !Number.isFinite(width) || !Number.isFinite(height)) {
+      return;
+    }
+
     this.rendererSize.set(width, height);
 
     this.webglRenderer.setSize(width, height);

@@ -204,6 +204,9 @@ export class WebGlGlobe extends EventTarget {
 
   private doResize() {
     const {width, height} = this.container.getBoundingClientRect();
+    if (width <= 0 || height <= 0 || !Number.isFinite(width) || !Number.isFinite(height)) {
+      return;
+    }
 
     // Resize tile selector size
     this.tileSelector.setSize(new Vector2(width, height).multiplyScalar(0.25).round());

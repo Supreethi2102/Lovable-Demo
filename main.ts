@@ -27,16 +27,21 @@ const globe = new WebGlGlobe(globeEl, {
   cameraView: {lng: 155, lat: -10, altitude: distance, isAnimated: false}
 });
 
+function resizeGlobeIfVisible() {
+  const {width, height} = globeEl.getBoundingClientRect();
+  if (width <= 0 || height <= 0) return;
+  try {
+    globe.resize();
+  } catch (e) {
+    console.warn('Globe resize error:', e);
+  }
+}
+
+window.__portfolioGlobeResize = resizeGlobeIfVisible;
+
 // Notify WebGL globe when container dimensions change (e.g. responsive resize or move into hero)
 const resizeObserver = new ResizeObserver(() => {
-  const { width, height } = globeEl.getBoundingClientRect();
-  if (width > 0 && height > 0) {
-    try {
-      globe.resize();
-    } catch (e) {
-      console.warn('Globe resize error:', e);
-    }
-  }
+  resizeGlobeIfVisible();
 });
 resizeObserver.observe(globeEl);
 

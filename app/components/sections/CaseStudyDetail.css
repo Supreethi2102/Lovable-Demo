@@ -859,7 +859,8 @@
   background: #f7f8f9;
   border: 1px solid #b0b3b8;
   border-radius: 24px;
-  padding: 52px 180px;
+  padding-block: 52px;
+  padding-inline: 180px;
   box-sizing: border-box;
 }
 
@@ -880,31 +881,26 @@
   line-height: 1.5rem;
 }
 
-.case-study-detail__text-panel--scaling {
-  min-height: 348px;
+/* Same vertical rhythm as space above first line (padding + heading gap) */
+.case-study-detail__text-panel > *:last-child {
+  margin-bottom: 0;
 }
 
 .case-study-detail__text-panel--scaling h4,
 .case-study-detail__text-panel--scaling p,
 .case-study-detail__text-panel--scaling ul {
   width: 624px;
-}
-
-.case-study-detail__text-panel--scaling h4 {
-  margin: 0 0 4px;
-}
-
-.case-study-detail__text-panel--scaling p {
-  margin: 0 0 16px;
+  max-width: 100%;
 }
 
 .case-study-detail__text-panel--scaling ul {
-  margin: 0 0 16px;
+  margin: 0 0 12px;
   padding-left: 24px;
   color: #3c3f43;
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
   font-size: 16px;
   line-height: 24px;
+  box-sizing: border-box;
 }
 
 .case-study-detail__text-panel--scaling li {
@@ -1402,7 +1398,8 @@
   }
 
   .case-study-detail__text-panel {
-    padding: 32px 28px;
+    padding-block: 32px;
+    padding-inline: 28px;
   }
 
   .case-study-detail__two-up {

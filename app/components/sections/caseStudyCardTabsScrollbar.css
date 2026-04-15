@@ -1,0 +1,50 @@
+/**
+ * Scrollbar chrome shared by case study flip-card tab strips and case study detail sidebar nav.
+ * WebKit rules match CaseStudies.css (phone tab row); detail reuses the same thumb/size.
+ */
+
+@media (max-width: 767px) {
+  .case-study-card__tabs::-webkit-scrollbar,
+  .case-study-card__back-tabs::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .case-study-card__tabs::-webkit-scrollbar-thumb,
+  .case-study-card__back-tabs::-webkit-scrollbar-thumb {
+    background: rgba(60, 63, 67, 0.35);
+    border-radius: 2px;
+  }
+}
+
+@media (min-width: 1301px) {
+  .case-study-detail__tabs::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  .case-study-detail__tabs::-webkit-scrollbar-thumb {
+    background: rgba(60, 63, 67, 0.35);
+    border-radius: 2px;
+  }
+
+  .case-study-detail__tabs {
+    scrollbar-color: rgba(60, 63, 67, 0.35) transparent;
+  }
+}
+
+@media (max-width: 1300px) {
+  .case-study-detail__sidebar::-webkit-scrollbar,
+  .case-study-detail__tabs::-webkit-scrollbar {
+    height: 4px;
+  }
+
+  .case-study-detail__sidebar::-webkit-scrollbar-thumb,
+  .case-study-detail__tabs::-webkit-scrollbar-thumb {
+    background: rgba(60, 63, 67, 0.35);
+    border-radius: 2px;
+  }
+
+  .case-study-detail__sidebar,
+  .case-study-detail__tabs {
+    scrollbar-color: rgba(60, 63, 67, 0.35) transparent;
+  }
+}

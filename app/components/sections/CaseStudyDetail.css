@@ -1,3 +1,5 @@
+@import './caseStudyCardTabsScrollbar.css';
+
 .case-study-detail {
   background: #eceff1;
   width: 100%;
@@ -62,19 +64,56 @@
 .case-study-detail__tabs {
   position: relative;
   width: 170px;
-  border-right: 4px solid #d1d1d1;
+  /* Same rail as .case-study-card__sidebar: grey line + padding so active bar sits flush on the line */
+  border-right: 1px solid #b0b3b8;
   display: flex;
   flex-direction: column;
   gap: 12px;
-  padding-right: 0;
+  /* 32px rail is .case-study-detail__tab-row column 2 (matches card sidebar padding band) */
+  /* Room below last row so the scroll edge doesn’t clip the indicator */
+  padding-bottom: 12px;
+  box-sizing: border-box;
+  /* Cap height so long nav scrolls (thumb only appears when overflow); style matches case-study card tab strip */
+  max-height: max(11rem, min(26rem, calc(100dvh - var(--header-height, 96px) - 240px)));
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
+  overscroll-behavior-y: contain;
+  scrollbar-gutter: stable;
+  scrollbar-width: thin;
+}
+
+/* Rail + 4px bar live in-flow (no button ::after into padding) so scroll/overflow-x don’t clip the bar */
+.case-study-detail__tab-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 32px;
+  align-items: center;
+  min-height: 48px;
+  width: 100%;
+}
+
+.case-study-detail__tab-row::after {
+  content: '';
+  grid-column: 2;
+  justify-self: end;
+  width: 4px;
+  height: 48px;
+  border-radius: 2px;
+  background: transparent;
+}
+
+.case-study-detail__tab-row:has(.case-study-detail__tab.is-active)::after {
+  background: #111213;
 }
 
 .case-study-detail__tab {
+  grid-column: 1;
   position: relative;
   display: flex;
   align-items: center;
   gap: 8px;
   width: 100%;
+  min-width: 0;
   height: 48px;
   border: none;
   margin-right: 0;
@@ -88,16 +127,6 @@
 
 .case-study-detail__tab.is-active {
   color: #111213;
-}
-
-.case-study-detail__tab.is-active::after {
-  content: '';
-  position: absolute;
-  right: -4px;
-  top: 0;
-  width: 4px;
-  height: 100%;
-  background: #111213;
 }
 
 .case-study-detail__listen {
@@ -143,6 +172,12 @@
 
 .case-study-detail__content > * {
   margin: 0;
+}
+
+/* Native scrollIntoView({ behavior: 'smooth' }): offset for fixed header */
+.case-study-detail__content > section[id],
+.case-study-detail__content > article[id] {
+  scroll-margin-top: calc(var(--header-height, 96px) + 20px);
 }
 
 .case-study-detail__top {
@@ -345,37 +380,22 @@
   grid-template-columns: 492px 492px;
 }
 
-.case-study-detail__split-card--solution {
-  min-height: 504px;
-}
-
 .case-study-detail__split-card--digital {
-  min-height: 630px;
   width: 984px;
   grid-template-columns: 492px 492px;
 }
 
-.case-study-detail__split-card--digital .text-side {
-  padding: 52px 52px 48px;
-}
-
 .case-study-detail__split-card--digital .media-side {
   width: 492px;
-  min-height: 100%;
-}
-
-.case-study-detail__split-card--impact {
-  min-height: 588px;
+  min-height: 630px;
 }
 
 .case-study-detail__split-card--reflection {
   grid-template-columns: 467px 517px;
-  min-height: 470px;
 }
 
 .case-study-detail__split-card--sources {
   grid-template-columns: 532px 449px;
-  min-height: 952px;
 }
 
 .case-study-detail__split-card--reverse .text-side {
@@ -384,6 +404,25 @@
 
 .case-study-detail__split-card--reverse .media-side {
   order: 2;
+}
+
+/* Split cards (except locked brief): row height from content; text column symmetric padding;
+   media stretches to match text column — avoids a tall empty band under copy. */
+.case-study-detail__split-card:not(.case-study-detail__split-card--brief) {
+  align-items: stretch;
+  min-height: 0;
+}
+
+.case-study-detail__split-card:not(.case-study-detail__split-card--brief) .text-side {
+  align-self: start;
+  height: fit-content;
+  padding-block: 52px;
+  padding-inline: 52px;
+  box-sizing: border-box;
+}
+
+.case-study-detail__split-card:not(.case-study-detail__split-card--brief) .media-side {
+  align-self: stretch;
 }
 
 .media-side {
@@ -506,7 +545,8 @@
 }
 
 .case-study-detail__sources-media {
-  min-height: 952px;
+  align-self: stretch;
+  min-height: 720px;
 }
 
 .case-study-detail__sources-media img {
@@ -1115,6 +1155,10 @@
   margin-bottom: 0;
 }
 
+.case-study-detail__split-card--sources .credits-list {
+  margin-top: 20px;
+}
+
 .case-study-detail > .site-footer {
   margin-top: 90px;
   background: #F7F8F9;
@@ -1131,6 +1175,7 @@
   padding: 0;
   box-sizing: border-box;
   text-align: center;
+  background: transparent;
 }
 
 .case-study-detail__testimonial-bubble {
@@ -1139,6 +1184,7 @@
   width: 100%;
   height: 100%;
   display: block;
+  pointer-events: none;
 }
 
 .case-study-detail__testimonial-content {
@@ -1146,13 +1192,14 @@
   z-index: 1;
   width: 100%;
   height: 100%;
-  padding: 48px;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  gap: 20px;
   align-items: center;
   justify-content: center;
+  gap: clamp(16px, 2vw, 24px);
+  /* Base; each bubble SVG reserves space for its pointer (see modifiers below) */
+  padding: 44px 52px 52px;
 }
 
 .case-study-detail__testimonial-card--top-left {
@@ -1162,11 +1209,21 @@
   height: 208px;
 }
 
+.case-study-detail__testimonial-card--top-left .case-study-detail__testimonial-content {
+  /* Pointer bottom-centre — keep copy clear of the tail */
+  padding: 44px 56px 72px;
+}
+
 .case-study-detail__testimonial-card--top-right {
   left: 653px;
   top: 0;
   width: 329px;
   height: 284px;
+}
+
+.case-study-detail__testimonial-card--top-right .case-study-detail__testimonial-content {
+  /* Pointer middle-left (narrow card — keep inset moderate) */
+  padding: 44px 40px 44px 64px;
 }
 
 .case-study-detail__testimonial-card--bottom-left {
@@ -1176,6 +1233,11 @@
   height: 308px;
 }
 
+.case-study-detail__testimonial-card--bottom-left .case-study-detail__testimonial-content {
+  /* Pointer middle-right — a touch less left / more right inset so copy sits optically centred in the rounded body */
+  padding: 44px 76px 44px 34px;
+}
+
 .case-study-detail__testimonial-card--bottom-right {
   left: 472px;
   top: 366px;
@@ -1183,26 +1245,39 @@
   height: 216px;
 }
 
+.case-study-detail__testimonial-card--bottom-right .case-study-detail__testimonial-content {
+  /* Pointer top-centre */
+  padding: 72px 56px 44px;
+}
+
 .case-study-detail__testimonial-quote {
   margin: 0;
+  width: 100%;
+  max-width: min(38ch, 100%);
   color: #111213;
   font-family: 'Romie Trial', 'Romie', Georgia, serif;
   font-size: 24px;
   font-style: normal;
   font-weight: 500;
-  line-height: 36px;
-  letter-spacing: 0.96px;
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+  text-align: center;
+  text-wrap: balance;
+  hyphens: manual;
 }
 
 .case-study-detail__testimonial-author {
   margin: 0;
-  color: #3c3f43;
+  width: 100%;
+  max-width: min(38ch, 100%);
+  color: #6b6e73;
   font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 16px;
+  font-size: 15px;
   font-style: normal;
   font-weight: 400;
-  line-height: 24px;
-  letter-spacing: 0.64px;
+  line-height: 1.5;
+  letter-spacing: 0.01em;
+  text-align: center;
 }
 
 .case-study-detail__more-projects {
@@ -1280,6 +1355,9 @@
     overflow-x: auto;
     padding-bottom: 6px;
     justify-content: flex-start;
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-x: contain;
   }
 
   .case-study-detail__sidebar-top {
@@ -1294,9 +1372,29 @@
     border-bottom: 1px solid #b0b3b8;
     flex-direction: row;
     min-width: max-content;
+    max-height: none;
+    overflow-y: visible;
+    overflow-x: auto;
+    padding-right: 0;
+    padding-bottom: 0;
+    scrollbar-gutter: auto;
+    scrollbar-width: thin;
+    overscroll-behavior-x: contain;
+  }
+
+  .case-study-detail__tab-row {
+    display: inline-flex;
+    width: auto;
+    min-height: 0;
+    grid-template-columns: none;
+  }
+
+  .case-study-detail__tab-row::after {
+    display: none;
   }
 
   .case-study-detail__tab {
+    grid-column: auto;
     border-right: none;
     border-bottom: 3px solid transparent;
     margin-right: 0;
@@ -1307,10 +1405,6 @@
 
   .case-study-detail__tab.is-active {
     border-bottom-color: #111213;
-  }
-
-  .case-study-detail__tab.is-active::after {
-    display: none;
   }
 
   .case-study-detail__listen {
@@ -1364,6 +1458,25 @@
     min-height: 220px;
   }
 
+  .case-study-detail__testimonial-content,
+  .case-study-detail__testimonial-card--top-left .case-study-detail__testimonial-content,
+  .case-study-detail__testimonial-card--top-right .case-study-detail__testimonial-content,
+  .case-study-detail__testimonial-card--bottom-left .case-study-detail__testimonial-content,
+  .case-study-detail__testimonial-card--bottom-right .case-study-detail__testimonial-content {
+    padding: clamp(28px, 5vw, 36px) clamp(22px, 4vw, 32px) clamp(36px, 6vw, 48px);
+    gap: clamp(14px, 2vw, 20px);
+  }
+
+  .case-study-detail__testimonial-quote {
+    font-size: clamp(1.125rem, 2.2vw, 1.5rem);
+    max-width: min(34ch, 100%);
+  }
+
+  .case-study-detail__testimonial-author {
+    font-size: 0.9375rem;
+    max-width: min(34ch, 100%);
+  }
+
   .case-study-detail__hero-card {
     height: auto;
   }
@@ -1384,6 +1497,16 @@
   .case-study-detail__split-card--reflection,
   .case-study-detail__split-card--sources {
     grid-template-columns: 1fr;
+  }
+
+  .case-study-detail__split-card:not(.case-study-detail__split-card--brief) .text-side {
+    align-self: stretch;
+    height: auto;
+  }
+
+  .case-study-detail__split-card:not(.case-study-detail__split-card--brief) .media-side {
+    min-height: min(420px, 60vw);
+    align-self: stretch;
   }
 
   .case-study-detail__brief-media,

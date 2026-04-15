@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   ArrowLeft,
@@ -137,10 +137,41 @@ export const CaseStudyDetail: React.FC = () => {
   const { id } = useParams();
   const [activeSection, setActiveSection] = useState<NavSectionId>('overview');
   const sectionsRef = useRef<Record<string, HTMLElement | null>>({});
+  /** While true, section spy ignores IO (avoids dozens of setStates during smooth scroll = jank). */
+  const suppressSectionSpyRef = useRef(false);
+  const suppressSectionSpyTimerRef = useRef(0);
 
   useEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
   }, [id]);
+
+  useEffect(() => {
+    return () => {
+      window.clearTimeout(suppressSectionSpyTimerRef.current);
+    };
+  }, []);
+
+  const scrollToNavSection = useCallback((sectionId: NavSectionId) => {
+    const el = sectionsRef.current[sectionId];
+    if (!el) return;
+
+    setActiveSection(sectionId);
+    window.clearTimeout(suppressSectionSpyTimerRef.current);
+    suppressSectionSpyRef.current = true;
+
+    const reduce =
+      typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    el.scrollIntoView({ block: 'start', behavior: reduce ? 'auto' : 'smooth' });
+
+    const releaseSpy = () => {
+      suppressSectionSpyRef.current = false;
+    };
+
+    if (typeof window !== 'undefined') {
+      window.addEventListener('scrollend', releaseSpy, { once: true });
+    }
+    suppressSectionSpyTimerRef.current = window.setTimeout(releaseSpy, 1100);
+  }, []);
 
   useEffect(() => {
     const nodes = NAV_ITEMS.map((s) => sectionsRef.current[s.id])
@@ -149,6 +180,7 @@ export const CaseStudyDetail: React.FC = () => {
 
     const observer = new IntersectionObserver(
       (entries) => {
+        if (suppressSectionSpyRef.current) return;
         const visible = entries
           .filter((entry) => entry.isIntersecting)
           .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
@@ -189,18 +221,17 @@ export const CaseStudyDetail: React.FC = () => {
                   const isActive = activeSection === section.id;
                   const SectionIcon = SECTION_ICON_COMPONENTS[section.id];
                   return (
-                    <button
-                      key={section.id}
-                      type="button"
-                      className={`case-study-detail__tab ${isActive ? 'is-active' : ''}`}
-                      onClick={() => {
-                        sectionsRef.current[section.id]?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                      }}
-                      aria-current={isActive ? 'location' : undefined}
-                    >
-                      <SectionIcon size={24} weight={isActive ? 'fill' : 'regular'} aria-hidden="true" />
-                      <span>{section.label}</span>
-                    </button>
+                    <div key={section.id} className="case-study-detail__tab-row">
+                      <button
+                        type="button"
+                        className={`case-study-detail__tab ${isActive ? 'is-active' : ''}`}
+                        onClick={() => scrollToNavSection(section.id)}
+                        aria-current={isActive ? 'location' : undefined}
+                      >
+                        <SectionIcon size={24} weight={isActive ? 'fill' : 'regular'} aria-hidden="true" />
+                        <span>{section.label}</span>
+                      </button>
+                    </div>
                   );
                 })}
               </nav>
@@ -687,7 +718,6 @@ export const CaseStudyDetail: React.FC = () => {
                   shoots at Big Manly Beach, Whangaparāoa, Takapuna, and Maraetai.
                 </p>
                 <p>After a stretch of rough weather, we struck it lucky with perfect conditions on shoot days.</p>
-                <br></br>
                 <div className="credits-list">
                   <p>
                     <strong>Advertiser:</strong> The Warehouse Group

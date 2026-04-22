@@ -15,7 +15,7 @@ const input = exampleFiles.reduce(
 );
 
 export default defineConfig({
-  base: './',
+  base: '/',
   resolve: { alias: { '~': resolve(__dirname, 'src') } },
   define: {
     __IS_VITE_BUILD__: 'true'

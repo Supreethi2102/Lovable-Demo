@@ -14,7 +14,7 @@ const MESSAGE_MAX_LENGTH = 2000;
 const ENABLE_FORM_VALIDATION = true;
 const ENABLE_EMAILJS = true;
 
-/** Figma tablet / phone composites – use BASE_URL so paths work with Vite base: './' */
+/** Figma tablet / phone composites – use BASE_URL for correct absolute paths in production */
 const CONTACT_ART_TABLET = `${import.meta.env.BASE_URL}contact/tablet-composite.png`;
 const CONTACT_ART_PHONE = `${import.meta.env.BASE_URL}contact/phone-composite.png`;
 

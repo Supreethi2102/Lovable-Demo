@@ -1,6 +1,19 @@
 import React, { useLayoutEffect, useRef } from 'react';
 import { BrowserRouter, Routes, Route, useLocation } from 'react-router-dom';
-import { Header, Hero, Footer, CaseStudies, Publications, PublicationDetail, CaseStudyDetail, About, Testimonials, Contact, Destinations, ColorSwatches } from './components';
+import {
+  Header,
+  Hero,
+  Footer,
+  CaseStudies,
+  Publications,
+  PublicationDetail,
+  CaseStudyDetail,
+  About,
+  Testimonials,
+  Contact,
+  Destinations,
+  ColorSwatches,
+} from './components';
 import './App.css';
 import './ButtonStyles.css';
 

@@ -41,8 +41,8 @@
   background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 999px;
-  font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
-  font-size: 0.9375rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 600;
   color: #3c3f43;
   will-change: transform;
@@ -92,8 +92,8 @@
   background: #ffffff;
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 12px;
-  font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
-  font-size: 0.875rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-sm-size);
   font-weight: 600;
   color: #3c3f43;
   text-transform: uppercase;
@@ -213,10 +213,10 @@
 }
 
 .gp-swatch__name {
-  font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
-  font-size: 0.75rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-xs-size);
   font-weight: 600;
-  line-height: 1rem;
+  line-height: var(--type-atkinson-text-md-size);
   letter-spacing: 0.48px;
   color: #212325;
   text-align: center;
@@ -231,10 +231,10 @@
 }
 
 .gp-swatch__hex {
-  font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
-  font-size: 0.75rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-xs-size);
   font-weight: 400;
-  line-height: 1rem;
+  line-height: var(--type-atkinson-text-md-size);
   letter-spacing: 0.48px;
   color: #3c3f43;
   text-transform: uppercase;
@@ -247,10 +247,10 @@
 }
 
 .gp-swatch__link {
-  font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
-  font-size: 0.75rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-xs-size);
   font-weight: 400;
-  line-height: 1rem;
+  line-height: var(--type-atkinson-text-md-size);
   letter-spacing: 0.48px;
   color: #7150e5;
   text-align: center;
@@ -285,10 +285,10 @@
 }
 
 .gp-swatch__description {
-  font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
-  font-size: 0.6875rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-xs-size);
   font-weight: 400;
-  line-height: 0.9375rem;
+  line-height: var(--type-atkinson-text-sm-lh);
   letter-spacing: 0px;
   color: #3c3f43;
   margin: 0 0 12px 0; /* 12px + 12px gap = 24px between description and contrast bar */
@@ -319,10 +319,10 @@
 }
 
 .gp-swatch__ideal {
-  font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
-  font-size: 0.625rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-xs-size);
   font-weight: 400;
-  line-height: 0.875rem;
+  line-height: var(--type-atkinson-text-sm-lh);
   letter-spacing: 0px;
   color: #3c3f43;
   flex-shrink: 0;
@@ -344,17 +344,17 @@
 
 .gp-swatch__ideal-name {
   margin: 0;
-  font-size: 0.625rem;
+  font-size: var(--type-atkinson-text-xs-size);
   font-weight: 400;
-  line-height: 0.875rem;
+  line-height: var(--type-atkinson-text-sm-lh);
   color: #3c3f43;
 }
 
 .gp-swatch__contrast-ratio {
-  font-family: 'Atkinson Hyperlegible Next', system-ui, sans-serif;
-  font-size: 0.625rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-xs-size);
   font-weight: 400;
-  line-height: 0.875rem;
+  line-height: var(--type-atkinson-text-sm-lh);
   letter-spacing: 0px;
   color: #3c3f43;
   margin: 0;
@@ -384,28 +384,28 @@
   }
 
   .gp-pill {
-    font-size: 0.8125rem;
+    font-size: var(--type-atkinson-text-xs-size);
     padding: 0 18px;
   }
 
   .gp-text {
-    font-size: 0.75rem;
+    font-size: var(--type-atkinson-text-xs-size);
   }
 
   .gp-swatch__name,
   .gp-swatch__hex,
   .gp-swatch__link {
-    font-size: 0.625rem;
+    font-size: var(--type-atkinson-text-xs-size);
   }
 
   .gp-swatch__description {
-    font-size: 0.625rem;
-    line-height: 0.875rem;
+    font-size: var(--type-atkinson-text-xs-size);
+    line-height: var(--type-atkinson-text-sm-lh);
   }
 
   .gp-swatch__ideal,
   .gp-swatch__contrast-ratio {
-    font-size: 0.5625rem;
+    font-size: var(--type-atkinson-text-xs-size);
   }
 }
 

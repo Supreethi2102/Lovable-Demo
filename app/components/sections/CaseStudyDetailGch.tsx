@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   ArrowLeft,
   SpeakerHigh,
@@ -33,8 +33,8 @@ const NAV_ITEMS: Array<{ id: NavSectionId; label: string }> = [
   { id: 'research', label: 'Research' },
   { id: 'process', label: 'Process' },
   { id: 'solution', label: 'Solution' },
-  { id: 'impact', label: 'Impact' },
   { id: 'reflection', label: 'Reflection' },
+  { id: 'impact', label: 'Impact' },
   { id: 'sources', label: 'Sources' },
 ];
 
@@ -48,11 +48,6 @@ const SECTION_ICON_COMPONENTS: Record<NavSectionId, React.ElementType> = {
   impact: ChartBar,
   sources: Books,
 };
-
-const PALE_YELLOW_PLACEHOLDER =
-  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='984' height='680' viewBox='0 0 984 680'><rect width='984' height='680' fill='%23F6F2C0'/></svg>";
-const SOFT_PEACH_PLACEHOLDER =
-  "data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='984' height='680' viewBox='0 0 984 680'><rect width='984' height='680' fill='%23FFE9B8'/></svg>";
 
 const IMG = {
   hero: '/case-study-gch/9912d40ae739a7575ec4a7abed1a19cf05d03244.png',
@@ -84,26 +79,27 @@ const IMG = {
 
 const TESTIMONIALS = [
   {
-    quote: 'It drew people in more, especially around the summer promo areas.',
-    author: 'Store team member, Auckland',
+    quote: 'Customers comment on them more than the old ones. Especially the wording on the side.',
+    author: 'Pharmacy assistant, Auckland',
     className: 'case-study-detail__testimonial-card--top-left',
     bubble: '/case-study/464ed7b7414f42b86b14ae25bcac75852bc99010.svg',
   },
   {
-    quote: 'It feels more welcoming, like you actually want to look around.',
+    quote: 'It’s good to see something a bit more responsible, especially from a big chain.',
     author: 'Customer, Auckland',
     className: 'case-study-detail__testimonial-card--top-right',
     bubble: '/case-study/18f9645bf37c99104bb50a07a5a4af98f0aec53a.svg',
   },
   {
-    quote: 'The colour really lifted the space, especially on grey days.',
-    author: 'Store team member, Auckland',
+    quote:
+      'I liked the “Kia ora” on the bag. I didn’t know the exact meaning until I saw it, and it feels really Kiwi. It’s nice seeing te reo used more.',
+    author: 'Customer, Auckland',
     className: 'case-study-detail__testimonial-card--bottom-left',
     bubble: '/case-study/67f34898ea6b9e22ca7d4c59fe0a19577d334a39.svg',
   },
   {
-    quote: 'It’s bright and welcoming, it just makes the whole store feel better.',
-    author: 'Customer, Auckland',
+    quote: 'The new bags feel clearer and more premium at checkout.',
+    author: 'Store team member, Auckland',
     className: 'case-study-detail__testimonial-card--bottom-right',
     bubble: '/case-study/55848b141f11b80be83c56000477a15b580f06a6.svg',
   },
@@ -111,33 +107,38 @@ const TESTIMONIALS = [
 
 const MORE_PROJECTS: CaseStudyCardStudy[] = [
   {
-    id: 101,
-    subtitle: 'Unichem | Packaging system',
-    title: 'How do you make compliance feel branded and useful?',
+    id: 1,
+    subtitle: 'The Warehouse | Mega Toy Month Campaign',
+    title: 'How do you turn a toy sale into a month-long adventure?',
     description:
-      'Green Cross Health needed compliant paper bags that worked across Life Pharmacy and Unichem while maintaining distinct identities.',
-    image: '/case-study-gch/1ed717e27b4208d7579d7f929d28b0624fde988e.png',
+      'Families entered the July school holidays with tight budgets after lockdowns. The Warehouse needed a campaign that felt playful for kids, clear and value-driven for parents, and strong enough to drive online and in-store sales across busy retail channels.',
+    image: '/case-study-gch/c8cdbdceb1fbf0c9bca7307bcba47c77cfbb2e81.png',
     duration: '4 weeks',
     category: 'campaigns',
   },
   {
-    id: 102,
-    subtitle: 'Green Cross Health | Packaging',
-    title: 'How do you keep two brands distinct in one rollout?',
+    id: 2,
+    subtitle: 'The Warehouse | Summer Campaign',
+    title: 'How do you make small spends feel like summer wins?',
     description:
-      'When New Zealand banned single-use plastic, Green Cross Health needed new bags that felt purposeful. The challenge was to create a system for Life Pharmacy and Unichem that communicated care, sustainability, and identity across a nationwide rollout.',
+      'After lockdowns and rising living costs, Kiwi families were cautious with spending. The Warehouse needed a bright summer campaign that balanced aspiration with approachability.',
     image: '/case-study-gch/ae57819f1182ad7e22b284384065d1925c6aabd7.png',
     duration: '4 weeks',
-    category: 'packaging',
+    category: 'campaigns',
   },
 ];
 
 export const CaseStudyDetailGch: React.FC = () => {
   const navigate = useNavigate();
+  const { id } = useParams();
   const [activeSection, setActiveSection] = useState<NavSectionId>('overview');
   const sectionsRef = useRef<Record<string, HTMLElement | null>>({});
   const suppressSectionSpyRef = useRef(false);
   const suppressSectionSpyTimerRef = useRef(0);
+
+  useEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [id]);
 
   useEffect(() => {
     return () => {
@@ -252,16 +253,17 @@ export const CaseStudyDetailGch: React.FC = () => {
                   <img
                     className="case-study-detail__hero-image case-study-detail__hero-image--figma"
                     src={IMG.hero}
-                    alt="Summer campaign hero visual"
+                    alt="Brown paper retail bags in warm sunlight"
                   />
                 </figure>
                 <div className="case-study-detail__hero-copy">
-                  <p className="case-study-detail__hero-subtitle">Packaging | Green Cross Health</p>
+                  <p className="case-study-detail__hero-subtitle">Packaging | Green Cross</p>
                   <h1 id="case-study-detail-title" className="case-study-detail__hero-title">
                     Retail paper bags
                   </h1>
                   <p className="case-study-detail__hero-body">
-                    A plastics ban opened the door to rethink how Life Pharmacy and Unichem show up. I designed paper bags as small moments of brand, culture and distinction.
+                    Green Cross needed a practical paper bag system across Life Pharmacy and Unichem. I led design
+                    direction to balance sustainability, brand clarity, and production reality.
                   </p>
                   <p className="case-study-detail__hero-meta">Estimated read time: 3 minutes | Duration: 4 weeks</p>
                 </div>
@@ -272,35 +274,39 @@ export const CaseStudyDetailGch: React.FC = () => {
                 {[
                   {
                     label: 'Role',
-                    value: 'Art direction, visual design, and photography direction across campaign assets',
+                    value: 'Art direction, visual design, and packaging rollout assets',
                     size: 'summary-item--72',
                   },
                   {
                     label: 'Context',
-                    value: 'Nationwide transition from plastic to paper bags for Life Pharmacy and Unichem',
+                    value: 'Green Cross Health plastic-bag phase-out across NZ stores',
                     size: 'summary-item--48',
                   },
-                  { label: 'Tools', value: 'Figma, Miro, InDesign, Photoshop, Illustrator', size: 'summary-item--48' },
+                  { label: 'Tools', value: 'InDesign, Illustrator, Photoshop', size: 'summary-item--48' },
                   {
                     label: 'Platforms',
-                    value: 'Platforms: In-store point of sale (POS), out-of-home (OOH), website, digital, social',
+                    value: 'In-store point of sale (POS), checkout touchpoints, and carry-out packaging',
                     size: 'summary-item--auto',
                   },
-                  { label: 'Audience', value: 'Life Pharmacy and Unichem customers', size: 'summary-item--24' },
+                  {
+                    label: 'Audience',
+                    value: 'Everyday pharmacy shoppers',
+                    size: 'summary-item--24',
+                  },
                   {
                     label: 'Focus',
-                    value: 'Packaging system, retail-ready artwork, print production, and rollout governance',
+                    value: 'Packaging system, hierarchy, and production-ready templates',
                     size: 'summary-item--48',
                   },
                   {
                     label: 'Designs',
-                    value: 'Bag front/back artwork, lockups, print-ready variants, and supplier specs',
+                    value: 'Bag faces, side panels, lockups, and printable variants',
                     size: 'summary-item--48',
                   },
-                  { label: 'Accessibility', value: 'Clear hierarchy, high visibility', size: 'summary-item--24' },
+                  { label: 'Accessibility', value: 'High contrast, legible typography', size: 'summary-item--24' },
                   {
                     label: 'Team',
-                    value: 'Brand, packaging, production, and retail operations stakeholders',
+                    value: 'Brand, packaging, production, and illustrator collaboration',
                     size: 'summary-item--48',
                   },
                 ].map(({ label, value, size }, idx, arr) => (
@@ -324,7 +330,7 @@ export const CaseStudyDetailGch: React.FC = () => {
               className="case-study-detail__split-card case-study-detail__split-card--brief"
             >
               <figure className="media-side case-study-detail__brief-media">
-                <img src={IMG.brief} alt="Brief placeholder visual" />
+                <img src={IMG.duo1} alt="Life Pharmacy paper bag front and back" />
               </figure>
               <div className="text-side case-study-detail__brief-text">
                 <div className="case-study-detail__brief-content">
@@ -334,7 +340,8 @@ export const CaseStudyDetailGch: React.FC = () => {
                       <div className="case-study-detail__brief-business">
                         <h4>Business context</h4>
                         <p>
-                          The NZ plastic-bag phase-out required compliant replacements across two brands. The system needed to preserve recognition while staying practical for rollout.
+                          With New Zealand’s single-use plastics ban kicking in, Green Cross Health needed packaging that
+                          felt like a step forward.
                         </p>
                       </div>
                     </div>
@@ -342,21 +349,21 @@ export const CaseStudyDetailGch: React.FC = () => {
                     <div className="case-study-detail__brief-priorities">
                       <h4>Priorities:</h4>
                       <ul>
-                        <li>Drive visibility in busy environments</li>
-                        <li>Keep messaging clear across channels</li>
-                        <li>Keep both brands distinct while sharing a practical production framework</li>
+                        <li>Make sustainability visible</li>
+                        <li>Strengthen each brand’s individual presence</li>
+                        <li>Turn a regulatory shift into a customer moment</li>
                       </ul>
                     </div>
                   </div>
 
                   <div className="case-study-detail__brief-question">
                     <h4 className="case-study-detail__brief-question-title">
-                      How might we design compliant retail paper bags that:
+                      How might we create paper bags that double as small billboards:
                     </h4>
                     <ul>
-                      <li>Preserve brand recognition for Life Pharmacy and Unichem</li>
-                      <li>Work across small and large bag formats</li>
-                      <li>Remain clear and legible in real-world retail use</li>
+                      <li>Show sustainability upfront</li>
+                      <li>Reflect Aotearoa’s (New Zealand) culture</li>
+                      <li>Help the two brands feel distinct at a glance</li>
                     </ul>
                   </div>
                 </div>
@@ -372,19 +379,23 @@ export const CaseStudyDetailGch: React.FC = () => {
             >
               <div className="text-side case-study-detail__text-stack">
                 <h3>Research</h3>
-                <h4>Sustainability and material insight</h4>
-                <p>Shoppers glance at bags quickly; recognition comes from bold hierarchy, symbols, and clear colour cues.</p>
-                <p>Material, ink coverage, and print constraints strongly influence what survives production.</p>
-                <h4>Key insights</h4>
-                <ul>
-                  <li>Bag graphics are seen in motion, not studied</li>
-                  <li>Contrast and hierarchy drive instant recognition</li>
-                  <li>Large iconography improves wayfinding at a glance</li>
-                  <li>Print-safe colour and line weights reduce production risk</li>
-                </ul>
+                <p>With a tight timeline, I focused on what would directly impact the outcome.</p>
+                <h4>Sustainability and material</h4>
+                <p>
+                  I reviewed recycled bag design. Many relied on bright greens and leaf symbols that felt surface-level.
+                </p>
+                <p>
+                  I focused on kraft behaviour in print, ink absorption, fibre strength, dielines, and detail limits,
+                  grounding decisions in production and avoiding greenwashing.
+                </p>
+                <h4>How people see a bag</h4>
+                <p>Bags aren’t studied. They’re glimpsed.</p>
+                <p>
+                  Insights from Nielsen Norman Group shaped layouts. Hierarchy and contrast drive instant recognition.
+                </p>
               </div>
               <figure className="media-side">
-                <img src={IMG.research} alt="Research placeholder visual" />
+                <img src={IMG.research} alt="Research notes and references" />
               </figure>
             </article>
 
@@ -396,152 +407,82 @@ export const CaseStudyDetailGch: React.FC = () => {
               className="case-study-detail__split-card"
             >
               <figure className="media-side">
-                <img src={IMG.process} alt="Process placeholder visual" />
+                <img src={IMG.process} alt="Process visual board" />
               </figure>
               <div className="text-side case-study-detail__text-stack">
                 <h3>Process &amp; approach</h3>
-                <h4>Defining the visual direction</h4>
-                <p>POS came first, anchoring the direction early.</p>
                 <p>
-                  I built rapid concept routes for front/back bag layouts, balancing brand expression with manufacturing constraints.
+                  The project began with early concepts from an external agency. While they didn’t fully capture the
+                  direction, I saw an opportunity to take a different approach and developed a new concept from scratch.
                 </p>
-                <p>Routes were tested against kraft stock, ink absorption, fold lines, and handle placements.</p>
-                <p>The goal: practical production files that still feel branded, warm, and distinct.</p>
+                <p>
+                  Over four days, I introduced warmth, clarity, and cultural grounding, helping build trust and set a
+                  more collaborative path.
+                </p>
+                <h4>Direction</h4>
+                <p>I created moodboards to quickly align both brands and establish a shared visual tone.</p>
+                <p>
+                  The direction drew from papercraft references. Burano lacework, artists like Karen Bit Vejle and Maude
+                  White, and traditional Japanese kirie.
+                </p>
+                <p>
+                  The focus wasn’t decoration. It was structure. Negative space and clean geometry created a system
+                  designed for clarity, used where space allowed.
+                </p>
               </div>
-            </article>
-
-            <article className="case-study-detail__panel case-study-detail__composite-panel case-study-detail__composite-panel--typography">
-              <figure className="case-study-detail__typography-specimen">
-                <img
-                  className="case-study-detail__typography-specimen-image"
-                  src={IMG.typographySpecimen}
-                  alt="Typography specimen board"
-                />
-              </figure>
-              <figure className="case-study-detail__typography-banner">
-                <img
-                  className="case-study-detail__typography-banner-image"
-                  src={IMG.typographyBanner}
-                  alt="Packaging concept board"
-                />
-              </figure>
-            </article>
-
-            <article className="case-study-detail__panel case-study-detail__color-panel">
-              <div className="case-study-detail__color-bars" aria-hidden="true">
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-                <span />
-              </div>
-            </article>
-
-            <article className="case-study-detail__text-panel">
-              <h4>Balancing brand attitude</h4>
-              <p>
-                I aligned both bag systems around recognisable icons, disciplined spacing, and consistent typography.
-              </p>
-              <p>Small touchpoints can carry significant brand weight when applied intentionally.</p>
-            </article>
-
-            <section className="case-study-detail__two-up case-study-detail__two-up--featured">
-              <img className="case-study-detail__poster-image case-study-detail__poster-image--one" src={IMG.duo1} alt="Campaign visual placeholder one" />
-              <img className="case-study-detail__poster-image case-study-detail__poster-image--two" src={IMG.duo2} alt="Campaign visual placeholder two" />
-            </section>
-
-            <article className="case-study-detail__text-panel">
-              <h4>Finding the balance</h4>
-              <p>
-                Where possible, lower camera angles gave talent presence while keeping it open and approachable.
-              </p>
-              <p>The result. Bold, spirited imagery that still felt warm and human.</p>
-            </article>
-
-            <section className="case-study-detail__two-up case-study-detail__two-up--posters">
-              <div className="case-study-detail__two-up-row">
-                <img className="case-study-detail__poster-image case-study-detail__poster-image--three" src={IMG.duo3} alt="Life Pharmacy bag concept one" />
-                <img className="case-study-detail__poster-image case-study-detail__poster-image--four" src={IMG.duo4} alt="Unichem bag concept one" />
-              </div>
-              <p className="case-study-detail__two-up-caption">Bag concept variants</p>
-            </section>
-
-            <article className="case-study-detail__text-panel">
-              <h4>Designing for retail reality</h4>
-              <p>
-                Production constraints were locked early: dielines, gusset folds, handle clearance, and one-colour versus multi-colour print options.
-              </p>
-              <p>I created print-ready templates covering safe zones, lockups, and scalable front/back systems.</p>
             </article>
 
             <article className="case-study-detail__panel">
-              <img className="full-bleed-media case-study-detail__store-image" src={IMG.posterWall} alt="Life Pharmacy and Unichem bag lineup" />
+              <img className="full-bleed-media" src={IMG.brief} alt="Early layout exploration for paper bags" />
+            </article>
+            <article className="case-study-detail__panel">
+              <img className="full-bleed-media" src={IMG.typographyBanner} alt="Design system exploration boards" />
             </article>
 
             <article className="case-study-detail__text-panel">
-              <h4>Efficiency and consistency at scale</h4>
-              <p>This reduced rework, avoided crop issues, and ensured consistency across formats.</p>
-              <p>Early mockups helped the team visualise how the campaign would land in-store.</p>
-            </article>
-
-            <article className="case-study-detail__panel case-study-detail__panel--retail-display">
-              <img className="full-bleed-media case-study-detail__retail-display-image" src={IMG.retailDisplay} alt="Bag application in retail context" />
-            </article>
-
-            <article className="case-study-detail__text-panel case-study-detail__text-panel--scaling">
-              <h4>Scaling across channels</h4>
-              <p>Once POS was established, I extended the system into digital.</p>
-              <p>I mapped twelve layout compositions across key banner sizes, planning for product hierarchy and messaging.</p>
+              <h4>Messaging</h4>
+              <p>I refined copy into short, high-impact lines designed to land instantly in busy retail:</p>
               <ul>
-                <li>POS carried in-store visibility and impact</li>
-                <li>Consistent icon hierarchy reinforced recognition across both brands</li>
+                <li>Life Pharmacy. “It’s what’s on the inside that counts”</li>
+                <li>Unichem. “Our greatest wealth is health”</li>
               </ul>
-              <p>Layouts were tested early. From large posters to small mobile banners, everything remained clear and consistent.</p>
+              <p>
+                Clear, human, and easy to absorb in motion. Side panels carried Living Rewards and sustainability details,
+                keeping the main faces focused and uncluttered.
+              </p>
             </article>
-
-            <section className="case-study-detail__four-up">
-              <div className="case-study-detail__four-up-grid">
-                <figure className="case-study-detail__four-up-tile case-study-detail__four-up-tile--1">
-                  <img className="case-study-detail__four-up-image case-study-detail__four-up-image--1" src={IMG.outOfHome1} alt="Out of home concept visual one" />
-                </figure>
-                <figure className="case-study-detail__four-up-tile case-study-detail__four-up-tile--2">
-                  <img className="case-study-detail__four-up-image case-study-detail__four-up-image--2" src={IMG.outOfHome2} alt="Out of home concept visual two" />
-                </figure>
-                <figure className="case-study-detail__four-up-tile case-study-detail__four-up-tile--3">
-                  <img className="case-study-detail__four-up-image case-study-detail__four-up-image--3" src={IMG.outOfHome3} alt="Out of home concept visual three" />
-                </figure>
-                <figure className="case-study-detail__four-up-tile case-study-detail__four-up-tile--4">
-                  <img className="case-study-detail__four-up-image case-study-detail__four-up-image--4" src={IMG.outOfHome4} alt="Out of home concept visual four" />
-                </figure>
-              </div>
-              <p className="case-study-detail__four-up-caption">Example of out of home</p>
-            </section>
 
             <article className="case-study-detail__text-panel">
-              <h4>Crafting authentic moments</h4>
+              <h4>Te reo Māori</h4>
               <p>
-                Supplier collaboration and iterative proofing ensured the final bags held up in real retail environments.
+                I introduced te reo Māori to bring warmth and cultural meaning into the system, in a way that felt
+                authentic, not decorative:
               </p>
-              <p>
-                I worked with brand, packaging, and production stakeholders to align visual intent with manufacturing constraints.
-              </p>
-              <p>Not just compliance - cohesive, recognisable bags at scale.</p>
+              <ul>
+                <li>Life Pharmacy. “Aroha nui” (much love)</li>
+                <li>Unichem. “Kia ora” (a welcoming greeting)</li>
+              </ul>
+              <p>These phrases grounded the design in Aotearoa and reinforced tone, identity, and emotional connection.</p>
             </article>
 
-            <article className="case-study-detail__panel case-study-detail__panel--commercial-bay">
-              <img
-                className="full-bleed-media case-study-detail__commercial-bay-image"
-                src={IMG.commercialBay}
-                alt="Bag mockups in context"
-              />
-              <img
-                className="case-study-detail__commercial-bay-poster"
-                src={IMG.commercialBayPoster}
-                alt="Street furniture poster close-up"
-              />
+            <article className="case-study-detail__panel">
+              <img className="full-bleed-media" src={IMG.duo3} alt="Paper bag design development" />
+            </article>
+
+            <article className="case-study-detail__text-panel">
+              <h4>Design development</h4>
+              <p>
+                I worked with suppliers and dielines to adapt motifs and copy across six bag sizes, simplifying where
+                needed to maintain clarity.
+              </p>
+              <p>
+                Negative space and simple geometry reduced visual noise and improved legibility on a challenging print
+                surface.
+              </p>
+              <p>
+                Final motifs were developed with Morgan Paige Taitoko, forming a subtle heart that introduced warmth and
+                anchored the system.
+              </p>
             </article>
 
             <article
@@ -552,22 +493,36 @@ export const CaseStudyDetailGch: React.FC = () => {
               className="case-study-detail__split-card case-study-detail__split-card--solution"
             >
               <figure className="media-side case-study-detail__solution-media">
-                <img src={IMG.solution} alt="Design solution placeholder visual" />
+                <img src={IMG.solution} alt="Design solution visual" />
               </figure>
               <div className="text-side case-study-detail__text-stack">
                 <h3>Design solution</h3>
                 <p>
-                  The packaging system was designed to scale across two retail brands with clear visual distinction and shared production logic.
+                  The final system separates the two brands clearly while keeping sustainability, clarity, and usability at
+                  the core.
                 </p>
-                <h4>Production-ready execution</h4>
                 <p>
-                  Final files balanced icon hierarchy, logo lockups, and clean information architecture on kraft stock. 
-                  <br></br><br></br>A soft yellow
-                  This improved legibility while preserving each brand's tone.
+                  Life Pharmacy takes a warmer, more expressive approach. Brush-stroke typography and papercut-inspired
+                  motifs create a boutique feel, with Aroha nui acting as a clear, human focal point.
                 </p>
-                <p>Reusable templates reduced rework and approval cycles. 
-                  <br></br><br></br>The result: practical, scalable, and recognisable packaging.</p>
+                <p>
+                  Unichem is more structured and knowledge-led. Kia ora is broken down across two lines, making it both
+                  welcoming and informative, while maintaining consistency with the shared stencil and lace style.
+                </p>
+                <p>
+                  Across both, negative space and high contrast improve readability on kraft, helping messages cut through
+                  quickly in-store.
+                </p>
+                <p>The system scales cleanly across all six bag sizes, balancing visual impact with real-world production constraints.</p>
               </div>
+            </article>
+
+            <article className="case-study-detail__panel">
+              <img
+                className="full-bleed-media"
+                src={IMG.duo2}
+                alt="Unichem paper bag front and back in retail context"
+              />
             </article>
 
             <article className="case-study-detail__split-card case-study-detail__split-card--reverse case-study-detail__split-card--digital">
@@ -626,23 +581,19 @@ export const CaseStudyDetailGch: React.FC = () => {
               <div className="text-side case-study-detail__text-stack">
                 <h3>Impact &amp; learnings</h3>
                 <p>
-                  Full performance metrics weren’t available following my departure, but feedback from teams and
-                  customers was strong.
+                  The redesign rolled out across ~360 pharmacies, turning a functional item into a high-frequency brand
+                  touchpoint.
                 </p>
-                <h4>What worked well:</h4>
+                <p>
+                  Each bag replaced single-use plastic while reinforcing brand, culture, and sustainability in everyday
+                  moments.
+                </p>
                 <ul>
-                  <li>Brighter, easier-to-navigate POS (store teams)</li>
-                  <li>Strong response to colour and photography</li>
-                  <li>Arc system organised space without clutter</li>
-                  <li>Templates enabled smooth digital rollout</li>
+                  <li>Strengthened loyalty through Living Rewards messaging</li>
+                  <li>Embedded te reo Māori and local motifs to build cultural presence</li>
+                  <li>Designed for rollout, with production decisions supporting consistency at scale</li>
                 </ul>
-                <h4>Key learnings:</h4>
-                <ul>
-                  <li>Photography templates saved time</li>
-                  <li>Early mockups aligned the team faster</li>
-                  <li>Joining a fast-moving agile squad late required rapid collaboration</li>
-                  <li>Small visual shifts had a big impact on mood</li>
-                </ul>
+                <p>By elevating a disposable item, the system built brand equity in places most campaigns never reach.</p>
               </div>
             </article>
 
@@ -667,21 +618,30 @@ export const CaseStudyDetailGch: React.FC = () => {
             >
               <div className="text-side case-study-detail__text-stack">
                 <h3>Reflection</h3>
-                <p>I stepped into the campaign with POS needing delivery within 48 hours.</p>
                 <p>
-                  This meant prioritising what mattered most. Clarity, speed, and getting the system working in-store.
+                  This project reinforced how much impact small, everyday touchpoints can carry when tied to strategy.
                 </p>
                 <p>
-                  With more time, I would have developed POS and digital as one unified system, extending elements like
-                  the arc more consistently across channels.
+                  The bags are simple, but they deliver brand, culture, and consistency at scale. Clear, recognisable, and
+                  grounded in Aotearoa.
                 </p>
                 <p>
-                  The takeaway. Strong campaigns aren’t just about ideas. They’re about making the right decisions
-                  under pressure, and focusing effort where it has the biggest impact.
+                  It also highlighted the balance between creative ambition, cultural respect, and real-world feasibility,
+                  and how much strong collaboration shapes the final outcome.
+                </p>
+                <p>Looking ahead, there’s opportunity to extend the system further:</p>
+                <ul>
+                  <li>Seasonal or rotating phrases tied to key moments like Matariki or Christmas</li>
+                  <li>Deeper links into fashion and beauty culture through collaborations</li>
+                  <li>A premium, fully sustainable line that elevates the everyday bag</li>
+                </ul>
+                <p>
+                  For me, it reinforced a core belief. The most effective design isn’t always the most visible, it’s the
+                  most considered.
                 </p>
               </div>
               <figure className="media-side case-study-detail__reflection-media">
-                <img src={IMG.reflection} alt="Reflection campaign visual" />
+                <img src={IMG.reflection} alt="Reflection visual" />
               </figure>
             </article>
 
@@ -698,55 +658,14 @@ export const CaseStudyDetailGch: React.FC = () => {
               <div className="text-side case-study-detail__text-stack">
                 <h3>Sources &amp; credits</h3>
                 <p>
-                  Thanks to everyone involved in bringing this packaging rollout to life across brand, packaging, and production teams.
+                  Thanks to everyone involved across Green Cross Health, brand, packaging, and production teams.
                 </p>
-                <p>Collaboration across design and production made execution smoother and more consistent.</p>
                 <div className="credits-list">
-                  <p>
-                    <strong>Client:</strong> Green Cross Health
-                  </p>
-                  <p>
-                    <strong>Design Lead:</strong> Samantha Smith
-                  </p>
-                  <p>
-                    <strong>Content Specialist:</strong> Amanda Sachtleben
-                  </p>
-                  <p>
-                    <strong>Production Design:</strong> Isabella Clark, Rodney Hazelden
-                  </p>
-                  <p>
-                    <strong>Brand Marketing:</strong> Vanessa Hitchcock, Tina Davis
-                  </p>
-                  <p>
-                    <strong>Producer:</strong> Sarah Miller
-                  </p>
-                  <p>
-                    <strong>Production Partner:</strong> Packaging and print suppliers
-                  </p>
-                  <p>
-                    <strong>Photographer’s Assistant:</strong> Georgia Paalvast
-                  </p>
-                  <p>
-                    <strong>POS Stylist:</strong> Anna Clark
-                  </p>
-                  <p>
-                    <strong>Location Stylist:</strong> Lili Janes
-                  </p>
-                  <p>
-                    <strong>Stylist Assistant:</strong> Rosie Galbraith
-                  </p>
-                  <p>
-                    <strong>Hair &amp; Make-up:</strong> Sharon Laurence-Anderson, Greer Melrose, Angela Stewart
-                  </p>
-                  <p>
-                    <strong>Retoucher:</strong> Adrian Fitzgerald
-                  </p>
-                  <p>
-                    <strong>Social Media:</strong> Bhavika Rambhai
-                  </p>
-                  <p>
-                    <strong>Brands:</strong> Life Pharmacy, Unichem
-                  </p>
+                  <p>Nielsen Norman Group. Scan-reading and visual hierarchy research</p>
+                  <p>TAPPI. Kraft paper and print performance studies</p>
+                  <p>Ministry for the Environment (NZ). Plastic bag ban and sustainability guidance</p>
+                  <p>Outdoor Advertising Association of America (OAAA). Visibility and readability research</p>
+                  <p>Papercut traditions (Kirie, European lacework) and artists including Karen Bit Vejle and Maude White</p>
                 </div>
               </div>
             </article>
@@ -758,7 +677,7 @@ export const CaseStudyDetailGch: React.FC = () => {
           <h2>Explore More Projects</h2>
           <div className="case-study-detail__more-projects-list">
             {MORE_PROJECTS.map((study) => (
-              <CaseStudyCard key={study.id} study={study} />
+              <CaseStudyCard key={study.subtitle} study={study} />
             ))}
           </div>
           <button type="button" className="case-study-detail__view-all">

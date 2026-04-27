@@ -27,8 +27,8 @@
   gap: 8px;
   padding: 8px 0;
   margin-bottom: 16px;
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
   color: #7150E5;
   background: none;
@@ -71,11 +71,11 @@
 
 .publication-detail__title {
   margin: 0;
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family: var(--font-family-ui);
   font-weight: 600;
   font-style: normal;
-  font-size: 1.25rem;
-  line-height: 1.5rem;
+  font-size: var(--type-atkinson-text-xl-size);
+  line-height: var(--type-atkinson-text-md-lh);
   letter-spacing: 0.04em; /* 4% */
   color: #111213;
   white-space: nowrap; /* heading on one line */
@@ -83,10 +83,10 @@
 
 .publication-detail__subtitle {
   margin: 0;
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #3c3f43;
 }
 
@@ -100,27 +100,27 @@
 
 .publication-detail__paragraph {
   margin: 0;
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #111213;
 }
 
 .publication-detail__bullets {
   margin: 0;
   padding-left: 18px;
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #111213;
   list-style-position: outside;
 }
 
 .publication-detail__bullets ::marker {
   /* Figma bullets read slightly smaller than browser default */
-  font-size: 1.2rem;
+  font-size: var(--type-atkinson-text-xl-size);
 }
 
 .publication-detail__bullet {
@@ -170,8 +170,8 @@
 
 .publication-detail__listen-label {
   text-align: center;
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
   /* Helps match Figma's 104px hug height in browser */
   line-height: 1rem;
@@ -206,10 +206,10 @@
   align-items: center;
   justify-content: flex-start;
   padding-left: calc(var(--publication-detail-stage-inset) + 4px);
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #3c3f43;
 }
 
@@ -408,8 +408,8 @@
   gap: 8px;
   padding: 8px 0;
   margin-bottom: 0;
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
   color: #7150E5;
   background: none;
@@ -452,10 +452,10 @@
 .publication-detail-enlarged__counter {
   width: 100%;
   padding-left: var(--publication-detail-stage-inset, 84px);
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #3c3f43;
   display: flex;
   align-items: center;
@@ -527,10 +527,10 @@
   width: 100%;
   /* Align caption with stage edge like the top card */
   padding-left: var(--publication-detail-stage-inset, 84px);
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #3c3f43;
 }
 

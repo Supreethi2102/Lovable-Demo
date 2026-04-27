@@ -18,10 +18,10 @@
 }
 
 .destinations__title {
-  font-family: 'Romie', Georgia, serif;
-  font-size: 2rem;
+  font-family: var(--font-family-display);
+  font-size: var(--type-romie-display-l-size);
   font-weight: 500;
-  line-height: 2.25rem;
+  line-height: var(--type-romie-display-m-lh);
   letter-spacing: 1.28px;
   color: #111213;
   margin: 0;
@@ -32,10 +32,10 @@
 }
 
 .destinations__subtitle {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #3c3f43;
   letter-spacing: 0;
 }
@@ -155,19 +155,19 @@
 }
 
 .destination-card__city {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 600;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #111213;
   margin: 0;
 }
 
 .destination-card__country {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #3C3F43;
   margin: 0;
 }
@@ -259,10 +259,10 @@
   background: none;
   border: none;
   cursor: pointer;
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #3C3F43;
   padding: 0;
   transition: all 0.2s ease;
@@ -364,10 +364,10 @@
 }
 
 .destination-expanded__artist {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #3C3F43;
   margin: 0;
   overflow-wrap: break-word;
@@ -375,10 +375,10 @@
 }
 
 .destination-expanded__photographer {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 0.875rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-sm-size);
   font-weight: 400;
-  line-height: 1.25rem;
+  line-height: var(--type-atkinson-text-sm-lh);
   color: #3C3F43;
   margin: 0;
   overflow-wrap: break-word;
@@ -430,10 +430,10 @@
 }
 
 .destination-expanded__title {
-  font-family: 'Romie', Georgia, serif;
-  font-size: 2rem;
+  font-family: var(--font-family-display);
+  font-size: var(--type-romie-display-l-size);
   font-weight: 500;
-  line-height: 2.5rem;
+  line-height: var(--type-romie-display-l-lh);
   letter-spacing: 1.28px;
   color: #111213;
   margin: 0;
@@ -444,10 +444,10 @@
 }
 
 .destination-expanded__location {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #3C3F43;
   margin: 0;
   max-width: 308px;
@@ -456,10 +456,10 @@
 }
 
 .destination-expanded__section h4 {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 600;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #111213;
   margin: 0;
   max-width: 308px;
@@ -482,10 +482,10 @@
 }
 
 .destination-expanded__section p {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #3C3F43;
   margin: 0;
   max-width: 308px;
@@ -567,19 +567,19 @@
 }
 
 .destination-small__city {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 600;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #111213;
   margin: 0;
 }
 
 .destination-small__country {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #3C3F43;
   margin: 0;
 }
@@ -596,10 +596,10 @@
 }
 
 .destinations__cta-text {
-  font-family: 'Romie', Georgia, serif;
-  font-size: 2rem;
+  font-family: var(--font-family-display);
+  font-size: var(--type-romie-display-l-size);
   font-weight: 500;
-  line-height: 3.25rem; /* Figma line height */
+  line-height: var(--type-atkinson-display-xl-lh);
   letter-spacing: 1.28px;
   color: #111213;
   text-align: center;
@@ -684,8 +684,8 @@
   }
 
   .destinations__cta-text {
-    font-size: 1.75rem;
-    line-height: 2.75rem;
+    font-size: var(--type-romie-display-m-size);
+    line-height: var(--type-romie-h8-lh);
   }
 }
 
@@ -697,8 +697,8 @@
   }
 
   .destinations__title {
-    font-size: 1.75rem;
-    line-height: 2.25rem;
+    font-size: var(--type-romie-display-m-size);
+    line-height: var(--type-romie-display-m-lh);
   }
 
   .destinations__grid {
@@ -758,8 +758,8 @@
   }
 
   .destinations__cta-text {
-    font-size: 1.5rem;
-    line-height: 2.5rem;
+    font-size: var(--type-romie-display-s-size);
+    line-height: var(--type-romie-display-l-lh);
   }
 }
 
@@ -908,14 +908,14 @@
   }
 
   .destination-expanded__title {
-    font-size: 1.75rem;
-    line-height: 2.25rem;
+    font-size: var(--type-romie-display-m-size);
+    line-height: var(--type-romie-display-m-lh);
   }
 
   .destination-expanded__section h4,
   .destination-expanded__section p {
-    font-size: 1rem;
-    line-height: 1.5rem;
+    font-size: var(--type-atkinson-text-md-size);
+    line-height: var(--type-atkinson-text-md-lh);
   }
 
   .destinations__small-grid {
@@ -934,8 +934,8 @@
   }
 
   .destinations__cta-text {
-    font-size: 1.375rem;
-    line-height: 2.25rem;
+    font-size: var(--type-atkinson-text-xl-size);
+    line-height: var(--type-romie-display-m-lh);
   }
 
   /* Row 2: tall on left, inner-row on right */
@@ -954,8 +954,8 @@
   }
 
   .destinations__title {
-    font-size: 1.5rem;
-    line-height: 2rem;
+    font-size: var(--type-romie-display-s-size);
+    line-height: var(--type-romie-display-s-lh);
   }
 
   .destinations__grid {
@@ -1040,7 +1040,7 @@
 
   .destination-card__country,
   .destination-card__city {
-    font-size: 0.875rem;
+    font-size: var(--type-atkinson-text-sm-size);
   }
 
   /* Expanded view – tablet portrait: stacked layout, full-width image and content */
@@ -1059,7 +1059,7 @@
   .destination-expanded__close {
     top: 20px;
     right: 20px;
-    font-size: 0.9375rem;
+    font-size: var(--type-atkinson-text-md-size);
   }
 
   .destination-expanded__image-wrapper {
@@ -1097,14 +1097,14 @@
   }
 
   .destination-expanded__title {
-    font-size: 1.5rem;
-    line-height: 1.875rem;
+    font-size: var(--type-romie-display-s-size);
+    line-height: var(--type-romie-display-s-lh);
   }
 
   .destination-expanded__section h4,
   .destination-expanded__section p {
-    font-size: 0.9375rem;
-    line-height: 1.375rem;
+    font-size: var(--type-atkinson-text-md-size);
+    line-height: var(--type-atkinson-text-sm-lh);
   }
 
   /* Bottom three cards: tighter gap and full width so they match other breakpoints */
@@ -1127,8 +1127,8 @@
   }
 
   .destinations__cta-text {
-    font-size: 1.25rem;
-    line-height: 2rem;
+    font-size: var(--type-atkinson-text-xl-size);
+    line-height: var(--type-atkinson-display-xs-lh);
   }
 
   .destinations__share-btn {
@@ -1137,7 +1137,7 @@
   }
 
   .destinations__share-btn span {
-    font-size: 0.875rem;
+    font-size: var(--type-atkinson-text-sm-size);
   }
 
   /* Row 2: tall on left, inner-row on right */
@@ -1155,12 +1155,12 @@
   }
 
   .destinations__title {
-    font-size: 1.375rem;
-    line-height: 1.75rem;
+    font-size: var(--type-romie-display-xs-size);
+    line-height: var(--type-atkinson-text-xl-lh);
   }
 
   .destinations__subtitle {
-    font-size: 0.875rem;
+    font-size: var(--type-atkinson-text-sm-size);
   }
 
   .destinations__grid {
@@ -1202,7 +1202,7 @@
   .destination-expanded__close {
     top: 16px;
     right: 16px;
-    font-size: 0.875rem;
+    font-size: var(--type-atkinson-text-sm-size);
     min-width: 44px;
     min-height: 44px;
     justify-content: flex-end;
@@ -1246,20 +1246,20 @@
   }
 
   .destination-expanded__title {
-    font-size: 1.25rem;
-    line-height: 1.625rem;
+    font-size: var(--type-atkinson-text-xl-size);
+    line-height: var(--type-romie-display-xs-lh);
   }
 
   .destination-expanded__section h4,
   .destination-expanded__section p {
-    font-size: 0.875rem;
-    line-height: 1.375rem;
+    font-size: var(--type-atkinson-text-sm-size);
+    line-height: var(--type-atkinson-text-sm-lh);
   }
 
   .destination-expanded__artist,
   .destination-expanded__photographer {
-    font-size: 0.8125rem;
-    line-height: 1.125rem;
+    font-size: var(--type-atkinson-text-xs-size);
+    line-height: var(--type-atkinson-text-xs-lh);
   }
 
   .destinations__small-grid {
@@ -1279,8 +1279,8 @@
   }
 
   .destinations__cta-text {
-    font-size: 1.125rem;
-    line-height: 1.75rem;
+    font-size: var(--type-atkinson-text-xl-size);
+    line-height: var(--type-atkinson-text-xl-lh);
     letter-spacing: 0.72px;
   }
 

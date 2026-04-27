@@ -16,7 +16,7 @@
   --btn-disabled-border: #d3d6da;
   --btn-white: #ffffff;
   --btn-radius: 8px;
-  --btn-font: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --btn-font: var(--font-family-ui);
   --btn-focus-outline: 2px solid var(--btn-primary-focus);
   --btn-focus-offset: 2px;
 }
@@ -30,9 +30,9 @@
   padding: 12px 24px;
   min-height: 48px;
   font-family: var(--btn-font);
-  font-size: 1rem;
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   border-radius: var(--btn-radius);
   cursor: pointer;
   border: none;

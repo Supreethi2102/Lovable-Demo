@@ -21,6 +21,16 @@ export type CaseStudyCardStudy = {
   duration: string;
   category: string;
   image: string;
+  frontTabs?: {
+    challenge: { title: string; description: string; image: string };
+    focus: { title: string; description: string; image: string };
+    impact: { title: string; description: string; image: string };
+  };
+  backTabs?: {
+    place: { title: string; description: string; image?: string; background?: string };
+    influence: { title: string; description: string; image?: string; background?: string };
+    discoveries: { title: string; description: string; image?: string; background?: string };
+  };
 };
 
 interface CaseStudyCardProps {
@@ -44,11 +54,45 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
   const tabPanelId = useId();
   const cardTitleId = useId();
 
-  const tabDescription = useMemo(() => study.description, [study.description]);
+  const frontTabs = useMemo(
+    () =>
+      study.frontTabs ?? {
+        challenge: { title: study.title, description: study.description, image: study.image },
+        focus: { title: study.title, description: study.description, image: study.image },
+        impact: { title: study.title, description: study.description, image: study.image },
+      },
+    [study],
+  );
+
+  const backTabs = useMemo(
+    () =>
+      study.backTabs ?? {
+        place: {
+          title: 'Anchored in the Pacific islands',
+          description:
+            "This design was shaped by the rhythm of the Moana, the ocean that connects us all. From Aotearoa to Hawai'i, Samoa, Tonga, Fiji, Niue, the Cook Islands, Tokelau and beyond, I've always been drawn to the connection between the islands, shores, and communities linked by the Pacific tides - and wanted that sense of belonging to ripple through Palmy.",
+          image: '/misc/Image%20frame.png',
+        },
+        influence: {
+          title: 'Anchored in the Pacific islands',
+          description:
+            "This design was shaped by the rhythm of the Moana, the ocean that connects us all. From Aotearoa to Hawai'i, Samoa, Tonga, Fiji, Niue, the Cook Islands, Tokelau and beyond, I've always been drawn to the connection between the islands, shores, and communities linked by the Pacific tides - and wanted that sense of belonging to ripple through Palmy.",
+          image: '/misc/Image%20frame.png',
+        },
+        discoveries: {
+          title: 'Anchored in the Pacific islands',
+          description:
+            "This design was shaped by the rhythm of the Moana, the ocean that connects us all. From Aotearoa to Hawai'i, Samoa, Tonga, Fiji, Niue, the Cook Islands, Tokelau and beyond, I've always been drawn to the connection between the islands, shores, and communities linked by the Pacific tides - and wanted that sense of belonging to ripple through Palmy.",
+          image: '/misc/Image%20frame.png',
+        },
+      },
+    [study],
+  );
+  const currentFrontTab = frontTabs[contentTab];
+  const currentBackTab = backTabs[activeBackTab];
 
   const getTabImage = (tab: 'challenge' | 'focus' | 'impact') => {
-    void tab;
-    return study.image;
+    return frontTabs[tab].image;
   };
 
   const setLayerBg = (el: HTMLDivElement | null, url: string) => {
@@ -219,9 +263,9 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               <div ref={copyRef} className="case-study-card__copy">
                 <p className="case-study-card__subtitle">{study.subtitle}</p>
                 <h3 id={cardTitleId} className="case-study-card__title">
-                  {study.title}
+                  {currentFrontTab.title}
                 </h3>
-                <p className="case-study-card__description">{tabDescription}</p>
+                <p className="case-study-card__description">{currentFrontTab.description}</p>
               </div>
               <button
                 type="button"
@@ -346,12 +390,9 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
             <div className="case-study-card__main">
               <div className="case-study-card__copy">
                 <p className="case-study-card__subtitle">{study.subtitle}</p>
-                <h3 className="case-study-card__title">Anchored in the Pacific islands</h3>
+                <h3 className="case-study-card__title">{currentBackTab.title}</h3>
                 <p className="case-study-card__description">
-                  This design was shaped by the rhythm of the Moana, the ocean that connects us all. From Aotearoa to
-                  Hawai&apos;i, Samoa, Tonga, Fiji, Niue, the Cook Islands, Tokelau and beyond, I&apos;ve always been
-                  drawn to the connection between the islands, shores, and communities linked by the Pacific tides — and
-                  wanted that sense of belonging to ripple through Palmy.
+                  {currentBackTab.description}
                 </p>
               </div>
               <button
@@ -392,7 +433,16 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               Duration: {study.duration}
             </div>
             <div className="case-study-card__image-viewport" role="img" aria-label={`${study.subtitle} project preview`}>
-              <div className="case-study-card__image-layer" style={{ backgroundImage: `url(/misc/Image%20frame.png)` }} aria-hidden="true" />
+              <div
+                className="case-study-card__image-layer"
+                style={{
+                  backgroundImage: currentBackTab.image
+                    ? `url(${currentBackTab.image})`
+                    : 'none',
+                  backgroundColor: currentBackTab.background ?? '#ddd',
+                }}
+                aria-hidden="true"
+              />
             </div>
           </figure>
         </div>

@@ -26,6 +26,7 @@
   ],
   "scripts": {
     "start": "vite",
+    "figma:mtm-stills": "node scripts/figma-mcp-export-mtm-stills.mjs",
     "prepack": "npm run build:lib",
     "build": "tsc && rm -rf ./dist && npm run build:lib && npm run build:examples",
     "build:lib": "rm -rf ./dist ; rollup -c ; cp -r public/textures dist/textures",

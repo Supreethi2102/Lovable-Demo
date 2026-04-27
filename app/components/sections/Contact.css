@@ -56,20 +56,20 @@
 }
 
 .contact-sent-overlay__title {
-  font-family: 'Romie', Georgia, serif;
-  font-size: 1.625rem;
+  font-family: var(--font-family-display);
+  font-size: var(--type-romie-display-m-size);
   font-weight: 500;
-  line-height: 1.2;
+  line-height: var(--type-romie-display-m-lh);
   letter-spacing: 0.4px;
   color: #111213;
   margin: 0 0 10px;
 }
 
 .contact-sent-overlay__subtitle {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #3c3f43;
   margin: 0;
 }
@@ -249,18 +249,18 @@
 }
 
 .contact__label {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1.25rem; /* Figma */
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-xl-size); /* Figma */
   font-weight: 400;
   line-height: normal;
   color: #3c3f43;
 }
 
 .contact__title {
-  font-family: 'Romie', Georgia, serif;
-  font-size: 2rem; /* Figma */
+  font-family: var(--font-family-display);
+  font-size: var(--type-romie-display-l-size);
   font-weight: 500;
-  line-height: normal;
+  line-height: var(--type-romie-display-l-lh);
   letter-spacing: 1.28px; /* Figma */
   color: #111213;
   margin: 0;
@@ -282,10 +282,10 @@
 }
 
 .contact__field-label {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 600; /* SemiBold from Figma */
-  line-height: 1.25rem;
+  line-height: var(--type-atkinson-text-sm-lh);
   color: #111213;
 }
 
@@ -297,10 +297,10 @@
   border: 1px solid #76797f; /* Figma border */
   border-radius: 8px; /* Figma border radius */
   box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05); /* Figma shadow */
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #111213;
   outline: none;
   transition: border-color 0.2s ease;
@@ -326,10 +326,10 @@
   background: #f9fafb; /* gray-50 */
   border: 1px solid #76797f; /* Figma border */
   border-radius: 8px; /* Figma border radius */
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #111213;
   resize: none;
   outline: none;
@@ -351,11 +351,11 @@
 }
 
 .contact__char-count {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 0.875rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-sm-size);
   font-weight: 400;
   color: #76797f;
-  line-height: 1.25rem;
+  line-height: var(--type-atkinson-text-sm-lh);
 }
 
 .contact__char-count--warning {
@@ -458,19 +458,19 @@
 }
 
 .contact__sent-box-title {
-  font-family: 'Romie', Georgia, serif;
-  font-size: 1.5rem;
+  font-family: var(--font-family-display);
+  font-size: var(--type-romie-display-s-size);
   font-weight: 500;
-  line-height: 1.3;
+  line-height: var(--type-romie-display-s-lh);
   color: #111213;
   margin: 0;
 }
 
 .contact__sent-box-subtitle {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #3c3f43;
   margin: 0;
 }
@@ -572,10 +572,10 @@
 }
 
 .contact__submit-btn span {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #7150e5;
   white-space: nowrap;
   transition: color 0.2s ease;
@@ -595,8 +595,8 @@
 }
 
 .contact__error {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 0.875rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-sm-size);
   font-weight: 400;
   color: #dc2626;
   margin-top: 4px;
@@ -670,8 +670,8 @@
   display: flex;
   align-items: center;
   gap: 6px;
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 0.875rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-sm-size);
   color: #dc2626;
   margin-top: 12px;
   animation: slideIn 0.2s ease;
@@ -732,7 +732,8 @@
   }
 
   .contact__title {
-    font-size: 1.75rem;
+    font-size: var(--type-romie-display-m-size);
+    line-height: var(--type-romie-display-m-lh);
   }
 
   .contact__postcard-side {
@@ -934,7 +935,8 @@
 /* Tablet landscape (769–1024px): typography only – composite height stays intrinsic */
 @media (min-width: 769px) and (max-width: 1024px) {
   .contact__title {
-    font-size: clamp(1.625rem, 2.8vw, 2rem);
+    font-size: clamp(var(--type-romie-display-m-size), 2.8vw, var(--type-romie-display-l-size));
+    line-height: var(--type-romie-display-m-lh);
   }
 }
 

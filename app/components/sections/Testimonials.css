@@ -27,8 +27,8 @@
 }
 
 .testimonials__label {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1.25rem; /* Figma */
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-xl-size); /* Figma */
   font-weight: 400;
   line-height: normal;
   color: #3c3f43;
@@ -49,20 +49,20 @@
 }
 
 .testimonials__title {
-  font-family: 'Romie', Georgia, serif;
-  font-size: 2.5rem; /* Figma */
+  font-family: var(--font-family-display);
+  font-size: var(--type-romie-h8-size);
   font-weight: 500;
-  line-height: 3.5rem; /* Figma */
+  line-height: var(--type-romie-h7-lh);
   letter-spacing: 1.6px; /* Figma */
   color: #111213;
   margin: 0 0 8px 0;
 }
 
 .testimonials__subtitle {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
-  line-height: 2.75rem; /* Figma */
+  line-height: var(--type-romie-h8-lh);
   color: #3c3f43;
   margin: 0;
 }
@@ -127,11 +127,11 @@
 }
 
 .testimonials__quote {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
   font-style: normal; /* No italics */
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #3c3f43;
   margin: 0;
   white-space: pre-line;
@@ -150,11 +150,11 @@
 }
 
 .testimonials__author {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
   font-style: normal; /* Override cite default italics */
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #3c3f43;
   display: flex;
   flex-direction: column;
@@ -165,8 +165,8 @@
 .testimonials__author-name,
 .testimonials__author-role,
 .testimonials__author-company {
-  font-size: 1rem;
-  line-height: 1.5rem;
+  font-size: var(--type-atkinson-text-md-size);
+  line-height: var(--type-atkinson-text-md-lh);
   margin: 0;
   display: block;
 }
@@ -333,17 +333,18 @@
   }
 
   .testimonials__label {
-    font-size: 1.125rem;
+    font-size: var(--type-atkinson-text-xl-size);
+    line-height: var(--type-atkinson-text-xl-lh);
   }
 
   .testimonials__title {
-    font-size: 2rem;
-    line-height: 2.75rem;
+    font-size: var(--type-romie-display-l-size);
+    line-height: var(--type-romie-h8-lh);
   }
 
   .testimonials__subtitle {
-    font-size: 0.9375rem;
-    line-height: 1.5rem;
+    font-size: var(--type-atkinson-text-md-size);
+    line-height: var(--type-atkinson-text-md-lh);
   }
 
   .testimonials__content {
@@ -383,8 +384,8 @@
   }
 
   .testimonials__quote {
-    font-size: 0.9375rem;
-    line-height: 1.5rem;
+    font-size: var(--type-atkinson-text-md-size);
+    line-height: var(--type-atkinson-text-md-lh);
     max-width: 100%;
   }
 
@@ -418,7 +419,7 @@
   }
 
   .testimonials__label {
-    font-size: 1rem;
+    font-size: var(--type-atkinson-text-md-size);
   }
 
   /* Mobile only: chevrons together, centered, with padding above the heading */
@@ -445,14 +446,14 @@
   }
 
   .testimonials__title {
-    font-size: 1.625rem;
-    line-height: 2.25rem;
+    font-size: var(--type-romie-display-m-size);
+    line-height: var(--type-romie-display-m-lh);
     letter-spacing: 1px;
   }
 
   .testimonials__subtitle {
-    font-size: 0.875rem;
-    line-height: 1.375rem;
+    font-size: var(--type-atkinson-text-sm-size);
+    line-height: var(--type-atkinson-text-sm-lh);
   }
 
   .testimonials__content {
@@ -493,8 +494,8 @@
   }
 
   .testimonials__quote {
-    font-size: 0.875rem;
-    line-height: 1.375rem;
+    font-size: var(--type-atkinson-text-sm-size);
+    line-height: var(--type-atkinson-text-sm-lh);
     max-width: 100%;
     padding-left: 16px;
     padding-right: 16px;
@@ -516,8 +517,8 @@
   .testimonials__author-name,
   .testimonials__author-role,
   .testimonials__author-company {
-    font-size: 0.875rem;
-    line-height: 1.375rem;
+    font-size: var(--type-atkinson-text-sm-size);
+    line-height: var(--type-atkinson-text-sm-lh);
   }
 
   .testimonials__dots {

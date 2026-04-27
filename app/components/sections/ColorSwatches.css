@@ -48,10 +48,10 @@
 }
 
 .color-swatches__text {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #3c3f43;
   text-align: center;
   margin: 0;
@@ -156,10 +156,10 @@
 }
 
 .swatch-card__name {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 0.6875rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-xs-size);
   font-weight: 700;
-  line-height: 1rem;
+  line-height: var(--type-atkinson-text-xs-lh);
   letter-spacing: 0.22px;
   color: #212325;
   text-align: center;
@@ -173,10 +173,10 @@
 }
 
 .swatch-card__hex {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 0.625rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-xs-size);
   font-weight: 400;
-  line-height: 0.875rem;
+  line-height: var(--type-atkinson-text-sm-lh);
   letter-spacing: 0.4px;
   color: #3c3f43;
   text-transform: uppercase;
@@ -189,10 +189,10 @@
 }
 
 .swatch-card__link {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 0.625rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-xs-size);
   font-weight: 400;
-  line-height: 0.875rem;
+  line-height: var(--type-atkinson-text-sm-lh);
   letter-spacing: 0.4px;
   color: #7150e5;
   text-align: center;
@@ -259,10 +259,10 @@
 }
 
 .back-to-top__text {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #7150e5;
   text-align: center;
 }
@@ -301,8 +301,8 @@
 }
 
 .site-footer__copyright {
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
   line-height: normal;
   color: #3c3f43;
@@ -321,8 +321,8 @@
   gap: 8px;
   text-decoration: none;
   color: #3c3f43;
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
   line-height: normal;
   transition: color 0.2s ease;
@@ -400,10 +400,10 @@ button.site-footer__link {
   border: none;
   cursor: pointer;
   padding: 0;
-  font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   letter-spacing: 0;
   color: #000000;
   z-index: 10;
@@ -442,8 +442,8 @@ button.site-footer__link {
 
 .sustainability-modal__title {
   color: #111213;
-  font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1.25rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-xl-size);
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -452,11 +452,11 @@ button.site-footer__link {
 
 .sustainability-modal__p {
   color: #3C3F43;
-  font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-style: normal;
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   margin: 0 0 16px 0;
   max-width: 100%;
 }
@@ -568,7 +568,7 @@ button.site-footer__link {
   .sustainability-modal__close {
     top: 32px;
     right: 32px;
-    font-size: 0.875rem;
+    font-size: var(--type-atkinson-text-sm-size);
     width: auto;
     height: auto;
   }
@@ -578,14 +578,14 @@ button.site-footer__link {
   }
 
   .sustainability-modal__title {
-    font-size: 1.125rem;
-    line-height: 1.5rem;
+    font-size: var(--type-atkinson-text-xl-size);
+    line-height: var(--type-atkinson-text-xl-lh);
     margin-bottom: 8px;
   }
 
   .sustainability-modal__p {
-    font-size: 0.875rem;
-    line-height: 1.25rem;
+    font-size: var(--type-atkinson-text-sm-size);
+    line-height: var(--type-atkinson-text-sm-lh);
     margin-bottom: 12px;
   }
 
@@ -642,10 +642,10 @@ button.site-footer__link {
   border: none;
   cursor: pointer;
   padding: 0;
-  font-family: 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   letter-spacing: 0;
   color: #000000;
   z-index: 10;
@@ -684,8 +684,8 @@ button.site-footer__link {
 
 .privacy-cookies-modal__title {
   color: #111213;
-  font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1.25rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-xl-size);
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -694,11 +694,11 @@ button.site-footer__link {
 
 .privacy-cookies-modal__p {
   color: #3C3F43;
-  font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-style: normal;
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   margin: 0 0 16px 0;
   max-width: 100%;
 }
@@ -785,7 +785,7 @@ button.site-footer__link {
   .privacy-cookies-modal__close {
     top: 32px;
     right: 32px;
-    font-size: 0.875rem;
+    font-size: var(--type-atkinson-text-sm-size);
     width: auto;
     height: auto;
   }
@@ -795,14 +795,14 @@ button.site-footer__link {
   }
 
   .privacy-cookies-modal__title {
-    font-size: 1.125rem;
-    line-height: 1.5rem;
+    font-size: var(--type-atkinson-text-xl-size);
+    line-height: var(--type-atkinson-text-xl-lh);
     margin-bottom: 8px;
   }
 
   .privacy-cookies-modal__p {
-    font-size: 0.875rem;
-    line-height: 1.25rem;
+    font-size: var(--type-atkinson-text-sm-size);
+    line-height: var(--type-atkinson-text-sm-lh);
     margin-bottom: 12px;
   }
 
@@ -862,10 +862,10 @@ button.site-footer__link {
   border: none;
   cursor: pointer;
   padding: 0;
-  font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   letter-spacing: 0;
   color: #000000;
   z-index: 10;
@@ -904,8 +904,8 @@ button.site-footer__link {
 
 .accessibility-modal__title {
   color: #111213;
-  font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1.25rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-xl-size);
   font-style: normal;
   font-weight: 600;
   line-height: normal;
@@ -914,11 +914,11 @@ button.site-footer__link {
 
 .accessibility-modal__p {
   color: #3C3F43;
-  font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-style: normal;
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   margin: 0 0 16px 0;
   overflow-wrap: normal;
   hyphens: none;
@@ -937,8 +937,8 @@ button.site-footer__link {
 
 .accessibility-modal__motion-label {
   color: #3C3F43;
-  font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-style: normal;
   font-weight: 400;
   line-height: 1;
@@ -957,11 +957,11 @@ button.site-footer__link {
   transition: background 0.2s ease;
   position: relative;
   /* Establish typography so "On" text inherits (overrides browser button defaults) */
-  font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  font-size: 1rem;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
   font-style: normal;
   font-weight: 400;
-  line-height: 1.5rem;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #FFF;
 }
 
@@ -989,8 +989,8 @@ button.site-footer__link {
   top: 50%;
   transform: translateY(-50%);
   color: #FFF !important;
-  font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-  font-size: 1rem !important;
+  font-family: var(--font-family-ui) !important;
+  font-size: var(--type-atkinson-text-md-size) !important;
   font-weight: 400;
   line-height: 1 !important;
   opacity: 0;
@@ -1010,8 +1010,8 @@ button.site-footer__link {
   top: 50%;
   transform: translateY(-50%);
   color: #3C3F43 !important;
-  font-family: "Atkinson Hyperlegible Next VF", 'Atkinson Hyperlegible Next', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif !important;
-  font-size: 1rem !important;
+  font-family: var(--font-family-ui) !important;
+  font-size: var(--type-atkinson-text-md-size) !important;
   font-weight: 400;
   line-height: 1 !important;
   opacity: 1;
@@ -1132,7 +1132,7 @@ button.site-footer__link {
   .accessibility-modal__close {
     top: 32px;
     right: 32px;
-    font-size: 0.875rem;
+    font-size: var(--type-atkinson-text-sm-size);
   }
 
   .accessibility-modal__content {
@@ -1140,15 +1140,15 @@ button.site-footer__link {
   }
 
   .accessibility-modal__title {
-    font-size: 1.125rem;
-    line-height: normal;
+    font-size: var(--type-atkinson-text-xl-size);
+    line-height: var(--type-atkinson-text-xl-lh);
     margin-bottom: 8px;
     max-width: 100%;
   }
 
   .accessibility-modal__p {
-    font-size: 0.875rem;
-    line-height: 1.375rem;
+    font-size: var(--type-atkinson-text-sm-size);
+    line-height: var(--type-atkinson-text-sm-lh);
     margin-bottom: 8px;
     max-width: 100%;
   }
@@ -1251,7 +1251,7 @@ button.site-footer__link {
   }
 
   .color-swatches__text {
-    font-size: 0.875rem;
+    font-size: var(--type-atkinson-text-sm-size);
     max-width: 100%;
     padding: 0 16px;
     white-space: normal;
@@ -1276,15 +1276,15 @@ button.site-footer__link {
   }
 
   .back-to-top__text {
-    font-size: 0.875rem;
+    font-size: var(--type-atkinson-text-sm-size);
   }
 
   .site-footer__copyright {
-    font-size: 0.75rem;
+    font-size: var(--type-atkinson-text-xs-size);
   }
 
   .site-footer__link {
-    font-size: 0.75rem;
+    font-size: var(--type-atkinson-text-xs-size);
   }
 
   .site-footer__link span {
@@ -1313,7 +1313,7 @@ button.site-footer__link {
   }
 
   .color-swatches__text {
-    font-size: 0.8125rem;
+    font-size: var(--type-atkinson-text-xs-size);
   }
 
   .color-swatches__container {

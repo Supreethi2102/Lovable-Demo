@@ -1,3 +1,5 @@
+@import './typography-tokens.css';
+
 /* App Layout - 4pt Grid */
 
 /* Fonts */
@@ -47,7 +49,7 @@ html {
   scroll-behavior: smooth;
   scroll-padding-top: 100px; /* Account for fixed header */
   /* 1rem scales slightly on narrow viewports (UA-relative rems inside clamp) */
-  font-size: clamp(0.875rem, 0.45vw + 0.8375rem, 1rem);
+  font-size: clamp(var(--type-atkinson-text-sm-size), 0.45vw + 0.8375rem, var(--type-atkinson-text-md-size));
 }
 
 /* Global focus styles for keyboard navigation */

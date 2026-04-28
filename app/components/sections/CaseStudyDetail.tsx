@@ -898,9 +898,9 @@ export const CaseStudyDetail: React.FC = () => {
             {isAmio && (
               <article className="case-study-detail__text-panel case-study-detail__text-panel--amio-intro" aria-label="Amio meaning">
                 <p className="case-study-detail__amio-intro-quote">
-                  Āmio. Meaning to roam. Āmio Airways, a name
-                  I chose from te reo Māori to reflect a calmer, more 
-                  considered approach to travel.
+                  <span className="case-study-detail__amio-intro-line">Āmio. Meaning to roam. Āmio Airways, a name</span>
+                  <span className="case-study-detail__amio-intro-line">I chose from te reo Māori to reflect a calmer, more</span>
+                  <span className="case-study-detail__amio-intro-line">considered approach to travel.</span>
                 </p>
               </article>
             )}
@@ -911,10 +911,14 @@ export const CaseStudyDetail: React.FC = () => {
                 sectionsRef.current.research = el;
               }}
               className={`case-study-detail__split-card case-study-detail__split-card--reverse ${
-                isMegaToy ? 'case-study-detail__split-card--mega-fluid case-study-detail__split-card--research-toy' : ''
+                isMegaToy
+                  ? 'case-study-detail__split-card--mega-fluid case-study-detail__split-card--research-toy'
+                  : isAmio
+                    ? 'case-study-detail__split-card--amio-research'
+                    : ''
               }`}
             >
-              <div className="text-side case-study-detail__text-stack">
+              <div className={`text-side case-study-detail__text-stack ${isAmio ? 'case-study-detail__text-stack--amio-impact' : ''}`}>
                 {isGreenCross ? (
                   <>
                     <h3>Research</h3>
@@ -1030,7 +1034,9 @@ export const CaseStudyDetail: React.FC = () => {
               ref={(el) => {
                 sectionsRef.current.process = el;
               }}
-              className={`case-study-detail__split-card ${isMegaToy ? 'case-study-detail__split-card--mega-fluid' : ''}`}
+              className={`case-study-detail__split-card ${
+                isMegaToy ? 'case-study-detail__split-card--mega-fluid' : isAmio ? 'case-study-detail__split-card--amio-process-main' : ''
+              }`}
             >
               <figure className="media-side">
                 <img
@@ -1046,7 +1052,7 @@ export const CaseStudyDetail: React.FC = () => {
                   alt="Process visual"
                 />
               </figure>
-              <div className="text-side case-study-detail__text-stack">
+              <div className={`text-side case-study-detail__text-stack ${isAmio ? 'case-study-detail__text-stack--amio-flow' : ''}`}>
                 {isGreenCross ? (
                   <>
                     <h3>Process &amp; approach</h3>
@@ -1112,8 +1118,8 @@ export const CaseStudyDetail: React.FC = () => {
 
             {isAmio && (
               <>
-                <article className="case-study-detail__split-card case-study-detail__split-card--reverse">
-                  <div className="text-side case-study-detail__text-stack">
+                <article className="case-study-detail__split-card case-study-detail__split-card--reverse case-study-detail__split-card--amio-process-paths">
+                  <div className="text-side case-study-detail__text-stack case-study-detail__text-stack--amio-flow">
                     <h4>A strategic shift: two booking paths</h4>
                     <p>Instead of forcing a single flow, I designed for two distinct behaviours:</p>
                     <h4>Full flow</h4>
@@ -1137,11 +1143,11 @@ export const CaseStudyDetail: React.FC = () => {
                   </figure>
                 </article>
 
-                <article className="case-study-detail__split-card">
+                <article className="case-study-detail__split-card case-study-detail__split-card--amio-process-sketch">
                   <figure className="media-side">
                     <img src={PALE_YELLOW_PLACEHOLDER} alt="Soft yellow section background" />
                   </figure>
-                  <div className="text-side case-study-detail__text-stack">
+                  <div className="text-side case-study-detail__text-stack case-study-detail__text-stack--amio-flow">
                     <h4>Sketching and iteration</h4>
                     <p>Low-fidelity sketching helped resolve structure early.</p>
                     <h4>It exposed:</h4>
@@ -1154,8 +1160,8 @@ export const CaseStudyDetail: React.FC = () => {
                   </div>
                 </article>
 
-                <article className="case-study-detail__split-card case-study-detail__split-card--reverse">
-                  <div className="text-side case-study-detail__text-stack">
+                <article className="case-study-detail__split-card case-study-detail__split-card--reverse case-study-detail__split-card--amio-process-test">
+                  <div className="text-side case-study-detail__text-stack case-study-detail__text-stack--amio-flow">
                     <h4>Prototyping and testing</h4>
                     <p>By the time I moved into Figma, the structure was defined.</p>
                     <p>The focus shifted to pacing, interaction, and clarity.</p>
@@ -1486,7 +1492,9 @@ export const CaseStudyDetail: React.FC = () => {
                   ? 'case-study-detail__split-card case-study-detail__split-card--solution case-study-detail__split-card--reverse case-study-detail__split-card--solution-gch'
                   : isMegaToy
                     ? 'case-study-detail__split-card case-study-detail__split-card--solution case-study-detail__split-card--reverse case-study-detail__split-card--solution-toy'
-                  : 'case-study-detail__split-card case-study-detail__split-card--solution'
+                  : isAmio
+                    ? 'case-study-detail__split-card case-study-detail__split-card--solution case-study-detail__split-card--amio-solution-main'
+                    : 'case-study-detail__split-card case-study-detail__split-card--solution'
               }
             >
               <figure className="media-side case-study-detail__solution-media">
@@ -1495,7 +1503,7 @@ export const CaseStudyDetail: React.FC = () => {
                   alt="Design solution visual"
                 />
               </figure>
-              <div className="text-side case-study-detail__text-stack">
+              <div className={`text-side case-study-detail__text-stack ${isAmio ? 'case-study-detail__text-stack--amio-flow' : ''}`}>
                 <h3>{isMegaToy || isAmio ? 'Design Solution' : 'Design solution'}</h3>
                 {isGreenCross ? (
                   <>
@@ -1559,8 +1567,8 @@ export const CaseStudyDetail: React.FC = () => {
 
             {isAmio && (
               <>
-                <article className="case-study-detail__split-card case-study-detail__split-card--reverse">
-                  <div className="text-side case-study-detail__text-stack">
+                <article className="case-study-detail__split-card case-study-detail__split-card--reverse case-study-detail__split-card--amio-solution-decisions">
+                  <div className="text-side case-study-detail__text-stack case-study-detail__text-stack--amio-flow">
                     <h4>Making decisions visible</h4>
                     <p>
                       A key feature is the summary triangle. An always-visible, cart-like element that updates in real
@@ -1592,11 +1600,22 @@ export const CaseStudyDetail: React.FC = () => {
                   </figure>
                 </article>
 
-                <article className="case-study-detail__split-card">
+                <section className="case-study-detail__testimonials case-study-detail__testimonials--amio" aria-label="Participant feedback">
+                  <article className="case-study-detail__testimonial-card case-study-detail__testimonial-card--amio">
+                    <div className="case-study-detail__testimonial-content">
+                      <p className="case-study-detail__testimonial-quote">
+                        Seeing my choice jump into the summary gave me peace of mind.
+                      </p>
+                      <p className="case-study-detail__testimonial-author">Participant feedback</p>
+                    </div>
+                  </article>
+                </section>
+
+                <article className="case-study-detail__split-card case-study-detail__split-card--amio-solution-load">
                   <figure className="media-side">
                     <img src={PALE_YELLOW_PLACEHOLDER} alt="Soft yellow section background" />
                   </figure>
-                  <div className="text-side case-study-detail__text-stack">
+                  <div className="text-side case-study-detail__text-stack case-study-detail__text-stack--amio-flow">
                     <h4>Reducing cognitive load</h4>
                     <p>
                       Every interface decision reduced mental effort: calendar designed for fast scanning, flight
@@ -1879,6 +1898,7 @@ export const CaseStudyDetail: React.FC = () => {
                       interface.
                     </p>
                     <h4>Why this matters</h4>
+                    <p>These behaviours indicate:</p>
                     <ul>
                       <li>Reduced cognitive load</li>
                       <li>Increased trust in selections</li>
@@ -2016,18 +2036,7 @@ export const CaseStudyDetail: React.FC = () => {
                   </figure>
                 </article>
               </>
-            ) : isAmio ? (
-              <section className="case-study-detail__testimonials case-study-detail__testimonials--amio" aria-label="Participant feedback">
-                <article className="case-study-detail__testimonial-card case-study-detail__testimonial-card--amio">
-                  <div className="case-study-detail__testimonial-content">
-                    <p className="case-study-detail__testimonial-quote">
-                      Seeing my choice jump into the summary gave me peace of mind.
-                    </p>
-                    <p className="case-study-detail__testimonial-author">Participant feedback</p>
-                  </div>
-                </article>
-              </section>
-            ) : (
+            ) : isAmio ? null : (
               <section className="case-study-detail__testimonials" aria-label="Testimonials">
                 {testimonials.map((item) => (
                   <article key={item.quote} className={`case-study-detail__testimonial-card ${item.className}`}>
@@ -2051,7 +2060,9 @@ export const CaseStudyDetail: React.FC = () => {
                   ? 'case-study-detail__split-card case-study-detail__split-card--reflection case-study-detail__split-card--reflection-gch'
                   : isMegaToy
                     ? 'case-study-detail__split-card case-study-detail__split-card--reflection case-study-detail__split-card--reflection-toy'
-                  : 'case-study-detail__split-card case-study-detail__split-card--reflection'
+                  : isAmio
+                    ? 'case-study-detail__split-card case-study-detail__split-card--reflection case-study-detail__split-card--amio-reflection'
+                    : 'case-study-detail__split-card case-study-detail__split-card--reflection'
               }
             >
               <figure className={isGreenCross ? 'media-side case-study-detail__reflection-media case-study-detail__reflection-media--gch' : isMegaToy ? 'media-side case-study-detail__reflection-media case-study-detail__reflection-media--toy' : 'media-side case-study-detail__reflection-media'}>
@@ -2060,7 +2071,7 @@ export const CaseStudyDetail: React.FC = () => {
                   alt="Reflection visual"
                 />
               </figure>
-              <div className="text-side case-study-detail__text-stack">
+              <div className={`text-side case-study-detail__text-stack ${isAmio ? 'case-study-detail__text-stack--amio-reflection' : ''}`}>
                 <h3>Reflection</h3>
                 {isGreenCross ? (
                   <>
@@ -2089,25 +2100,24 @@ export const CaseStudyDetail: React.FC = () => {
                   </>
                 ) : isAmio ? (
                   <>
-                    <p>
-                      If I revisited this project, I would extend it into a cross-device experience. Mobile leads
-                      discovery. Desktop supports commitment. Designing both intentionally would create a more seamless
-                      journey.
-                    </p>
+                    <p>If I revisited this project, I would extend it into a cross-device experience.</p>
+                    <p>Mobile leads discovery.</p>
+                    <p>Desktop supports commitment.</p>
+                    <p>Designing both intentionally would create a more seamless journey.</p>
                     <p>
                       I would also prototype the Swift and Save flow to explore how returning-user behaviour reduces
                       effort over time.
                     </p>
                     <h4>Key reflection</h4>
+                    <p>This project shifted my thinking.</p>
+                    <p>From designing for completion to designing for decision confidence</p>
                     <p>
-                      This project shifted my thinking from designing for completion to designing for decision
-                      confidence. When users clearly understand what they’ve selected, what it costs, and what comes
-                      next, they stop hesitating. They commit.
+                      When users clearly understand what they&apos;ve selected, what it costs, and what comes next, they
+                      stop hesitating.
                     </p>
-                    <p>
-                      It reinforced the role of research. Not just validating decisions, but shaping them from the
-                      start.
-                    </p>
+                    <p>They commit.</p>
+                    <p>It reinforced the role of research.</p>
+                    <p>Not just validating decisions, but shaping them from the start.</p>
                   </>
                 ) : (
                   <>
@@ -2138,10 +2148,12 @@ export const CaseStudyDetail: React.FC = () => {
                   ? 'case-study-detail__split-card case-study-detail__split-card--sources case-study-detail__split-card--sources-gch'
                   : isMegaToy
                     ? 'case-study-detail__split-card case-study-detail__split-card--sources case-study-detail__split-card--sources-toy'
-                  : 'case-study-detail__split-card case-study-detail__split-card--sources'
+                  : isAmio
+                    ? 'case-study-detail__split-card case-study-detail__split-card--sources case-study-detail__split-card--amio-sources'
+                    : 'case-study-detail__split-card case-study-detail__split-card--sources'
               }
             >
-              <div className="text-side case-study-detail__text-stack">
+              <div className={`text-side case-study-detail__text-stack ${isAmio ? 'case-study-detail__text-stack--amio-sources' : ''}`}>
                 <h3>Sources &amp; credits</h3>
                 {isGreenCross ? (
                   <>
@@ -2204,7 +2216,11 @@ export const CaseStudyDetail: React.FC = () => {
                     </p>
                     <h4>Supporting materials</h4>
                     <ul>
-                      <li>Recorded usability tests. Aer Lingus, Eurowings (UX Design Institute materials)</li>
+                      <li>
+                        Recorded usability tests. Aer Lingus, Eurowings
+                        <br />
+                        (UX Design Institute materials)
+                      </li>
                       <li>Competitive reference platforms. Air New Zealand, Qantas</li>
                     </ul>
                   </>

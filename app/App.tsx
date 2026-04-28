@@ -44,6 +44,7 @@ const AppRoutes: React.FC = () => {
       <Route path="/" element={<HomePage />} />
       <Route path="/publications/:id" element={<PublicationDetailPage />} />
       <Route path="/case-studies/:id" element={<CaseStudyDetailPage />} />
+      <Route path="/case-study/:id" element={<CaseStudyDetailPage />} />
     </Routes>
   );
 };

@@ -3,6 +3,9 @@ import { useNavigate } from 'react-router-dom';
 import {
   ArrowsClockwise,
   Ruler,
+  NotePencil,
+  Megaphone,
+  Package,
   PuzzlePiece,
   Target,
   ChartBar,
@@ -36,6 +39,79 @@ export type CaseStudyCardStudy = {
 interface CaseStudyCardProps {
   study: CaseStudyCardStudy;
 }
+
+const splitIntoSixLines = (text: string): string[] => {
+  const words = text.trim().split(/\s+/).filter(Boolean);
+  const lineCount = 6;
+  if (words.length === 0) return Array(lineCount).fill('');
+
+  if (words.length <= lineCount) {
+    return [...words, ...Array(lineCount - words.length).fill('')];
+  }
+
+  const n = words.length;
+  const prefixWordLengths = new Array<number>(n + 1).fill(0);
+  for (let i = 0; i < n; i += 1) {
+    prefixWordLengths[i + 1] = prefixWordLengths[i] + words[i].length;
+  }
+
+  const lineLength = (start: number, end: number) => {
+    const chars = prefixWordLengths[end] - prefixWordLengths[start];
+    const spaces = end - start - 1;
+    return chars + Math.max(0, spaces);
+  };
+
+  const totalLength = lineLength(0, n);
+  const targetLength = totalLength / lineCount;
+  const minReasonableLength = targetLength * 0.72;
+
+  const dp: number[][] = Array.from({ length: lineCount + 1 }, () => Array(n + 1).fill(Number.POSITIVE_INFINITY));
+  const prev: number[][] = Array.from({ length: lineCount + 1 }, () => Array(n + 1).fill(-1));
+  dp[0][0] = 0;
+
+  for (let line = 1; line <= lineCount; line += 1) {
+    for (let end = line; end <= n; end += 1) {
+      for (let start = line - 1; start < end; start += 1) {
+        if (!Number.isFinite(dp[line - 1][start])) continue;
+
+        const len = lineLength(start, end);
+        let cost = Math.pow(len - targetLength, 2);
+
+        // Penalize visibly short lines so line breaks look less jagged.
+        if (line < lineCount && len < minReasonableLength) {
+          cost += Math.pow(minReasonableLength - len, 2) * 1.6;
+        }
+
+        const candidate = dp[line - 1][start] + cost;
+        if (candidate < dp[line][end]) {
+          dp[line][end] = candidate;
+          prev[line][end] = start;
+        }
+      }
+    }
+  }
+
+  const lines = new Array<string>(lineCount).fill('');
+  let end = n;
+  for (let line = lineCount; line >= 1; line -= 1) {
+    const start = prev[line][end];
+    if (start < 0) {
+      // Fallback: greedy split if DP unexpectedly fails.
+      return [
+        words.slice(0, Math.ceil(n / 6)).join(' '),
+        words.slice(Math.ceil(n / 6), Math.ceil((2 * n) / 6)).join(' '),
+        words.slice(Math.ceil((2 * n) / 6), Math.ceil((3 * n) / 6)).join(' '),
+        words.slice(Math.ceil((3 * n) / 6), Math.ceil((4 * n) / 6)).join(' '),
+        words.slice(Math.ceil((4 * n) / 6), Math.ceil((5 * n) / 6)).join(' '),
+        words.slice(Math.ceil((5 * n) / 6)).join(' '),
+      ];
+    }
+    lines[line - 1] = words.slice(start, end).join(' ');
+    end = start;
+  }
+
+  return lines;
+};
 
 export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
   const navigate = useNavigate();
@@ -90,9 +166,34 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
   );
   const currentFrontTab = frontTabs[contentTab];
   const currentBackTab = backTabs[activeBackTab];
+  const frontDescriptionLines = useMemo(
+    () => splitIntoSixLines(currentFrontTab.description),
+    [currentFrontTab.description],
+  );
+  const backDescriptionLines = useMemo(
+    () => splitIntoSixLines(currentBackTab.description),
+    [currentBackTab.description],
+  );
 
   const getTabImage = (tab: 'challenge' | 'focus' | 'impact') => {
     return frontTabs[tab].image;
+  };
+
+  const renderViewDesignIcon = (isHovered: boolean) => {
+    const weight = isHovered ? 'fill' : 'regular';
+
+    switch (study.id) {
+      case 2:
+        return <Package size={24} weight={weight} color="currentColor" />;
+      case 3:
+      case 4:
+        return <Megaphone size={24} weight={weight} color="currentColor" />;
+      case 5:
+        return <NotePencil size={24} weight={weight} color="currentColor" />;
+      case 1:
+      default:
+        return <Ruler size={24} weight={weight} color="currentColor" />;
+    }
   };
 
   const setLayerBg = (el: HTMLDivElement | null, url: string) => {
@@ -265,7 +366,13 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
                 <h3 id={cardTitleId} className="case-study-card__title">
                   {currentFrontTab.title}
                 </h3>
-                <p className="case-study-card__description">{currentFrontTab.description}</p>
+                <p className="case-study-card__description" aria-label={currentFrontTab.description}>
+                  {frontDescriptionLines.map((line, idx) => (
+                    <span key={idx} className="case-study-card__description-line">
+                      {line || '\u00A0'}
+                    </span>
+                  ))}
+                </p>
               </div>
               <button
                 type="button"
@@ -276,7 +383,7 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
                 aria-label={`View the design for ${study.subtitle}`}
               >
                 <span className="btn__icon" aria-hidden="true">
-                  <Ruler size={24} weight={hoveredBtn === 'viewDesign' ? 'fill' : 'regular'} color="currentColor" />
+                  {renderViewDesignIcon(hoveredBtn === 'viewDesign')}
                 </span>
                 <span>View the design</span>
               </button>
@@ -391,8 +498,12 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               <div className="case-study-card__copy">
                 <p className="case-study-card__subtitle">{study.subtitle}</p>
                 <h3 className="case-study-card__title">{currentBackTab.title}</h3>
-                <p className="case-study-card__description">
-                  {currentBackTab.description}
+                <p className="case-study-card__description" aria-label={currentBackTab.description}>
+                  {backDescriptionLines.map((line, idx) => (
+                    <span key={idx} className="case-study-card__description-line">
+                      {line || '\u00A0'}
+                    </span>
+                  ))}
                 </p>
               </div>
               <button
@@ -404,7 +515,7 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
                 aria-label={`View the design for ${study.subtitle}`}
               >
                 <span className="btn__icon" aria-hidden="true">
-                  <Ruler size={24} weight={hoveredBtn === 'viewDesignBack' ? 'fill' : 'regular'} color="currentColor" />
+                  {renderViewDesignIcon(hoveredBtn === 'viewDesignBack')}
                 </span>
                 <span>View the design</span>
               </button>

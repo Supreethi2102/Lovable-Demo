@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Info } from '@phosphor-icons/react';
+import { SwatchCard, type SwatchCardMood } from './SwatchCard';
 import './About.css';
 
 /* =========================================
@@ -92,30 +92,63 @@ const AboutBlock2: React.FC = () => {
    BLOCK 3: Color Cards + Design in Practice
    ========================================= */
 
-const colorCards = [
+const colorCards: Array<{
+  id: string;
+  name: string;
+  hex: string;
+  color: string;
+  mood: SwatchCardMood;
+  rotation: number;
+  zIndex: number;
+  position: { top: number; left: number };
+}> = [
   { 
     id: 'nympheas', 
     name: 'Nymphéas Blue', 
-    hex: '#5A87E8', 
-    color: '#618eb6', 
+    hex: '#B3CDE2', 
+    color: '#B3CDE2', 
+    mood: {
+      description: "Monet's Water Lilies at the Musée de l'Orangerie revealed a blue that shifts with light, space, and calm reflection.",
+      contrastColor: '#4F5421',
+      idealMatchHex: '#4F5421',
+      idealMatchName: 'Island Grove Green',
+      contrastRatio: '4.86:1',
+      contrastRating: 'AA',
+    },
     rotation: -2.122,
     zIndex: 3,
     position: { top: 0, left: 230 }
   },
   { 
-    id: 'yellow', 
-    name: 'Paradise Tipani Yellow', 
-    hex: '#188974', 
-    color: '#f6e067', 
+    id: 'flamingo', 
+    name: 'Sunlit Flamingo Pink', 
+    hex: '#FC95B1', 
+    color: '#FC95B1', 
+    mood: {
+      description: "At the San Diego Zoo, sunlight and flamingo feathers created a vivid pink that brings joy and bold energy.",
+      contrastColor: '#060591',
+      idealMatchHex: '#060591',
+      idealMatchName: 'Gaudí Cathedral Blue',
+      contrastRatio: '7:1',
+      contrastRating: 'AAA',
+    },
     rotation: -21.906,
     zIndex: 2,
     position: { top: 213, left: 0 }
   },
   { 
-    id: 'teal', 
-    name: 'Sunshade Teal', 
-    hex: '#188974', 
-    color: '#188974', 
+    id: 'gaudi', 
+    name: 'Gaudí Cathedral Blue', 
+    hex: '#060591', 
+    color: '#060591', 
+    mood: {
+      description: "At the Sagrada Família, stained-glass light washed the stone in deep blue, balancing awe, structure, and imagination.",
+      contrastColor: '#FC95B1',
+      idealMatchHex: '#FC95B1',
+      idealMatchName: 'Sunlit Flamingo Pink',
+      contrastRatio: '7:1',
+      contrastRating: 'AAA',
+    },
     rotation: 15.525,
     zIndex: 1,
     position: { top: 356, left: 288 }
@@ -128,13 +161,26 @@ interface ColorCardProps {
   isExiting: boolean;
   animationDelay: number;
   exitDelay: number;
+  isFlipped: boolean;
+  onToggle: () => void;
+  interactive?: boolean;
 }
 
-const ColorCard: React.FC<ColorCardProps> = ({ card, isVisible, isExiting, animationDelay, exitDelay }) => {
+const ColorCard: React.FC<ColorCardProps> = ({
+  card,
+  isVisible,
+  isExiting,
+  animationDelay,
+  exitDelay,
+  isFlipped,
+  onToggle,
+  interactive = true,
+}) => {
   const cardClasses = [
     'about-color-card',
     isVisible ? 'about-color-card--animate' : '',
     isExiting ? 'about-color-card--exit' : '',
+    isFlipped ? 'about-color-card--flipped' : '',
   ].filter(Boolean).join(' ');
 
   return (
@@ -151,25 +197,16 @@ const ColorCard: React.FC<ColorCardProps> = ({ card, isVisible, isExiting, anima
       aria-label={`Color swatch: ${card.name}`}
       role="listitem"
     >
-      <div className="about-color-card__inner">
-        <div 
-          className="about-color-card__swatch" 
-          style={{ backgroundColor: card.color }}
-          role="img"
-          aria-label={`Color sample showing ${card.name}`}
-        />
-        <div className="about-color-card__text">
-          <p className="about-color-card__name">{card.name}</p>
-          <div className="about-color-card__hex-row">
-            <span className="about-color-card__hex" aria-label={`Hex code: ${card.hex}`}>{card.hex}</span>
-            <Info size={20} weight="regular" color="#5238a8" aria-hidden="true" />
-          </div>
-        </div>
-        <button type="button" className="about-color-card__link">
-          View colour mood
-          <span className="sr-only"> for {card.name}</span>
-        </button>
-      </div>
+      <SwatchCard
+        id={card.id}
+        color={card.color}
+        hex={card.hex}
+        name={card.name}
+        mood={card.mood}
+        isFlipped={isFlipped}
+        onToggle={onToggle}
+        interactive={interactive}
+      />
     </article>
   );
 };
@@ -181,8 +218,18 @@ interface AboutBlock3Props {
 const AboutBlock3: React.FC<AboutBlock3Props> = ({ onCollapseClick }) => {
   const [isVisible, setIsVisible] = useState(false);
   const [isExiting, setIsExiting] = useState(false);
+  const [flippedCardIds, setFlippedCardIds] = useState<Set<string>>(new Set());
   const block3Ref = useRef<HTMLDivElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
+
+  const toggleCard = (cardId: string) => {
+    setFlippedCardIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(cardId)) next.delete(cardId);
+      else next.add(cardId);
+      return next;
+    });
+  };
 
   // Entry animation observer
   useEffect(() => {
@@ -239,6 +286,8 @@ const AboutBlock3: React.FC<AboutBlock3Props> = ({ onCollapseClick }) => {
               isExiting={false}
               animationDelay={index * 400}
               exitDelay={0}
+              isFlipped={flippedCardIds.has(card.id)}
+              onToggle={() => toggleCard(card.id)}
             />
           ))}
         </div>
@@ -257,6 +306,9 @@ const AboutBlock3: React.FC<AboutBlock3Props> = ({ onCollapseClick }) => {
               isExiting={true}
               animationDelay={0}
               exitDelay={index * 50}
+              isFlipped={false}
+              onToggle={() => {}}
+              interactive={false}
             />
           ))}
         </div>

@@ -4,6 +4,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 12px;
+  background: #F7F9FA;
   /* Shrink to copy width so “Reduce motion” aligns with the end of the line below */
   width: fit-content;
   max-width: min(740px, 100%);

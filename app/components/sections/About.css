@@ -250,20 +250,21 @@
   margin-left: 60px; /* Push cards to the right */
 }
 
-/* Color Card - NO shadow */
+/* Color Card */
 .about-color-card {
   position: absolute;
   top: calc(var(--card-top, 0) * 0.75);
   left: calc(var(--card-left, 0) * 0.75);
-  width: 192px; /* 256 * 0.75 */
-  height: 330px; /* 440 * 0.75 */
-  background: #f9fafb;
-  border: 1px solid #76797f;
-  border-radius: 12px;
-  padding: 21px;
+  width: 176px;
+  height: 308px;
+  background: transparent;
+  border: none;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 0;
   transform: rotate(var(--card-rotation, 0deg)) translateY(-225px);
   opacity: 0;
-  overflow: clip;
+  overflow: visible;
 }
 
 .about-color-card--animate {
@@ -324,10 +325,53 @@
 .about-color-card__inner {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: stretch;
   height: 282px; /* 376 * 0.75 */
-  gap: 48px; /* 64 * 0.75 */
+  gap: 0;
   padding-bottom: 21px;
+}
+
+.about-color-card__body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.about-color-card__viewport {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.about-color-card__track {
+  width: 100%;
+  height: 200%;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.45s ease;
+}
+
+.about-color-card--flipped .about-color-card__track {
+  transform: translateY(-50%);
+}
+
+.about-color-card__panel {
+  height: 50%;
+  width: 100%;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.about-color-card__panel--front {
+  overflow: hidden;
+}
+
+.about-color-card__panel--back {
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .about-color-card__swatch {
@@ -335,6 +379,8 @@
   height: 135px; /* 180 * 0.75 */
   border-radius: 6px 6px 0 0;
   flex-shrink: 0;
+  border: 1px solid #76797f;
+  box-sizing: border-box;
 }
 
 .about-color-card__text {
@@ -342,6 +388,10 @@
   flex-direction: column;
   align-items: center;
   gap: 8px;
+}
+
+.about-color-card__text--back-header {
+  flex-shrink: 0;
 }
 
 .about-color-card__name {
@@ -359,6 +409,20 @@
   display: flex;
   align-items: center;
   gap: 6px;
+}
+
+.about-color-card__info-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
+.about-color-card__info-btn:disabled {
+  cursor: default;
 }
 
 .about-color-card__hex {
@@ -381,8 +445,99 @@
   text-align: center;
   background: none;
   border: none;
-  padding: 0;
+  padding: 6px 0 0 0;
   cursor: pointer;
+  flex-shrink: 0;
+  width: 100%;
+}
+
+.about-color-card__link:disabled {
+  cursor: default;
+}
+
+.about-color-card__mood {
+  display: block;
+  width: 100%;
+  padding: 0 2px 0;
+  margin-top: 8px;
+}
+
+.about-color-card__mood-description {
+  margin: 0;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-xs-size);
+  font-weight: 400;
+  line-height: 1.25;
+  letter-spacing: 0;
+  color: #3c3f43;
+  text-align: left;
+}
+
+.about-color-card__mood-contrast-bar {
+  display: flex;
+  width: 100%;
+  height: 8px;
+  border-radius: 6px;
+  overflow: hidden;
+  margin-top: 8px;
+  border: 1px solid #76797f;
+}
+
+.about-color-card__mood-contrast-left,
+.about-color-card__mood-contrast-right {
+  flex: 1;
+}
+
+.about-color-card__mood-contrast-divider {
+  width: 1px;
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.about-color-card__mood-ideal {
+  margin-top: 8px;
+}
+
+.about-color-card__mood-ideal-line {
+  margin: 0;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-xs-size);
+  font-weight: 400;
+  line-height: 1.2;
+  color: #3c3f43;
+  text-align: left;
+}
+
+.about-color-card__mood-ideal-label {
+  color: #212325;
+}
+
+.about-color-card__mood-ideal-hex {
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.about-color-card__mood-ideal-name {
+  margin: 2px 0 0 0;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-xs-size);
+  font-weight: 400;
+  line-height: 1.2;
+  color: #3c3f43;
+  text-align: left;
+}
+
+.about-color-card__mood-contrast-ratio {
+  margin: 8px 0 0 0;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-xs-size);
+  font-weight: 400;
+  line-height: 1.2;
+  color: #3c3f43;
+  text-align: left;
+}
+
+.about-color-card--flipped .about-color-card__inner {
+  gap: 0;
 }
 
 .about-color-card__link:hover {

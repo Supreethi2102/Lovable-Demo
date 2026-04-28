@@ -28,7 +28,7 @@ type NavSectionId =
   | 'sources';
 
 const NAV_ITEMS: Array<{ id: NavSectionId; label: string }> = [
-  { id: 'overview', label: 'Overview' },
+  { id: 'overview', label: 'Intro' },
   { id: 'brief', label: 'Brief' },
   { id: 'research', label: 'Research' },
   { id: 'process', label: 'Process' },
@@ -219,7 +219,7 @@ const GCH_INSIGHTS = [
 
 const MORE_PROJECTS: CaseStudyCardStudy[] = [
   {
-    id: 2,
+    id: 4,
     subtitle: 'The Warehouse | Mega Toy Month Campaign',
     title: 'How do you turn a toy sale into a month-long adventure?',
     description:
@@ -242,7 +242,7 @@ const MORE_PROJECTS: CaseStudyCardStudy[] = [
 
 const MORE_PROJECTS_GCH: CaseStudyCardStudy[] = [
   {
-    id: 2,
+    id: 4,
     subtitle: 'The Warehouse | Mega Toy Month Campaign',
     title: 'How do you turn a toy sale into a month-long adventure?',
     description:
@@ -252,7 +252,7 @@ const MORE_PROJECTS_GCH: CaseStudyCardStudy[] = [
     category: 'campaigns',
   },
   {
-    id: 1,
+    id: 3,
     subtitle: 'The Warehouse | Summer Campaign',
     title: 'How do you make small spends feel like summer wins?',
     description:
@@ -265,7 +265,7 @@ const MORE_PROJECTS_GCH: CaseStudyCardStudy[] = [
 
 const MORE_PROJECTS_TOY: CaseStudyCardStudy[] = [
   {
-    id: 1,
+    id: 3,
     subtitle: 'The Warehouse | Summer Campaign',
     title: 'How do you make small spends feel like summer wins?',
     description:
@@ -290,8 +290,11 @@ export const CaseStudyDetail: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const isGreenCross = id === '2';
+  const isSummer = id === '3';
   const isMegaToy = id === '4';
+  const isPalmy = id === '1';
   const isAmio = id === '5';
+  const isAmioLayout = isAmio || isPalmy;
   const overview = isGreenCross
     ? {
         heroImage: '/case-study-gch/9912d40ae739a7575ec4a7abed1a19cf05d03244.png',
@@ -312,15 +315,17 @@ export const CaseStudyDetail: React.FC = () => {
             'Mega Toy Month is one of The Warehouse’s biggest pre–July school holiday events. I helped bring the campaign to life across mailer, store and digital.',
           meta: 'Estimated read time: 3 minutes | Duration: 12 weeks',
         }
-    : isAmio
+    : isAmioLayout
       ? {
           heroImage: PALE_YELLOW_PLACEHOLDER,
           heroAlt: '',
-          subtitle: 'UX | UX Design Institute',
-          title: 'Amio Airways',
+          subtitle: isPalmy ? 'UI | UX Design Insitute' : 'UX | UX Design Institute',
+          title: isPalmy ? 'Palmy bank' : 'Amio Airways',
           body:
-            'Amio Airways is a New Zealand airline concept where I designed a booking experience for clear, confident decisions. The goal was calm, transparent travel.',
-          meta: 'Estimated read time: 3 minutes | Duration: 12 months',
+            isPalmy
+              ? 'A calm, modern banking experience built on trust, clarity and joy. Designed across desktop, mobile and tablet, with underserved communities at its core.'
+              : 'Amio Airways is a New Zealand airline concept where I designed a booking experience for clear, confident decisions. The goal was calm, transparent travel.',
+          meta: isPalmy ? 'Estimated read time: 3 minutes | Duration: 9 months' : 'Estimated read time: 3 minutes | Duration: 12 months',
         }
     : {
         heroImage: IMG.hero,
@@ -402,44 +407,54 @@ export const CaseStudyDetail: React.FC = () => {
             size: 'summary-item--48',
           },
         ]
-    : isAmio
+    : isAmioLayout
       ? [
-          { label: 'Role', value: 'UX Researcher, UX Designer', size: 'summary-item--24' },
+          { label: 'Role', value: isPalmy ? 'UI Designer (solo project)' : 'UX Researcher, UX Designer', size: 'summary-item--24' },
           {
             label: 'Context',
-            value: 'UX Design Institute project. Concept airline booking experience.',
+            value: isPalmy
+              ? 'Completed as part of a UI Design Certificate, UX Design Institute.'
+              : 'UX Design Institute project. Concept airline booking experience.',
             size: 'summary-item--48',
           },
-          { label: 'Tools', value: 'Figma, FigJam, Miro, Jotform, Lookback', size: 'summary-item--24' },
+          { label: 'Tools', value: isPalmy ? 'Figma, Miro, Photoshop, Illustrator' : 'Figma, FigJam, Miro, Jotform, Lookback', size: 'summary-item--24' },
           {
             label: 'Platforms',
-            value: 'Desktop-first, with future mobile-first expansion',
-            size: 'summary-item--48',
+            value: isPalmy ? 'Mobile, Tablet, Desktop' : 'Desktop-first, with future mobile-first expansion',
+            size: isPalmy ? 'summary-item--24' : 'summary-item--48',
           },
           {
             label: 'Audience',
             value:
-              'Leisure and budget-conscious travellers seeking affordable flights with a more considered, human-centred travel experience.',
+              isPalmy
+                ? 'Broad, with a focus on Pacific peoples, Māori, women, underserved and sustainability-minded communities.'
+                : 'Leisure and budget-conscious travellers seeking affordable flights with a more considered, human-centred travel experience.',
             size: 'summary-item--auto',
           },
           {
             label: 'Focus',
-            value: 'Clarity, reassurance, speed, flexibility, transparency, trust',
+            value: isPalmy
+              ? 'Translating brand values into a clear, playful, trustworthy and sustainable experience throughout the interface.'
+              : 'Clarity, reassurance, speed, flexibility, transparency, trust',
             size: 'summary-item--48',
           },
           {
             label: 'Designs',
-            value: 'Medium-fidelity wireframes and interactive prototype',
+            value: isPalmy
+              ? 'Accounts, Transactions and Spending Tracker across light and dark modes, creating a cohesive and scalable UI system.'
+              : 'Medium-fidelity wireframes and interactive prototype',
             size: 'summary-item--48',
           },
           {
             label: 'Accessibility',
-            value: 'Clear hierarchy, predictable patterns, visual confirmation states',
+            value: isPalmy
+              ? 'WCAG-compliant contrast, neurodivergent-friendly design patterns, and responsive typography.'
+              : 'Clear hierarchy, predictable patterns, visual confirmation states',
             size: 'summary-item--24',
           },
           {
             label: 'Team',
-            value: 'Solo-driven project, with peer feedback throughout the process',
+            value: isPalmy ? 'Solo-led, shaped by weekly feedback from mentors and peers.' : 'Solo-driven project, with peer feedback throughout the process',
             size: 'summary-item--24',
           },
         ]
@@ -518,23 +533,39 @@ export const CaseStudyDetail: React.FC = () => {
           postBriefImage: TOY_IMG.briefPanel,
           postBriefAlt: 'Mega Toy Month campaign board',
         }
-    : isAmio
+    : isAmioLayout
       ? {
           image: PALE_YELLOW_PLACEHOLDER,
           imageAlt: 'Soft yellow section background',
           business:
-            'Booking a flight is a high-stakes decision. Travellers juggle dates, pricing, baggage, meals and timing, often second-guessing hidden fees or the risk of choosing wrong, on top of already busy lives. This wasn’t just a usability problem. It was a decision-making problem under pressure.',
+            isPalmy
+              ? 'Palmy is a concept for a digital-first challenger bank designed for people often underserved by traditional financial systems. The challenge wasn’t just visual. It was behavioural.'
+              : 'Booking a flight is a high-stakes decision. Travellers juggle dates, pricing, baggage, meals and timing, often second-guessing hidden fees or the risk of choosing wrong, on top of already busy lives. This wasn’t just a usability problem. It was a decision-making problem under pressure.',
           priorities: [
-            'Clear, upfront pricing',
-            'Control over decisions',
-            'Reassurance at key moments',
+            ...(isPalmy
+              ? [
+                  'High trust',
+                  'Clear decision-making',
+                  'Emotional reassurance',
+                  'All within a system that’s often complex and intimidating.',
+                ]
+              : ['Clear, upfront pricing', 'Control over decisions', 'Reassurance at key moments']),
           ],
-          question: 'How might we design a booking experience that:',
+          question: isPalmy ? 'How might we design a banking interface that:' : 'How might we design a booking experience that:',
           bullets: [
-            'Simplifies complex decisions without oversimplifying',
-            'Shows total cost upfront, with no surprises',
-            'Supports both careful planners and returning users',
-            'Reinforces trust through every interaction',
+            ...(isPalmy
+              ? [
+                  'Clear under pressure',
+                  'Warm and human',
+                  'Culturally aware',
+                  'Consistent across mobile, tablet, and desktop',
+                ]
+              : [
+                  'Simplifies complex decisions without oversimplifying',
+                  'Shows total cost upfront, with no surprises',
+                  'Supports both careful planners and returning users',
+                  'Reinforces trust through every interaction',
+                ]),
           ],
           postBriefImage: '',
           postBriefAlt: '',
@@ -589,7 +620,7 @@ export const CaseStudyDetail: React.FC = () => {
             'Engaging them directly, while giving parents clarity and confidence, allowed the campaign to work harder across every channel, with activities designed to feel affordable, sustainable, and grounded in everyday Kiwi life.',
           ],
         }
-    : isAmio
+    : isAmioLayout
       ? {
           heading: 'Research',
           subheading: 'To understand booking behaviour, I combined:',
@@ -641,7 +672,7 @@ export const CaseStudyDetail: React.FC = () => {
             'Working within an agile squad model, I collaborated across social, digital, and in-store teams to support a seamless cross-channel rollout.',
           ],
         }
-    : isAmio
+    : isAmioLayout
       ? {
           heading: 'Process & Approach',
           subheading: 'This wasn’t a linear process',
@@ -728,7 +759,7 @@ export const CaseStudyDetail: React.FC = () => {
   }, []);
 
   return (
-    <section className="case-study-detail" aria-labelledby="case-study-detail-title">
+    <section className={`case-study-detail ${isPalmy ? 'case-study-detail--palmy' : ''}`} aria-labelledby="case-study-detail-title">
       <div className="case-study-detail__inner">
         <div className="case-study-detail__layout">
           <aside className="case-study-detail__sidebar" aria-label="Case study sections">
@@ -740,7 +771,7 @@ export const CaseStudyDetail: React.FC = () => {
                   onClick={() => navigate(-1)}
                   aria-label="Back to case studies"
                 >
-                  <ArrowLeft size={24} weight="regular" color="#3C3F43" aria-hidden="true" />
+                  <ArrowLeft size={24} weight="regular" color="currentColor" aria-hidden="true" />
                   <span>Back</span>
                 </button>
               </div>
@@ -788,7 +819,7 @@ export const CaseStudyDetail: React.FC = () => {
                     className={`case-study-detail__hero-image ${
                       isGreenCross
                         ? 'case-study-detail__hero-image--gch'
-                        : !isMegaToy && !isAmio
+                        : !isMegaToy && !isAmioLayout
                           ? 'case-study-detail__hero-image--figma'
                           : ''
                     }`}
@@ -806,8 +837,8 @@ export const CaseStudyDetail: React.FC = () => {
                 </div>
               </article>
 
-              <aside className="case-study-detail__summary" aria-label="Project summary">
-                <h2>Project summary</h2>
+              <aside className="case-study-detail__summary" aria-label="Overview">
+                <h2>Overview</h2>
                 {overviewSummaryItems.map(({ label, value, size }, idx, arr) => (
                   <React.Fragment key={label}>
                     <div className={`case-study-detail__summary-item ${size}`}>
@@ -827,7 +858,7 @@ export const CaseStudyDetail: React.FC = () => {
                 sectionsRef.current.brief = el;
               }}
               className={`case-study-detail__split-card case-study-detail__split-card--brief ${
-                isMegaToy ? 'case-study-detail__split-card--mega-fluid' : isAmio ? 'case-study-detail__split-card--brief-amio' : ''
+                isMegaToy ? 'case-study-detail__split-card--mega-fluid' : isAmioLayout ? 'case-study-detail__split-card--brief-amio' : ''
               }`}
             >
               <figure className="media-side case-study-detail__brief-media">
@@ -839,30 +870,71 @@ export const CaseStudyDetail: React.FC = () => {
                     <div className="case-study-detail__brief-intro">
                       <h3>The brief</h3>
                       <div className="case-study-detail__brief-business">
-                        {!isAmio && <h4>Business context</h4>}
-                        <p>{briefContent.business}</p>
+                        {!isAmioLayout && <h4>Business context</h4>}
+                        {isPalmy ? (
+                          <>
+                            <p>Palmy is a concept for a digital-first challenger bank designed for people often underserved by traditional financial systems.</p>
+                            <p>The challenge wasn’t just visual. It was behavioural.</p>
+                          </>
+                        ) : (
+                          <p>{briefContent.business}</p>
+                        )}
                       </div>
                     </div>
 
                     <div className="case-study-detail__brief-priorities">
-                      <h4>{isAmio ? 'Early research highlighted three core needs:' : 'Priorities:'}</h4>
-                      <ul>
-                        {briefContent.priorities.map((item) => (
-                          <li key={item}>{item}</li>
-                        ))}
-                      </ul>
+                      {isPalmy ? (
+                        <>
+                          <h4>Banking requires:</h4>
+                          <ul>
+                            <li>High trust</li>
+                            <li>Clear decision-making</li>
+                            <li>Emotional reassurance</li>
+                          </ul>
+                          <p>All within a system that&apos;s often complex and intimidating.</p>
+                        </>
+                      ) : (
+                        <>
+                          <h4>{isAmioLayout ? 'Early research highlighted three core needs:' : 'Priorities:'}</h4>
+                          <ul>
+                            {briefContent.priorities.map((item) => (
+                              <li key={item}>{item}</li>
+                            ))}
+                          </ul>
+                        </>
+                      )}
                     </div>
                   </div>
 
                   <div className="case-study-detail__brief-question">
-                    {isAmio ? (
+                    {isPalmy ? (
+                      <>
+                        <h4 className="case-study-detail__brief-question-title">The goal was to design a UI that feels:</h4>
+                        <ul>
+                          <li>Clear under pressure</li>
+                          <li>Warm and human</li>
+                          <li>Culturally aware</li>
+                          <li>Consistent across mobile, tablet, and desktop</li>
+                        </ul>
+                        <h4 className="case-study-detail__brief-question-title">Constraint</h4>
+                        <p>Balancing brand values playful and trustworthy without reducing clarity.</p>
+                        <h4 className="case-study-detail__brief-question-title">
+                          How might we design a banking experience that builds trust, reduces friction, and helps users feel capable. Not confused.
+                        </h4>
+                      </>
+                    ) : isAmioLayout ? (
                       <>
                         <p>
-                          Post-COVID behaviour added context. For high-value purchases, many users preferred booking on
-                          desktop. It felt more secure, easier to compare, and more considered.
+                          {isPalmy
+                            ? 'The goal was to design a UI that feels:'
+                            : 'Post-COVID behaviour added context. For high-value purchases, many users preferred booking on desktop. It felt more secure, easier to compare, and more considered.'}
                         </p>
                         <h4 className="case-study-detail__brief-question-title">Opportunity</h4>
-                        <p>Reduce uncertainty to increase decision confidence.</p>
+                        <p>
+                          {isPalmy
+                            ? 'Balancing brand values playful and trustworthy without reducing clarity.'
+                            : 'Reduce uncertainty to increase decision confidence.'}
+                        </p>
                         <h4 className="case-study-detail__brief-question-title">{briefContent.question}</h4>
                         <ul>
                           {briefContent.bullets.map((item) => (
@@ -895,12 +967,22 @@ export const CaseStudyDetail: React.FC = () => {
               </article>
             )}
 
-            {isAmio && (
+            {isAmioLayout && (
               <article className="case-study-detail__text-panel case-study-detail__text-panel--amio-intro" aria-label="Amio meaning">
                 <p className="case-study-detail__amio-intro-quote">
-                  <span className="case-study-detail__amio-intro-line">Āmio. Meaning to roam. Āmio Airways, a name</span>
-                  <span className="case-study-detail__amio-intro-line">I chose from te reo Māori to reflect a calmer, more</span>
-                  <span className="case-study-detail__amio-intro-line">considered approach to travel.</span>
+                  {isPalmy ? (
+                    <>
+                      <span className="case-study-detail__amio-intro-line">Palmy. Meaning flourishing. A name I chose to</span>
+                      <span className="case-study-detail__amio-intro-line">reflect growth, prosperity, and the Pacific</span>
+                      <span className="case-study-detail__amio-intro-line">communities at its heart.</span>
+                    </>
+                  ) : (
+                    <>
+                      <span className="case-study-detail__amio-intro-line">Āmio. Meaning to roam. Āmio Airways, a name</span>
+                      <span className="case-study-detail__amio-intro-line">I chose from te reo Māori to reflect a calmer, more</span>
+                      <span className="case-study-detail__amio-intro-line">considered approach to travel.</span>
+                    </>
+                  )}
                 </p>
               </article>
             )}
@@ -913,12 +995,12 @@ export const CaseStudyDetail: React.FC = () => {
               className={`case-study-detail__split-card case-study-detail__split-card--reverse ${
                 isMegaToy
                   ? 'case-study-detail__split-card--mega-fluid case-study-detail__split-card--research-toy'
-                  : isAmio
+                  : isAmioLayout
                     ? 'case-study-detail__split-card--amio-research'
                     : ''
               }`}
             >
-              <div className={`text-side case-study-detail__text-stack ${isAmio ? 'case-study-detail__text-stack--amio-impact' : ''}`}>
+              <div className="text-side case-study-detail__text-stack">
                 {isGreenCross ? (
                   <>
                     <h3>Research</h3>
@@ -957,44 +1039,77 @@ export const CaseStudyDetail: React.FC = () => {
                       activities designed to feel affordable, sustainable, and grounded in everyday Kiwi life.
                     </p>
                   </>
-                ) : isAmio ? (
+                ) : isAmioLayout ? (
                   <>
                     <h3>Research</h3>
-                    <h4>To understand booking behaviour, I combined:</h4>
-                    <ul>
-                      <li>User survey</li>
-                      <li>Usability testing across airline flows (Air New Zealand, Qantas)</li>
-                      <li>Competitive benchmarking</li>
-                      <li>Analysis of recorded usability tests (Aer Lingus, Eurowings)</li>
-                    </ul>
-                    <p>
-                      A clear pattern emerged. Users weren’t struggling to complete bookings. They were struggling to
-                      trust their decisions.
-                    </p>
-                    <h4>Observed behaviours</h4>
-                    <ul>
-                      <li>Re-checking prices multiple times</li>
-                      <li>Comparing flights across multiple tabs</li>
-                      <li>Delaying commitment due to uncertainty</li>
-                    </ul>
-                    <p>
-                      Pricing was the biggest source of friction. Hidden credit card fees, often revealed late, made it
-                      difficult to trust the final cost.
-                    </p>
-                    <h4>Behavioural insight</h4>
-                    <p>
-                      Booking a flight is shaped by perceived risk. Users described browsing on mobile but switching to
-                      desktop to complete purchases, where it felt:
-                    </p>
-                    <ul>
-                      <li>More secure</li>
-                      <li>Easier to compare</li>
-                      <li>More controlled</li>
-                    </ul>
-                    <p>
-                      This reframed the problem. Improving usability alone wasn’t enough. The experience needed to
-                      support clear decisions under pressure.
-                    </p>
+                    {isPalmy ? (
+                      <>
+                        <p>Before designing, I focused on the real barriers people face when managing money and building confidence.</p>
+                        <h4>Existing research highlighted consistent issues, particularly for Pacific, Māori, and female users:</h4>
+                        <ul>
+                          <li>Financial services felt impersonal</li>
+                          <li>Complex language reduced confidence</li>
+                          <li>Limited cultural relevance weakened trust</li>
+                          <li>Unclear information increased cognitive load</li>
+                        </ul>
+                      </>
+                    ) : (
+                      <>
+                        <h4>To understand booking behaviour, I combined:</h4>
+                        <ul>
+                          <li>User survey</li>
+                          <li>Usability testing across airline flows (Air New Zealand, Qantas)</li>
+                          <li>Competitive benchmarking</li>
+                          <li>Analysis of recorded usability tests (Aer Lingus, Eurowings)</li>
+                        </ul>
+                        <p>
+                          A clear pattern emerged. Users weren’t struggling to complete bookings. They were struggling to trust their decisions.
+                        </p>
+                      </>
+                    )}
+                    <h4>{isPalmy ? 'Key Insight' : 'Observed behaviours'}</h4>
+                    {isPalmy ? (
+                      <>
+                        <p>Confidence isn’t driven by features. <br></br> It’s driven by clarity, tone, and emotional safety.</p>
+                        <h4>What this meant for UI</h4>
+                        <ul>
+                          <li>Reduce cognitive load through hierarchy and spacing</li>
+                          <li>Use human, supportive language</li>
+                          <li>Design for cultural presence, not surface styling</li>
+                          <li>Reinforce feedback at every step</li>
+                        </ul>
+                      </>
+                    ) : (
+                      <>
+                        <ul>
+                          <li>Re-checking prices multiple times</li>
+                          <li>Comparing flights across multiple tabs</li>
+                          <li>Delaying commitment due to uncertainty</li>
+                        </ul>
+                        <p>
+                          Pricing was the biggest source of friction. Hidden credit card fees, often revealed late, made it
+                          difficult to trust the final cost.
+                        </p>
+                      </>
+                    )}
+                    {!isPalmy && (
+                      <>
+                        <h4>Behavioural insight</h4>
+                        <p>
+                          Booking a flight is shaped by perceived risk. Users described browsing on mobile but switching to
+                          desktop to complete purchases, where it felt:
+                        </p>
+                        <ul>
+                          <li>More secure</li>
+                          <li>Easier to compare</li>
+                          <li>More controlled</li>
+                        </ul>
+                        <p>
+                          This reframed the problem. Improving usability alone wasn’t enough. The experience needed to
+                          support clear decisions under pressure.
+                        </p>
+                      </>
+                    )}
                   </>
                 ) : (
                   <>
@@ -1020,7 +1135,7 @@ export const CaseStudyDetail: React.FC = () => {
                       ? PALE_YELLOW_PLACEHOLDER
                       : isMegaToy
                         ? TOY_IMG.researchBoard
-                        : isAmio
+                        : isAmioLayout
                           ? PALE_YELLOW_PLACEHOLDER
                           : IMG.research
                   }
@@ -1029,13 +1144,31 @@ export const CaseStudyDetail: React.FC = () => {
               </figure>
             </article>
 
+            {isPalmy && (
+              <section className="case-study-detail__palmy-process-quote" aria-label="Research quote">
+                <article className="case-study-detail__palmy-process-quote-card">
+                  <p className="case-study-detail__palmy-process-quote-text">
+                    <span className="case-study-detail__palmy-process-quote-line">
+                      When people are afraid of the system and don’t know
+                    </span>
+                    <span className="case-study-detail__palmy-process-quote-line">
+                      how to navigate it with confidence, they don’t engage.
+                    </span>
+                  </p>
+                  <p className="case-study-detail__palmy-process-quote-author">
+                    Pacific community leader, Digital Inclusion User Insights — Pacific Peoples (DIA)
+                  </p>
+                </article>
+              </section>
+            )}
+
             <article
               id="process"
               ref={(el) => {
                 sectionsRef.current.process = el;
               }}
               className={`case-study-detail__split-card ${
-                isMegaToy ? 'case-study-detail__split-card--mega-fluid' : isAmio ? 'case-study-detail__split-card--amio-process-main' : ''
+                isMegaToy ? 'case-study-detail__split-card--mega-fluid' : isAmioLayout ? 'case-study-detail__split-card--amio-process-main' : ''
               }`}
             >
               <figure className="media-side">
@@ -1045,14 +1178,14 @@ export const CaseStudyDetail: React.FC = () => {
                       ? PALE_YELLOW_PLACEHOLDER
                       : isMegaToy
                         ? PALE_YELLOW_PLACEHOLDER
-                        : isAmio
+                        : isAmioLayout
                           ? PALE_YELLOW_PLACEHOLDER
                           : IMG.process
                   }
                   alt="Process visual"
                 />
               </figure>
-              <div className={`text-side case-study-detail__text-stack ${isAmio ? 'case-study-detail__text-stack--amio-flow' : ''}`}>
+              <div className={`text-side case-study-detail__text-stack ${isAmioLayout ? 'case-study-detail__text-stack--amio-flow' : ''}`}>
                 {isGreenCross ? (
                   <>
                     <h3>Process &amp; approach</h3>
@@ -1081,28 +1214,50 @@ export const CaseStudyDetail: React.FC = () => {
                       support a seamless cross-channel rollout.
                     </p>
                   </>
-                ) : isAmio ? (
+                ) : isAmioLayout ? (
                   <>
                     <h3>Process &amp; Approach</h3>
                     <p>
-                      This wasn’t a linear process. It moved between research, flows, sketching, and testing. Each step
-                      surfaced new questions and often led me back to refine earlier decisions.
+                      {isPalmy
+                        ? 'I translated the brand values into guiding UI principles, turning intent into clear decisions across layout, interaction, and tone.'
+                        : 'This wasn’t a linear process. It moved between research, flows, sketching, and testing. Each step surfaced new questions and often led me back to refine earlier decisions.'}
                     </p>
-                    <h4>Defining the structure</h4>
+                    <h4>{isPalmy ? 'Clear' : 'Defining the structure'}</h4>
                     <p>
-                      Using affinity mapping and a customer journey map, I mapped emotional highs and lows across the
-                      booking experience.
+                      {isPalmy
+                        ? 'Structured layouts, predictable patterns, strong hierarchy'
+                        : 'Using affinity mapping and a customer journey map, I mapped emotional highs and lows across the booking experience.'}
                     </p>
-                    <h4>Three key friction points emerged</h4>
-                    <ul>
-                      <li>Pricing confusion</li>
-                      <li>Decision fatigue</li>
-                      <li>Loss of certainty</li>
-                    </ul>
-                    <p>
-                      A critical constraint quickly became clear. Passenger details are essential. They can’t be removed.
-                      The challenge wasn’t simplification. It was reducing effort and doubt within the journey.
-                    </p>
+                    <h4>{isPalmy ? 'Playful' : 'Three key friction points emerged'}</h4>
+                    {isPalmy ? (
+                      <>
+                        <p>Moments of personality through tone and microinteraction</p>
+                        <h4>Trustworthy</h4>
+                        <p>Consistency, feedback, and controlled pacing</p>
+                        <h4>Visual direction (intentional)</h4>
+                        <ul>
+                          <li>Tivaevae quilting &rarr; structure and layering</li>
+                          <li>Henri Matisse &rarr; simplified forms and clarity</li>
+                          <li>Richard Killeen &rarr; modular composition</li>
+                        </ul>
+                        <p>
+                          These references influenced not just the visual style, but how content is grouped, spaced, and
+                          understood.
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <ul>
+                          <li>Pricing confusion</li>
+                          <li>Decision fatigue</li>
+                          <li>Loss of certainty</li>
+                        </ul>
+                        <p>
+                          A critical constraint quickly became clear. Passenger details are essential. They can’t be
+                          removed. The challenge wasn’t simplification. It was reducing effort and doubt within the journey.
+                        </p>
+                      </>
+                    )}
                   </>
                 ) : (
                   <>
@@ -1116,73 +1271,97 @@ export const CaseStudyDetail: React.FC = () => {
               </div>
             </article>
 
-            {isAmio && (
+            {isAmioLayout && (
               <>
-                <article className="case-study-detail__split-card case-study-detail__split-card--reverse case-study-detail__split-card--amio-process-paths">
-                  <div className="text-side case-study-detail__text-stack case-study-detail__text-stack--amio-flow">
-                    <h4>A strategic shift: two booking paths</h4>
-                    <p>Instead of forcing a single flow, I designed for two distinct behaviours:</p>
-                    <h4>Full flow</h4>
-                    <ul>
-                      <li>Supports comparison and flexibility</li>
-                      <li>Allows users to leave and return</li>
-                      <li>Prioritises control and reassurance</li>
-                    </ul>
-                    <h4>Swift and Save</h4>
-                    <ul>
-                      <li>Designed for returning users</li>
-                      <li>Stores passenger details and preferences</li>
-                      <li>Reduces repeat effort</li>
-                    </ul>
-                    <h4>This revealed a key trade-off:</h4>
-                    <p>control vs speed</p>
-                    <p>Rather than choosing one, the experience supports both.</p>
-                  </div>
-                  <figure className="media-side">
-                    <img src={PALE_YELLOW_PLACEHOLDER} alt="Soft yellow section background" />
-                  </figure>
-                </article>
+                {isPalmy ? (
+                  <article className="case-study-detail__split-card case-study-detail__split-card--reverse case-study-detail__split-card--amio-process-paths">
+                    <div className="text-side case-study-detail__text-stack case-study-detail__text-stack--amio-flow">
+                      <h4>Early exploration (structure before style)</h4>
+                      <p>
+                        Before moving into visual design, I explored layout, hierarchy, and flow through quick sketches and
+                        low-fidelity wireframes.<br></br> This helped define how key screens. Accounts, Transactions, and Spending.
+                        should behave before introducing brand or visual detail.
+                      </p>
+                      <h4>What this enabled</h4>
+                      <ul>
+                        <li>Tested hierarchy without visual bias</li>
+                        <li>Reduced cognitive load early through layout decisions</li>
+                        <li>Aligned three core screens into a consistent system</li>
+                      </ul>
+                    </div>
+                    <figure className="media-side">
+                      <img src={PALE_YELLOW_PLACEHOLDER} alt="Soft yellow section background" />
+                    </figure>
+                  </article>
+                ) : (
+                  <>
+                    <article className="case-study-detail__split-card case-study-detail__split-card--reverse case-study-detail__split-card--amio-process-paths">
+                      <div className="text-side case-study-detail__text-stack case-study-detail__text-stack--amio-flow">
+                        <h4>A strategic shift: two booking paths</h4>
+                        <p>Instead of forcing a single flow, I designed for two distinct behaviours:</p>
+                        <h4>Full flow</h4>
+                        <ul>
+                          <li>Supports comparison and flexibility</li>
+                          <li>Allows users to leave and return</li>
+                          <li>Prioritises control and reassurance</li>
+                        </ul>
+                        <h4>Swift and Save</h4>
+                        <ul>
+                          <li>Designed for returning users</li>
+                          <li>Stores passenger details and preferences</li>
+                          <li>Reduces repeat effort</li>
+                        </ul>
+                        <h4>This revealed a key trade-off:</h4>
+                        <p>control vs speed</p>
+                        <p>Rather than choosing one, the experience supports both.</p>
+                      </div>
+                      <figure className="media-side">
+                        <img src={PALE_YELLOW_PLACEHOLDER} alt="Soft yellow section background" />
+                      </figure>
+                    </article>
 
-                <article className="case-study-detail__split-card case-study-detail__split-card--amio-process-sketch">
-                  <figure className="media-side">
-                    <img src={PALE_YELLOW_PLACEHOLDER} alt="Soft yellow section background" />
-                  </figure>
-                  <div className="text-side case-study-detail__text-stack case-study-detail__text-stack--amio-flow">
-                    <h4>Sketching and iteration</h4>
-                    <p>Low-fidelity sketching helped resolve structure early.</p>
-                    <h4>It exposed:</h4>
-                    <ul>
-                      <li>Unclear transitions between steps</li>
-                      <li>Weak visibility of selections</li>
-                      <li>Inconsistencies between flows</li>
-                    </ul>
-                    <p>Resolving these simplified the journey before moving into digital.</p>
-                  </div>
-                </article>
+                    <article className="case-study-detail__split-card case-study-detail__split-card--amio-process-sketch">
+                      <figure className="media-side">
+                        <img src={PALE_YELLOW_PLACEHOLDER} alt="Soft yellow section background" />
+                      </figure>
+                      <div className="text-side case-study-detail__text-stack case-study-detail__text-stack--amio-flow">
+                        <h4>Sketching and iteration</h4>
+                        <p>Low-fidelity sketching helped resolve structure early.</p>
+                        <h4>It exposed:</h4>
+                        <ul>
+                          <li>Unclear transitions between steps</li>
+                          <li>Weak visibility of selections</li>
+                          <li>Inconsistencies between flows</li>
+                        </ul>
+                        <p>Resolving these simplified the journey before moving into digital.</p>
+                      </div>
+                    </article>
 
-                <article className="case-study-detail__split-card case-study-detail__split-card--reverse case-study-detail__split-card--amio-process-test">
-                  <div className="text-side case-study-detail__text-stack case-study-detail__text-stack--amio-flow">
-                    <h4>Prototyping and testing</h4>
-                    <p>By the time I moved into Figma, the structure was defined.</p>
-                    <p>The focus shifted to pacing, interaction, and clarity.</p>
-                    <h4>Testing revealed:</h4>
-                    <ul>
-                      <li>Dense layouts increased hesitation</li>
-                      <li>Poor visibility led to repeated checking</li>
-                      <li>Small friction points created disproportionate doubt</li>
-                    </ul>
-                    <h4>This led to targeted improvements:</h4>
-                    <ul>
-                      <li>Simplified layouts</li>
-                      <li>Clearer pricing and selection states</li>
-                      <li>Stronger feedback moments</li>
-                    </ul>
-                    <p>Each iteration reduced hesitation and improved decision flow.</p>
-                  </div>
-                  <figure className="media-side">
-                    <img src={PALE_YELLOW_PLACEHOLDER} alt="Soft yellow section background" />
-                  </figure>
-                </article>
+                    <article className="case-study-detail__split-card case-study-detail__split-card--reverse case-study-detail__split-card--amio-process-test">
+                      <div className="text-side case-study-detail__text-stack case-study-detail__text-stack--amio-flow">
+                        <h4>Prototyping and testing</h4>
+                        <p>By the time I moved into Figma, the structure was defined.</p>
+                        <p>The focus shifted to pacing, interaction, and clarity.</p>
+                        <h4>Testing revealed:</h4>
+                        <ul>
+                          <li>Dense layouts increased hesitation</li>
+                          <li>Poor visibility led to repeated checking</li>
+                          <li>Small friction points created disproportionate doubt</li>
+                        </ul>
+                        <h4>This led to targeted improvements:</h4>
+                        <ul>
+                          <li>Simplified layouts</li>
+                          <li>Clearer pricing and selection states</li>
+                          <li>Stronger feedback moments</li>
+                        </ul>
+                        <p>Each iteration reduced hesitation and improved decision flow.</p>
+                      </div>
+                      <figure className="media-side">
+                        <img src={PALE_YELLOW_PLACEHOLDER} alt="Soft yellow section background" />
+                      </figure>
+                    </article>
+                  </>
+                )}
               </>
             )}
 
@@ -1194,7 +1373,7 @@ export const CaseStudyDetail: React.FC = () => {
               </article>
             )}
 
-            {!isMegaToy && !isAmio && (
+            {!isMegaToy && !isAmioLayout && (
               <article
                 className={
                   isGreenCross
@@ -1225,7 +1404,7 @@ export const CaseStudyDetail: React.FC = () => {
               </article>
             )}
 
-            {!isMegaToy && !isAmio && (
+            {!isMegaToy && !isAmioLayout && (
               <article
                 className={
                   isGreenCross
@@ -1279,7 +1458,7 @@ export const CaseStudyDetail: React.FC = () => {
                   <img src={PALE_YELLOW_PLACEHOLDER} alt="Soft yellow section background" />
                 </figure>
               </article>
-            ) : isAmio ? null : (
+            ) : isAmioLayout ? null : (
               <article className="case-study-detail__text-panel">
                 <h4>{isGreenCross ? 'Messaging' : 'Balancing brand attitude'}</h4>
                 {isGreenCross ? (
@@ -1312,7 +1491,7 @@ export const CaseStudyDetail: React.FC = () => {
               <article className="case-study-detail__panel case-study-detail__panel--gch-image case-study-detail__panel--gch-image-550">
                 <img className="case-study-detail__gch-section-image" src={IMG.typographySpecimen} alt="Typeface board" />
               </article>
-            ) : isAmio ? null : (
+            ) : isAmioLayout ? null : (
               <section className="case-study-detail__two-up case-study-detail__two-up--featured">
                 <img
                   className="case-study-detail__poster-image case-study-detail__poster-image--one"
@@ -1327,7 +1506,7 @@ export const CaseStudyDetail: React.FC = () => {
               </section>
             )}
 
-            {!isMegaToy && !isAmio && (
+            {!isMegaToy && !isAmioLayout && (
               <article className="case-study-detail__text-panel">
                 <h4>{isGreenCross ? 'Te reo Māori' : 'Finding the balance'}</h4>
                 {isGreenCross ? (
@@ -1378,7 +1557,7 @@ export const CaseStudyDetail: React.FC = () => {
                   </div>
                 </article>
               </>
-            ) : isAmio ? null : (
+            ) : isAmioLayout ? null : (
               <section className="case-study-detail__two-up case-study-detail__two-up--posters">
                 <div className="case-study-detail__two-up-row">
                   <img
@@ -1396,7 +1575,7 @@ export const CaseStudyDetail: React.FC = () => {
               </section>
             )}
 
-            {!isGreenCross && !isMegaToy && !isAmio && (
+            {!isGreenCross && !isMegaToy && !isAmioLayout && (
               <>
                 <article className="case-study-detail__panel">
                   <img
@@ -1482,6 +1661,68 @@ export const CaseStudyDetail: React.FC = () => {
               </>
             )}
 
+            {isPalmy && (
+              <>
+                <article className="case-study-detail__split-card case-study-detail__split-card--amio-process-test case-study-detail__split-card--palmy-alohi">
+                  <figure className="media-side">
+                    <img src={PALE_YELLOW_PLACEHOLDER} alt="Soft yellow section background" />
+                  </figure>
+                  <div className="text-side case-study-detail__text-stack case-study-detail__text-stack--amio-flow case-study-detail__text-stack--palmy-alohi">
+                    <p>To make the experience more human,<br></br> I introduced Alohi.</p>
+                    <h4>Alohi. Designing for emotional clarity</h4>
+                    <p>Alohi is Palmy’s financial companion.</p>
+                    <p>
+                      Not decoration. A UI decision designed to support clarity and confidence.
+                    </p>
+                    <p>Alohi acts as a guide. Reassuring users and explaining complex actions in simple, human terms.</p>
+                    <h4>Why it works</h4>
+                    <ul>
+                      <li>Reduces intimidation in financial tasks</li>
+                      <li>Reinforces feedback through tone and motion</li>
+                      <li>Creates a consistent emotional layer across the experience</li>
+                    </ul>
+                    <h4>Accessibility built in</h4>
+                    <ul>
+                      <li>Voice interaction support</li>
+                      <li>Scalable typography</li>
+                      <li>High contrast modes</li>
+                      <li>Alohi shifts the experience from transactional to supportive.</li>
+                    </ul>
+                    <p>That changes how users engage.</p>
+                  </div>
+                </article>
+
+                <article className="case-study-detail__split-card case-study-detail__split-card--amio-process-sketch case-study-detail__split-card--palmy-design-system">
+                  <div className="text-side case-study-detail__text-stack case-study-detail__text-stack--amio-flow case-study-detail__text-stack--palmy-design-system">
+                    <h4>Design System</h4>
+                    <p>Everything was designed as a system, not screens.</p>
+                    <h4>Foundations</h4>
+                    <ul>
+                      <li><strong>Font</strong> Figtree (primary), Sirenia (accent)</li>
+                      <li><strong>Case</strong> Sentence case for readability</li>
+                      <li><strong>Spacing</strong> 4pt system for consistency</li>
+                      <li><strong>Type scale</strong> Responsive across breakpoints</li>
+                    </ul>
+                    <h4>Components</h4>
+                    <ul>
+                      <li><strong>Patterns</strong> Cards, navigation, and data visualisation</li>
+                      <li><strong>Motion</strong> Consistent behaviour across interactions</li>
+                      <li><strong>Theming</strong> Light and dark modes designed together</li>
+                    </ul>
+                    <h4>Accessibility</h4>
+                    <ul>
+                      <li><strong>Contrast</strong> WCAG AA across themes</li>
+                      <li><strong>Focus</strong> Visible states and keyboard support</li>
+                      <li><strong>Clarity</strong> Hierarchy and spacing for easy scanning</li>
+                    </ul>
+                  </div>
+                  <figure className="media-side">
+                    <img src={PALE_YELLOW_PLACEHOLDER} alt="Soft yellow section background" />
+                  </figure>
+                </article>
+              </>
+            )}
+
             <article
               id="solution"
               ref={(el) => {
@@ -1492,19 +1733,19 @@ export const CaseStudyDetail: React.FC = () => {
                   ? 'case-study-detail__split-card case-study-detail__split-card--solution case-study-detail__split-card--reverse case-study-detail__split-card--solution-gch'
                   : isMegaToy
                     ? 'case-study-detail__split-card case-study-detail__split-card--solution case-study-detail__split-card--reverse case-study-detail__split-card--solution-toy'
-                  : isAmio
+                  : isAmioLayout
                     ? 'case-study-detail__split-card case-study-detail__split-card--solution case-study-detail__split-card--amio-solution-main'
                     : 'case-study-detail__split-card case-study-detail__split-card--solution'
               }
             >
               <figure className="media-side case-study-detail__solution-media">
                 <img
-                  src={isGreenCross || isMegaToy || isAmio ? SOFT_PEACH_PLACEHOLDER : IMG.solution}
+                  src={isGreenCross || isMegaToy || isAmioLayout ? SOFT_PEACH_PLACEHOLDER : IMG.solution}
                   alt="Design solution visual"
                 />
               </figure>
-              <div className={`text-side case-study-detail__text-stack ${isAmio ? 'case-study-detail__text-stack--amio-flow' : ''}`}>
-                <h3>{isMegaToy || isAmio ? 'Design Solution' : 'Design solution'}</h3>
+              <div className={`text-side case-study-detail__text-stack ${isAmioLayout ? 'case-study-detail__text-stack--amio-flow' : ''}`}>
+                <h3>{isMegaToy || isAmioLayout ? 'Design Solution' : 'Design solution'}</h3>
                 {isGreenCross ? (
                   <>
                     <p>The final system separates the two brands clearly while keeping sustainability, clarity, and usability at the core.</p>
@@ -1532,19 +1773,48 @@ export const CaseStudyDetail: React.FC = () => {
                     </ul><br></br>
                     <p>Instead of flipping pages, families stayed, explored, and built decisions together.</p>
                   </>
-                ) : isAmio ? (
+                ) : isAmioLayout ? (
                   <>
-                    <p>
-                      The final prototype is a calm, structured desktop booking experience designed for
-                      decision-making under pressure.
-                    </p>
-                    <h4>Every screen reinforces three things:</h4>
-                    <ul>
-                      <li>Where you are</li>
-                      <li>What you have selected</li>
-                      <li>What it costs</li>
-                    </ul>
-                    <p>The goal wasn’t speed alone. It was clarity when it matters most.</p>
+                    {isPalmy ? (
+                      <>
+                        <p>
+                          A calm, structured banking experience designed to support confident decisions. <br></br>Not simplified
+                          for the sake of appearance. <br></br>Clearer so users feel in control.
+                        </p>
+                        <h4>Accounts homepage</h4>
+                        <ul>
+                          <li>Dashboard layout with side navigation</li>
+                          <li>Clear balance hierarchy</li>
+                          <li>In-context guidance from Alohi</li>
+                        </ul>
+                        <p>Users always know where they are and what to do next</p>
+                        <h4>Everyday transactions</h4>
+                        <ul>
+                          <li>Card-based layout for fast scanning</li>
+                          <li>Humanised transaction labels</li>
+                          <li>Immediate feedback on interaction</li>
+                        </ul>
+                        <p>Reduces effort when reviewing activity</p>
+                        <h4>Spending tracker</h4>
+                        <ul>
+                          <li>Visualised monthly behaviour</li>
+                          <li>Eco-impact surfaced through actions</li>
+                          <li>Accessible colour adjustments across modes</li>
+                        </ul>
+                        <p>Makes financial behaviour visible and understandable</p>
+                      </>
+                    ) : (
+                      <>
+                        <p>The final prototype is a calm, structured desktop booking experience designed for decision-making under pressure.</p>
+                        <h4>Every screen reinforces three things:</h4>
+                        <ul>
+                          <li>Where you are</li>
+                          <li>What you have selected</li>
+                          <li>What it costs</li>
+                        </ul>
+                        <p>The goal wasn’t speed alone. It was clarity when it matters most.</p>
+                      </>
+                    )}
                   </>
                 ) : (
                   <>
@@ -1571,28 +1841,55 @@ export const CaseStudyDetail: React.FC = () => {
                   <div className="text-side case-study-detail__text-stack case-study-detail__text-stack--amio-flow">
                     <h4>Making decisions visible</h4>
                     <p>
-                      A key feature is the summary triangle. An always-visible, cart-like element that updates in real
-                      time.
+                      {isPalmy
+                        ? 'A key pattern is always-visible account context: balances, recent movement, and quick actions update in real time.'
+                        : 'A key feature is the summary triangle. An always-visible, cart-like element that updates in real time.'}
                     </p>
-                    <h4>When a user selects a flight:</h4>
+                    <h4>{isPalmy ? 'When users review or act on money:' : 'When a user selects a flight:'}</h4>
                     <ul>
-                      <li>A card moves into the triangle</li>
-                      <li>The total price updates instantly</li>
+                      {isPalmy ? (
+                        <>
+                          <li>Transaction context stays visible</li>
+                          <li>Balances and status update immediately</li>
+                        </>
+                      ) : (
+                        <>
+                          <li>A card moves into the triangle</li>
+                          <li>The total price updates instantly</li>
+                        </>
+                      )}
                     </ul>
                     <h4>This creates two immediate effects:</h4>
                     <ul>
-                      <li>Selections feel stable and committed</li>
-                      <li>Pricing is always visible</li>
+                      {isPalmy ? (
+                        <>
+                          <li>Users feel in control of their financial position</li>
+                          <li>Key information stays visible at decision moments</li>
+                        </>
+                      ) : (
+                        <>
+                          <li>Selections feel stable and committed</li>
+                          <li>Pricing is always visible</li>
+                        </>
+                      )}
                     </ul>
-                    <p>This directly addresses a core anxiety. Not knowing what you've selected or how much it costs.</p>
+                    <p>{isPalmy ? 'This directly addresses a core banking anxiety.' : 'This directly addresses a core anxiety.'}</p>
                     <p>
-                      In testing, users relied on the triangle summary instead of re-checking the interface. It reduced
-                      second-guessing and helped them move forward.
+                      {isPalmy
+                        ? 'Not knowing where your money stands after each action.'
+                        : "Not knowing what you've selected or how much it costs."}
                     </p>
+                    <p>
+                      {isPalmy
+                        ? 'In testing, users relied on persistent context instead of re-checking multiple screens.'
+                        : 'In testing, users relied on the triangle summary instead of re-checking the interface.'}
+                    </p>
+                    <p>{isPalmy ? 'It reduced uncertainty and helped users act faster with confidence.' : 'It reduced second-guessing and helped them move forward.'}</p>
                     <h4>Trade-off</h4>
                     <p>
-                      Keeping it visible reduced screen space. Testing showed visibility mattered more than additional
-                      content.
+                      {isPalmy
+                        ? 'Keeping this context visible uses space, but testing showed clarity mattered more than secondary detail.'
+                        : 'Keeping it visible reduced screen space. Testing showed visibility mattered more than additional content.'}
                     </p>
                   </div>
                   <figure className="media-side">
@@ -1604,9 +1901,11 @@ export const CaseStudyDetail: React.FC = () => {
                   <article className="case-study-detail__testimonial-card case-study-detail__testimonial-card--amio">
                     <div className="case-study-detail__testimonial-content">
                       <p className="case-study-detail__testimonial-quote">
-                        Seeing my choice jump into the summary gave me peace of mind.
+                        {isPalmy
+                          ? 'I could understand my money at a glance without second-guessing every screen.'
+                          : 'Seeing my choice jump into the summary gave me peace of mind.'}
                       </p>
-                      <p className="case-study-detail__testimonial-author">Participant feedback</p>
+                      <p className="case-study-detail__testimonial-author">{isPalmy ? 'Prototype participant' : 'Participant feedback'}</p>
                     </div>
                   </article>
                 </section>
@@ -1617,20 +1916,45 @@ export const CaseStudyDetail: React.FC = () => {
                   </figure>
                   <div className="text-side case-study-detail__text-stack case-study-detail__text-stack--amio-flow">
                     <h4>Reducing cognitive load</h4>
-                    <p>
-                      Every interface decision reduced mental effort: calendar designed for fast scanning, flight
-                      results spaced for comparison, extras written in plain, human language, and microinteractions
-                      providing subtle feedback.
-                    </p>
-                    <p>
-                      Dense layouts caused hesitation and missed details. Simplifying layout and language improved
-                      decision clarity. The experience is intentionally calm, because the task itself is already
-                      high-stakes.
-                    </p>
-                    <h4>Supporting different decision styles</h4>
+                    <p>Every interface decision reduced mental effort:</p>
                     <ul>
-                      <li>Careful, comparison-led decisions</li>
-                      <li>Fast, repeat bookings</li>
+                      {isPalmy ? (
+                        <>
+                          <li>Account summaries designed for fast scanning</li>
+                          <li>Transaction rows spaced for quick comparison</li>
+                          <li>Plain-language labels and status messages</li>
+                          <li>Microinteractions provide subtle confirmation feedback</li>
+                        </>
+                      ) : (
+                        <>
+                          <li>Calendar designed for fast scanning</li>
+                          <li>Flight results spaced for comparison</li>
+                          <li>Extras written in plain, human language</li>
+                          <li>Microinteractions provide subtle feedback</li>
+                        </>
+                      )}
+                    </ul>
+                    <p>
+                      {isPalmy
+                        ? 'Dense finance layouts cause hesitation and missed details. Simplifying hierarchy and language improved decision clarity.'
+                        : 'Dense layouts caused hesitation and missed details. Simplifying layout and language improved decision clarity.'}
+                    </p>
+                    <p>The experience is intentionally calm.</p>
+                    <p>{isPalmy ? 'Because money decisions already carry emotional weight.' : 'Because the task itself is already high-stakes.'}</p>
+                    <h4>Supporting different decision styles</h4>
+                    <p>The experience supports:</p>
+                    <ul>
+                      {isPalmy ? (
+                        <>
+                          <li>Careful, detail-oriented checking</li>
+                          <li>Fast, habitual day-to-day actions</li>
+                        </>
+                      ) : (
+                        <>
+                          <li>Careful, comparison-led decisions</li>
+                          <li>Fast, repeat bookings</li>
+                        </>
+                      )}
                     </ul>
                     <p>Rather than forcing one path, it adapts to real behaviour.</p>
                   </div>
@@ -1773,7 +2097,7 @@ export const CaseStudyDetail: React.FC = () => {
               </>
             )}
 
-            {!isGreenCross && !isMegaToy && !isAmio && (
+            {!isGreenCross && !isMegaToy && !isAmioLayout && (
               <article className="case-study-detail__split-card case-study-detail__split-card--reverse case-study-detail__split-card--digital">
                 <div className="text-side case-study-detail__text-stack case-study-detail__digital-text">
                   <h4>Digital campaign</h4>
@@ -1812,7 +2136,7 @@ export const CaseStudyDetail: React.FC = () => {
               </article>
             )}
 
-            {!isGreenCross && !isMegaToy && !isAmio && (
+            {!isGreenCross && !isMegaToy && !isAmioLayout && (
               <article className="case-study-detail__text-panel">
                 <h4>Outcome</h4>
                 <>
@@ -1840,10 +2164,10 @@ export const CaseStudyDetail: React.FC = () => {
               }
             >
               <figure className="media-side case-study-detail__impact-media">
-                <img src={isGreenCross || isMegaToy || isAmio ? PALE_YELLOW_PLACEHOLDER : IMG.impact} alt="Impact visual" />
+                <img src={isGreenCross || isMegaToy || isAmioLayout ? PALE_YELLOW_PLACEHOLDER : IMG.impact} alt="Impact visual" />
               </figure>
-              <div className="text-side case-study-detail__text-stack">
-                <h3>Impact &amp; learnings</h3>
+              <div className={`text-side case-study-detail__text-stack ${isAmioLayout ? 'case-study-detail__text-stack--amio-impact' : ''}`}>
+                <h3>{isPalmy ? 'Impact and learnings' : 'Impact & learnings'}</h3>
                 {isGreenCross ? (
                   <>
                     <p>The redesign rolled out across ~360 pharmacies, turning a functional item into a high-frequency brand touchpoint.</p>
@@ -1883,35 +2207,69 @@ export const CaseStudyDetail: React.FC = () => {
                       <li>Testing with kids refined usability, improving clarity, participation, and overall experience</li>
                     </ul>
                   </>
-                ) : isAmio ? (
+                ) : isAmioLayout ? (
                   <>
-                    <p>Even at medium fidelity, the experience changed behaviour.</p>
-                    <h4>Users:</h4>
-                    <ul>
-                      <li>Backtracked less</li>
-                      <li>Re-checked selections less frequently</li>
-                      <li>Made decisions faster once options were narrowed</li>
-                      <li>Showed stronger commitment at final selection</li>
-                    </ul>
-                    <p>
-                      The summary triangle became a key anchor. Users relied on it instead of repeatedly scanning the
-                      interface.
-                    </p>
-                    <h4>Why this matters</h4>
-                    <p>These behaviours indicate:</p>
-                    <ul>
-                      <li>Reduced cognitive load</li>
-                      <li>Increased trust in selections</li>
-                      <li>Stronger decision momentum</li>
-                    </ul>
-                    <p>Confidence wasn’t just a feeling. It directly influenced progression through the flow.</p>
-                    <h4>What I would validate next</h4>
-                    <ul>
-                      <li>Drop-off at key decision points</li>
-                      <li>Time to complete booking</li>
-                      <li>Interaction with the summary triangle</li>
-                      <li>Returning-user completion rates.</li>
-                    </ul>
+                    {isPalmy ? (
+                      <>
+                        <h4>Observed outcomes (testing)</h4>
+                        <ul>
+                          <li>Users moved through tasks with less hesitation</li>
+                          <li>Reduced re-checking of balances and actions</li>
+                          <li>Faster understanding of spending behaviour</li>
+                          <li>Stronger emotional engagement</li>
+                        </ul>
+                        <h4>Real behaviour shift</h4>
+                        <p>
+                          Users stopped scanning the interface repeatedly and instead relied on layout and feedback to
+                          confirm decisions.
+                        </p>
+                        <h4>Why this matters</h4>
+                        <p>Clarity reduces cognitive load. <br></br>But more importantly, it builds trust.</p>
+                        <p className="case-study-detail__palmy-impact-lead">And trust drives:</p>
+                        <ul>
+                          <li>Engagement</li>
+                          <li>Completion</li>
+                          <li>Return behaviour</li>
+                        </ul>
+                        <h4>What I would validate next</h4>
+                        <ul>
+                          <li>Task success rate</li>
+                          <li>Time on task</li>
+                          <li>Feature engagement</li>
+                          <li>Accessibility usage</li>
+                          <li>Retention</li>
+                        </ul>
+                      </>
+                    ) : (
+                      <>
+                        <p>Even at medium fidelity, the experience changed behaviour.</p>
+                        <h4>Users:</h4>
+                        <ul>
+                          <li>Backtracked less</li>
+                          <li>Re-checked selections less frequently</li>
+                          <li>Made decisions faster once options were narrowed</li>
+                          <li>Showed stronger commitment at final selection</li>
+                        </ul>
+                        <br></br>
+                        <p>The summary triangle became a key anchor. Users relied on it instead of repeatedly scanning the interface.</p>
+                        <h4>Why this matters</h4>
+                        <p>These behaviours indicate:</p>
+                        <ul>
+                          <li>Reduced cognitive load</li>
+                          <li>Increased trust in selections</li>
+                          <li>Stronger decision momentum</li>
+                        </ul>
+                        <br></br>
+                        <p>Confidence wasn’t just a feeling. It directly influenced progression through the flow.</p>
+                        <h4>What I would validate next</h4>
+                        <ul>
+                          <li>Drop-off at key decision points</li>
+                          <li>Time to complete booking</li>
+                          <li>Interaction with the summary triangle</li>
+                          <li>Returning-user completion rates.</li>
+                        </ul>
+                      </>
+                    )}
                   </>
                 ) : (
                   <>
@@ -1937,6 +2295,53 @@ export const CaseStudyDetail: React.FC = () => {
                 )}
               </div>
             </article>
+
+            {isPalmy && (
+              <>
+                <section className="case-study-detail__testimonials case-study-detail__testimonials--amio" aria-label="Participant feedback">
+                  <article className="case-study-detail__testimonial-card case-study-detail__testimonial-card--amio">
+                    <div className="case-study-detail__testimonial-content">
+                      <p className="case-study-detail__testimonial-quote">
+                        Alohi is cute. It made everything feel way less intimidating. And I loved the sustainability section.
+                        It felt like I was doing something good.
+                      </p>
+                      <p className="case-study-detail__testimonial-author">Participant feedback</p>
+                    </div>
+                  </article>
+                </section>
+                <article className="case-study-detail__split-card case-study-detail__split-card--reverse case-study-detail__split-card--amio-solution-load case-study-detail__split-card--palmy-next-right">
+                  <div className="text-side case-study-detail__text-stack case-study-detail__text-stack--amio-flow">
+                    <h4>What I’d Build Next</h4>
+                    <ul>
+                      <li>Budgeting and financial education tools</li>
+                      <li>Behaviour-driven nudges through Alohi</li>
+                      <li>Personalised onboarding</li>
+                      <li>Gamified saving systems</li>
+                    </ul>
+                    <h4>Next Steps</h4>
+                    <ul>
+                      <li>Formal usability testing with diverse users</li>
+                      <li>Validate accessibility in real-world conditions</li>
+                      <li>Measure engagement and drop-off across flows</li>
+                      <li>Expand and document the design system</li>
+                    </ul>
+                  </div>
+                  <figure className="media-side">
+                    <img src={PALE_YELLOW_PLACEHOLDER} alt="Soft yellow section background" />
+                  </figure>
+                </article>
+                <section className="case-study-detail__testimonials case-study-detail__testimonials--amio" aria-label="Participant feedback">
+                  <article className="case-study-detail__testimonial-card case-study-detail__testimonial-card--amio">
+                    <div className="case-study-detail__testimonial-content">
+                      <p className="case-study-detail__testimonial-quote">
+                        It feels more like me. I reckon I’d stay on top of my money way more. I’d actually use something like this.
+                      </p>
+                      <p className="case-study-detail__testimonial-author">Participant feedback</p>
+                    </div>
+                  </article>
+                </section>
+              </>
+            )}
 
             {isGreenCross ? (
               <>
@@ -2036,7 +2441,7 @@ export const CaseStudyDetail: React.FC = () => {
                   </figure>
                 </article>
               </>
-            ) : isAmio ? null : (
+            ) : isAmioLayout ? null : (
               <section className="case-study-detail__testimonials" aria-label="Testimonials">
                 {testimonials.map((item) => (
                   <article key={item.quote} className={`case-study-detail__testimonial-card ${item.className}`}>
@@ -2060,18 +2465,26 @@ export const CaseStudyDetail: React.FC = () => {
                   ? 'case-study-detail__split-card case-study-detail__split-card--reflection case-study-detail__split-card--reflection-gch'
                   : isMegaToy
                     ? 'case-study-detail__split-card case-study-detail__split-card--reflection case-study-detail__split-card--reflection-toy'
-                  : isAmio
-                    ? 'case-study-detail__split-card case-study-detail__split-card--reflection case-study-detail__split-card--amio-reflection'
-                    : 'case-study-detail__split-card case-study-detail__split-card--reflection'
+                  : isAmioLayout
+                    ? `case-study-detail__split-card case-study-detail__split-card--reflection case-study-detail__split-card--amio-reflection${
+                        isPalmy ? ' case-study-detail__split-card--palmy-reflection-left' : ''
+                      }`
+                    : `case-study-detail__split-card case-study-detail__split-card--reflection${
+                        isSummer ? ' case-study-detail__split-card--summer-reflection-left' : ''
+                      }`
               }
             >
               <figure className={isGreenCross ? 'media-side case-study-detail__reflection-media case-study-detail__reflection-media--gch' : isMegaToy ? 'media-side case-study-detail__reflection-media case-study-detail__reflection-media--toy' : 'media-side case-study-detail__reflection-media'}>
                 <img
-                  src={isGreenCross ? SOFT_PEACH_PLACEHOLDER : isMegaToy || isAmio ? PALE_YELLOW_PLACEHOLDER : IMG.reflection}
+                  src={isGreenCross ? SOFT_PEACH_PLACEHOLDER : isMegaToy || isAmioLayout ? PALE_YELLOW_PLACEHOLDER : IMG.reflection}
                   alt="Reflection visual"
                 />
               </figure>
-              <div className={`text-side case-study-detail__text-stack ${isAmio ? 'case-study-detail__text-stack--amio-reflection' : ''}`}>
+              <div
+                className={`text-side case-study-detail__text-stack ${isAmioLayout ? 'case-study-detail__text-stack--amio-reflection' : ''}${
+                  isPalmy ? ' case-study-detail__text-stack--palmy-reflection' : ''
+                }`}
+              >
                 <h3>Reflection</h3>
                 {isGreenCross ? (
                   <>
@@ -2098,26 +2511,43 @@ export const CaseStudyDetail: React.FC = () => {
                       </li>
                     </ul>
                   </>
-                ) : isAmio ? (
+                ) : isAmioLayout ? (
                   <>
-                    <p>If I revisited this project, I would extend it into a cross-device experience.</p>
-                    <p>Mobile leads discovery.</p>
-                    <p>Desktop supports commitment.</p>
-                    <p>Designing both intentionally would create a more seamless journey.</p>
-                    <p>
-                      I would also prototype the Swift and Save flow to explore how returning-user behaviour reduces
-                      effort over time.
-                    </p>
-                    <h4>Key reflection</h4>
-                    <p>This project shifted my thinking.</p>
-                    <p>From designing for completion to designing for decision confidence</p>
-                    <p>
-                      When users clearly understand what they&apos;ve selected, what it costs, and what comes next, they
-                      stop hesitating.
-                    </p>
-                    <p>They commit.</p>
-                    <p>It reinforced the role of research.</p>
-                    <p>Not just validating decisions, but shaping them from the start.</p>
+                    {isPalmy ? (
+                      <>
+                        <p>This project pushed me beyond interface design.</p>
+                        <p className="case-study-detail__palmy-reflection-lead">It forced me to think about:</p>
+                        <ul>
+                          <li>Trust as a design outcome</li>
+                          <li>Culture as structure, not styling</li>
+                          <li>Emotion as part of usability</li>
+                        </ul>
+                        <h4>What I learned</h4>
+                        <ul>
+                          <li>Clarity is a competitive advantage</li>
+                          <li>Systems thinking scales confidence</li>
+                          <li>Small interactions can change behaviour</li>
+                        </ul>
+                        <h4>Palmy reinforced something simple:</h4>
+                        <p>Good UI doesn’t just help people complete tasks.</p>
+                        <p>It helps them feel capable while doing it.</p>
+                      </>
+                    ) : (
+                      <>
+                        <p>If I revisited this project, I would extend it into a cross-device experience.</p>
+                        <p>Mobile leads discovery.</p>
+                        <p>Desktop supports commitment.</p>
+                        <p>Designing both intentionally would create a more seamless journey.</p>
+                        <p>I would also prototype the Swift and Save flow to explore how returning-user behaviour reduces effort over time.</p>
+                        <h4>Key reflection</h4>
+                        <p>This project shifted my thinking.</p>
+                        <p>From designing for completion to designing for decision confidence</p>
+                        <p>When users clearly understand what they&apos;ve selected, what it costs, and what comes next, they stop hesitating.</p>
+                        <p>They commit.</p>
+                        <p>It reinforced the role of research.</p>
+                        <p>Not just validating decisions, but shaping them from the start.</p>
+                      </>
+                    )}
                   </>
                 ) : (
                   <>
@@ -2148,12 +2578,20 @@ export const CaseStudyDetail: React.FC = () => {
                   ? 'case-study-detail__split-card case-study-detail__split-card--sources case-study-detail__split-card--sources-gch'
                   : isMegaToy
                     ? 'case-study-detail__split-card case-study-detail__split-card--sources case-study-detail__split-card--sources-toy'
-                  : isAmio
-                    ? 'case-study-detail__split-card case-study-detail__split-card--sources case-study-detail__split-card--amio-sources'
-                    : 'case-study-detail__split-card case-study-detail__split-card--sources'
+                  : isAmioLayout
+                    ? `case-study-detail__split-card case-study-detail__split-card--sources case-study-detail__split-card--amio-sources${
+                        isPalmy ? ' case-study-detail__split-card--palmy-sources-right' : ''
+                      }`
+                    : `case-study-detail__split-card case-study-detail__split-card--sources${
+                        isSummer ? ' case-study-detail__split-card--summer-sources-right' : ''
+                      }`
               }
             >
-              <div className={`text-side case-study-detail__text-stack ${isAmio ? 'case-study-detail__text-stack--amio-sources' : ''}`}>
+              <div
+                className={`text-side case-study-detail__text-stack ${isAmioLayout ? 'case-study-detail__text-stack--amio-sources' : ''}${
+                  isPalmy ? ' case-study-detail__text-stack--palmy-sources' : ''
+                }`}
+              >
                 <h3>Sources &amp; credits</h3>
                 {isGreenCross ? (
                   <>
@@ -2207,22 +2645,49 @@ export const CaseStudyDetail: React.FC = () => {
                       <p><strong>Planning Director:</strong> Suzanne Breslin</p>
                     </div>
                   </>
-                ) : isAmio ? (
+                ) : isAmioLayout ? (
                   <>
-                    <p>
-                      This project was completed as part of the UX Design Institute Professional Diploma in UX Design.
-                      While guided by the course brief, all research, analysis, and design decisions were carried out
-                      independently.
-                    </p>
-                    <h4>Supporting materials</h4>
-                    <ul>
-                      <li>
-                        Recorded usability tests. Aer Lingus, Eurowings
-                        <br />
-                        (UX Design Institute materials)
-                      </li>
-                      <li>Competitive reference platforms. Air New Zealand, Qantas</li>
-                    </ul>
+                    {isPalmy ? (
+                      <ul>
+                        <li>
+                          <strong>Department of Internal Affairs (DIA). Digital Inclusion User Insights — Pacific Peoples.</strong>{' '}
+                          New Zealand Government, 2020.
+                        </li>
+                        <li>
+                          <strong>Financial Markets Authority (FMA).</strong> Consumer Experience with the Financial Sector.
+                          2022.
+                        </li>
+                        <li>
+                          <strong>Reserve Bank of New Zealand.</strong> Financial Inclusion Indicators. 2025.
+                        </li>
+                        <li>
+                          <strong>NN/g (Nielsen Norman Group)</strong> — usability and cognitive load research
+                        </li>
+                        <li>
+                          <strong>Google Material Design</strong> — motion and accessibility guidance
+                        </li>
+                        <li>
+                          <strong>Microsoft Inclusive Design Toolkit</strong>
+                        </li>
+                      </ul>
+                    ) : (
+                      <>
+                        <p>
+                          This project was completed as part of the UX Design Institute Professional Diploma in UX Design.
+                          While guided by the course brief, all research, analysis, and design decisions were carried out
+                          independently.
+                        </p>
+                        <h4>Supporting materials</h4>
+                        <ul>
+                          <li>
+                            Recorded usability tests. Aer Lingus, Eurowings
+                            <br />
+                            (UX Design Institute materials)
+                          </li>
+                          <li>Competitive reference platforms. Air New Zealand, Qantas</li>
+                        </ul>
+                      </>
+                    )}
                   </>
                 ) : (
                   <>
@@ -2290,11 +2755,11 @@ export const CaseStudyDetail: React.FC = () => {
                       ? 'media-side case-study-detail__sources-media case-study-detail__sources-media--toy'
                     : 'media-side media-side--tall case-study-detail__sources-media'
                 }
-                aria-hidden={isGreenCross || isMegaToy || isAmio ? true : undefined}
+                aria-hidden={isGreenCross || isMegaToy || isAmioLayout ? true : undefined}
               >
                 <img
-                  src={isGreenCross || isMegaToy || isAmio ? PALE_YELLOW_PLACEHOLDER : IMG.sources}
-                  alt={isGreenCross || isMegaToy || isAmio ? '' : 'Sources visual'}
+                  src={isGreenCross || isMegaToy || isAmioLayout ? PALE_YELLOW_PLACEHOLDER : IMG.sources}
+                  alt={isGreenCross || isMegaToy || isAmioLayout ? '' : 'Sources visual'}
                   decoding="async"
                 />
               </figure>

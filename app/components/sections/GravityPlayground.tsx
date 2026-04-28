@@ -8,20 +8,12 @@ import {
   PaintBrush,
   Ruler,
   Compass,
-  PencilSimple,
-  Info
+  PencilSimple
 } from '@phosphor-icons/react';
+import { SwatchCard, type SwatchCardMood } from './SwatchCard';
 import './GravityPlayground.css';
 
-// Mood (back of card) data per swatch – Figma colour mood
-interface SwatchMood {
-  description: string;
-  contrastColor: string;   // paired color for contrast bar
-  idealMatchHex: string;
-  idealMatchName: string;
-  contrastRatio: string;   // e.g. "7:1"
-  contrastRating: string;  // e.g. "AAA" or "AA"
-}
+type SwatchMood = SwatchCardMood;
 
 // Swatch cards with front + back (colour mood) data
 const swatchCards: Array<{
@@ -148,7 +140,7 @@ const swatchCards: Array<{
 // Skill pills
 const skillPills = [
   { id: 'pill-ux', content: 'UX Design', width: 130, height: 48 },
-  { id: 'pill-ui', content: 'UI Design', width: 120, height: 48 },
+  { id: 'pill-ui', content: 'UI Design', width: 132, height: 48 },
   { id: 'pill-figma', content: 'Figma', width: 100, height: 48 },
   { id: 'pill-creative', content: 'Creative', width: 120, height: 48 },
   { id: 'pill-branding', content: 'Branding', width: 120, height: 48 },
@@ -169,10 +161,10 @@ const iconElements = [
 
 // Text cards
 const textCards = [
-  { id: 'text-nz', content: 'NZ Based', width: 110, height: 50 },
-  { id: 'text-pixels', content: 'Pixels & Places', width: 150, height: 50 },
+  { id: 'text-nz', content: 'NZ Based', width: 122, height: 50 },
+  { id: 'text-pixels', content: 'Pixels & Places', width: 176, height: 50 },
   { id: 'text-bold', content: 'Bold', width: 80, height: 50 },
-  { id: 'text-human', content: 'Human-Centred', width: 160, height: 50 },
+  { id: 'text-human', content: 'Human-Centred', width: 176, height: 50 },
 ];
 
 // Component types
@@ -211,73 +203,6 @@ const allElements: PhysicsElement[] = [
 ];
 
 const swatchMoodById = new Map(swatchCards.map(s => [s.id, s.mood]));
-
-// Swatch card: content slides up/down within the card; button stays fixed at bottom
-const SwatchElement: React.FC<{
-  id: string;
-  color: string;
-  hex: string;
-  name: string;
-  mood: SwatchMood;
-  isFlipped: boolean;
-  style: React.CSSProperties;
-}> = ({ id, color, hex, name, mood, isFlipped, style }) => (
-  <div className={`gp-swatch ${isFlipped ? 'gp-swatch--flipped' : ''}`} style={style} data-swatch-id={id}>
-    <div className="gp-swatch__face">
-      <div className="gp-swatch__body">
-        <div className="gp-swatch__viewport">
-          <div className="gp-swatch__track">
-            {/* Panel 1: colour block + name (slides up when opened) */}
-            <div className="gp-swatch__panel gp-swatch__panel--front">
-              <div className="gp-swatch__color" style={{ backgroundColor: color }} />
-              <div className="gp-swatch__content">
-                <div className="gp-swatch__text">
-                  <p className="gp-swatch__name">{name}</p>
-                  <div className="gp-swatch__hex-row">
-                    <span className="gp-swatch__hex">{hex}</span>
-                    <Info size={16} weight="regular" color="#7150E5" className="gp-swatch__info-icon" aria-hidden="true" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            {/* Panel 2: colour mood (slides up into view when opened) */}
-            <div className="gp-swatch__panel gp-swatch__panel--back">
-              <div className="gp-swatch__back-inner">
-                <div className="gp-swatch__text gp-swatch__text--back-header">
-                  <p className="gp-swatch__name">{name}</p>
-                  <div className="gp-swatch__hex-row">
-                    <span className="gp-swatch__hex">{hex}</span>
-                    <Info size={16} weight="regular" color="#7150E5" className="gp-swatch__info-icon" aria-hidden="true" />
-                  </div>
-                </div>
-                <p className="gp-swatch__description">{mood.description}</p>
-                <div className="gp-swatch__contrast-bar" aria-hidden="true">
-                  <span className="gp-swatch__contrast-left" style={{ backgroundColor: color }} />
-                  <span className="gp-swatch__contrast-divider" />
-                  <span className="gp-swatch__contrast-right" style={{ backgroundColor: mood.contrastColor }} />
-                </div>
-                <div className="gp-swatch__ideal">
-                  <p className="gp-swatch__ideal-line">
-                    <span className="gp-swatch__ideal-label">My ideal match: </span>
-                    <span className="gp-swatch__ideal-hex">{mood.idealMatchHex}</span>
-                  </p>
-                  <p className="gp-swatch__ideal-name">{mood.idealMatchName}</p>
-                </div>
-                <p className="gp-swatch__contrast-ratio">
-                  Contrast: {mood.contrastRatio} – ({mood.contrastRating})
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        {/* Button stays in same place; label toggles */}
-        <div className="gp-swatch__footer">
-          <span className="gp-swatch__link">{isFlipped ? 'Hide colour mood' : 'View colour mood'}</span>
-        </div>
-      </div>
-    </div>
-  </div>
-);
 
 const PillElement: React.FC<{ content: string; style: React.CSSProperties }> = ({ content, style }) => (
   <div className="gp-pill" style={style}>
@@ -334,18 +259,41 @@ export const GravityPlayground: React.FC = () => {
   const [scale, setScale] = useState(() => getScaleFactor());
   const scaleRef = useRef(1);
   const [flippedSwatchIds, setFlippedSwatchIds] = useState<Set<string>>(new Set());
+  const [activeSwatchId, setActiveSwatchId] = useState<string | null>(null);
   const dragStartPosRef = useRef<{ x: number; y: number } | null>(null);
   const CLICK_THRESHOLD_PX = 8;
 
   // Keep scaleRef in sync so physics mouse coords are correct
   scaleRef.current = scale;
 
-  const toggleSwatchFlip = (swatchId: string) => {
-    setFlippedSwatchIds(prev => {
-      const next = new Set(prev);
-      if (next.has(swatchId)) next.delete(swatchId);
-      else next.add(swatchId);
-      return next;
+  const setSwatchStatic = (swatchId: string, shouldBeStatic: boolean) => {
+    const body = bodiesRef.current.get(swatchId);
+    if (!body) return;
+    Matter.Body.setStatic(body, shouldBeStatic);
+    if (shouldBeStatic) {
+      Matter.Body.setVelocity(body, { x: 0, y: 0 });
+      Matter.Body.setAngularVelocity(body, 0);
+      Matter.Body.setAngle(body, 0);
+    }
+  };
+
+  const focusAndFlipSwatch = (swatchId: string) => {
+    setActiveSwatchId((prevActive) => {
+      const isClosingCurrent = prevActive === swatchId;
+
+      if (prevActive && prevActive !== swatchId) {
+        setSwatchStatic(prevActive, false);
+      }
+
+      if (isClosingCurrent) {
+        setSwatchStatic(swatchId, false);
+        setFlippedSwatchIds(new Set());
+        return null;
+      }
+
+      setSwatchStatic(swatchId, true);
+      setFlippedSwatchIds(new Set([swatchId]));
+      return swatchId;
     });
   };
 
@@ -393,13 +341,14 @@ export const GravityPlayground: React.FC = () => {
 
     // Create engine with gravity
     const engine = Matter.Engine.create({
-      gravity: { x: 0, y: 0.8, scale: 0.001 }
+      gravity: { x: 0, y: 0.8, scale: 0.001 },
+      enableSleeping: true,
     });
     engineRef.current = engine;
 
     // Create walls - NO top wall so elements fall from above
     const wallThickness = 100;
-    const wallOpts = { isStatic: true, render: { visible: false }, friction: 0.3, restitution: 0.6 };
+    const wallOpts = { isStatic: true, render: { visible: false }, friction: 0.6, restitution: 0.1 };
     const walls = [
       // Bottom wall
       Matter.Bodies.rectangle(width / 2, height + wallThickness / 2, width * 2, wallThickness, wallOpts),
@@ -433,11 +382,12 @@ export const GravityPlayground: React.FC = () => {
       
       const body = Matter.Bodies.rectangle(x, y, el.width, el.height, {
         chamfer: { radius },
-        friction: 0.4,
-        frictionAir: 0.015,
-        restitution: 0.5,
+        friction: 0.7,
+        frictionAir: 0.045,
+        restitution: 0.12,
         angle,
         label: el.id,
+        sleepThreshold: 40,
       });
 
       allBodies.push(body);
@@ -528,7 +478,7 @@ export const GravityPlayground: React.FC = () => {
           const dx = endPoint.x - dragStartPosRef.current.x;
           const dy = endPoint.y - dragStartPosRef.current.y;
           if (Math.hypot(dx, dy) < CLICK_THRESHOLD_PX) {
-            toggleSwatchFlip(String(body.label));
+            focusAndFlipSwatch(String(body.label));
           }
         }
       }
@@ -543,6 +493,51 @@ export const GravityPlayground: React.FC = () => {
     scene.addEventListener('touchmove', handleMove, { passive: false });
     scene.addEventListener('touchend', (e) => handleEnd(e));
 
+    // Keep a small visual safe zone so rotated cards/shadows do not appear clipped.
+    const EDGE_PADDING = 20;
+
+    const clampBodyToScene = (body: Matter.Body) => {
+      if (body.isStatic || body.isSleeping) return;
+
+      const boundsWidth = body.bounds.max.x - body.bounds.min.x;
+      const boundsHeight = body.bounds.max.y - body.bounds.min.y;
+      const halfBoundsWidth = boundsWidth / 2;
+      const halfBoundsHeight = boundsHeight / 2;
+
+      const minX = halfBoundsWidth + EDGE_PADDING;
+      const maxX = width - halfBoundsWidth - EDGE_PADDING;
+      const minY = halfBoundsHeight + EDGE_PADDING;
+      const maxY = height - halfBoundsHeight - EDGE_PADDING;
+
+      let nextX = body.position.x;
+      let nextY = body.position.y;
+      let nextVx = body.velocity.x;
+      let nextVy = body.velocity.y;
+
+      if (nextX < minX) {
+        nextX = minX;
+        nextVx = Math.abs(nextVx) * 0.2;
+      } else if (nextX > maxX) {
+        nextX = maxX;
+        nextVx = -Math.abs(nextVx) * 0.2;
+      }
+
+      // Allow natural entry from above; once a body reaches the scene, keep it fully in view.
+      if (nextY > -halfBoundsHeight && nextY < minY) {
+        nextY = minY;
+        nextVy = Math.abs(nextVy) * 0.2;
+      } else if (nextY > maxY) {
+        nextY = maxY;
+        nextVy = -Math.abs(nextVy) * 0.2;
+      }
+
+      const movedEnough = Math.abs(nextX - body.position.x) > 0.5 || Math.abs(nextY - body.position.y) > 0.5;
+      if (movedEnough) {
+        Matter.Body.setPosition(body, { x: nextX, y: nextY });
+        Matter.Body.setVelocity(body, { x: nextVx, y: nextVy });
+      }
+    };
+
     // Run engine
     const runner = Matter.Runner.create();
     runnerRef.current = runner;
@@ -552,7 +547,13 @@ export const GravityPlayground: React.FC = () => {
     const tick = () => {
       const newPos = new Map<string, { x: number; y: number; angle: number }>();
       bodiesRef.current.forEach((body, id) => {
-        newPos.set(id, { x: body.position.x, y: body.position.y, angle: body.angle });
+        clampBodyToScene(body);
+        // Snap to render pixels to avoid text shimmer from subpixel transforms.
+        newPos.set(id, {
+          x: Math.round(body.position.x),
+          y: Math.round(body.position.y),
+          angle: Math.round(body.angle * 1000) / 1000,
+        });
       });
       setPositions(newPos);
       rafRef.current = requestAnimationFrame(tick);
@@ -579,11 +580,16 @@ export const GravityPlayground: React.FC = () => {
     const x = pos?.x ?? 100;
     const y = pos?.y ?? 100;
     const angle = pos?.angle ?? 0;
+    const isActive = activeSwatchId === el.id;
+    const isDimmed = !!activeSwatchId && activeSwatchId !== el.id && el.type === 'swatch';
+    const visualAngle = isActive && el.type === 'swatch' ? 0 : angle;
+    const liftY = isActive && el.type === 'swatch' ? 24 : 0;
 
     const style: React.CSSProperties = {
-      transform: `translate(${x - el.width / 2}px, ${y - el.height / 2}px) rotate(${angle}rad)`,
+      transform: `translate(${x - el.width / 2}px, ${y - el.height / 2 - liftY}px) rotate(${visualAngle}rad)`,
       width: el.width,
       height: el.height,
+      zIndex: isActive ? 220 : undefined,
     };
 
     switch (el.type) {
@@ -591,7 +597,7 @@ export const GravityPlayground: React.FC = () => {
         const mood = swatchMoodById.get(el.id);
         if (!mood) return null;
         return (
-          <SwatchElement
+          <SwatchCard
             key={el.id}
             id={el.id}
             color={el.color!}
@@ -599,6 +605,9 @@ export const GravityPlayground: React.FC = () => {
             name={el.name!}
             mood={mood}
             isFlipped={flippedSwatchIds.has(el.id)}
+            isActive={isActive}
+            isDimmed={isDimmed}
+            onToggle={() => focusAndFlipSwatch(el.id)}
             style={style}
           />
         );

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import './Testimonials.css';
 
@@ -45,6 +45,28 @@ export const Testimonials: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hoveredNav, setHoveredNav] = useState<'prev' | 'next' | null>(null);
   const [isPaused, setIsPaused] = useState(false);
+  const sectionRef = useRef<HTMLElement | null>(null);
+  const wasInViewRef = useRef(false);
+
+  useEffect(() => {
+    const node = sectionRef.current;
+    if (!node) return;
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const visible = entry.isIntersecting;
+        if (visible && !wasInViewRef.current) {
+          // Always open on the first testimonial when the section is entered.
+          setCurrentIndex(0);
+        }
+        wasInViewRef.current = visible;
+      },
+      { threshold: 0.35 },
+    );
+
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
 
   // Auto-advance testimonials
   useEffect(() => {
@@ -52,17 +74,17 @@ export const Testimonials: React.FC = () => {
     
     const interval = setInterval(() => {
       setCurrentIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
-    }, 8000); // 8 seconds per testimonial
+    }, 5000); // 5 seconds per testimonial
     
     return () => clearInterval(interval);
   }, [currentIndex, isPaused]);
 
   const handlePrev = () => {
-    setCurrentIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
+    setCurrentIndex((prev) => (prev === 0 ? prev : prev - 1));
   };
 
   const handleNext = () => {
-    setCurrentIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
+    setCurrentIndex((prev) => (prev === testimonials.length - 1 ? prev : prev + 1));
   };
 
   const handleDotClick = (index: number) => {
@@ -76,13 +98,12 @@ export const Testimonials: React.FC = () => {
     <section 
       className="testimonials" 
       id="testimonials"
+      ref={sectionRef}
       aria-labelledby="testimonials-title"
       tabIndex={-1}
     >
       <div 
         className="testimonials__card"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
         role="region"
         aria-roledescription="carousel"
         aria-label="Testimonials carousel"
@@ -99,6 +120,7 @@ export const Testimonials: React.FC = () => {
               onMouseEnter={() => setHoveredNav('prev')}
               onMouseLeave={() => setHoveredNav(null)}
               aria-label="Previous testimonial"
+              disabled={currentIndex === 0}
             >
               <CaretLeft size={24} weight={hoveredNav === 'prev' ? 'bold' : 'regular'} color={hoveredNav === 'prev' ? '#ffffff' : '#7150E5'} aria-hidden="true" />
             </button>
@@ -109,6 +131,7 @@ export const Testimonials: React.FC = () => {
               onMouseEnter={() => setHoveredNav('next')}
               onMouseLeave={() => setHoveredNav(null)}
               aria-label="Next testimonial"
+              disabled={currentIndex === testimonials.length - 1}
             >
               <CaretRight size={24} weight={hoveredNav === 'next' ? 'bold' : 'regular'} color={hoveredNav === 'next' ? '#ffffff' : '#7150E5'} aria-hidden="true" />
             </button>
@@ -136,6 +159,7 @@ export const Testimonials: React.FC = () => {
               onMouseEnter={() => setHoveredNav('prev')}
               onMouseLeave={() => setHoveredNav(null)}
               aria-label="Previous testimonial"
+              disabled={currentIndex === 0}
             >
               <CaretLeft size={24} weight={hoveredNav === 'prev' ? 'bold' : 'regular'} color={hoveredNav === 'prev' ? '#ffffff' : '#7150E5'} aria-hidden="true" />
             </button>
@@ -159,6 +183,7 @@ export const Testimonials: React.FC = () => {
               onMouseEnter={() => setHoveredNav('next')}
               onMouseLeave={() => setHoveredNav(null)}
               aria-label="Next testimonial"
+              disabled={currentIndex === testimonials.length - 1}
             >
               <CaretRight size={24} weight={hoveredNav === 'next' ? 'bold' : 'regular'} color={hoveredNav === 'next' ? '#ffffff' : '#7150E5'} aria-hidden="true" />
             </button>

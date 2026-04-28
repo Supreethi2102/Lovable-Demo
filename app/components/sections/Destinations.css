@@ -3,12 +3,24 @@
 
 .destinations {
   background: #f7f9fa;
+  position: relative;
   padding-top: 88px; /* Figma vertical padding */
   padding-bottom: 188px; /* Figma bottom padding from CTA section */
   /* Dynamic padding: grows on screens larger than 1440px */
   padding-left: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
   padding-right: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
   width: 100%;
+}
+
+.destinations::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 94px; /* Half of the bottom spacing: transition block between sections */
+  background: #eceef2;
+  pointer-events: none;
 }
 
 /* Header - same pattern as Case studies and Publications */
@@ -106,7 +118,8 @@
   overflow: hidden;
   position: relative;
   outline: 0 !important;
-  box-shadow: none !important;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   background: #f7f9fa; /* Match section background */
 }
 
@@ -127,6 +140,10 @@
 
 .destination-card:hover .destination-card__image {
   transform: scale(1.05);
+}
+
+.destination-card:hover .destination-card__image-wrapper {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.08);
 }
 
 /* Card Size Variants - Figma exact dimensions */
@@ -336,6 +353,7 @@
   border: 1px solid #B0B3B8;
   overflow: hidden;
   flex-shrink: 0;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
 }
 
 .destination-expanded__image-clip--no-border {
@@ -546,6 +564,8 @@
   border-radius: 12px;
   overflow: hidden;
   aspect-ratio: 368 / 228;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+  transition: box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .destination-small__image {
@@ -558,6 +578,10 @@
 
 .destination-small:hover .destination-small__image {
   transform: scale(1.05);
+}
+
+.destination-small:hover .destination-small__image-wrapper {
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.08);
 }
 
 .destination-small__info {

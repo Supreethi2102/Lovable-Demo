@@ -58,9 +58,10 @@
   width: 100%;
   min-width: 0;
   box-sizing: border-box;
-  padding: 21px 16px;
-  margin-left: -16px;
-  margin-right: -16px;
+  /* Keep filter row exactly within the same content width as cards. */
+  padding: 21px 0;
+  margin-left: 0;
+  margin-right: 0;
   margin-bottom: 0;
   align-items: stretch;
   flex-wrap: nowrap;
@@ -406,6 +407,11 @@
   min-width: 0;
 }
 
+.case-study-card__description-line {
+  display: block;
+  white-space: nowrap;
+}
+
 /* View Design Button – uses .btn .btn--primary from ButtonStyles.css */
 .view-design-btn {
   margin-top: auto;
@@ -534,8 +540,27 @@
 /* Footer */
 .case-studies__footer {
   display: flex;
-  justify-content: center;
+  justify-content: stretch;
   padding: 56px 0 0;
+  width: 100%;
+}
+
+.case-studies__footer .view-all-btn {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Match solid-purple hover treatment used by primary action buttons. */
+.case-studies__footer .view-all-btn:hover:not(:disabled) {
+  background: #5e3ec9;
+  border-color: #5e3ec9;
+  color: #ffffff;
+}
+
+.case-studies__footer .view-all-btn:active:not(:disabled) {
+  background: #5238a8;
+  border-color: #5238a8;
+  color: #ffffff;
 }
 
 /* View All – uses .btn .btn--secondary from ButtonStyles.css */

@@ -50,9 +50,9 @@
 
 .testimonials__title {
   font-family: var(--font-family-display);
-  font-size: var(--type-romie-h8-size);
+  font-size: var(--type-romie-display-l-size);
   font-weight: 500;
-  line-height: var(--type-romie-h7-lh);
+  line-height: var(--type-romie-display-l-lh);
   letter-spacing: 1.6px; /* Figma */
   color: #111213;
   margin: 0 0 8px 0;

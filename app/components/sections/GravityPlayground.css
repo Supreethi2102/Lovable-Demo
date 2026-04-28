@@ -7,7 +7,7 @@
   cursor: grab;
   user-select: none;
   overflow: hidden;
-  background: #f7f9fa;
+  background: #eceef2;
   margin: 30px 0 0 0;
   box-sizing: border-box;
 }
@@ -29,6 +29,11 @@
   pointer-events: auto;
 }
 
+:root {
+  /* Keep card shadows aligned with Publications shadow language */
+  --shadow-publication-rest: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+}
+
 /* Pill Elements – neutral white like other small elements */
 .gp-pill {
   position: absolute;
@@ -43,12 +48,17 @@
   border-radius: 999px;
   font-family: var(--font-family-ui);
   font-size: var(--type-atkinson-text-md-size);
-  font-weight: 600;
+  font-weight: 400;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #3c3f43;
   will-change: transform;
   backface-visibility: hidden;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-publication-rest);
   pointer-events: none; /* Let Matter.js handle mouse events */
+}
+
+.gp-pill span {
+  white-space: nowrap;
 }
 
 /* Color Cards */
@@ -59,7 +69,7 @@
   border-radius: 14px;
   will-change: transform;
   backface-visibility: hidden;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+  box-shadow: var(--shadow-publication-rest);
   pointer-events: none; /* Let Matter.js handle mouse events */
 }
 
@@ -76,7 +86,7 @@
   border-radius: 16px;
   will-change: transform;
   backface-visibility: hidden;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-publication-rest);
   pointer-events: none; /* Let Matter.js handle mouse events */
 }
 
@@ -93,15 +103,20 @@
   border: 1px solid rgba(0, 0, 0, 0.08);
   border-radius: 12px;
   font-family: var(--font-family-ui);
-  font-size: var(--type-atkinson-text-sm-size);
-  font-weight: 600;
+  font-size: var(--type-atkinson-text-md-size);
+  font-weight: 400;
+  line-height: var(--type-atkinson-text-md-lh);
   color: #3c3f43;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
+  text-transform: none;
+  letter-spacing: 0;
   will-change: transform;
   backface-visibility: hidden;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-publication-rest);
   pointer-events: none; /* Let Matter.js handle mouse events */
+}
+
+.gp-text span {
+  white-space: nowrap;
 }
 
 /* Swatch Cards – content slides up/down within card; button fixed at bottom */
@@ -114,7 +129,17 @@
   border-radius: 12px;
   overflow: hidden;
   will-change: transform;
-  pointer-events: none;
+  pointer-events: auto;
+  transition: filter 0.25s ease, opacity 0.25s ease;
+}
+
+.gp-swatch--active {
+  filter: drop-shadow(0 18px 28px rgba(0, 0, 0, 0.22));
+}
+
+.gp-swatch--dimmed {
+  opacity: 0.58;
+  filter: brightness(0.8);
 }
 
 .gp-swatch__face {
@@ -122,9 +147,9 @@
   inset: 0;
   border-radius: 12px;
   background: #ffffff;
-  border: 1px solid #e5e7eb;
+  border: 1px solid #76797f;
   padding: 20px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--shadow-publication-rest);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -191,7 +216,7 @@
   height: 112px;
   border-radius: 8px 8px 0 0;
   flex-shrink: 0;
-  border: 1px solid rgba(0, 0, 0, 0.06);
+  border: none;
   box-sizing: border-box;
 }
 
@@ -246,6 +271,19 @@
   flex-shrink: 0;
 }
 
+.gp-swatch__info-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+}
+
 .gp-swatch__link {
   font-family: var(--font-family-ui);
   font-size: var(--type-atkinson-text-xs-size);
@@ -255,6 +293,13 @@
   color: #7150e5;
   text-align: center;
   margin-top: auto;
+}
+
+.gp-swatch__cta {
+  padding: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
 }
 
 /* Back face – colour mood (left-aligned per Figma) */
@@ -327,10 +372,14 @@
   color: #3c3f43;
   flex-shrink: 0;
   text-align: left;
+  margin-top: 2px;
 }
 
 .gp-swatch__ideal-line {
   margin: 0 0 2px 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
 }
 
 .gp-swatch__ideal-label {
@@ -358,7 +407,7 @@
   letter-spacing: 0px;
   color: #3c3f43;
   margin: 0;
-  margin-top: -10px; /* reduce space above Contrast line */
+  margin-top: 4px;
   flex-shrink: 0;
   text-align: left;
 }

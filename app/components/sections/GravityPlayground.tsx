@@ -260,9 +260,6 @@ export const GravityPlayground: React.FC = () => {
   const scaleRef = useRef(1);
   const [flippedSwatchIds, setFlippedSwatchIds] = useState<Set<string>>(new Set());
   const [activeSwatchId, setActiveSwatchId] = useState<string | null>(null);
-  const dragStartPosRef = useRef<{ x: number; y: number } | null>(null);
-  const CLICK_THRESHOLD_PX = 8;
-
   // Keep scaleRef in sync so physics mouse coords are correct
   scaleRef.current = scale;
 
@@ -423,14 +420,25 @@ export const GravityPlayground: React.FC = () => {
       return null;
     };
 
+    /** Footer / info buttons — must not run preventDefault or drag or clicks break (flip only via these controls). */
+    const isSwatchControlTarget = (target: EventTarget | null): boolean => {
+      if (!(target instanceof Element)) return false;
+      return Boolean(target.closest('.gp-swatch button'));
+    };
+
     // Create a static point body for dragging
     const dragPoint = Matter.Bodies.circle(0, 0, 1, { isStatic: true, render: { visible: false } });
     Matter.Composite.add(engine.world, dragPoint);
 
     const handleStart = (e: MouseEvent | TouchEvent) => {
+      const rawTarget =
+        'touches' in e && e.touches.length > 0 ? e.touches[0].target : (e as MouseEvent).target;
+      if (isSwatchControlTarget(rawTarget)) {
+        return;
+      }
+
       e.preventDefault();
       const point = e instanceof MouseEvent ? getMousePos(e) : getMousePos(e.touches[0]);
-      dragStartPosRef.current = point;
       const body = findBodyAtPoint(point);
 
       if (body) {
@@ -462,36 +470,22 @@ export const GravityPlayground: React.FC = () => {
       Matter.Body.setPosition(dragPoint, point);
     };
 
-    const handleEnd = (e?: MouseEvent | TouchEvent) => {
-      const body = dragBodyRef.current;
+    const handleEnd = () => {
       if (dragConstraintRef.current) {
         Matter.Composite.remove(engine.world, dragConstraintRef.current);
         dragConstraintRef.current = null;
         dragBodyRef.current = null;
         scene.style.cursor = 'grab';
       }
-      // Click-vs-drag: if we didn't move much and this is a swatch, toggle flip
-      if (body && body.label && String(body.label).startsWith('swatch-') && dragStartPosRef.current && e) {
-        const touch = (e as TouchEvent).changedTouches?.[0];
-        const endPoint = e instanceof MouseEvent ? getMousePos(e) : touch ? getMousePos(touch) : null;
-        if (endPoint) {
-          const dx = endPoint.x - dragStartPosRef.current.x;
-          const dy = endPoint.y - dragStartPosRef.current.y;
-          if (Math.hypot(dx, dy) < CLICK_THRESHOLD_PX) {
-            focusAndFlipSwatch(String(body.label));
-          }
-        }
-      }
-      dragStartPosRef.current = null;
     };
 
     scene.addEventListener('mousedown', handleStart);
     scene.addEventListener('mousemove', handleMove);
-    scene.addEventListener('mouseup', (e) => handleEnd(e));
+    scene.addEventListener('mouseup', () => handleEnd());
     scene.addEventListener('mouseleave', () => handleEnd());
     scene.addEventListener('touchstart', handleStart, { passive: false });
     scene.addEventListener('touchmove', handleMove, { passive: false });
-    scene.addEventListener('touchend', (e) => handleEnd(e));
+    scene.addEventListener('touchend', () => handleEnd());
 
     // Keep a small visual safe zone so rotated cards/shadows do not appear clipped.
     const EDGE_PADDING = 20;
@@ -581,7 +575,6 @@ export const GravityPlayground: React.FC = () => {
     const y = pos?.y ?? 100;
     const angle = pos?.angle ?? 0;
     const isActive = activeSwatchId === el.id;
-    const isDimmed = !!activeSwatchId && activeSwatchId !== el.id && el.type === 'swatch';
     const visualAngle = isActive && el.type === 'swatch' ? 0 : angle;
     const liftY = isActive && el.type === 'swatch' ? 24 : 0;
 
@@ -605,8 +598,6 @@ export const GravityPlayground: React.FC = () => {
             name={el.name!}
             mood={mood}
             isFlipped={flippedSwatchIds.has(el.id)}
-            isActive={isActive}
-            isDimmed={isDimmed}
             onToggle={() => focusAndFlipSwatch(el.id)}
             style={style}
           />

@@ -92,7 +92,7 @@ const TESTIMONIALS = [
   },
   {
     quote:
-      'I liked the “Kia ora” on the bag. I didn’t know the exact meaning until I saw it, and it feels really Kiwi. It’s nice seeing te reo used more.',
+      'I liked the “Kia ora” on the bag. I didn’t know the exact meaning until I saw it, and it feels really Kiwi. It’s nice seeing te reo Māori used more.',
     author: 'Customer, Auckland',
     className: 'case-study-detail__testimonial-card--bottom-left',
     bubble: '/case-study/67f34898ea6b9e22ca7d4c59fe0a19577d334a39.svg',
@@ -132,6 +132,7 @@ export const CaseStudyDetailGch: React.FC = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const [activeSection, setActiveSection] = useState<NavSectionId>('overview');
+  const [hoveredNavId, setHoveredNavId] = useState<NavSectionId | null>(null);
   const sectionsRef = useRef<Record<string, HTMLElement | null>>({});
   const suppressSectionSpyRef = useRef(false);
   const suppressSectionSpyTimerRef = useRef(0);
@@ -221,9 +222,18 @@ export const CaseStudyDetailGch: React.FC = () => {
                         type="button"
                         className={`case-study-detail__tab ${isActive ? 'is-active' : ''}`}
                         onClick={() => scrollToNavSection(section.id)}
+                        onMouseEnter={() => setHoveredNavId(section.id)}
+                        onMouseLeave={() => setHoveredNavId(null)}
+                        onFocus={() => setHoveredNavId(section.id)}
+                        onBlur={() => setHoveredNavId(null)}
                         aria-current={isActive ? 'location' : undefined}
                       >
-                        <SectionIcon size={24} weight={isActive ? 'fill' : 'regular'} aria-hidden="true" />
+                        <SectionIcon
+                          size={24}
+                          weight={isActive || hoveredNavId === section.id ? 'fill' : 'regular'}
+                          color="currentColor"
+                          aria-hidden="true"
+                        />
                         <span>{section.label}</span>
                       </button>
                     </div>
@@ -251,7 +261,7 @@ export const CaseStudyDetailGch: React.FC = () => {
               <article className="case-study-detail__hero-card">
                 <figure className="case-study-detail__hero-image-wrap">
                   <img
-                    className="case-study-detail__hero-image case-study-detail__hero-image--figma"
+                    className="case-study-detail__hero-image case-study-detail__hero-image--cinema case-study-detail__hero-image--figma"
                     src={IMG.hero}
                     alt="Brown paper retail bags in warm sunlight"
                   />

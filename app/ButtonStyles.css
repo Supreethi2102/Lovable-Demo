@@ -11,6 +11,9 @@
   --btn-secondary-border: #7150E5;
   --btn-secondary-hover-border: #5E3EC9;
   --btn-secondary-active-bg: #e8e0ff;
+  /** Purple scale 100 — lightest tint (hover surfaces, e.g. case study card tabs) */
+  --btn-purple-100-bg: #f0ecfe;
+  --btn-purple-100-text: #4c3cac;
   --btn-disabled-bg: #e8e9eb;
   --btn-disabled-text: #9ca0a6;
   --btn-disabled-border: #d3d6da;

@@ -64,7 +64,9 @@
 .case-study-detail__tabs {
   position: relative;
   width: 170px;
-  /* Same rail as .case-study-card__sidebar: grey line + padding so active bar sits flush on the line */
+  /* Same tokens as .case-study-card__sidebar (CaseStudies.css) */
+  --case-card-tab-rail: 32px;
+  --case-card-tab-indicator: 4px;
   border-right: 1px solid #b0b3b8;
   display: flex;
   flex-direction: column;
@@ -79,10 +81,12 @@
   scrollbar-width: auto;
 }
 
-/* Rail + 4px bar live in-flow (no button ::after into padding) so scroll/overflow-x don’t clip the bar */
+/* Rail + indicator bar in-flow (matches card vertical tabs geometry) */
 .case-study-detail__tab-row {
+  position: relative;
+  isolation: isolate;
   display: grid;
-  grid-template-columns: minmax(0, 1fr) 32px;
+  grid-template-columns: minmax(0, 1fr) var(--case-card-tab-rail, 32px);
   align-items: center;
   min-height: 48px;
   width: 100%;
@@ -90,39 +94,87 @@
 
 .case-study-detail__tab-row::after {
   content: '';
+  position: relative;
+  z-index: 2;
   grid-column: 2;
   justify-self: end;
-  width: 4px;
+  width: var(--case-card-tab-indicator, 4px);
   height: 48px;
   border-radius: 2px;
   background: transparent;
+  transition: background-color 0.2s ease;
 }
 
 .case-study-detail__tab-row:has(.case-study-detail__tab.is-active)::after {
   background: #111213;
 }
 
+.case-study-detail__tab-row:hover:not(:has(.case-study-detail__tab.is-active))::after {
+  background: var(--btn-purple-100-text, #4c3cac);
+}
+
 .case-study-detail__tab {
   grid-column: 1;
   position: relative;
+  z-index: 1;
   display: flex;
   align-items: center;
   gap: 8px;
   width: 100%;
   min-width: 0;
   height: 48px;
+  padding: 0;
   border: none;
   margin-right: 0;
-  background: transparent;
+  background: none;
   color: #3c3f43;
   cursor: pointer;
   font-family: var(--font-family-ui);
   font-size: var(--type-atkinson-text-md-size);
+  font-weight: 400;
+  line-height: var(--type-atkinson-text-sm-lh);
   text-align: left;
+  transition: color 0.2s ease, background-color 0.2s ease;
 }
 
 .case-study-detail__tab.is-active {
   color: #111213;
+  letter-spacing: 0.32px;
+}
+
+.case-study-detail__tab.is-active:hover,
+.case-study-detail__tab.is-active:focus-visible {
+  color: #111213;
+}
+
+.case-study-detail__tab:not(.is-active):hover {
+  color: var(--btn-purple-100-text, #4c3cac);
+}
+
+/*
+ * Vertical sidebar: hover wash on the row (not the button) so it isn’t clipped by grid
+ * paint order — card tabs avoid this because the bar sits in sidebar padding on one box.
+ * Wash ends at the centre of the 4px indicator (same as CaseStudies .tab:hover::before).
+ * Horizontal detail nav (≤1300px) clears ::before in that breakpoint block.
+ */
+@media (min-width: 768px) {
+  .case-study-detail__tabs .case-study-detail__tab {
+    padding-left: 12px;
+    box-sizing: border-box;
+  }
+
+  .case-study-detail__tab-row:not(:has(.case-study-detail__tab.is-active)):hover::before {
+    content: '';
+    position: absolute;
+    z-index: 0;
+    top: 0;
+    bottom: 0;
+    left: 4px;
+    right: calc(var(--case-card-tab-indicator, 4px) / 2);
+    background: var(--btn-purple-100-bg, #f0ecfe);
+    border-radius: 8px;
+    pointer-events: none;
+  }
 }
 
 .case-study-detail__listen {
@@ -203,6 +255,8 @@
   flex: 0 0 398px;
   position: relative;
   overflow: hidden;
+  /* Placeholder while hero img is position:fixed during cinema scroll */
+  background: #f7f8f9;
 }
 
 .case-study-detail__hero-image {
@@ -226,6 +280,13 @@
   height: 100%;
   left: 0;
   top: 0;
+}
+
+/* Full-bleed → card hero: layout driven by CaseStudyDetail.tsx (scroll). */
+.case-study-detail__hero-image--cinema {
+  transform-origin: center center;
+  object-fit: cover;
+  overflow: hidden;
 }
 
 .case-study-detail__hero-copy {
@@ -2963,6 +3024,11 @@
     display: none;
   }
 
+  /* Horizontal row: no card-style hover pill (matches phone tabs on CaseStudies) */
+  .case-study-detail__tab-row:hover::before {
+    content: none;
+  }
+
   .case-study-detail__tab {
     grid-column: auto;
     border-right: none;
@@ -2975,6 +3041,10 @@
 
   .case-study-detail__tab.is-active {
     border-bottom-color: #111213;
+  }
+
+  .case-study-detail__tab:not(.is-active):hover {
+    border-bottom-color: var(--btn-purple-100-text, #4c3cac);
   }
 
   .case-study-detail__listen {

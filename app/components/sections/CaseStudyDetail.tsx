@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   ArrowLeft,
@@ -320,11 +320,11 @@ export const CaseStudyDetail: React.FC = () => {
           heroImage: PALE_YELLOW_PLACEHOLDER,
           heroAlt: '',
           subtitle: isPalmy ? 'UI | UX Design Insitute' : 'UX | UX Design Institute',
-          title: isPalmy ? 'Palmy bank' : 'Amio Airways',
+          title: isPalmy ? 'Palmy bank' : 'Āmio Airways',
           body:
             isPalmy
               ? 'A calm, modern banking experience built on trust, clarity and joy. Designed across desktop, mobile and tablet, with underserved communities at its core.'
-              : 'Amio Airways is a New Zealand airline concept where I designed a booking experience for clear, confident decisions. The goal was calm, transparent travel.',
+              : 'Āmio Airways is a New Zealand airline concept where I designed a booking experience for clear, confident decisions. The goal was calm, transparent travel.',
           meta: isPalmy ? 'Estimated read time: 3 minutes | Duration: 9 months' : 'Estimated read time: 3 minutes | Duration: 12 months',
         }
     : {
@@ -696,13 +696,247 @@ export const CaseStudyDetail: React.FC = () => {
   const testimonials = TESTIMONIALS;
   const moreProjects = isGreenCross ? MORE_PROJECTS_GCH : isMegaToy ? MORE_PROJECTS_TOY : MORE_PROJECTS;
   const [activeSection, setActiveSection] = useState<NavSectionId>('overview');
+  const [hoveredNavId, setHoveredNavId] = useState<NavSectionId | null>(null);
   const sectionsRef = useRef<Record<string, HTMLElement | null>>({});
   /** While true, section spy ignores IO (avoids dozens of setStates during smooth scroll = jank). */
   const suppressSectionSpyRef = useRef(false);
   const suppressSectionSpyTimerRef = useRef(0);
+  const heroImageWrapRef = useRef<HTMLElement>(null);
+  const heroImageRef = useRef<HTMLImageElement>(null);
+  const heroScrollRafRef = useRef(0);
+  /** 0 = full-bleed cinema; 1 = hero seated in card — driven by wheel/touch only (page does not scroll). */
+  const cinemaProgressRef = useRef(0);
+  const cinemaBackdropRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
+  /**
+   * Hero “cinema”: full-width image first; wheel/trackpad/touch scrubs it into the card.
+   * Until seated, document scroll is locked (no page movement). After seated, normal scrolling.
+   */
+  useLayoutEffect(() => {
     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+
+    const wrap = heroImageWrapRef.current;
+    const img = heroImageRef.current;
+    const reduce =
+      typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+
+    if (!wrap || !img || reduce) return;
+
+    cinemaProgressRef.current = 0;
+
+    const syncBackdrop = (visible: boolean) => {
+      const bd = cinemaBackdropRef.current;
+      if (!bd) return;
+      bd.style.opacity = visible ? '1' : '0';
+      bd.style.visibility = visible ? 'visible' : 'hidden';
+    };
+
+    /** ~1.0 progress per typical trackpad “page” of wheel delta */
+    const WHEEL_FACTOR = 1 / 950;
+    /** Finish morph before float noise leaves us stuck & re-reading rects forever */
+    const PROGRESS_SNAP = 0.996;
+
+    let cinemaComplete = false;
+    let settleRaf = 0;
+
+    const lockPageScroll = () => {
+      document.documentElement.style.overflow = 'hidden';
+      document.body.style.overflow = 'hidden';
+    };
+
+    const unlockPageScroll = () => {
+      document.documentElement.style.removeProperty('overflow');
+      document.body.style.removeProperty('overflow');
+    };
+
+    const clearCinemaStyles = () => {
+      [
+        'position',
+        'left',
+        'top',
+        'right',
+        'bottom',
+        'width',
+        'height',
+        'z-index',
+        'object-fit',
+        'border-top-left-radius',
+        'border-top-right-radius',
+        'border-bottom-left-radius',
+        'border-bottom-right-radius',
+        'max-width',
+        'margin',
+        'transform',
+      ].forEach((p) => img.style.removeProperty(p));
+    };
+
+    const applyFixedToRect = (
+      left: number,
+      top: number,
+      width: number,
+      height: number,
+      brTop: number,
+      brBottom = 0,
+    ) => {
+      img.style.position = 'fixed';
+      img.style.left = `${Math.round(left)}px`;
+      img.style.top = `${Math.round(top)}px`;
+      img.style.right = 'auto';
+      img.style.bottom = 'auto';
+      img.style.width = `${Math.round(width)}px`;
+      img.style.height = `${Math.round(height)}px`;
+      img.style.zIndex = '40';
+      img.style.objectFit = 'cover';
+      img.style.borderTopLeftRadius = `${Math.round(brTop)}px`;
+      img.style.borderTopRightRadius = `${Math.round(brTop)}px`;
+      img.style.borderBottomLeftRadius = `${Math.round(brBottom)}px`;
+      img.style.borderBottomRightRadius = `${Math.round(brBottom)}px`;
+      img.style.maxWidth = 'none';
+      img.style.margin = '0';
+      img.style.transform = 'none';
+    };
+
+    const scrollOpts: AddEventListenerOptions = { passive: true };
+    const onResize = () => scheduleApply();
+
+    const detachMorphHelpers = () => {
+      window.removeEventListener('resize', onResize);
+      img.removeEventListener('load', scheduleApply);
+    };
+
+    const finishCinema = () => {
+      if (cinemaComplete) return;
+      cinemaComplete = true;
+      cinemaProgressRef.current = 1;
+
+      const tr = wrap.getBoundingClientRect();
+      applyFixedToRect(tr.left, tr.top, tr.width, tr.height, 24, 0);
+      syncBackdrop(false);
+
+      detachMorphHelpers();
+
+      if (settleRaf) cancelAnimationFrame(settleRaf);
+      settleRaf = requestAnimationFrame(() => {
+        settleRaf = 0;
+        clearCinemaStyles();
+        unlockPageScroll();
+      });
+    };
+
+    const apply = () => {
+      heroScrollRafRef.current = 0;
+
+      if (cinemaComplete) return;
+
+      let tLin = Math.min(1, Math.max(0, cinemaProgressRef.current));
+      if (tLin >= PROGRESS_SNAP) {
+        tLin = 1;
+        cinemaProgressRef.current = 1;
+      }
+
+      if (tLin >= 1) {
+        finishCinema();
+        return;
+      }
+
+      lockPageScroll();
+      window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+      syncBackdrop(true);
+
+      const t = tLin;
+      const target = wrap.getBoundingClientRect();
+      const vw = window.innerWidth;
+      const headerRaw = getComputedStyle(document.documentElement).getPropertyValue('--header-height').trim();
+      const headerH = parseFloat(headerRaw) || 96;
+      const aspect = 398 / 592;
+      /** Inset from full width so gutters show frosted page behind */
+      const EXPANDED_WIDTH_RATIO = 0.88;
+      const OPEN_CORNER_RADIUS = 20;
+      const expW = vw * EXPANDED_WIDTH_RATIO;
+      const expH = Math.min(expW * aspect, window.innerHeight - headerH - 24);
+      const expL = (vw - expW) / 2;
+      const expT = headerH + 12;
+
+      const left = expL + (target.left - expL) * t;
+      const top = expT + (target.top - expT) * t;
+      const width = expW + (target.width - expW) * t;
+      const height = expH + (target.height - expH) * t;
+      const brTop = OPEN_CORNER_RADIUS + (24 - OPEN_CORNER_RADIUS) * t;
+      const brBottom = OPEN_CORNER_RADIUS * (1 - t);
+
+      applyFixedToRect(left, top, width, height, brTop, brBottom);
+    };
+
+    const scheduleApply = () => {
+      if (heroScrollRafRef.current || cinemaComplete) return;
+      heroScrollRafRef.current = requestAnimationFrame(apply);
+    };
+
+    const onWheel = (e: WheelEvent) => {
+      if (cinemaComplete || cinemaProgressRef.current >= 1) return;
+      e.preventDefault();
+      const scale = e.deltaMode === 1 ? 16 : e.deltaMode === 2 ? window.innerHeight : 1;
+      cinemaProgressRef.current = Math.min(
+        1,
+        Math.max(0, cinemaProgressRef.current + e.deltaY * WHEEL_FACTOR * scale),
+      );
+      scheduleApply();
+    };
+
+    let touchLastY: number | null = null;
+    const TOUCH_FACTOR = 1 / 720;
+
+    const onTouchStart = (e: TouchEvent) => {
+      if (cinemaComplete || cinemaProgressRef.current >= 1) {
+        touchLastY = null;
+        return;
+      }
+      touchLastY = e.touches[0]?.clientY ?? null;
+    };
+
+    const onTouchMove = (e: TouchEvent) => {
+      if (cinemaComplete || cinemaProgressRef.current >= 1) {
+        touchLastY = null;
+        return;
+      }
+      if (touchLastY == null || !e.touches[0]) return;
+      e.preventDefault();
+      const y = e.touches[0].clientY;
+      const dy = touchLastY - y;
+      touchLastY = y;
+      cinemaProgressRef.current = Math.min(1, Math.max(0, cinemaProgressRef.current + dy * TOUCH_FACTOR));
+      scheduleApply();
+    };
+
+    const onTouchEnd = () => {
+      touchLastY = null;
+    };
+
+    lockPageScroll();
+    syncBackdrop(true);
+    window.addEventListener('resize', onResize, scrollOpts);
+    img.addEventListener('load', scheduleApply);
+
+    apply();
+
+    const passiveFalse = { passive: false } as AddEventListenerOptions;
+    window.addEventListener('wheel', onWheel, passiveFalse);
+    window.addEventListener('touchstart', onTouchStart, passiveFalse);
+    window.addEventListener('touchmove', onTouchMove, passiveFalse);
+    window.addEventListener('touchend', onTouchEnd, { passive: true });
+
+    return () => {
+      window.removeEventListener('wheel', onWheel);
+      window.removeEventListener('touchstart', onTouchStart);
+      window.removeEventListener('touchmove', onTouchMove);
+      window.removeEventListener('touchend', onTouchEnd);
+      detachMorphHelpers();
+      if (heroScrollRafRef.current) cancelAnimationFrame(heroScrollRafRef.current);
+      if (settleRaf) cancelAnimationFrame(settleRaf);
+      unlockPageScroll();
+      clearCinemaStyles();
+      syncBackdrop(false);
+    };
   }, [id]);
 
   useEffect(() => {
@@ -760,6 +994,7 @@ export const CaseStudyDetail: React.FC = () => {
 
   return (
     <section className={`case-study-detail ${isPalmy ? 'case-study-detail--palmy' : ''}`} aria-labelledby="case-study-detail-title">
+      <div ref={cinemaBackdropRef} className="case-study-detail__cinema-backdrop" aria-hidden />
       <div className="case-study-detail__inner">
         <div className="case-study-detail__layout">
           <aside className="case-study-detail__sidebar" aria-label="Case study sections">
@@ -786,9 +1021,18 @@ export const CaseStudyDetail: React.FC = () => {
                         type="button"
                         className={`case-study-detail__tab ${isActive ? 'is-active' : ''}`}
                         onClick={() => scrollToNavSection(section.id)}
+                        onMouseEnter={() => setHoveredNavId(section.id)}
+                        onMouseLeave={() => setHoveredNavId(null)}
+                        onFocus={() => setHoveredNavId(section.id)}
+                        onBlur={() => setHoveredNavId(null)}
                         aria-current={isActive ? 'location' : undefined}
                       >
-                        <SectionIcon size={24} weight={isActive ? 'fill' : 'regular'} aria-hidden="true" />
+                        <SectionIcon
+                          size={24}
+                          weight={isActive || hoveredNavId === section.id ? 'fill' : 'regular'}
+                          color="currentColor"
+                          aria-hidden="true"
+                        />
                         <span>{section.label}</span>
                       </button>
                     </div>
@@ -814,9 +1058,10 @@ export const CaseStudyDetail: React.FC = () => {
               className="case-study-detail__top"
             >
               <article className="case-study-detail__hero-card">
-                <figure className="case-study-detail__hero-image-wrap">
+                <figure ref={heroImageWrapRef} className="case-study-detail__hero-image-wrap">
                   <img
-                    className={`case-study-detail__hero-image ${
+                    ref={heroImageRef}
+                    className={`case-study-detail__hero-image case-study-detail__hero-image--cinema ${
                       isGreenCross
                         ? 'case-study-detail__hero-image--gch'
                         : !isMegaToy && !isAmioLayout
@@ -968,7 +1213,7 @@ export const CaseStudyDetail: React.FC = () => {
             )}
 
             {isAmioLayout && (
-              <article className="case-study-detail__text-panel case-study-detail__text-panel--amio-intro" aria-label="Amio meaning">
+              <article className="case-study-detail__text-panel case-study-detail__text-panel--amio-intro" aria-label="Āmio meaning">
                 <p className="case-study-detail__amio-intro-quote">
                   {isPalmy ? (
                     <>
@@ -2386,7 +2631,7 @@ export const CaseStudyDetail: React.FC = () => {
                     <div className="case-study-detail__gch-testimonial-content case-study-detail__gch-testimonial-content--right">
                       <p className="case-study-detail__gch-testimonial-quote case-study-detail__gch-testimonial-quote--right">
                         I liked the &lsquo;Kia ora&rsquo; on the bag. I didn&apos;t know the exact meaning until I saw it, and it
-                        feels really Kiwi. It&apos;s nice seeing te reo used more.
+                        feels really Kiwi. It&apos;s nice seeing te reo Māori used more.
                       </p>
                       <p className="case-study-detail__gch-testimonial-author">Customer, Auckland</p>
                     </div>

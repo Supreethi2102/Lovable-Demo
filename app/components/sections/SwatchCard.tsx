@@ -18,8 +18,6 @@ interface SwatchCardProps {
   mood: SwatchCardMood;
   isFlipped: boolean;
   onToggle: () => void;
-  isActive?: boolean;
-  isDimmed?: boolean;
   interactive?: boolean;
   style?: React.CSSProperties;
   className?: string;
@@ -33,13 +31,11 @@ export const SwatchCard: React.FC<SwatchCardProps> = ({
   mood,
   isFlipped,
   onToggle,
-  isActive = false,
-  isDimmed = false,
   interactive = true,
   style,
   className = '',
 }) => {
-  const cardClassName = `gp-swatch${isFlipped ? ' gp-swatch--flipped' : ''}${isActive ? ' gp-swatch--active' : ''}${isDimmed ? ' gp-swatch--dimmed' : ''}${className ? ` ${className}` : ''}`;
+  const cardClassName = `gp-swatch${isFlipped ? ' gp-swatch--flipped' : ''}${className ? ` ${className}` : ''}`;
 
   return (
     <div className={cardClassName} style={style} data-swatch-id={id}>

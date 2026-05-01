@@ -166,6 +166,9 @@ interface ColorCardProps {
   interactive?: boolean;
 }
 
+/** Single layer above the idle stack (z-index 1–3). Equal values use DOM order; Gaudí is last and paints on top. */
+const FLIPPED_CARD_Z_INDEX = 40;
+
 const ColorCard: React.FC<ColorCardProps> = ({
   card,
   isVisible,
@@ -192,7 +195,7 @@ const ColorCard: React.FC<ColorCardProps> = ({
         '--card-left': `${card.position.left}px`,
         '--animation-delay': `${animationDelay}ms`,
         '--exit-delay': `${exitDelay}ms`,
-        zIndex: card.zIndex,
+        zIndex: isFlipped ? FLIPPED_CARD_Z_INDEX : card.zIndex,
       } as React.CSSProperties}
       aria-label={`Color swatch: ${card.name}`}
       role="listitem"

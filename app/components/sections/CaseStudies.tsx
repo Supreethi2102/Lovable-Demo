@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { 
   SelectionAll, 
   PaintBrush, 
@@ -13,6 +13,9 @@ import {
 } from '@phosphor-icons/react';
 import './CaseStudies.css';
 import { CaseStudyCard, type CaseStudyCardStudy } from '../CaseStudyCard';
+
+/** Cards shown before “View all cases”; remainder loads without sticky-stack scrolling. */
+const INITIAL_CASE_STUDIES_VISIBLE = 3;
 
 // Category data - Phosphor icons
 type CategoryType = {
@@ -72,7 +75,7 @@ const caseStudies: CaseStudyCardStudy[] = [
       influence: {
         title: 'What happens when craft meets type and language?',
         description:
-          'Burano lace informed precision, negative space, and rhythm. Paper-cut artists and bold, graphic typography inspired by Barbara Kruger added structure and impact, while te reo Maori phrases grounded the work in culture. Together, these influences bridged craft and strategy.',
+          'Burano lace informed precision, negative space, and rhythm. Paper-cut artists and bold, graphic typography inspired by Barbara Kruger added structure and impact, while te reo Māori phrases grounded the work in culture. Together, these influences bridged craft and strategy.',
         image: '/misc/retail-bags-tab-influence.png',
       },
       discoveries: {
@@ -186,7 +189,7 @@ const caseStudies: CaseStudyCardStudy[] = [
   {
     id: 5,
     title: 'Why is booking a flight so hard to navigate?',
-    subtitle: 'Amio Airways | UX',
+    subtitle: 'Āmio Airways | UX',
     description:
       'Booking a flight should be quick, but time-poor users are slowed by cluttered flows, hidden trade-offs, and comparison overload. This project rethinks the journey to reduce friction, support flexible decisions, and enable fast, confident choices.',
     duration: '4 weeks',
@@ -220,7 +223,7 @@ const caseStudies: CaseStudyCardStudy[] = [
         image: '/misc/amio-airways-tab-place.png',
       },
       influence: {
-        title: 'Which design minds shaped Amio\u2019s clear, calm flow?',
+        title: 'Which design minds shaped Āmio\u2019s clear, calm flow?',
         description:
           'Influenced by designers who prioritise human experience. Ilse Crawford\u2019s focus on wellbeing, IDEO\u2019s human-centred prototyping, and Nielsen Norman\u2019s clarity-first principles guided how I designed a flow that feels intuitive, calm, and easy to trust.',
         image: '/misc/amio-airways-tab-influence.png',
@@ -238,7 +241,7 @@ const caseStudies: CaseStudyCardStudy[] = [
     title: 'What if your banking app knew how to smile?',
     subtitle: 'Palmy Bank | UI',
     description:
-      'Palmy is a fictional challenger bank rethinking trust and clarity in everyday banking. Designed for those underserved by traditional banking, including Pacific peoples, Maori and women. Built to feel warm, human, and genuinely inclusive. Maybe even smile-worthy.',
+      'Palmy is a fictional challenger bank rethinking trust and clarity in everyday banking. Designed for those underserved by traditional banking, including Pacific peoples, Māori and women. Built to feel warm, human, and genuinely inclusive. Maybe even smile-worthy.',
     duration: '4 weeks',
     category: 'ui',
     image: '/misc/palmy-bank-tab-challenge.png',
@@ -246,7 +249,7 @@ const caseStudies: CaseStudyCardStudy[] = [
       challenge: {
         title: 'What if your banking app knew how to smile?',
         description:
-          'Palmy is a fictional challenger bank rethinking trust and clarity in everyday banking. Designed for those underserved by traditional banking, including Pacific peoples, Maori and women. Built to feel warm, human, and genuinely inclusive. Maybe even smile-worthy.',
+          'Palmy is a fictional challenger bank rethinking trust and clarity in everyday banking. Designed for those underserved by traditional banking, including Pacific peoples, Māori and women. Built to feel warm, human, and genuinely inclusive. Maybe even smile-worthy.',
         image: '/misc/palmy-bank-tab-challenge.png',
       },
       focus: {
@@ -289,10 +292,33 @@ export const CaseStudies: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState('all');
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
   const [hoveredViewAll, setHoveredViewAll] = useState(false);
+  const [showAllCaseStudies, setShowAllCaseStudies] = useState(false);
+  const caseStudiesSectionRef = useRef<HTMLElement | null>(null);
+  /** True only when the user chose “Show fewer” — not when the category filter resets the list. */
+  const anchorScrollAfterCollapseRef = useRef(false);
 
   const filteredStudies = activeCategory === 'all' 
     ? caseStudies 
     : caseStudies.filter(s => s.category === activeCategory);
+
+  useEffect(() => {
+    setShowAllCaseStudies(false);
+  }, [activeCategory]);
+
+  /** Collapsing removes a lot of height; keep scroll on Case studies (avoid landing in Publications). */
+  useLayoutEffect(() => {
+    if (!showAllCaseStudies && anchorScrollAfterCollapseRef.current) {
+      anchorScrollAfterCollapseRef.current = false;
+      caseStudiesSectionRef.current?.scrollIntoView({ block: 'start', behavior: 'auto' });
+    }
+  }, [showAllCaseStudies]);
+
+  const visibleStudies =
+    showAllCaseStudies || filteredStudies.length <= INITIAL_CASE_STUDIES_VISIBLE
+      ? filteredStudies
+      : filteredStudies.slice(0, INITIAL_CASE_STUDIES_VISIBLE);
+
+  const canExpandList = filteredStudies.length > INITIAL_CASE_STUDIES_VISIBLE;
 
   const getIconWeight = (catId: string): IconWeight => {
     if (activeCategory === catId || hoveredCategory === catId) return 'fill';
@@ -301,6 +327,7 @@ export const CaseStudies: React.FC = () => {
 
   return (
     <section 
+      ref={caseStudiesSectionRef}
       className="case-studies" 
       id="work"
       aria-labelledby="case-studies-title"
@@ -353,12 +380,14 @@ export const CaseStudies: React.FC = () => {
         aria-label={`Showing ${activeCategory === 'all' ? 'all' : activeCategory} case studies`}
         aria-live="polite"
       >
-        <div className="case-studies__stack">
-          {filteredStudies.map((study, index) => (
+        <div
+          className={`case-studies__stack${showAllCaseStudies ? ' case-studies__stack--expanded' : ''}`}
+        >
+          {visibleStudies.map((study, index) => (
             <div 
               key={study.id} 
               className="case-studies__stack-item"
-              style={{ zIndex: index + 1 }}
+              style={showAllCaseStudies ? undefined : { zIndex: index + 1 }}
             >
               <CaseStudyCard study={study} />
             </div>
@@ -366,21 +395,32 @@ export const CaseStudies: React.FC = () => {
         </div>
       </div>
 
-      {/* View All Button */}
-      <footer className="case-studies__footer">
-        <button 
-          type="button"
-          className={`btn btn--secondary btn--icon-left view-all-btn ${hoveredViewAll ? 'view-all-btn--hovered' : ''}`}
-          onMouseEnter={() => setHoveredViewAll(true)}
-          onMouseLeave={() => setHoveredViewAll(false)}
-          aria-label="View all case studies"
-        >
-          <span className="btn__icon" aria-hidden="true">
-            <Folders size={24} weight={hoveredViewAll ? 'fill' : 'regular'} color="currentColor" />
-          </span>
-          <span>View all cases</span>
-        </button>
-      </footer>
+      {/* View all / show fewer — hidden when every study already fits above the fold */}
+      {canExpandList ? (
+        <footer className="case-studies__footer">
+          <button 
+            type="button"
+            className={`btn btn--secondary btn--icon-left view-all-btn ${hoveredViewAll ? 'view-all-btn--hovered' : ''}`}
+            onMouseEnter={() => setHoveredViewAll(true)}
+            onMouseLeave={() => setHoveredViewAll(false)}
+            aria-expanded={showAllCaseStudies}
+            aria-label={
+              showAllCaseStudies ? 'Show fewer case studies' : 'View all case studies'
+            }
+            onClick={() => {
+              setShowAllCaseStudies((v) => {
+                if (v) anchorScrollAfterCollapseRef.current = true;
+                return !v;
+              });
+            }}
+          >
+            <span className="btn__icon" aria-hidden="true">
+              <Folders size={24} weight={hoveredViewAll ? 'fill' : 'regular'} color="currentColor" />
+            </span>
+            <span>{showAllCaseStudies ? 'Show fewer cases' : 'View all cases'}</span>
+          </button>
+        </footer>
+      ) : null}
     </section>
   );
 };

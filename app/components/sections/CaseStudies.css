@@ -155,6 +155,17 @@
   margin-bottom: 0;
 }
 
+/* After “View all cases”: simple column — no sticky stacked scroll */
+.case-studies__stack--expanded {
+  gap: clamp(28px, 4vw, 48px);
+}
+
+.case-studies__stack--expanded .case-studies__stack-item {
+  position: static;
+  top: auto;
+  margin-bottom: 0;
+}
+
 /* Flip wrapper – subtle 3D (higher perspective = less depth) */
 .case-study-card-flip {
   perspective: 3000px;
@@ -232,6 +243,9 @@
   width: 160px;
   border-right: 1px solid #b0b3b8;
   padding-right: 32px;
+  /* Vertical tab rail: padding matches indicator alignment math below */
+  --case-card-tab-rail: 32px;
+  --case-card-tab-indicator: 4px;
 }
 
 /* Flip Button */
@@ -312,9 +326,10 @@
   font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
   line-height: var(--type-atkinson-text-sm-lh);
-  transition: color 0.2s ease;
+  transition: color 0.2s ease, background-color 0.2s ease;
   width: 100%;
   position: relative;
+  isolation: isolate;
 }
 
 .tab img {
@@ -329,29 +344,60 @@
   letter-spacing: 0.32px;
 }
 
-.tab:hover {
-  color: #7150E5;
+.tab:not(.tab--active):hover {
+  color: var(--btn-purple-100-text, #4c3cac);
 }
 .tab--active img {
   /* Dark icon for active - #111213 */
   filter: brightness(0) saturate(100%) invert(5%) sepia(5%) saturate(500%) hue-rotate(180deg) brightness(95%) contrast(95%);
 }
 
-.tab--active::after {
+.tab--active::after,
+.tab:not(.tab--active):hover::after {
   content: '';
   position: absolute;
-  /* Align indicator exactly on the sidebar divider line */
-  right: -32px;
+  z-index: 1;
+  right: calc(-1 * var(--case-card-tab-rail, 32px));
   top: 50%;
   transform: translateY(-50%);
-  width: 4px;
+  width: var(--case-card-tab-indicator, 4px);
   height: 48px;
-  background: #111213;
   border-radius: 2px;
 }
 
-.tab:hover::after {
-  background: #7150E5;
+.tab--active::after {
+  background: #111213;
+}
+
+.tab:not(.tab--active):hover::after {
+  background: var(--btn-purple-100-text, #4c3cac);
+}
+
+/*
+ * Vertical sidebar tabs only (not horizontal mobile row): hover tint + left inset.
+ * Tint ends at the horizontal centre of the accent bar (see --case-card-tab-* on .sidebar).
+ */
+@media (min-width: 768px) {
+  .case-study-card__sidebar .case-study-card__tabs .tab,
+  .case-study-card__sidebar .case-study-card__back-tabs .case-study-card__back-item.tab {
+    padding-left: 12px;
+    box-sizing: border-box;
+  }
+
+  .case-study-card__sidebar .tab:not(.tab--active):hover::before,
+  .case-study-card__sidebar .case-study-card__back-item.tab:not(.tab--active):hover::before {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    bottom: 0;
+    left: 4px;
+    right: calc(
+      -1 * var(--case-card-tab-rail, 32px) + var(--case-card-tab-indicator, 4px) / 2
+    );
+    background: var(--btn-purple-100-bg, #f0ecfe);
+    border-radius: 8px;
+  }
 }
 
 /* Main Content */
@@ -540,13 +586,13 @@
 /* Footer */
 .case-studies__footer {
   display: flex;
-  justify-content: stretch;
+  justify-content: center;
   padding: 56px 0 0;
   width: 100%;
 }
 
 .case-studies__footer .view-all-btn {
-  width: 100%;
+  width: auto;
   justify-content: center;
 }
 
@@ -755,24 +801,15 @@
 
   /* Vertical accent flush to column rule (desktop geometry) */
   .tab--active::after,
-  .case-study-card__back-item.tab--active::after {
-    right: -32px;
+  .case-study-card__back-item.tab--active::after,
+  .tab:not(.tab--active):hover::after,
+  .case-study-card__back-item.tab:not(.tab--active):hover::after {
+    right: calc(-1 * var(--case-card-tab-rail));
     top: 50%;
     bottom: auto;
     left: auto;
     transform: translateY(-50%);
-    width: 4px;
-    height: 48px;
-  }
-
-  .tab:hover::after,
-  .case-study-card__back-item.tab:hover::after {
-    right: -32px;
-    top: 50%;
-    bottom: auto;
-    left: auto;
-    transform: translateY(-50%);
-    width: 4px;
+    width: var(--case-card-tab-indicator);
     height: 48px;
   }
 
@@ -835,13 +872,14 @@
     min-width: 148px;
     max-width: 148px;
     padding-right: 24px;
+    --case-card-tab-rail: 24px;
   }
 
   .tab--active::after,
   .case-study-card__back-item.tab--active::after,
-  .tab:hover::after,
-  .case-study-card__back-item.tab:hover::after {
-    right: -24px;
+  .tab:not(.tab--active):hover::after,
+  .case-study-card__back-item.tab:not(.tab--active):hover::after {
+    right: calc(-1 * var(--case-card-tab-rail));
   }
 }
 
@@ -1062,7 +1100,7 @@
     height: 3px;
     transform: none;
     border-radius: 1px;
-    background: #7150e5;
+    background: var(--btn-purple-100-text, #4c3cac);
     z-index: 1;
   }
 

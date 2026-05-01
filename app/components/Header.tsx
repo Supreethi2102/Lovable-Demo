@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect, useCallback, useRef } from 'react';
-import { Palette, User, ChatCircleDots, Sun, SunHorizon, CloudFog, MoonStars, CloudMoon, Moon, Phone, PaintBrush, Megaphone, Package, BookOpen, Ruler, NotePencil, CaretDown } from '@phosphor-icons/react';
+import { Palette, User, ChatsCircle, Sun, SunHorizon, CloudFog, MoonStars, CloudMoon, Moon, Phone, PaintBrush, Megaphone, Package, BookOpen, Ruler, NotePencil, CaretDown } from '@phosphor-icons/react';
 import './Header.css';
 
 export const Header: React.FC = () => {
@@ -8,7 +8,6 @@ export const Header: React.FC = () => {
   const [isMobileWorkOpen, setIsMobileWorkOpen] = useState(false);
   const [isMobileThemeOpen, setIsMobileThemeOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
   const [activeTheme, setActiveTheme] = useState('light');
@@ -199,8 +198,6 @@ export const Header: React.FC = () => {
             href="#work" 
             className="header__nav-link"
             onClick={toggleMegaMenu}
-            onMouseEnter={() => setHoveredLink('work')}
-            onMouseLeave={() => setHoveredLink(null)}
             aria-expanded={isMegaMenuOpen}
             aria-haspopup="menu"
           >
@@ -289,8 +286,6 @@ export const Header: React.FC = () => {
           href="#about" 
           className="header__nav-link"
           onClick={(e) => scrollToSection(e, '#about')}
-          onMouseEnter={() => setHoveredLink('about')}
-          onMouseLeave={() => setHoveredLink(null)}
         >
           <User size={24} weight={'regular'} className="header__nav-icon" aria-hidden="true" />
           <span>About</span>
@@ -299,10 +294,8 @@ export const Header: React.FC = () => {
           href="#testimonials" 
           className="header__nav-link"
           onClick={(e) => scrollToSection(e, '#testimonials')}
-          onMouseEnter={() => setHoveredLink('testimonials')}
-          onMouseLeave={() => setHoveredLink(null)}
         >
-          <ChatCircleDots size={24} weight={'regular'} className="header__nav-icon" aria-hidden="true" />
+          <ChatsCircle size={24} weight="regular" className="header__nav-icon" aria-hidden="true" />
           <span>Testimonials</span>
         </a>
         <div 
@@ -318,8 +311,6 @@ export const Header: React.FC = () => {
             type="button"
             className="header__nav-link header__theme-toggle"
             onClick={isTabletViewport ? toggleThemeMenu : undefined}
-            onMouseEnter={() => setHoveredLink('theme')}
-            onMouseLeave={() => setHoveredLink(null)}
             aria-label="Toggle theme"
             aria-expanded={isThemeMenuOpen}
             aria-haspopup="menu"
@@ -391,11 +382,9 @@ export const Header: React.FC = () => {
         href="#contact"
         className="btn btn--primary btn--icon-left header__contact-btn"
         onClick={(e) => scrollToSection(e, '#contact')}
-        onMouseEnter={() => setHoveredLink('contact')}
-        onMouseLeave={() => setHoveredLink(null)}
       >
         <span className="btn__icon" aria-hidden="true">
-          <Phone size={24} weight={hoveredLink === 'contact' ? 'fill' : 'regular'} color="currentColor" />
+          <Phone size={24} weight="regular" color="currentColor" />
         </span>
         <span>Contact</span>
       </a>
@@ -472,7 +461,7 @@ export const Header: React.FC = () => {
           <span>About</span>
         </a>
         <a href="#testimonials" className="header__mobile-link" onClick={(e) => scrollToSection(e, '#testimonials')} tabIndex={isMobileMenuOpen ? 0 : -1}>
-          <ChatCircleDots size={24} weight="regular" className="header__nav-icon" aria-hidden="true" />
+          <ChatsCircle size={24} weight="regular" className="header__nav-icon" aria-hidden="true" />
           <span>Testimonials</span>
         </a>
         <button

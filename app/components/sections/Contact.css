@@ -354,7 +354,8 @@
   font-family: var(--font-family-ui);
   font-size: var(--type-atkinson-text-sm-size);
   font-weight: 400;
-  color: #76797f;
+  /* Secondary body text — stronger than border grey (#76797f) for WCAG contrast on #f9fafb */
+  color: #3c3f43;
   line-height: var(--type-atkinson-text-sm-lh);
 }
 

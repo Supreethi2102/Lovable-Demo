@@ -188,8 +188,10 @@ export const Contact: React.FC = () => {
                 onBlur={handleBlur}
                 disabled={cardIsSubmitting}
                 aria-required="true"
-                aria-invalid={cardErrors.name && cardTouched.name ? 'true' : 'false'}
-                aria-describedby={cardErrors.name && cardTouched.name ? `${nameErrorId}-${cardKey}` : undefined}
+                aria-invalid={cardErrors.name && cardTouched.name && showValidationErrors ? 'true' : 'false'}
+                aria-describedby={
+                  cardErrors.name && cardTouched.name && showValidationErrors ? `${nameErrorId}-${cardKey}` : undefined
+                }
                 autoComplete="name"
               />
               {cardErrors.name && showValidationErrors && (
@@ -215,8 +217,10 @@ export const Contact: React.FC = () => {
                 onBlur={handleBlur}
                 disabled={cardIsSubmitting}
                 aria-required="true"
-                aria-invalid={cardErrors.email && cardTouched.email ? 'true' : 'false'}
-                aria-describedby={cardErrors.email && cardTouched.email ? `${emailErrorId}-${cardKey}` : undefined}
+                aria-invalid={cardErrors.email && cardTouched.email && showValidationErrors ? 'true' : 'false'}
+                aria-describedby={
+                  cardErrors.email && cardTouched.email && showValidationErrors ? `${emailErrorId}-${cardKey}` : undefined
+                }
                 autoComplete="email"
               />
               {cardErrors.email && showValidationErrors && (
@@ -243,12 +247,24 @@ export const Contact: React.FC = () => {
                   disabled={cardIsSubmitting}
                   maxLength={MESSAGE_MAX_LENGTH}
                   aria-required="true"
-                  aria-invalid={cardErrors.message && cardTouched.message ? 'true' : 'false'}
-                  aria-describedby={[`${messageCharCountId}-${cardKey}`, cardErrors.message && cardTouched.message ? `${messageErrorId}-${cardKey}` : null].filter(Boolean).join(' ') || undefined}
+                  aria-invalid={
+                    cardErrors.message && cardTouched.message && showValidationErrors ? 'true' : 'false'
+                  }
+                  aria-describedby={
+                    [
+                      `${messageCharCountId}-${cardKey}`,
+                      cardErrors.message && cardTouched.message && showValidationErrors
+                        ? `${messageErrorId}-${cardKey}`
+                        : null,
+                    ]
+                      .filter(Boolean)
+                      .join(' ') || undefined
+                  }
                 />
               </div>
-              <div id={`${messageCharCountId}-${cardKey}`} className="contact__char-count-wrapper" aria-live="polite">
+              <div className="contact__char-count-wrapper" aria-live="polite">
                 <span
+                  id={`${messageCharCountId}-${cardKey}`}
                   className={`contact__char-count ${
                     cardFormData.message.length > MESSAGE_MAX_LENGTH
                       ? 'contact__char-count--error'

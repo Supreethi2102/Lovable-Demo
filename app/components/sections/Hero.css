@@ -53,12 +53,13 @@
 
 .hero__description {
   font-family: var(--font-family-ui);
-  font-size: var(--type-atkinson-text-md-size);
+  font-size: var(--type-atkinson-intro-size);
+  font-style: normal;
   font-weight: 400;
-  line-height: var(--type-atkinson-text-md-lh);
+  line-height: var(--type-atkinson-intro-lh);
   color: #3c3f43;
   margin: 0;
-  max-width: 430px;
+  max-width: 100%;
 }
 
 /* Responsive */

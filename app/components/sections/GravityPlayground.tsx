@@ -81,7 +81,7 @@ const swatchCards: Array<{
   },
   {
     id: 'swatch-black',
-    name: 'Nightfall Onyx Evee',
+    name: 'Nightfall Onyx Eve',
     hex: '#0E0213',
     color: '#0E0213',
     mood: {

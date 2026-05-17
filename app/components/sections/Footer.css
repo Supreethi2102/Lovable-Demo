@@ -1,28 +1,29 @@
-/* Footer Section - 4pt Grid */
+/* Footer Section — width follows copy so row edges match the instruction line */
 .footer {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: stretch;
   gap: 12px;
-  background: #F7F9FA;
-  /* Shrink to copy width so “Reduce motion” aligns with the end of the line below */
+  background: #f7f9fa;
   width: fit-content;
   max-width: min(740px, 100%);
   min-width: 0;
   box-sizing: border-box;
+  align-self: center;
 }
 
 .footer__wrapper {
-  display: grid;
-  grid-template-columns: minmax(0, max-content);
-  justify-items: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   gap: 12px;
-  width: max-content;
+  width: fit-content;
   max-width: 100%;
   min-width: 0;
   box-sizing: border-box;
 }
 
+/* Gestures ↔ text left; Reduce motion ↔ text right (same width as .footer__text) */
 .footer__row {
   display: flex;
   align-items: center;
@@ -36,6 +37,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
+  flex-shrink: 0;
 }
 
 .footer__gesture-icon {
@@ -48,15 +50,15 @@
   font-family: var(--font-family-ui);
   font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
-  color: #7150E5;
+  color: #7150e5;
   text-decoration: none !important;
   text-decoration-line: none !important;
-  /* Reset button styles to look like a link */
   background: none;
   border: none;
   padding: 0;
   cursor: pointer;
   flex-shrink: 0;
+  white-space: nowrap;
   text-align: right;
 }
 
@@ -65,7 +67,7 @@
 }
 
 .footer__link:focus-visible {
-  outline: 2px solid #7150E5;
+  outline: 2px solid #7150e5;
   outline-offset: 2px;
   border-radius: 4px;
 }
@@ -75,60 +77,51 @@
   font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
   line-height: var(--type-atkinson-text-md-lh);
-  color: #3C3F43;
+  color: #3c3f43;
   margin: 0;
   padding: 0;
   text-align: left;
-  white-space: normal;
-  display: block;
   width: max-content;
-  max-width: 100%;
+  max-width: min(740px, 100%);
   min-width: 0;
-  overflow-wrap: break-word;
-  word-wrap: break-word;
   box-sizing: border-box;
 }
 
 /* Responsive */
 @media (max-width: 1400px) {
   .footer {
-    max-width: min(690px, 100%);
+    max-width: 690px;
   }
 }
 
 @media (max-width: 1200px) {
   .footer {
-    max-width: min(620px, 100%);
+    max-width: 660px;
   }
 }
 
 @media (max-width: 1024px) {
   .footer {
     max-width: min(620px, 100%);
-    align-items: flex-start;
     align-self: flex-start;
-    margin-left: 0;
-  }
-
-  .footer__row {
-    justify-content: space-between;
-    flex-wrap: nowrap;
-    gap: 16px;
-  }
-
-  .footer__text {
-    text-align: left;
-    line-height: var(--type-atkinson-text-md-lh);
   }
 }
 
 @media (max-width: 768px) {
   .footer {
+    width: 100%;
     max-width: min(620px, 100%);
     padding-inline: 0;
+    align-self: stretch;
+  }
+
+  .footer__wrapper {
+    width: 100%;
   }
 
   .footer__text {
+    width: 100%;
+    max-width: 100%;
     font-size: clamp(var(--type-atkinson-text-xs-size), 0.35vw + 0.78rem, var(--type-atkinson-text-sm-size));
     line-height: var(--type-atkinson-text-md-lh);
   }

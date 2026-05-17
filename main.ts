@@ -6,8 +6,8 @@ import {RenderMode, WebGlGlobe} from './src';
 
 const distance = 20_000_000;
 
-// Use a single PNG image for the globe
-const customImageUrl = '/globe/Revised%20Globe%20sketch%2029th%20Jan.png';
+// Equirectangular PNG (generated from Illustrations/World map outline.svg for WebGL)
+const customImageUrl = '/Illustrations/world-map-outline.png';
 
 const globeEl = document.querySelector('#globe')! as HTMLElement;
 const globe = new WebGlGlobe(globeEl, {

@@ -348,10 +348,10 @@
   min-height: 84px;
   color: #3c3f43;
   font-family: var(--font-family-ui);
-  font-size: var(--type-atkinson-text-xl-size);
+  font-size: var(--type-atkinson-intro-size);
   font-style: normal;
   font-weight: 400;
-  line-height: var(--type-atkinson-text-xl-lh);
+  line-height: var(--type-atkinson-intro-lh);
   letter-spacing: 0.4px;
 }
 

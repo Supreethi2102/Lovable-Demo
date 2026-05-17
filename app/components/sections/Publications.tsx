@@ -56,7 +56,7 @@ export const Publications: React.FC = () => {
       aria-labelledby="publications-title"
     >
       <h2 id="publications-title" className="publications__title">
-        Publications <span className="publications__subtitle">Print and digital work</span>
+        Project highlights <span className="publications__subtitle">Visual craft. Thoughtful work.</span>
       </h2>
       
       <div 

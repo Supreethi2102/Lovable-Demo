@@ -336,7 +336,7 @@ export const CaseStudies: React.FC = () => {
       {/* Header */}
       <header className="case-studies__header">
         <h2 id="case-studies-title" className="case-studies__title">
-          Case studies <span className="case-studies__subtitle">Browse by design category</span>
+          Case studies <span className="case-studies__subtitle">In-depth design and thinking</span>
         </h2>
       </header>
 

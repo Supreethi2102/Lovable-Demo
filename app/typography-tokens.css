@@ -66,6 +66,9 @@
   --type-atkinson-display-xs-lh: 2rem;
   --type-atkinson-text-xl-size: 1.25rem;
   --type-atkinson-text-xl-lh: 1.75rem;
+  /* Intro body (hero + case study) — Figma 20px / 32px */
+  --type-atkinson-intro-size: 1.25rem;
+  --type-atkinson-intro-lh: 2rem;
   --type-atkinson-text-md-size: 1rem;
   --type-atkinson-text-md-lh: 1.5rem;
   --type-atkinson-text-sm-size: 0.875rem;

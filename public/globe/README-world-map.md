@@ -1,10 +1,6 @@
-# World Map Image Setup
+# Globe texture
 
-To use your flat map image for the globe:
+The hero globe uses `public/Illustrations/world-map-outline.png` (rasterized from `World map outline.svg` for WebGL), configured in `main.ts`.
 
-1. Save your world map PNG image to this directory (`public/globe/`)
-2. Name it `world-map-outline.png` (or update the filename in `main.ts`)
-3. The image should be in equirectangular projection (2:1 aspect ratio, e.g., 2048x1024px)
-
-The image will be accessible at `/globe/world-map-outline.png` when the dev server is running.
+For a custom flat map PNG (equirectangular 2:1, e.g. 2048×1024), save it under `public/globe/` and point `main.ts` at that path instead.
 

@@ -186,7 +186,7 @@ further, I'd love to hear them.
                 </p>
               </div>
               <div className="sustainability-modal__image-wrap">
-                <img src="/Footer images/Laptop and flowers 2.png" alt="" className="sustainability-modal__image" aria-hidden="true" />
+                <img src="/Illustrations/Laptop.svg" alt="" className="sustainability-modal__image" aria-hidden="true" />
               </div>
             </div>
           </div>
@@ -229,7 +229,7 @@ further, I'd love to hear them.
                 </p>
               </div>
               <div className="privacy-cookies-modal__image-wrap">
-                <img src="/Footer images/Cookie jar copy 3.png" alt="" className="privacy-cookies-modal__image" aria-hidden="true" />
+                <img src="/Illustrations/Cookie%20jar.svg" alt="" className="privacy-cookies-modal__image" aria-hidden="true" />
               </div>
             </div>
           </div>
@@ -291,7 +291,7 @@ further, I'd love to hear them.
                 </div>
               </div>
               <div className="accessibility-modal__image-wrap">
-                <img src="/Footer images/Balloons accessibility 2.png" alt="" className="accessibility-modal__image" aria-hidden="true" />
+                <img src="/Illustrations/Balloons.svg" alt="" className="accessibility-modal__image" aria-hidden="true" />
               </div>
             </div>
           </div>

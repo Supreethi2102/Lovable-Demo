@@ -556,8 +556,8 @@ button.site-footer__link {
     width: 100%;
     max-width: 320px;
     height: auto;
-    aspect-ratio: 405 / 371;
-    transform: none;
+    max-height: 400px;
+    transform: scale(1.2);
   }
 }
 
@@ -774,7 +774,8 @@ button.site-footer__link {
     width: 100%;
     max-width: 320px;
     height: auto;
-    aspect-ratio: 405 / 371;
+    max-height: 380px;
+    transform: scale(1.15);
   }
 }
 
@@ -1120,8 +1121,8 @@ button.site-footer__link {
     width: 100%;
     max-width: 320px;
     height: auto;
-    aspect-ratio: 405 / 371;
-    transform: none;
+    max-height: 420px;
+    transform: scale(1.25);
   }
 }
 

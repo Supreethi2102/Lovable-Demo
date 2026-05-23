@@ -2,7 +2,9 @@ import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   ArrowLeft,
+  ClipboardText,
   SpeakerHigh,
+  X,
   ListBullets,
   Note,
   MagnifyingGlass,
@@ -16,6 +18,7 @@ import {
 import { SiteFooter } from './SiteFooter';
 import { CaseStudyCard, type CaseStudyCardStudy } from '../CaseStudyCard';
 import './CaseStudyDetail.css';
+import './case-study-detail-responsive.css';
 
 type NavSectionId =
   | 'overview'
@@ -696,8 +699,11 @@ export const CaseStudyDetail: React.FC = () => {
   const testimonials = TESTIMONIALS;
   const moreProjects = isGreenCross ? MORE_PROJECTS_GCH : isMegaToy ? MORE_PROJECTS_TOY : MORE_PROJECTS;
   const [activeSection, setActiveSection] = useState<NavSectionId>('overview');
+  const [overviewSummaryOpen, setOverviewSummaryOpen] = useState(false);
   const [hoveredNavId, setHoveredNavId] = useState<NavSectionId | null>(null);
   const sectionsRef = useRef<Record<string, HTMLElement | null>>({});
+  const overviewToolbarBtnRef = useRef<HTMLButtonElement>(null);
+  const overviewModalCloseRef = useRef<HTMLButtonElement>(null);
   /** While true, section spy ignores IO (avoids dozens of setStates during smooth scroll = jank). */
   const suppressSectionSpyRef = useRef(false);
   const suppressSectionSpyTimerRef = useRef(0);
@@ -719,8 +725,34 @@ export const CaseStudyDetail: React.FC = () => {
     const img = heroImageRef.current;
     const reduce =
       typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    const preferSimpleHero =
+      typeof window !== 'undefined' && window.matchMedia?.('(max-width: 1300px)').matches;
 
-    if (!wrap || !img || reduce) return;
+    const clearCinemaStyles = () => {
+      [
+        'position',
+        'left',
+        'top',
+        'right',
+        'bottom',
+        'width',
+        'height',
+        'z-index',
+        'object-fit',
+        'border-top-left-radius',
+        'border-top-right-radius',
+        'border-bottom-left-radius',
+        'border-bottom-right-radius',
+        'max-width',
+        'margin',
+        'transform',
+      ].forEach((p) => img?.style.removeProperty(p));
+    };
+
+    if (!wrap || !img || reduce || preferSimpleHero) {
+      if (img && preferSimpleHero) clearCinemaStyles();
+      return;
+    }
 
     cinemaProgressRef.current = 0;
 
@@ -747,27 +779,6 @@ export const CaseStudyDetail: React.FC = () => {
     const unlockPageScroll = () => {
       document.documentElement.style.removeProperty('overflow');
       document.body.style.removeProperty('overflow');
-    };
-
-    const clearCinemaStyles = () => {
-      [
-        'position',
-        'left',
-        'top',
-        'right',
-        'bottom',
-        'width',
-        'height',
-        'z-index',
-        'object-fit',
-        'border-top-left-radius',
-        'border-top-right-radius',
-        'border-bottom-left-radius',
-        'border-bottom-right-radius',
-        'max-width',
-        'margin',
-        'transform',
-      ].forEach((p) => img.style.removeProperty(p));
     };
 
     const applyFixedToRect = (
@@ -939,6 +950,43 @@ export const CaseStudyDetail: React.FC = () => {
     };
   }, [id]);
 
+  /** Strip cinema inline styles when entering tablet/mobile so CSS responsive rules apply. */
+  useLayoutEffect(() => {
+    const img = heroImageRef.current;
+    if (!img || typeof window === 'undefined') return;
+
+    const mq = window.matchMedia('(max-width: 1300px)');
+    const clearHeroInlineStyles = () => {
+      [
+        'position',
+        'left',
+        'top',
+        'right',
+        'bottom',
+        'width',
+        'height',
+        'z-index',
+        'object-fit',
+        'border-top-left-radius',
+        'border-top-right-radius',
+        'border-bottom-left-radius',
+        'border-bottom-right-radius',
+        'max-width',
+        'margin',
+        'transform',
+      ].forEach((p) => img.style.removeProperty(p));
+    };
+
+    if (mq.matches) clearHeroInlineStyles();
+
+    const onMqChange = () => {
+      if (mq.matches) clearHeroInlineStyles();
+    };
+
+    mq.addEventListener('change', onMqChange);
+    return () => mq.removeEventListener('change', onMqChange);
+  }, [id]);
+
   useEffect(() => {
     return () => {
       window.clearTimeout(suppressSectionSpyTimerRef.current);
@@ -966,6 +1014,26 @@ export const CaseStudyDetail: React.FC = () => {
     }
     suppressSectionSpyTimerRef.current = window.setTimeout(releaseSpy, 1100);
   }, []);
+
+  const closeOverviewModal = useCallback(() => {
+    setOverviewSummaryOpen(false);
+    requestAnimationFrame(() => overviewToolbarBtnRef.current?.focus());
+  }, []);
+
+  useEffect(() => {
+    if (!overviewSummaryOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') closeOverviewModal();
+    };
+    document.addEventListener('keydown', onKeyDown);
+    overviewModalCloseRef.current?.focus();
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [overviewSummaryOpen, closeOverviewModal]);
 
   useEffect(() => {
     const nodes = NAV_ITEMS.map((s) => sectionsRef.current[s.id])
@@ -997,9 +1065,36 @@ export const CaseStudyDetail: React.FC = () => {
       <div ref={cinemaBackdropRef} className="case-study-detail__cinema-backdrop" aria-hidden />
       <div className="case-study-detail__inner">
         <div className="case-study-detail__layout">
+          <div className="case-study-detail__toolbar">
+            <div className="case-study-detail__back-wrap">
+              <button
+                type="button"
+                className="case-study-detail__back"
+                onClick={() => navigate(-1)}
+                aria-label="Back to case studies"
+              >
+                <ArrowLeft size={24} weight="regular" color="currentColor" aria-hidden="true" />
+                <span>Back</span>
+              </button>
+            </div>
+            <button
+              ref={overviewToolbarBtnRef}
+              type="button"
+              className="case-study-detail__toolbar-overview"
+              onClick={() => setOverviewSummaryOpen(true)}
+              aria-label="Open overview details"
+              aria-expanded={overviewSummaryOpen}
+              aria-haspopup="dialog"
+            >
+              <span>Overview</span>
+              <ClipboardText size={24} weight="regular" color="currentColor" aria-hidden="true" />
+            </button>
+          </div>
+
+          <div className="case-study-detail__layout-body">
           <aside className="case-study-detail__sidebar" aria-label="Case study sections">
             <div className="case-study-detail__sidebar-top">
-              <div className="case-study-detail__back-wrap">
+              <div className="case-study-detail__back-wrap case-study-detail__back-wrap--sidebar">
                 <button
                   type="button"
                   className="case-study-detail__back"
@@ -1082,7 +1177,18 @@ export const CaseStudyDetail: React.FC = () => {
                 </div>
               </article>
 
-              <aside className="case-study-detail__summary" aria-label="Overview">
+              <button
+                type="button"
+                className="case-study-detail__listen case-study-detail__listen--in-content"
+                aria-label="Listen to case study"
+              >
+                <span className="case-study-detail__listen-icon" aria-hidden="true">
+                  <SpeakerHigh size={24} weight="regular" color="#7150E5" />
+                </span>
+                <span className="case-study-detail__listen-label">Listen</span>
+              </button>
+
+              <aside className="case-study-detail__summary case-study-detail__summary--layout" aria-label="Overview">
                 <h2>Overview</h2>
                 {overviewSummaryItems.map(({ label, value, size }, idx, arr) => (
                   <React.Fragment key={label}>
@@ -3011,6 +3117,7 @@ export const CaseStudyDetail: React.FC = () => {
             </article>
 
           </div>
+          </div>
         </div>
         <section className="case-study-detail__more-projects" aria-label="Explore more projects">
           <div className="case-study-detail__more-projects-rule" aria-hidden="true" />
@@ -3026,6 +3133,45 @@ export const CaseStudyDetail: React.FC = () => {
           </button>
         </section>
       </div>
+
+      {overviewSummaryOpen ? (
+        <div className="case-study-detail__overview-modal__overlay" role="presentation" onClick={closeOverviewModal}>
+          <div
+            className="case-study-detail__overview-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="case-study-overview-modal-title"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <button
+              ref={overviewModalCloseRef}
+              type="button"
+              className="case-study-detail__overview-modal__close"
+              onClick={closeOverviewModal}
+            >
+              Close <X size={16} weight="regular" className="case-study-detail__overview-modal__close-icon" aria-hidden="true" />
+            </button>
+            <div className="case-study-detail__overview-modal__body">
+              <h2 id="case-study-overview-modal-title" className="case-study-detail__overview-modal__title">
+                Overview
+              </h2>
+              {overviewSummaryItems.map(({ label, value, size }, idx, arr) => (
+                <React.Fragment key={label}>
+                  <div className={`case-study-detail__overview-modal__item case-study-detail__summary-item ${size}`}>
+                    <p>
+                      <strong>{label}:</strong> {value}
+                    </p>
+                  </div>
+                  {idx < arr.length - 1 && (
+                    <div className="case-study-detail__overview-modal__divider" aria-hidden="true" />
+                  )}
+                </React.Fragment>
+              ))}
+            </div>
+          </div>
+        </div>
+      ) : null}
+
       <SiteFooter />
     </section>
   );

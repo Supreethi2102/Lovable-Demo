@@ -16,6 +16,7 @@ import {
 import { SiteFooter } from './SiteFooter';
 import { CaseStudyCard, type CaseStudyCardStudy } from '../CaseStudyCard';
 import './CaseStudyDetail.css';
+import './case-study-detail-responsive.css';
 
 type NavSectionId =
   | 'overview'

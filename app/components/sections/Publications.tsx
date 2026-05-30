@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { BookOpen } from '@phosphor-icons/react';
 import { publications } from '../../data/publications';
 import type { PublicationDetail } from '../../data/publications';
+import { ResponsivePicture } from '../ResponsivePicture';
 import './Publications.css';
 
 interface PublicationCardProps {
@@ -27,10 +28,11 @@ const PublicationCard: React.FC<PublicationCardProps> = ({ publication }) => {
       aria-label={`${publication.title} - ${publication.subtitle}`}
     >
       <figure className="publication-card__image-container">
-        <img 
-          src={publication.image} 
-          alt={`${publication.title} cover`}
+        <ResponsivePicture
+          image={publication.image}
           className="publication-card__image"
+          loading="lazy"
+          fallbackAlt={`${publication.title} cover`}
         />
       </figure>
       <div className="publication-card__info">

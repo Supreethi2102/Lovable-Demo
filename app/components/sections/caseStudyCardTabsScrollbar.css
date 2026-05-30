@@ -32,7 +32,6 @@
 }
 
 @media (max-width: 1300px) {
-  .case-study-detail__sidebar::-webkit-scrollbar,
   .case-study-detail__tabs::-webkit-scrollbar {
     height: 4px;
   }

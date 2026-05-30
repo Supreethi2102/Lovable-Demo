@@ -77,7 +77,7 @@ const IMG = {
   commercialBay: '/case-study/b648eda156ce1609157f311528bb6ecf5c80f573.png',
   commercialBayPoster: '/case-study/c052fab905012d597ad9d12a9d89fbf2323c42ec.png',
   digitalPoster: '/case-study/9163a5067802a9e3cc0e8971deb021834c7de8c9.png',
-  solution: SOFT_PEACH_PLACEHOLDER,
+  solution: PALE_YELLOW_PLACEHOLDER,
   digital: '/case-study/8d3d71c4521118f1643cfc2b643e9bdd6779cd20.png',
   impact: '/case-study/b3fa48388ea7dbd31884495c50ed00a9adf2ac9d.png',
   reflection: '/case-study/b167dc0821f705bdd7e5e2e689f7618823363a99.png',
@@ -298,6 +298,8 @@ export const CaseStudyDetail: React.FC = () => {
   const isPalmy = id === '1';
   const isAmio = id === '5';
   const isAmioLayout = isAmio || isPalmy;
+  /** Pale-yellow frames + mobile min-heights (shared split-card layout). */
+  const usesPlaceholderMedia = isSummer || isGreenCross || isMegaToy || isAmioLayout;
   const overview = isGreenCross
     ? {
         heroImage: '/case-study-gch/9912d40ae739a7575ec4a7abed1a19cf05d03244.png',
@@ -575,7 +577,7 @@ export const CaseStudyDetail: React.FC = () => {
         }
     : {
         image: IMG.brief,
-        imageAlt: 'Brief placeholder visual',
+        imageAlt: '',
         business:
           'Summer 2023 was a key retail window for The Warehouse. With declining foot traffic, the campaign needed to cut through across store and digital.',
         priorities: [
@@ -1036,32 +1038,60 @@ export const CaseStudyDetail: React.FC = () => {
   }, [overviewSummaryOpen, closeOverviewModal]);
 
   useEffect(() => {
-    const nodes = NAV_ITEMS.map((s) => sectionsRef.current[s.id])
-      .filter((el): el is HTMLElement => Boolean(el));
-    if (nodes.length === 0) return;
+    const getScrollOffset = () => {
+      const header =
+        parseFloat(
+          getComputedStyle(document.documentElement).getPropertyValue('--header-height'),
+        ) || 96;
+      return header + 32;
+    };
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        if (suppressSectionSpyRef.current) return;
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
-        if (visible[0]) {
-          setActiveSection(visible[0].target.id as NavSectionId);
+    const updateActiveSection = () => {
+      if (suppressSectionSpyRef.current) return;
+
+      if (window.scrollY < 64) {
+        setActiveSection('overview');
+        return;
+      }
+
+      const scrollPos = window.scrollY + getScrollOffset();
+      let current: NavSectionId = NAV_ITEMS[0].id;
+
+      for (const item of NAV_ITEMS) {
+        const el = sectionsRef.current[item.id];
+        if (!el) continue;
+        const sectionTop = el.getBoundingClientRect().top + window.scrollY;
+        if (sectionTop <= scrollPos) {
+          current = item.id;
         }
-      },
-      {
-        rootMargin: '-20% 0px -55% 0px',
-        threshold: [0.25, 0.5, 0.75],
-      },
-    );
+      }
 
-    nodes.forEach((node) => observer.observe(node));
-    return () => observer.disconnect();
+      setActiveSection(current);
+    };
+
+    updateActiveSection();
+    window.addEventListener('scroll', updateActiveSection, { passive: true });
+    window.addEventListener('resize', updateActiveSection);
+    return () => {
+      window.removeEventListener('scroll', updateActiveSection);
+      window.removeEventListener('resize', updateActiveSection);
+    };
   }, []);
 
   return (
-    <section className={`case-study-detail ${isPalmy ? 'case-study-detail--palmy' : ''}`} aria-labelledby="case-study-detail-title">
+    <section
+      className={[
+        'case-study-detail',
+        isPalmy && 'case-study-detail--palmy',
+        isSummer && 'case-study-detail--summer',
+        isGreenCross && 'case-study-detail--gch',
+        isMegaToy && 'case-study-detail--toy',
+        isAmio && 'case-study-detail--amio',
+      ]
+        .filter(Boolean)
+        .join(' ')}
+      aria-labelledby="case-study-detail-title"
+    >
       <div ref={cinemaBackdropRef} className="case-study-detail__cinema-backdrop" aria-hidden />
       <div className="case-study-detail__inner">
         <div className="case-study-detail__layout">
@@ -1118,8 +1148,6 @@ export const CaseStudyDetail: React.FC = () => {
                         onClick={() => scrollToNavSection(section.id)}
                         onMouseEnter={() => setHoveredNavId(section.id)}
                         onMouseLeave={() => setHoveredNavId(null)}
-                        onFocus={() => setHoveredNavId(section.id)}
-                        onBlur={() => setHoveredNavId(null)}
                         aria-current={isActive ? 'location' : undefined}
                       >
                         <SectionIcon
@@ -1212,8 +1240,16 @@ export const CaseStudyDetail: React.FC = () => {
                 isMegaToy ? 'case-study-detail__split-card--mega-fluid' : isAmioLayout ? 'case-study-detail__split-card--brief-amio' : ''
               }`}
             >
-              <figure className="media-side case-study-detail__brief-media">
-                <img src={briefContent.image} alt={briefContent.imageAlt} />
+              <figure
+                className={`media-side case-study-detail__brief-media${
+                  usesPlaceholderMedia ? ' case-study-detail__media--placeholder' : ''
+                }`}
+              >
+                <img
+                  src={briefContent.image}
+                  alt={usesPlaceholderMedia ? '' : briefContent.imageAlt}
+                  aria-hidden={usesPlaceholderMedia ? true : undefined}
+                />
               </figure>
               <div className="text-side case-study-detail__brief-text">
                 <div className="case-study-detail__brief-content">
@@ -1479,7 +1515,9 @@ export const CaseStudyDetail: React.FC = () => {
                   </>
                 )}
               </div>
-              <figure className="media-side">
+              <figure
+                className={`media-side${usesPlaceholderMedia ? ' case-study-detail__media--placeholder' : ''}`}
+              >
                 <img
                   src={
                     isGreenCross
@@ -1490,7 +1528,8 @@ export const CaseStudyDetail: React.FC = () => {
                           ? PALE_YELLOW_PLACEHOLDER
                           : IMG.research
                   }
-                  alt="Research visual"
+                  alt={usesPlaceholderMedia ? '' : 'Research visual'}
+                  aria-hidden={usesPlaceholderMedia ? true : undefined}
                 />
               </figure>
             </article>
@@ -1522,7 +1561,9 @@ export const CaseStudyDetail: React.FC = () => {
                 isMegaToy ? 'case-study-detail__split-card--mega-fluid' : isAmioLayout ? 'case-study-detail__split-card--amio-process-main' : ''
               }`}
             >
-              <figure className="media-side">
+              <figure
+                className={`media-side${usesPlaceholderMedia ? ' case-study-detail__media--placeholder' : ''}`}
+              >
                 <img
                   src={
                     isGreenCross
@@ -1533,7 +1574,8 @@ export const CaseStudyDetail: React.FC = () => {
                           ? PALE_YELLOW_PLACEHOLDER
                           : IMG.process
                   }
-                  alt="Process visual"
+                  alt={usesPlaceholderMedia ? '' : 'Process visual'}
+                  aria-hidden={usesPlaceholderMedia ? true : undefined}
                 />
               </figure>
               <div className={`text-side case-study-detail__text-stack ${isAmioLayout ? 'case-study-detail__text-stack--amio-flow' : ''}`}>
@@ -1640,7 +1682,7 @@ export const CaseStudyDetail: React.FC = () => {
                         <li>Aligned three core screens into a consistent system</li>
                       </ul>
                     </div>
-                    <figure className="media-side">
+                    <figure className="media-side case-study-detail__media--placeholder">
                       <img src={PALE_YELLOW_PLACEHOLDER} alt="Soft yellow section background" />
                     </figure>
                   </article>
@@ -1666,13 +1708,13 @@ export const CaseStudyDetail: React.FC = () => {
                         <p>control vs speed</p>
                         <p>Rather than choosing one, the experience supports both.</p>
                       </div>
-                      <figure className="media-side">
+                      <figure className="media-side case-study-detail__media--placeholder">
                         <img src={PALE_YELLOW_PLACEHOLDER} alt="Soft yellow section background" />
                       </figure>
                     </article>
 
                     <article className="case-study-detail__split-card case-study-detail__split-card--amio-process-sketch">
-                      <figure className="media-side">
+                      <figure className="media-side case-study-detail__media--placeholder">
                         <img src={PALE_YELLOW_PLACEHOLDER} alt="Soft yellow section background" />
                       </figure>
                       <div className="text-side case-study-detail__text-stack case-study-detail__text-stack--amio-flow">
@@ -1707,7 +1749,7 @@ export const CaseStudyDetail: React.FC = () => {
                         </ul>
                         <p>Each iteration reduced hesitation and improved decision flow.</p>
                       </div>
-                      <figure className="media-side">
+                      <figure className="media-side case-study-detail__media--placeholder">
                         <img src={PALE_YELLOW_PLACEHOLDER} alt="Soft yellow section background" />
                       </figure>
                     </article>
@@ -1805,7 +1847,7 @@ export const CaseStudyDetail: React.FC = () => {
                     and commercially effective for families.
                   </p>
                 </div>
-                <figure className="media-side">
+                <figure className="media-side case-study-detail__media--placeholder">
                   <img src={PALE_YELLOW_PLACEHOLDER} alt="Soft yellow section background" />
                 </figure>
               </article>
@@ -1922,13 +1964,27 @@ export const CaseStudyDetail: React.FC = () => {
                     alt="LP1 poster design visual two"
                   />
                 </div>
-                <p className="case-study-detail__two-up-caption">LP1 Posters</p>
               </section>
             )}
 
             {!isGreenCross && !isMegaToy && !isAmioLayout && (
               <>
-                <article className="case-study-detail__panel">
+                <p className="case-study-detail__two-up-caption case-study-detail__two-up-caption--lp1">LP1 Posters</p>
+
+                <article className="case-study-detail__text-panel case-study-detail__text-panel--retail-reality">
+                  <h4>Designing for retail reality</h4>
+                  <>
+                    <p>
+                      Retail constraints were locked in before the shoot. EAS security gates, pallet wraps, and LP1
+                      posters all came with strict crop and messaging rules.
+                    </p>
+                    <p>
+                      I built POS templates covering crop ratios, safe zones, type placement, and fixture specs.
+                    </p>
+                  </>
+                </article>
+
+                <article className="case-study-detail__panel case-study-detail__panel--poster-wall">
                   <img
                     className="full-bleed-media case-study-detail__store-image"
                     src={IMG.posterWall}
@@ -1954,30 +2010,62 @@ export const CaseStudyDetail: React.FC = () => {
 
                 <article className="case-study-detail__text-panel case-study-detail__text-panel--scaling">
                   <h4>Scaling across channels</h4>
-                  <>
-                    <p>Once POS was established, I extended the system into digital.</p>
-                    <p>I mapped twelve layout compositions across key banner sizes, planning for product hierarchy and messaging.</p>
-                    <ul>
-                      <li>POS carried in-store visibility and impact</li>
-                      <li>Digital reinforced brand recognition through The Warehouse colour system</li>
-                    </ul>
-                    <p>Layouts were tested early. From large posters to small mobile banners, everything remained clear and consistent.</p>
-                  </>
+                  <p>Once POS was established, I extended the system into digital.</p>
+                  <p>
+                    I mapped twelve layout compositions across key banner sizes, planning for product hierarchy and
+                    messaging.
+                  </p>
+                  <ul>
+                    <li>POS carried in-store visibility and impact</li>
+                    <li>Digital reinforced brand recognition through The Warehouse colour system</li>
+                  </ul>
+                  <p>
+                    Layouts were tested early. From large posters to small mobile banners, everything remained clear and
+                    consistent.
+                  </p>
                 </article>
 
                 <section className="case-study-detail__four-up">
                   <div className="case-study-detail__four-up-grid">
                     <figure className="case-study-detail__four-up-tile case-study-detail__four-up-tile--1">
-                      <img className="case-study-detail__four-up-image case-study-detail__four-up-image--1" src={IMG.outOfHome1} alt="Concept visual one" />
+                      <img
+                        className={`case-study-detail__four-up-image case-study-detail__four-up-image--1${
+                          isSummer ? ' case-study-detail__four-up-image--placeholder' : ''
+                        }`}
+                        src={isSummer ? PALE_YELLOW_PLACEHOLDER : IMG.outOfHome1}
+                        alt={isSummer ? '' : 'Concept visual one'}
+                        aria-hidden={isSummer ? true : undefined}
+                      />
                     </figure>
                     <figure className="case-study-detail__four-up-tile case-study-detail__four-up-tile--2">
-                      <img className="case-study-detail__four-up-image case-study-detail__four-up-image--2" src={IMG.outOfHome2} alt="Concept visual two" />
+                      <img
+                        className={`case-study-detail__four-up-image case-study-detail__four-up-image--2${
+                          isSummer ? ' case-study-detail__four-up-image--placeholder' : ''
+                        }`}
+                        src={isSummer ? PALE_YELLOW_PLACEHOLDER : IMG.outOfHome2}
+                        alt={isSummer ? '' : 'Concept visual two'}
+                        aria-hidden={isSummer ? true : undefined}
+                      />
                     </figure>
                     <figure className="case-study-detail__four-up-tile case-study-detail__four-up-tile--3">
-                      <img className="case-study-detail__four-up-image case-study-detail__four-up-image--3" src={IMG.outOfHome3} alt="Concept visual three" />
+                      <img
+                        className={`case-study-detail__four-up-image case-study-detail__four-up-image--3${
+                          isSummer ? ' case-study-detail__four-up-image--placeholder' : ''
+                        }`}
+                        src={isSummer ? PALE_YELLOW_PLACEHOLDER : IMG.outOfHome3}
+                        alt={isSummer ? '' : 'Concept visual three'}
+                        aria-hidden={isSummer ? true : undefined}
+                      />
                     </figure>
                     <figure className="case-study-detail__four-up-tile case-study-detail__four-up-tile--4">
-                      <img className="case-study-detail__four-up-image case-study-detail__four-up-image--4" src={IMG.outOfHome4} alt="Concept visual four" />
+                      <img
+                        className={`case-study-detail__four-up-image case-study-detail__four-up-image--4${
+                          isSummer ? ' case-study-detail__four-up-image--placeholder' : ''
+                        }`}
+                        src={isSummer ? PALE_YELLOW_PLACEHOLDER : IMG.outOfHome4}
+                        alt={isSummer ? '' : 'Concept visual four'}
+                        aria-hidden={isSummer ? true : undefined}
+                      />
                     </figure>
                   </div>
                   <p className="case-study-detail__four-up-caption">Example of out of home</p>
@@ -2015,7 +2103,7 @@ export const CaseStudyDetail: React.FC = () => {
             {isPalmy && (
               <>
                 <article className="case-study-detail__split-card case-study-detail__split-card--amio-process-test case-study-detail__split-card--palmy-alohi">
-                  <figure className="media-side">
+                  <figure className="media-side case-study-detail__media--placeholder">
                     <img src={PALE_YELLOW_PLACEHOLDER} alt="Soft yellow section background" />
                   </figure>
                   <div className="text-side case-study-detail__text-stack case-study-detail__text-stack--amio-flow case-study-detail__text-stack--palmy-alohi">
@@ -2067,7 +2155,7 @@ export const CaseStudyDetail: React.FC = () => {
                       <li><strong>Clarity</strong> Hierarchy and spacing for easy scanning</li>
                     </ul>
                   </div>
-                  <figure className="media-side">
+                  <figure className="media-side case-study-detail__media--placeholder">
                     <img src={PALE_YELLOW_PLACEHOLDER} alt="Soft yellow section background" />
                   </figure>
                 </article>
@@ -2089,10 +2177,19 @@ export const CaseStudyDetail: React.FC = () => {
                     : 'case-study-detail__split-card case-study-detail__split-card--solution'
               }
             >
-              <figure className="media-side case-study-detail__solution-media">
+              <figure
+                className={`media-side case-study-detail__solution-media${
+                  usesPlaceholderMedia ? ' case-study-detail__media--placeholder' : ''
+                }`}
+              >
                 <img
-                  src={isGreenCross || isMegaToy || isAmioLayout ? SOFT_PEACH_PLACEHOLDER : IMG.solution}
-                  alt="Design solution visual"
+                  src={
+                    isGreenCross || isMegaToy || isAmioLayout
+                      ? SOFT_PEACH_PLACEHOLDER
+                      : IMG.solution
+                  }
+                  alt={usesPlaceholderMedia ? '' : 'Design solution visual'}
+                  aria-hidden={usesPlaceholderMedia ? true : undefined}
                 />
               </figure>
               <div className={`text-side case-study-detail__text-stack ${isAmioLayout ? 'case-study-detail__text-stack--amio-flow' : ''}`}>
@@ -2243,7 +2340,7 @@ export const CaseStudyDetail: React.FC = () => {
                         : 'Keeping it visible reduced screen space. Testing showed visibility mattered more than additional content.'}
                     </p>
                   </div>
-                  <figure className="media-side">
+                  <figure className="media-side case-study-detail__media--placeholder">
                     <img src={PALE_YELLOW_PLACEHOLDER} alt="Soft yellow section background" />
                   </figure>
                 </article>
@@ -2262,7 +2359,7 @@ export const CaseStudyDetail: React.FC = () => {
                 </section>
 
                 <article className="case-study-detail__split-card case-study-detail__split-card--amio-solution-load">
-                  <figure className="media-side">
+                  <figure className="media-side case-study-detail__media--placeholder">
                     <img src={PALE_YELLOW_PLACEHOLDER} alt="Soft yellow section background" />
                   </figure>
                   <div className="text-side case-study-detail__text-stack case-study-detail__text-stack--amio-flow">
@@ -2352,7 +2449,7 @@ export const CaseStudyDetail: React.FC = () => {
                 </article>
 
                 <article className="case-study-detail__split-card case-study-detail__split-card--mega-fluid">
-                  <figure className="media-side">
+                  <figure className="media-side case-study-detail__media--placeholder">
                     <img src={PALE_YELLOW_PLACEHOLDER} alt="Soft yellow section background" />
                   </figure>
                   <div className="text-side case-study-detail__text-stack">
@@ -2470,19 +2567,29 @@ export const CaseStudyDetail: React.FC = () => {
                     <p>Confident, but never exclusive. Aspirational, yet accessible.</p>
                   </>
                 </div>
-                <figure className="media-side case-study-detail__digital-media">
-                  <img
-                    className="case-study-detail__digital-background"
-                    src={IMG.digital}
-                    alt="Digital campaign out-of-home visual"
-                  />
-                  <div className="case-study-detail__digital-overlay" aria-hidden="true">
-                    <img
-                      className="case-study-detail__digital-overlay-image"
-                      src={IMG.digitalPoster}
-                      alt=""
-                    />
-                  </div>
+                <figure
+                  className={`media-side case-study-detail__digital-media${
+                    usesPlaceholderMedia ? ' case-study-detail__media--placeholder' : ''
+                  }`}
+                >
+                  {isSummer ? (
+                    <img src={PALE_YELLOW_PLACEHOLDER} alt="" aria-hidden />
+                  ) : (
+                    <>
+                      <img
+                        className="case-study-detail__digital-background"
+                        src={IMG.digital}
+                        alt="Digital campaign out-of-home visual"
+                      />
+                      <div className="case-study-detail__digital-overlay" aria-hidden="true">
+                        <img
+                          className="case-study-detail__digital-overlay-image"
+                          src={IMG.digitalPoster}
+                          alt=""
+                        />
+                      </div>
+                    </>
+                  )}
                 </figure>
               </article>
             )}
@@ -2514,8 +2621,19 @@ export const CaseStudyDetail: React.FC = () => {
                   : 'case-study-detail__split-card case-study-detail__split-card--reverse case-study-detail__split-card--impact'
               }
             >
-              <figure className="media-side case-study-detail__impact-media">
-                <img src={isGreenCross || isMegaToy || isAmioLayout ? PALE_YELLOW_PLACEHOLDER : IMG.impact} alt="Impact visual" />
+              <figure
+                className={`media-side case-study-detail__impact-media${
+                  usesPlaceholderMedia ? ' case-study-detail__media--placeholder' : ''
+                }`}
+              >
+                <img
+                  src={
+                    usesPlaceholderMedia ? PALE_YELLOW_PLACEHOLDER
+                      : IMG.impact
+                  }
+                  alt={usesPlaceholderMedia ? '' : 'Impact visual'}
+                  aria-hidden={usesPlaceholderMedia ? true : undefined}
+                />
               </figure>
               <div className={`text-side case-study-detail__text-stack ${isAmioLayout ? 'case-study-detail__text-stack--amio-impact' : ''}`}>
                 <h3>{isPalmy ? 'Impact and learnings' : 'Impact & learnings'}</h3>
@@ -2677,7 +2795,7 @@ export const CaseStudyDetail: React.FC = () => {
                       <li>Expand and document the design system</li>
                     </ul>
                   </div>
-                  <figure className="media-side">
+                  <figure className="media-side case-study-detail__media--placeholder">
                     <img src={PALE_YELLOW_PLACEHOLDER} alt="Soft yellow section background" />
                   </figure>
                 </article>
@@ -2825,10 +2943,27 @@ export const CaseStudyDetail: React.FC = () => {
                       }`
               }
             >
-              <figure className={isGreenCross ? 'media-side case-study-detail__reflection-media case-study-detail__reflection-media--gch' : isMegaToy ? 'media-side case-study-detail__reflection-media case-study-detail__reflection-media--toy' : 'media-side case-study-detail__reflection-media'}>
+              <figure
+                className={
+                  isGreenCross
+                    ? 'media-side case-study-detail__reflection-media case-study-detail__reflection-media--gch'
+                    : isMegaToy
+                      ? 'media-side case-study-detail__reflection-media case-study-detail__reflection-media--toy'
+                      : `media-side case-study-detail__reflection-media${
+                          usesPlaceholderMedia ? ' case-study-detail__media--placeholder' : ''
+                        }`
+                }
+              >
                 <img
-                  src={isGreenCross ? SOFT_PEACH_PLACEHOLDER : isMegaToy || isAmioLayout ? PALE_YELLOW_PLACEHOLDER : IMG.reflection}
-                  alt="Reflection visual"
+                  src={
+                    isGreenCross
+                      ? SOFT_PEACH_PLACEHOLDER
+                      : isMegaToy || isAmioLayout || isSummer
+                        ? PALE_YELLOW_PLACEHOLDER
+                        : IMG.reflection
+                  }
+                  alt={usesPlaceholderMedia ? '' : 'Reflection visual'}
+                  aria-hidden={usesPlaceholderMedia ? true : undefined}
                 />
               </figure>
               <div
@@ -3104,13 +3239,18 @@ export const CaseStudyDetail: React.FC = () => {
                     ? 'media-side case-study-detail__sources-media case-study-detail__sources-media--gch'
                     : isMegaToy
                       ? 'media-side case-study-detail__sources-media case-study-detail__sources-media--toy'
-                    : 'media-side media-side--tall case-study-detail__sources-media'
+                    : `media-side media-side--tall case-study-detail__sources-media${
+                        usesPlaceholderMedia ? ' case-study-detail__media--placeholder' : ''
+                      }`
                 }
-                aria-hidden={isGreenCross || isMegaToy || isAmioLayout ? true : undefined}
+                aria-hidden={usesPlaceholderMedia ? true : undefined}
               >
                 <img
-                  src={isGreenCross || isMegaToy || isAmioLayout ? PALE_YELLOW_PLACEHOLDER : IMG.sources}
-                  alt={isGreenCross || isMegaToy || isAmioLayout ? '' : 'Sources visual'}
+                  src={
+                    usesPlaceholderMedia ? PALE_YELLOW_PLACEHOLDER
+                      : IMG.sources
+                  }
+                  alt={usesPlaceholderMedia ? '' : 'Sources visual'}
                   decoding="async"
                 />
               </figure>

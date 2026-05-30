@@ -2,6 +2,8 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { ArrowsIn, ArrowsOut, CaretLeft, CaretRight, ArrowLeft, SpeakerHigh } from '@phosphor-icons/react';
 import { getGalleryImages, getPublicationById, getPublicationCopy } from '../../data/publications';
+import { ResponsivePicture } from '../ResponsivePicture';
+import { isRasterImageSources, publicationImageAlt } from '../../utils/imageFormats';
 import './PublicationDetail.css';
 
 function clampIndex(n: number, len: number) {
@@ -120,10 +122,16 @@ export const PublicationDetail: React.FC = () => {
     }
   }, [id, navigate, params.id, publication]);
 
-  const activeSrc = useMemo(() => {
+  const activeImage = useMemo(() => {
     const idx = clampIndex(activeIndex, galleryImages.length);
-    return galleryImages[idx] ?? '';
+    return galleryImages[idx];
   }, [activeIndex, galleryImages]);
+
+  const activeImageAlt = useMemo(() => {
+    if (!publication || !activeImage) return '';
+    if (isRasterImageSources(activeImage)) return activeImage.alt;
+    return `${publication.title} image ${activeIndex + 1}`;
+  }, [activeImage, activeIndex, publication]);
 
   const caption = useMemo(() => {
     const lowerSubtitle = (copy?.modalSubtitle ?? '').toLowerCase();
@@ -171,11 +179,12 @@ export const PublicationDetail: React.FC = () => {
               </button>
 
               <div className="publication-detail-enlarged__stage">
-                {activeSrc ? (
-                  <img
+                {activeImage ? (
+                  <ResponsivePicture
+                    image={activeImage}
                     className="publication-detail-enlarged__image"
-                    src={activeSrc}
-                    alt={`${publication.title} image ${activeIndex + 1}`}
+                    loading="eager"
+                    fallbackAlt={activeImageAlt}
                   />
                 ) : (
                   <div className="publication-detail__image-placeholder" aria-hidden="true" />
@@ -269,8 +278,13 @@ export const PublicationDetail: React.FC = () => {
               </button>
 
               <div className="publication-detail__stage">
-                {activeSrc ? (
-                  <img className="publication-detail__image" src={activeSrc} alt={`${publication.title} image ${activeIndex + 1}`} />
+                {activeImage ? (
+                  <ResponsivePicture
+                    image={activeImage}
+                    className="publication-detail__image"
+                    loading={activeIndex === 0 ? 'eager' : 'lazy'}
+                    fallbackAlt={activeImageAlt}
+                  />
                 ) : (
                   <div className="publication-detail__image-placeholder" aria-hidden="true" />
                 )}
@@ -313,7 +327,7 @@ export const PublicationDetail: React.FC = () => {
                 >
                   {Array.from({ length: Math.max(totalImages, 1) }).map((_, idx) => {
                     const isActive = idx === clampIndex(activeIndex, Math.max(totalImages, 1));
-                    const thumbSrc = galleryImages[idx] ?? '';
+                    const thumbImage = galleryImages[idx];
                     return (
                       <button
                         key={idx}
@@ -324,8 +338,14 @@ export const PublicationDetail: React.FC = () => {
                         aria-current={isActive ? 'true' : undefined}
                         role="listitem"
                       >
-                        {thumbSrc ? (
-                          <img className="publication-detail__thumb-img" src={thumbSrc} alt="" aria-hidden="true" />
+                        {thumbImage ? (
+                          <ResponsivePicture
+                            image={thumbImage}
+                            className="publication-detail__thumb-img"
+                            decorative
+                            loading="lazy"
+                            fallbackAlt={`${publication.title} thumbnail ${idx + 1}`}
+                          />
                         ) : (
                           <span className="publication-detail__thumb-placeholder" aria-hidden="true" />
                         )}

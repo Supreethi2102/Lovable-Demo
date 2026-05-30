@@ -64,11 +64,7 @@ export const SiteFooter: React.FC = () => {
     <>
       <footer className="site-footer" role="contentinfo">
         <div className="site-footer__inner">
-          <div className="site-footer__left">
-            <img src="/icons/Brand logo.svg" alt="Samantha Jane Smith logo" className="site-footer__logo" />
-            <small className="site-footer__copyright">© 2026 Samantha Jane Smith, All rights reserved.</small>
-          </div>
-          <nav className="site-footer__right" aria-label="Footer navigation">
+          <nav className="site-footer__nav" aria-label="Footer navigation">
             <button
               ref={sustainabilityBtnRef}
               type="button"
@@ -144,6 +140,13 @@ export const SiteFooter: React.FC = () => {
               <span>Linkedin</span>
             </a>
           </nav>
+          <div className="site-footer__brand">
+            <img src="/icons/Brand logo.svg" alt="Samantha Jane Smith" className="site-footer__logo" />
+            <div className="site-footer__legal">
+              <small className="site-footer__copyright-line">© 2026 Samantha jane Smith</small>
+              <small className="site-footer__copyright-line">All rights reserved</small>
+            </div>
+          </div>
         </div>
       </footer>
 

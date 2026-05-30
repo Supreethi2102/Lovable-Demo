@@ -1,14 +1,34 @@
+import type { PublicationImage, RasterImageSources } from '../utils/imageFormats';
+
 export type PublicationDetail = {
   id: number;
   title: string;
   subtitle: string;
-  image: string;
+  image: PublicationImage;
   modalSubtitle?: string;
   intro?: string;
   bullets?: string[];
   conclusion?: string;
-  galleryImages?: string[];
+  galleryImages?: PublicationImage[];
 };
+
+const ARCHITECTURE_NZ_GALLERY: RasterImageSources[] = [
+  {
+    avif: '/Archive avif/architecture-nz-exhibition-reviews-magazine-print.avif',
+    webp: '/Archive webp/architecture-nz-exhibition-reviews-magazine-print.webp',
+    alt: 'Architecture New Zealand magazine spread — exhibition reviews feature with editorial typography and photography',
+  },
+  {
+    avif: '/Archive avif/architecture-nz-kelly-ranges-magazine-print.avif',
+    webp: '/Archive webp/architecture-nz-kelly-ranges-magazine-print.webp',
+    alt: 'Architecture New Zealand magazine spread — Kelly Ranges project showcase with architectural photography and layout',
+  },
+  {
+    avif: '/Archive avif/architecture-nz-aga-khan-awards-magazine-print.avif',
+    webp: '/Archive webp/architecture-nz-aga-khan-awards-magazine-print.webp',
+    alt: 'Architecture New Zealand magazine spread — Aga Khan Awards feature with project imagery and editorial design',
+  },
+];
 
 export const publications: PublicationDetail[] = [
   {
@@ -95,14 +115,14 @@ export const publications: PublicationDetail[] = [
     id: 9,
     title: 'Architecture New Zealand',
     subtitle: 'Layout/Art direction',
-    image: '/misc/81183903d1a5b39abc75683b7deb5957a7a26ddf.png',
+    image: ARCHITECTURE_NZ_GALLERY[0],
     modalSubtitle: 'Archived magazine',
     intro:
       'I freelanced for Architecture New\u00A0Zealand, AGM Publishing’s flagship journal covering built work and design discourse across Aotearoa.\n\nWork focused on layouts for long-form features, project showcases, and editorial articles across issues.',
     bullets: ['Organised dense content clearly', 'Applied systems to complex imagery', 'Balanced visuals and text for impact'],
     conclusion:
       'Collaborated closely with the editor to craft strong, clear visual narratives. The\u00A0project honed skills in adapting systems for image-rich work.',
-    galleryImages: Array(16).fill('/misc/81183903d1a5b39abc75683b7deb5957a7a26ddf.png'),
+    galleryImages: ARCHITECTURE_NZ_GALLERY,
   },
   {
     id: 11,
@@ -153,12 +173,16 @@ export function getPublicationById(id: number): PublicationDetail | undefined {
   return publications.find((p) => p.id === id);
 }
 
-export function getGalleryImages(pub: PublicationDetail): string[] {
+export function getGalleryImages(pub: PublicationDetail): PublicationImage[] {
   const DEFAULT_A = 16;
   const DEFAULT_B = 13;
   const fallbackLen = pub.id % 2 === 0 ? DEFAULT_A : DEFAULT_B;
 
-  const list = (pub.galleryImages ?? []).filter((s) => typeof s === 'string' && s.trim().length > 0);
+  const list = (pub.galleryImages ?? []).filter((item) => {
+    if (typeof item === 'string') return item.trim().length > 0;
+    return Boolean(item.avif && item.webp);
+  });
+
   if (list.length > 1) return list;
 
   // If only one (or none), repeat the main image so the UI always shows 13/16.

@@ -334,6 +334,43 @@
   order: 2;
 }
 
+@media (min-width: 1025px) {
+  .site-footer {
+    padding: 24px 0;
+    margin-left: calc(-1 * max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2)));
+    margin-right: 0;
+    border-top: none;
+  }
+
+  .site-footer__inner {
+    padding: 0 var(--padding-x, 112px);
+  }
+
+  .site-footer__brand {
+    flex-direction: row;
+  }
+
+  .site-footer__logo {
+    height: 24px;
+  }
+
+  .site-footer__legal {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: nowrap;
+  }
+
+  .site-footer__copyright-line {
+    display: inline;
+    line-height: normal;
+    white-space: nowrap;
+  }
+
+  .site-footer__copyright-line + .site-footer__copyright-line::before {
+    content: ", ";
+  }
+}
+
 .site-footer__link {
   display: flex;
   align-items: center;

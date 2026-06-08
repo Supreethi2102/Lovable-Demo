@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useLayoutEffect, useCallback, useRef } from 'react';
-import { Palette, User, ChatsCircle, Sun, SunHorizon, CloudFog, MoonStars, CloudMoon, Moon, Phone, PaintBrush, Megaphone, Package, BookOpen, Ruler, NotePencil, CaretDown } from '@phosphor-icons/react';
+import { Palette, User, ChatsCircle, Sun, SunHorizon, CloudFog, MoonStars, CloudMoon, Moon, EnvelopeSimple, PaintBrush, Megaphone, Package, BookOpen, Ruler, NotePencil, CaretDown } from '@phosphor-icons/react';
 import './Header.css';
 
 export const Header: React.FC = () => {
@@ -11,7 +11,15 @@ export const Header: React.FC = () => {
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
   const [activeTheme, setActiveTheme] = useState('light');
+  const [hoveredThemeOption, setHoveredThemeOption] = useState<string | null>(null);
+  const [hoveredNavLink, setHoveredNavLink] = useState<string | null>(null);
   const [isTabletViewport, setIsTabletViewport] = useState(false);
+
+  const navIconWeight = (linkId: string, isOpen = false) =>
+    isOpen || hoveredNavLink === linkId ? 'fill' : 'regular';
+
+  const themeIconWeight = (themeId: string) =>
+    activeTheme === themeId || hoveredThemeOption === themeId ? 'fill' : 'regular';
 
   // Expose the fixed header height as a CSS variable so pages can pad correctly.
   /* useLayoutEffect: set before paint so hero padding-top matches real header (avoids clipped headline). */
@@ -200,8 +208,12 @@ export const Header: React.FC = () => {
             onClick={toggleMegaMenu}
             aria-expanded={isMegaMenuOpen}
             aria-haspopup="menu"
+            onMouseEnter={() => setHoveredNavLink('work')}
+            onMouseLeave={() => setHoveredNavLink(null)}
+            onFocus={() => setHoveredNavLink('work')}
+            onBlur={() => setHoveredNavLink(null)}
           >
-            <Palette size={24} weight={'regular'} className="header__nav-icon" aria-hidden="true" />
+            <Palette size={24} weight={navIconWeight('work', isMegaMenuOpen)} className="header__nav-icon" aria-hidden="true" />
             <span>Work</span>
           </a>
           
@@ -286,16 +298,24 @@ export const Header: React.FC = () => {
           href="#about" 
           className="header__nav-link"
           onClick={(e) => scrollToSection(e, '#about')}
+          onMouseEnter={() => setHoveredNavLink('about')}
+          onMouseLeave={() => setHoveredNavLink(null)}
+          onFocus={() => setHoveredNavLink('about')}
+          onBlur={() => setHoveredNavLink(null)}
         >
-          <User size={24} weight={'regular'} className="header__nav-icon" aria-hidden="true" />
+          <User size={24} weight={navIconWeight('about')} className="header__nav-icon" aria-hidden="true" />
           <span>About</span>
         </a>
         <a 
           href="#testimonials" 
           className="header__nav-link"
           onClick={(e) => scrollToSection(e, '#testimonials')}
+          onMouseEnter={() => setHoveredNavLink('testimonials')}
+          onMouseLeave={() => setHoveredNavLink(null)}
+          onFocus={() => setHoveredNavLink('testimonials')}
+          onBlur={() => setHoveredNavLink(null)}
         >
-          <ChatsCircle size={24} weight="regular" className="header__nav-icon" aria-hidden="true" />
+          <ChatsCircle size={24} weight={navIconWeight('testimonials')} className="header__nav-icon" aria-hidden="true" />
           <span>Testimonials</span>
         </a>
         <div 
@@ -314,8 +334,12 @@ export const Header: React.FC = () => {
             aria-label="Toggle theme"
             aria-expanded={isThemeMenuOpen}
             aria-haspopup="menu"
+            onMouseEnter={() => setHoveredNavLink('theme')}
+            onMouseLeave={() => setHoveredNavLink(null)}
+            onFocus={() => setHoveredNavLink('theme')}
+            onBlur={() => setHoveredNavLink(null)}
           >
-            <Sun size={24} weight={'regular'} className="header__nav-icon" aria-hidden="true" />
+            <Sun size={24} weight={navIconWeight('theme', isThemeMenuOpen)} className="header__nav-icon" aria-hidden="true" />
             <span>Light</span>
           </button>
 
@@ -328,48 +352,72 @@ export const Header: React.FC = () => {
                 type="button"
                 className={`theme-menu__option ${activeTheme === 'light' ? 'theme-menu__option--active' : ''}`}
                 onClick={() => setActiveTheme('light')}
+                onMouseEnter={() => setHoveredThemeOption('light')}
+                onMouseLeave={() => setHoveredThemeOption(null)}
+                onFocus={() => setHoveredThemeOption('light')}
+                onBlur={() => setHoveredThemeOption(null)}
               >
-                <Sun size={24} weight="regular" aria-hidden="true" />
+                <Sun size={24} weight={themeIconWeight('light')} aria-hidden="true" />
                 <span>Light</span>
               </button>
               <button 
                 type="button"
                 className={`theme-menu__option ${activeTheme === 'dawn' ? 'theme-menu__option--active' : ''}`}
                 onClick={() => setActiveTheme('dawn')}
+                onMouseEnter={() => setHoveredThemeOption('dawn')}
+                onMouseLeave={() => setHoveredThemeOption(null)}
+                onFocus={() => setHoveredThemeOption('dawn')}
+                onBlur={() => setHoveredThemeOption(null)}
               >
-                <SunHorizon size={24} weight="regular" aria-hidden="true" />
+                <SunHorizon size={24} weight={themeIconWeight('dawn')} aria-hidden="true" />
                 <span>Dawn</span>
               </button>
               <button 
                 type="button"
                 className={`theme-menu__option ${activeTheme === 'aurora' ? 'theme-menu__option--active' : ''}`}
                 onClick={() => setActiveTheme('aurora')}
+                onMouseEnter={() => setHoveredThemeOption('aurora')}
+                onMouseLeave={() => setHoveredThemeOption(null)}
+                onFocus={() => setHoveredThemeOption('aurora')}
+                onBlur={() => setHoveredThemeOption(null)}
               >
-                <CloudFog size={24} weight="regular" aria-hidden="true" />
+                <CloudFog size={24} weight={themeIconWeight('aurora')} aria-hidden="true" />
                 <span>Aurora</span>
               </button>
               <button 
                 type="button"
                 className={`theme-menu__option ${activeTheme === 'nebula' ? 'theme-menu__option--active' : ''}`}
                 onClick={() => setActiveTheme('nebula')}
+                onMouseEnter={() => setHoveredThemeOption('nebula')}
+                onMouseLeave={() => setHoveredThemeOption(null)}
+                onFocus={() => setHoveredThemeOption('nebula')}
+                onBlur={() => setHoveredThemeOption(null)}
               >
-                <CloudMoon size={24} weight="regular" aria-hidden="true" />
+                <CloudMoon size={24} weight={themeIconWeight('nebula')} aria-hidden="true" />
                 <span>Nebula</span>
               </button>
               <button 
                 type="button"
                 className={`theme-menu__option ${activeTheme === 'eclipse' ? 'theme-menu__option--active' : ''}`}
                 onClick={() => setActiveTheme('eclipse')}
+                onMouseEnter={() => setHoveredThemeOption('eclipse')}
+                onMouseLeave={() => setHoveredThemeOption(null)}
+                onFocus={() => setHoveredThemeOption('eclipse')}
+                onBlur={() => setHoveredThemeOption(null)}
               >
-                <MoonStars size={24} weight="regular" aria-hidden="true" />
+                <MoonStars size={24} weight={themeIconWeight('eclipse')} aria-hidden="true" />
                 <span>Eclipse</span>
               </button>
               <button 
                 type="button"
                 className={`theme-menu__option ${activeTheme === 'dark' ? 'theme-menu__option--active' : ''}`}
                 onClick={() => setActiveTheme('dark')}
+                onMouseEnter={() => setHoveredThemeOption('dark')}
+                onMouseLeave={() => setHoveredThemeOption(null)}
+                onFocus={() => setHoveredThemeOption('dark')}
+                onBlur={() => setHoveredThemeOption(null)}
               >
-                <Moon size={24} weight="regular" aria-hidden="true" />
+                <Moon size={24} weight={themeIconWeight('dark')} aria-hidden="true" />
                 <span>Dark</span>
               </button>
             </div>
@@ -384,7 +432,7 @@ export const Header: React.FC = () => {
         onClick={(e) => scrollToSection(e, '#contact')}
       >
         <span className="btn__icon" aria-hidden="true">
-          <Phone size={24} weight="regular" color="currentColor" />
+          <EnvelopeSimple size={24} weight="regular" color="currentColor" />
         </span>
         <span>Contact</span>
       </a>
@@ -496,7 +544,7 @@ export const Header: React.FC = () => {
           tabIndex={isMobileMenuOpen ? 0 : -1}
         >
           <span className="btn__icon" aria-hidden="true">
-            <Phone size={24} weight="regular" color="currentColor" />
+            <EnvelopeSimple size={24} weight="regular" color="currentColor" />
           </span>
           <span>Contact</span>
         </a>

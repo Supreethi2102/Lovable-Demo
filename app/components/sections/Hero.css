@@ -80,8 +80,8 @@
 @media (max-width: 1200px) {
   .hero-section {
     gap: 32px;
-    padding-left: clamp(32px, 5vw, 112px);
-    padding-right: clamp(32px, 5vw, 112px);
+    padding-left: var(--padding-x);
+    padding-right: var(--padding-x);
   }
 
   .hero__content {
@@ -104,8 +104,8 @@
     justify-items: center;
     padding-top: calc(var(--header-height, 96px) + clamp(24px, 4vw, 36px));
     padding-bottom: max(48px, env(safe-area-inset-bottom, 0px));
-    padding-left: clamp(24px, 5vw, 64px);
-    padding-right: clamp(24px, 5vw, 64px);
+    padding-left: var(--padding-x);
+    padding-right: var(--padding-x);
     min-height: auto;
     gap: 32px;
     overflow: visible;
@@ -147,8 +147,8 @@
     padding-top: calc(var(--header-height, 96px) + clamp(20px, 5vw, 32px));
     padding-bottom: max(36px, env(safe-area-inset-bottom, 0px));
     gap: 24px;
-    padding-left: clamp(20px, 4vw, 48px);
-    padding-right: clamp(20px, 4vw, 48px);
+    padding-left: var(--padding-x);
+    padding-right: var(--padding-x);
   }
 
   .hero__content {

@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, useId } from 'react';
-import { ArrowSquareOut, X } from '@phosphor-icons/react';
+import { ArrowSquareOut, XCircle } from '@phosphor-icons/react';
 import './Destinations.css';
 
 // Destination data — expanded card layout matches Figma node 1408-2357 (Your rainbow panorama)
@@ -12,7 +12,7 @@ const destinations = {
     expandedImage: '/destinations/Opened panorama.png',
     size: 'wide',
     title: 'Your rainbow panorama',
-    artist: 'Your rainbow panorama by Olafur Eliasson.',
+    artist: 'Your rainbow panorama by Olafur Eliasson',
     photographer: 'Photo by Julia Taubitz',
     whyCity: 'ARoS Museum blends art and architecture into one experience. Its circular rooftop walkway turns the building into something you move through, not just view.',
     whatDrawsMe: 'Colour reshapes the city from within the walkway. Aarhus shifts mood without changing form.',
@@ -30,7 +30,7 @@ const destinations = {
     title: 'Seven Magic Mountains',
     noImageBorder: true,
     imageStrokeTop: true,
-    artist: 'Seven Magic Mountains by Ugo Rondinone.',
+    artist: 'Seven Magic Mountains by Ugo Rondinone',
     photographer: 'Photo by Erda Estremera',
     whyCity: 'Seven Magic Mountains in Nevada brings colour and scale to the desert. Neon stacked limestone boulders, 9 to 11 metres tall, create a striking desert artwork.',
     whatDrawsMe: 'The towers balance spectacle with simplicity. Bright colours and organic forms create framed, deliberate views.',
@@ -44,7 +44,7 @@ const destinations = {
     expandedImage: '/destinations/Calpe opened.png',
     size: 'normal',
     title: 'La Muralla Roja',
-    artist: 'La Muralla Roja by Ricardo Bofill.',
+    artist: 'La Muralla Roja by Ricardo Bofill',
     photographer: 'Photo by Lena Polishko',
     whyCity: 'La Muralla Roja reimagines a fortress through bold geometry and colour. Stepped volumes and interlocking courtyards make the structure feel sculptural and inhabitable.',
     whatDrawsMe: 'Its maze-like paths invite wandering. Private terraces and shared paths use warm and cool tones to frame views that feel intentional but open.',
@@ -59,7 +59,7 @@ const destinations = {
     gridImage: '/destinations/Grid Giza.png',
     size: 'normal',
     title: 'The Great Sphinx',
-    artist: 'The Great Sphinx, built under Pharaoh Khafre.',
+    artist: 'The Great Sphinx, built under Pharaoh Khafre',
     photographer: 'Photo by Dilip Podda',
     whyCity: 'The Great Sphinx is carved from a single limestone block. Its human head and lion body, combined with scale, reflect the ambition of early Egyptian builders.',
     whatDrawsMe: 'Its lines feel steady and assured. Weathering adds texture, and its placement ties it to the surrounding\u00A0pyramids.',
@@ -77,8 +77,8 @@ const destinations = {
     size: 'tall',
     title: 'Creek Harbour',
     noImageBorder: true,
-    artist: 'Creek Harbour by Santiago Calatrava.',
-    photographer: 'Photo by Florian Wehde.',
+    artist: 'Creek Harbour by Santiago Calatrava',
+    photographer: 'Photo by Florian Wehde',
     whyCity: 'Dubai treats the city as a designed composition. Its mix of Islamic geometry, futurism, and engineered spectacle makes the urban landscape intentional.',
     whatDrawsMe: 'Calatrava-inspired arches frame the skyline like living artwork. Seen through them, the city becomes the central focus.',
     howInfluences: 'I explore how framing guides attention. Layout and hierarchy help highlight content without distraction.',
@@ -93,8 +93,8 @@ const destinations = {
     gridImage: '/destinations/Grid Marrakech.png',
     size: 'wide',
     title: 'The Jardin Majorelle',
-    artist: 'The Jardin Majorelle by Jacques Majorelle.',
-    photographer: 'Photo by Riccardo Monteleone.',
+    artist: 'The Jardin Majorelle by Jacques Majorelle',
+    photographer: 'Photo by Riccardo Monteleone',
     whyCity: 'The Jardin Majorelle and the adjacent YSL Museum show how colour and craft shape identity. Moroccan design, modern lines, and lush planting give the spaces a vivid\u00A0feel.',
     whatDrawsMe: 'Majorelle Blue contrasts with dense greenery, while the museum highlights silhouette and palette as expressive tools.',
     howInfluences: 'I consider how visual language sets tone. Hierarchy, colour, and trend-aware choices shape a clear, intentional design\u00A0experience.'
@@ -108,8 +108,8 @@ const destinations = {
     gridImage: '/destinations/Grid hawa Mahal.png',
     size: 'normal',
     title: 'The Hawa Mahal',
-    artist: 'The Hawa Mahal, pink sandstone façade.',
-    photographer: 'Photo by Aditya Kumar.',
+    artist: 'The Hawa Mahal, pink sandstone façade',
+    photographer: 'Photo by Aditya Kumar',
     whyCity: 'Jaipur shows how beauty, function, and colour coexist. Pink façades, natural cooling, and human-scale planning respond thoughtfully to daily life.',
     whatDrawsMe: 'Its façade and 953 jharokha windows create airflow, privacy, and rhythm. Practical needs become a defining visual\u00A0identity.',
     howInfluences: 'I focus on solving multiple needs simultaneously. Structure and detail allow me to create clarity and purpose in my\u00A0work.',
@@ -126,8 +126,8 @@ const destinations = {
     title: 'Pumpkin',
     noImageBorder: true,
     imageStrokeTop: true,
-    artist: 'Pumpkin by Yayoi Kusama.',
-    photographer: 'Photo by Rebecca Lam.',
+    artist: 'Pumpkin by Yayoi Kusama',
+    photographer: 'Photo by Rebecca Lam',
     whyCity: 'Naoshima blends art, architecture, and landscape with precision. Underground museums and site-specific installations make the island a curated experience.',
     whatDrawsMe: 'Kusama\'s spotted sculpture is playful yet calm. Its repetition and scale stand out against the natural shoreline.',
     howInfluences: 'I use pattern, scale, and colour intentionally. This helps me craft work that is organised, approachable, and invites\u00A0exploration.',
@@ -230,7 +230,7 @@ const DestinationCard: React.FC<DestinationCardProps> = ({
       >
         <button 
           type="button"
-          className="destination-expanded__close" 
+          className="btn-close destination-expanded__close" 
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
@@ -238,7 +238,7 @@ const DestinationCard: React.FC<DestinationCardProps> = ({
           }}
           aria-label={`Close ${destination.city} details`}
         >
-          Close <X size={16} weight="regular" className="destination-expanded__close-icon" aria-hidden="true" />
+          Close <XCircle size={16} weight="regular" className="btn-close__icon" aria-hidden="true" />
         </button>
         
         {layoutDirection === 'image-left' ? (
@@ -698,7 +698,7 @@ export const Destinations: React.FC = () => {
         </p>
         <button 
           type="button"
-          className="btn btn--secondary btn--icon-left destinations__share-btn"
+          className="btn btn--secondary btn--on-surface btn--icon-left destinations__share-btn"
           onMouseEnter={() => setIsShareHovered(true)}
           onMouseLeave={() => setIsShareHovered(false)}
           aria-label="Share your design inspiration with me"

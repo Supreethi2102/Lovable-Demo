@@ -5,8 +5,8 @@
    ============================================================ */
    @media (max-width: 1300px) {
     .case-study-detail {
-      padding-left: clamp(12px, 5vw, 56px);
-      padding-right: clamp(12px, 5vw, 56px);
+      padding-left: var(--padding-x, clamp(52px, 5vw + 28px, 80px));
+      padding-right: var(--padding-x, clamp(52px, 5vw + 28px, 80px));
       padding-top: calc(var(--header-height, 0px) + 32px);
       overflow-x: hidden;
     }
@@ -94,7 +94,7 @@
       flex-direction: column;
       align-items: stretch;
       gap: 24px;
-      min-height: 0;
+      min-height: var(--case-study-sidebar-sync-height, 0);
       width: 156px;
       max-width: 156px;
       overflow: visible;
@@ -254,7 +254,7 @@
       align-self: flex-end;
       min-width: 100px;
       min-height: 44px;
-      padding: 8px 10px;
+      padding: 12px;
     }
   
     .case-study-detail__content {
@@ -1213,8 +1213,8 @@
   @media (max-width: 900px) {
     /* --- Page shell --- */
     .case-study-detail {
-      padding-left: 12px;
-      padding-right: 12px;
+      padding-left: var(--padding-x, clamp(28px, 4vw + 18px, 52px));
+      padding-right: var(--padding-x, clamp(28px, 4vw + 18px, 52px));
       padding-top: calc(var(--header-height, 0px) + 20px);
       padding-bottom: 48px;
       background: #eceff1;
@@ -1340,7 +1340,7 @@
       justify-content: center;
       min-height: 48px;
       height: 48px;
-      padding: 12px 16px;
+      padding: 12px;
       border-radius: 8px;
       box-sizing: border-box;
       border: 1px solid #7150e5;

@@ -80,30 +80,48 @@
 }
 
 .testimonials__nav {
-  width: 52px; /* 24px icon + 14px padding each side */
+  width: 52px;
   height: 52px;
-  border: 1px solid #7150e5; /* Figma */
-  border-radius: 12px; /* Figma */
-  background: #f7f9fa; /* Figma */
+  border: 1px solid var(--btn-secondary-border);
+  border-radius: 12px;
+  background: var(--btn-secondary-surface-bg);
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  padding: 14px; /* Figma */
-  transition: all 0.2s ease;
+  padding: 14px;
+  color: var(--btn-primary);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
 .testimonials__nav:hover:not(:disabled) {
-  background: #7150e5;
+  background: var(--btn-primary-hover);
+  border-color: var(--btn-primary-hover);
+  color: var(--btn-white);
 }
 
-.testimonials__nav:hover:not(:disabled) svg path {
-  stroke: #ffffff;
+.testimonials__nav:active:not(:disabled) {
+  background: var(--btn-primary-active);
+  border-color: var(--btn-primary-active);
+  color: var(--btn-white);
+}
+
+.testimonials__nav:focus-visible {
+  outline: var(--btn-focus-outline);
+  outline-offset: var(--btn-focus-offset);
+}
+
+.testimonials__nav:hover:not(:disabled) svg path,
+.testimonials__nav:active:not(:disabled) svg path {
+  stroke: currentColor;
 }
 
 .testimonials__nav:disabled {
-  opacity: 0.5;
+  background: var(--btn-disabled-bg);
+  border-color: var(--btn-disabled-border);
+  color: var(--btn-disabled-text);
+  opacity: 1;
   cursor: not-allowed;
 }
 

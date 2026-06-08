@@ -400,7 +400,7 @@ export const CaseStudies: React.FC = () => {
         <footer className="case-studies__footer">
           <button 
             type="button"
-            className={`btn btn--secondary btn--icon-left view-all-btn ${hoveredViewAll ? 'view-all-btn--hovered' : ''}`}
+            className={`btn btn--secondary btn--on-surface btn--icon-left view-all-btn ${hoveredViewAll ? 'view-all-btn--hovered' : ''}`}
             onMouseEnter={() => setHoveredViewAll(true)}
             onMouseLeave={() => setHoveredViewAll(false)}
             aria-expanded={showAllCaseStudies}

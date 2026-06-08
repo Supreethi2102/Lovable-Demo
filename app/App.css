@@ -234,10 +234,11 @@ a:focus-visible {
   }
 }
 
-/* Responsive - Desktop (1200px and below) */
+/* Responsive - Desktop (1200px and below): fluid side inset for tablet / small laptop */
 @media (max-width: 1200px) {
   :root {
-    --padding-x: 64px;
+    /* ~52px at 700px viewport → ~80px at 1200px (4pt-friendly steps via clamp) */
+    --padding-x: clamp(52px, 5vw + 28px, 80px);
     --padding-y: 40px;
   }
 
@@ -250,10 +251,21 @@ a:focus-visible {
   }
 }
 
+/* Tablet / small laptop — cap line length where cards span nearly full width */
+@media (min-width: 701px) and (max-width: 1200px) {
+  :is(
+    .case-study-card__main,
+    .case-study-detail__hero-copy,
+    .case-study-detail__split-card .text-side,
+    .case-study-detail__brief-text
+  ) {
+    max-width: min(40rem, 100%);
+  }
+}
+
 /* Responsive - Tablet Landscape (1024px and below) */
 @media (max-width: 1024px) {
   :root {
-    --padding-x: 48px;
     --padding-y: 32px;
   }
 
@@ -290,10 +302,32 @@ a:focus-visible {
 }
 
 /* Responsive - Tablet Portrait (768px and below) */
-@media (max-width: 768px) {
+@media (max-width: 700px) {
   :root {
-    --padding-x: 32px;
+    --padding-x: clamp(28px, 4vw + 18px, 52px);
     --padding-y: 24px;
+  }
+
+  /* Body copy: use full content width with natural line breaks on small screens */
+  :is(
+    .hero__description,
+    .case-study-card__description,
+    .case-study-card__title,
+    .case-study-detail__hero-body,
+    .case-study-detail__hero-title,
+    .case-study-detail__hero-subtitle,
+    .case-study-detail__brief-intro,
+    .case-study-detail__split-card .text-side p,
+    .case-study-detail__text-panel p,
+    .publication-detail__paragraph,
+    .about-block1__text p,
+    .about-block3__text-block p,
+    .contact__form-side p
+  ) {
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: break-word;
+    text-wrap: pretty;
   }
 
   .main {

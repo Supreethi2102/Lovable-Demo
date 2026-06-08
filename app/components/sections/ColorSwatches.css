@@ -58,6 +58,20 @@
   max-width: 650px;
 }
 
+.color-swatches__text-mobile {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .color-swatches__text-desktop {
+    display: none;
+  }
+
+  .color-swatches__text-mobile {
+    display: inline;
+  }
+}
+
 /* Swatches Container - Cards coming from bottom */
 .color-swatches__container {
   max-width: var(--content-max-width, 1220px);
@@ -468,47 +482,17 @@ button.site-footer__link {
   align-items: flex-start;
   gap: 0;
   border-radius: 24px;
-  background: #FCFCFD;
+  background: #FBFBFC;
   overflow: auto;
   position: relative;
   box-sizing: border-box;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
 }
 
-.sustainability-modal__close:focus,
-.sustainability-modal__close:focus-visible {
-  outline: none;
-}
-
 .sustainability-modal__close {
   position: absolute;
   top: 32px;
   right: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 4px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  font-family: var(--font-family-ui);
-  font-size: var(--type-atkinson-text-md-size);
-  font-weight: 400;
-  line-height: var(--type-atkinson-text-md-lh);
-  letter-spacing: 0;
-  color: #111213;
-  z-index: 10;
-}
-
-.sustainability-modal__close:hover {
-  color: #333333;
-}
-
-.sustainability-modal__close-icon {
-  color: currentColor;
-  fill: currentColor;
-  flex-shrink: 0;
 }
 
 .sustainability-modal__content {
@@ -574,10 +558,10 @@ button.site-footer__link {
   border-bottom-color: #5238a8;
 }
 
-/* Contact me link – new line with spacing */
+/* Contact me link – new line with spacing below body text */
 .modal__contact-wrap {
   display: block;
-  margin-top: 12px;
+  margin-top: 24px;
 }
 
 .sustainability-modal__image-wrap {
@@ -661,8 +645,6 @@ button.site-footer__link {
     top: 32px;
     right: 32px;
     font-size: var(--type-atkinson-text-sm-size);
-    width: auto;
-    height: auto;
   }
 
   .sustainability-modal__content {
@@ -710,47 +692,17 @@ button.site-footer__link {
   align-items: flex-start;
   gap: 0;
   border-radius: 24px;
-  background: #FCFCFD;
+  background: #FBFBFC;
   overflow: auto;
   position: relative;
   box-sizing: border-box;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
 }
 
-.privacy-cookies-modal__close:focus,
-.privacy-cookies-modal__close:focus-visible {
-  outline: none;
-}
-
 .privacy-cookies-modal__close {
   position: absolute;
   top: 32px;
   right: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 4px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  font-family: var(--font-family-ui);
-  font-size: var(--type-atkinson-text-md-size);
-  font-weight: 400;
-  line-height: var(--type-atkinson-text-md-lh);
-  letter-spacing: 0;
-  color: #111213;
-  z-index: 10;
-}
-
-.privacy-cookies-modal__close:hover {
-  color: #333333;
-}
-
-.privacy-cookies-modal__close-icon {
-  color: currentColor;
-  fill: currentColor;
-  flex-shrink: 0;
 }
 
 .privacy-cookies-modal__content {
@@ -879,8 +831,6 @@ button.site-footer__link {
     top: 32px;
     right: 32px;
     font-size: var(--type-atkinson-text-sm-size);
-    width: auto;
-    height: auto;
   }
 
   .privacy-cookies-modal__content {
@@ -931,47 +881,17 @@ button.site-footer__link {
   align-items: flex-start;
   gap: 0;
   border-radius: 24px;
-  background: #FCFCFD;
+  background: #FBFBFC;
   overflow: auto;
   position: relative;
   box-sizing: border-box;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
 }
 
-.accessibility-modal__close:focus,
-.accessibility-modal__close:focus-visible {
-  outline: none;
-}
-
 .accessibility-modal__close {
   position: absolute;
   top: 32px;
   right: 32px;
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 4px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  font-family: var(--font-family-ui);
-  font-size: var(--type-atkinson-text-md-size);
-  font-weight: 400;
-  line-height: var(--type-atkinson-text-md-lh);
-  letter-spacing: 0;
-  color: #111213;
-  z-index: 10;
-}
-
-.accessibility-modal__close:hover {
-  color: #111213;
-}
-
-.accessibility-modal__close-icon {
-  color: currentColor;
-  fill: currentColor;
-  flex-shrink: 0;
 }
 
 .accessibility-modal__content {

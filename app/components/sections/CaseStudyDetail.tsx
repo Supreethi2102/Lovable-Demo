@@ -4,7 +4,7 @@ import {
   ArrowLeft,
   ClipboardText,
   SpeakerHigh,
-  X,
+  XCircle,
   ListBullets,
   Note,
   MagnifyingGlass,
@@ -19,6 +19,7 @@ import { SiteFooter } from './SiteFooter';
 import { CaseStudyCard, type CaseStudyCardStudy } from '../CaseStudyCard';
 import './CaseStudyDetail.css';
 import './case-study-detail-responsive.css';
+import { useCaseStudyListenHeroSync } from './useCaseStudyListenHeroSync';
 
 type NavSectionId =
   | 'overview'
@@ -282,7 +283,7 @@ const MORE_PROJECTS_TOY: CaseStudyCardStudy[] = [
     subtitle: 'Green Cross Health | Packaging',
     title: 'How do you turn a plastics ban into a brand moment?',
     description:
-      'A plastics ban opened the door to rethink how Life Pharmacy and Unichem show up. I designed paper bags as small moments of brand, culture and distinction.',
+      'A plastics ban opened the door to rethink how Life Pharmacy and Unichem show up. I designed paper bags as small moments of brand identity and culture',
     image: '/case-study-gch/9912d40ae739a7575ec4a7abed1a19cf05d03244.png',
     duration: '4 weeks',
     category: 'packaging',
@@ -305,9 +306,9 @@ export const CaseStudyDetail: React.FC = () => {
         heroImage: '/case-study-gch/9912d40ae739a7575ec4a7abed1a19cf05d03244.png',
         heroAlt: 'Brown paper retail bags in warm sunlight',
         subtitle: 'Packaging | Green Cross Health',
-        title: 'Retail paper bags',
+        title: 'More than a carry bag',
         body:
-          'A plastics ban opened the door to rethink how Life Pharmacy and Unichem show up. I designed paper bags as small moments of brand, culture and distinction.',
+          'A plastics ban opened the door to rethink how Life Pharmacy and Unichem show up. I designed paper bags as small moments of brand identity and culture',
         meta: 'Estimated read time: 3 minutes | Duration: 4 weeks',
       }
     : isMegaToy
@@ -711,6 +712,8 @@ export const CaseStudyDetail: React.FC = () => {
   const suppressSectionSpyTimerRef = useRef(0);
   const heroImageWrapRef = useRef<HTMLElement>(null);
   const heroImageRef = useRef<HTMLImageElement>(null);
+  const heroCardRef = useRef<HTMLElement>(null);
+  const sidebarRef = useRef<HTMLElement>(null);
   const heroScrollRafRef = useRef(0);
   /** 0 = full-bleed cinema; 1 = hero seated in card — driven by wheel/touch only (page does not scroll). */
   const cinemaProgressRef = useRef(0);
@@ -989,6 +992,8 @@ export const CaseStudyDetail: React.FC = () => {
     return () => mq.removeEventListener('change', onMqChange);
   }, [id]);
 
+  useCaseStudyListenHeroSync(heroCardRef, sidebarRef, [id, overview.title, overview.body]);
+
   useEffect(() => {
     return () => {
       window.clearTimeout(suppressSectionSpyTimerRef.current);
@@ -1122,7 +1127,7 @@ export const CaseStudyDetail: React.FC = () => {
           </div>
 
           <div className="case-study-detail__layout-body">
-          <aside className="case-study-detail__sidebar" aria-label="Case study sections">
+          <aside ref={sidebarRef} className="case-study-detail__sidebar" aria-label="Case study sections">
             <div className="case-study-detail__sidebar-top">
               <div className="case-study-detail__back-wrap case-study-detail__back-wrap--sidebar">
                 <button
@@ -1166,7 +1171,7 @@ export const CaseStudyDetail: React.FC = () => {
 
             <button type="button" className="case-study-detail__listen" aria-label="Listen to case study">
               <span className="case-study-detail__listen-icon" aria-hidden="true">
-                <SpeakerHigh size={24} weight="regular" color="#7150E5" />
+                <SpeakerHigh size={24} weight="regular" color="currentColor" />
               </span>
               <span className="case-study-detail__listen-label">Listen</span>
             </button>
@@ -1180,7 +1185,7 @@ export const CaseStudyDetail: React.FC = () => {
               }}
               className="case-study-detail__top"
             >
-              <article className="case-study-detail__hero-card">
+              <article ref={heroCardRef} className="case-study-detail__hero-card">
                 <figure ref={heroImageWrapRef} className="case-study-detail__hero-image-wrap">
                   <img
                     ref={heroImageRef}
@@ -1211,7 +1216,7 @@ export const CaseStudyDetail: React.FC = () => {
                 aria-label="Listen to case study"
               >
                 <span className="case-study-detail__listen-icon" aria-hidden="true">
-                  <SpeakerHigh size={24} weight="regular" color="#7150E5" />
+                  <SpeakerHigh size={24} weight="regular" color="currentColor" />
                 </span>
                 <span className="case-study-detail__listen-label">Listen</span>
               </button>
@@ -3267,8 +3272,10 @@ export const CaseStudyDetail: React.FC = () => {
               <CaseStudyCard key={study.subtitle} study={study} />
             ))}
           </div>
-          <button type="button" className="case-study-detail__view-all">
-            <Folders size={24} weight="regular" />
+          <button type="button" className="btn btn--secondary btn--on-surface btn--icon-left case-study-detail__view-all">
+            <span className="btn__icon" aria-hidden="true">
+              <Folders size={24} weight="regular" color="currentColor" />
+            </span>
             <span>View all cases</span>
           </button>
         </section>
@@ -3286,10 +3293,11 @@ export const CaseStudyDetail: React.FC = () => {
             <button
               ref={overviewModalCloseRef}
               type="button"
-              className="case-study-detail__overview-modal__close"
+              className="btn-close case-study-detail__overview-modal__close"
               onClick={closeOverviewModal}
+              aria-label="Close overview"
             >
-              Close <X size={16} weight="regular" className="case-study-detail__overview-modal__close-icon" aria-hidden="true" />
+              Close <XCircle size={16} weight="regular" className="btn-close__icon" aria-hidden="true" />
             </button>
             <div className="case-study-detail__overview-modal__body">
               <h2 id="case-study-overview-modal-title" className="case-study-detail__overview-modal__title">

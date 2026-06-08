@@ -58,7 +58,7 @@ export const Publications: React.FC = () => {
       aria-labelledby="publications-title"
     >
       <h2 id="publications-title" className="publications__title">
-        Project highlights <span className="publications__subtitle">Visual craft. Thoughtful work.</span>
+        Project highlights <span className="publications__subtitle">Visual craft and thoughtful work</span>
       </h2>
       
       <div 
@@ -75,7 +75,7 @@ export const Publications: React.FC = () => {
         <footer className="publications__footer">
           <button 
             type="button"
-            className="btn btn--secondary btn--icon-left view-publications-btn"
+            className="btn btn--secondary btn--on-surface btn--icon-left view-publications-btn"
             onMouseEnter={() => setIsViewHovered(true)}
             onMouseLeave={() => setIsViewHovered(false)}
             onClick={() => setShowAll(!showAll)}

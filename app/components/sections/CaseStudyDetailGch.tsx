@@ -16,6 +16,7 @@ import {
 import { SiteFooter } from './SiteFooter';
 import { CaseStudyCard, type CaseStudyCardStudy } from '../CaseStudyCard';
 import './CaseStudyDetail.css';
+import { useCaseStudyListenHeroSync } from './useCaseStudyListenHeroSync';
 import './case-study-detail-responsive.css';
 
 type NavSectionId =
@@ -135,6 +136,8 @@ export const CaseStudyDetailGch: React.FC = () => {
   const [activeSection, setActiveSection] = useState<NavSectionId>('overview');
   const [hoveredNavId, setHoveredNavId] = useState<NavSectionId | null>(null);
   const sectionsRef = useRef<Record<string, HTMLElement | null>>({});
+  const heroCardRef = useRef<HTMLElement>(null);
+  const sidebarRef = useRef<HTMLElement>(null);
   const suppressSectionSpyRef = useRef(false);
   const suppressSectionSpyTimerRef = useRef(0);
 
@@ -195,11 +198,13 @@ export const CaseStudyDetailGch: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
+  useCaseStudyListenHeroSync(heroCardRef, sidebarRef, [id]);
+
   return (
     <section className="case-study-detail" aria-labelledby="case-study-detail-title">
       <div className="case-study-detail__inner">
         <div className="case-study-detail__layout">
-          <aside className="case-study-detail__sidebar" aria-label="Case study sections">
+          <aside ref={sidebarRef} className="case-study-detail__sidebar" aria-label="Case study sections">
             <div className="case-study-detail__sidebar-top">
               <div className="case-study-detail__back-wrap">
                 <button
@@ -245,7 +250,7 @@ export const CaseStudyDetailGch: React.FC = () => {
 
             <button type="button" className="case-study-detail__listen" aria-label="Listen to case study">
               <span className="case-study-detail__listen-icon" aria-hidden="true">
-                <SpeakerHigh size={24} weight="regular" color="#7150E5" />
+                <SpeakerHigh size={24} weight="regular" color="currentColor" />
               </span>
               <span className="case-study-detail__listen-label">Listen</span>
             </button>
@@ -259,7 +264,7 @@ export const CaseStudyDetailGch: React.FC = () => {
               }}
               className="case-study-detail__top"
             >
-              <article className="case-study-detail__hero-card">
+              <article ref={heroCardRef} className="case-study-detail__hero-card">
                 <figure className="case-study-detail__hero-image-wrap">
                   <img
                     className="case-study-detail__hero-image case-study-detail__hero-image--cinema case-study-detail__hero-image--figma"
@@ -270,11 +275,11 @@ export const CaseStudyDetailGch: React.FC = () => {
                 <div className="case-study-detail__hero-copy">
                   <p className="case-study-detail__hero-subtitle">Packaging | Green Cross</p>
                   <h1 id="case-study-detail-title" className="case-study-detail__hero-title">
-                    Retail paper bags
+                    More than a carry bag
                   </h1>
                   <p className="case-study-detail__hero-body">
-                    Green Cross needed a practical paper bag system across Life Pharmacy and Unichem. I led design
-                    direction to balance sustainability, brand clarity, and production reality.
+                    A plastics ban opened the door to rethink how Life Pharmacy and Unichem show up. I designed paper
+                    bags as small moments of brand identity and culture
                   </p>
                   <p className="case-study-detail__hero-meta">Estimated read time: 3 minutes | Duration: 4 weeks</p>
                 </div>
@@ -691,8 +696,10 @@ export const CaseStudyDetailGch: React.FC = () => {
               <CaseStudyCard key={study.subtitle} study={study} />
             ))}
           </div>
-          <button type="button" className="case-study-detail__view-all">
-            <Folders size={24} weight="regular" />
+          <button type="button" className="btn btn--secondary btn--on-surface btn--icon-left case-study-detail__view-all">
+            <span className="btn__icon" aria-hidden="true">
+              <Folders size={24} weight="regular" color="currentColor" />
+            </span>
             <span>View all cases</span>
           </button>
         </section>

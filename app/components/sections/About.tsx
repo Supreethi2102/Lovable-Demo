@@ -21,17 +21,17 @@ const AboutBlock1: React.FC<AboutBlock1Props> = ({ onMoreClick, isExpanded }) =>
         <h2 id="about-title-1" className="about-block1__title">A world of ideas</h2>
         
         <div className="about-block1__text">
-          <p>I'm a UX, UI, and graphic designer based in Aotearoa New Zealand. My background spans campaign concepts, art-directed photoshoots, print mailers, editorial layouts, and digital experiences. That mix taught me to design with clarity, emotion, and storytelling across any medium.</p>
+          <p>I&apos;m an Art Director and UX/UI designer based in Aotearoa New Zealand. My background spans campaign concepts, art-directed photoshoots, print mailers, editorial layouts, and digital experiences. Working across disciplines has taught me how to shape ideas and stories for different audiences. I aim to create work that feels clear, thoughtful, and genuinely useful.</p>
           <p className="about-block1__spacer" aria-hidden="true">&nbsp;</p>
           <p>I'm drawn to work that:</p>
           <ul className="about-block1__list">
-            <li>makes complex things feel simple</li>
-            <li>blends function with beauty</li>
-            <li>designs with culture, emotion, and context in mind</li>
+            <li>helps people feel informed, confident, and understood</li>
+            <li>combines clarity with character</li>
+            <li>takes inspiration from the people, places, and stories behind it</li>
           </ul>
           <p>I'm steadily building my accessibility practice. I care about designing for everyone and know there's always more to learn. I want to approach accessibility with intention, not box-ticking.</p>
           <p className="about-block1__spacer" aria-hidden="true">&nbsp;</p>
-          <p>Most of my time is spent in Figma and InDesign, sketching flows, building design systems, refining typographic hierarchy, or nudging layouts until everything clicks. Whether solo or collaborating with developers, marketers, or writers, I bring curiosity, empathy, and a careful eye for the details that matter.</p>
+          <p>Most of my time is spent in Figma and InDesign, sketching flows, building design systems, refining typographic hierarchy, exploring AI-assisted workflows, or nudging layouts until everything clicks. Whether solo or collaborating with developers, marketers, or writers, I bring curiosity, empathy, and a careful eye for the details that matter.</p>
           
           {!isExpanded && (
             <button 
@@ -326,14 +326,14 @@ const AboutBlock3: React.FC<AboutBlock3Props> = ({ onCollapseClick }) => {
           <ul className="about-block3__list" aria-label="Creative influences">
             <li>Dior exhibition in Paris, pure craftsmanship and fabric magic</li>
             <li>Barcelona's Sagrada Familia, structure and imagination in harmony</li>
-            <li>Yayoi Kusama's polka dot world in Wellington, joyful, surreal, human</li>
+            <li>Yayoi Kusama&apos;s polka dot world in Wellington, New Zealand, joyful, surreal, human</li>
           </ul>
           <p>These experiences remind me why I design. To move people, even just a little.</p>
           <p className="about-block3__spacer" aria-hidden="true">&nbsp;</p>
           <h3 className="about-block3__title">Small Joys</h3>
           <p>Moodboards are where ideas start to form, and I probably have too much fun naming colour palettes. One recent favourite is Nymphéas Blue, inspired by sitting in front of Monet's Water Lilies at the Musée de l'Orangerie. Watching how the blue shifted with light and space reminded me how colour, mood, and context interact, lessons I carry into my work.</p>
           <p className="about-block3__spacer" aria-hidden="true">&nbsp;</p>
-          <p>This site stays mostly black and white so the work takes centre stage. The accent purple adds a little personality, and you can switch modes if you want a touch more colour. If I'm deep in Figma, there's probably a stash of Natural Confectionery Co lollies nearby. Fruity chews are my unofficial reward system, one lolly at a time.</p>
+          <p>This site uses a mostly neutral palette so the work takes centre stage. The accent purple adds a little personality, and if you&apos;re curious, you&apos;ll find a few other colour modes tucked away too. If I&apos;m deep in Figma, there&apos;s probably a stash of Natural Confectionery Co lollies nearby. Fruity chews are my unofficial reward system, one lolly at a time.</p>
           
           <button 
             type="button"

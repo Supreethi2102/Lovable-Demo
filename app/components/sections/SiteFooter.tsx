@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Cookie, Leaf, LinkedinLogo, PersonSimpleCircle, X } from '@phosphor-icons/react';
+import { Cookie, Leaf, LinkedinLogo, PersonSimpleCircle, XCircle } from '@phosphor-icons/react';
 import './ColorSwatches.css';
 
 export const SiteFooter: React.FC = () => {
@@ -165,11 +165,11 @@ export const SiteFooter: React.FC = () => {
             <button
               ref={sustainabilityCloseRef}
               type="button"
-              className="sustainability-modal__close"
+              className="btn-close sustainability-modal__close"
               onClick={closeSustainability}
               aria-label="Close Sustainability"
             >
-              Close <X size={16} weight="regular" className="sustainability-modal__close-icon" aria-hidden="true" />
+              Close <XCircle size={16} weight="regular" className="btn-close__icon" aria-hidden="true" />
             </button>
             <div className="sustainability-modal__content">
               <div className="sustainability-modal__text">
@@ -211,11 +211,11 @@ further, I'd love to hear them.
             <button
               ref={privacyCookiesCloseRef}
               type="button"
-              className="privacy-cookies-modal__close"
+              className="btn-close privacy-cookies-modal__close"
               onClick={closePrivacyCookies}
               aria-label="Close Privacy and cookies"
             >
-              Close <X size={16} weight="regular" className="privacy-cookies-modal__close-icon" aria-hidden="true" />
+              Close <XCircle size={16} weight="regular" className="btn-close__icon" aria-hidden="true" />
             </button>
             <div className="privacy-cookies-modal__content">
               <div className="privacy-cookies-modal__text">
@@ -254,11 +254,11 @@ further, I'd love to hear them.
             <button
               ref={accessibilityCloseRef}
               type="button"
-              className="accessibility-modal__close"
+              className="btn-close accessibility-modal__close"
               onClick={closeAccessibility}
               aria-label="Close Accessibility"
             >
-              Close <X size={16} weight="regular" className="accessibility-modal__close-icon" aria-hidden="true" />
+              Close <XCircle size={16} weight="regular" className="btn-close__icon" aria-hidden="true" />
             </button>
             <div className="accessibility-modal__content">
               <div className="accessibility-modal__text">

@@ -4,24 +4,33 @@
  */
 
 :root {
-  --btn-primary: #7150E5;
-  --btn-primary-hover: #5E3EC9;
+  --btn-primary: #7150e5;
+  --btn-primary-hover: #5e3ec9;
   --btn-primary-active: #5238a8;
   --btn-primary-focus: #5340c4;
-  --btn-secondary-border: #7150E5;
-  --btn-secondary-hover-border: #5E3EC9;
-  --btn-secondary-active-bg: #e8e0ff;
+  --btn-secondary-border: #7150e5;
+  --btn-secondary-hover-border: #5e3ec9;
+  --btn-secondary-bg: #ffffff;
+  --btn-secondary-surface-bg: #f7f9fa;
   /** Purple scale 100 — lightest tint (hover surfaces, e.g. case study card tabs) */
-  --btn-purple-100-bg: #f0ecfe;
+  --btn-purple-100-bg: #eee8fe;
   --btn-purple-100-text: #4c3cac;
+  --surface-light-bg: #fbfbfc;
+  --surface-light-stroke: #e1e5e9;
+  --surface-light-shadow: 0 12px 32px rgba(17, 18, 19, 0.1);
+  --text-primary: #111213;
+  --text-secondary: #3c3f43;
   --btn-disabled-bg: #e8e9eb;
   --btn-disabled-text: #9ca0a6;
   --btn-disabled-border: #d3d6da;
+  --btn-loading-bg: #6b7280;
+  --btn-loading-border: #6b7280;
   --btn-white: #ffffff;
   --btn-radius: 8px;
   --btn-font: var(--font-family-ui);
   --btn-focus-outline: 2px solid var(--btn-primary-focus);
   --btn-focus-offset: 2px;
+  --btn-close-text: #3c3f43;
 }
 
 /* Base button reset */
@@ -61,62 +70,58 @@
 .btn--primary {
   background: var(--btn-primary);
   color: var(--btn-white);
+  border: 1px solid var(--btn-primary);
 }
 
 .btn--primary:hover:not(:disabled) {
   background: var(--btn-primary-hover);
+  border-color: var(--btn-primary-hover);
   color: var(--btn-white);
 }
 
 .btn--primary:active:not(:disabled) {
   background: var(--btn-primary-active);
+  border-color: var(--btn-primary-active);
   color: var(--btn-white);
 }
 
 .btn--primary:disabled {
   background: var(--btn-disabled-bg);
+  border-color: var(--btn-disabled-bg);
   color: var(--btn-disabled-text);
 }
 
-/* Primary: icon inherits text color */
 .btn--primary .btn__icon {
   color: currentColor;
   flex-shrink: 0;
 }
 
-/* ========== Secondary ========== */
+/* ========== Secondary (outline → solid on hover) ========== */
 .btn--secondary {
-  background: var(--btn-white);
+  background: var(--btn-secondary-bg);
   color: var(--btn-primary);
   border: 1px solid var(--btn-secondary-border);
 }
 
+.btn--secondary.btn--on-surface {
+  background: var(--btn-secondary-surface-bg);
+}
+
 .btn--secondary:hover:not(:disabled) {
-  border-color: var(--btn-secondary-hover-border);
-  color: var(--btn-primary-hover);
-}
-
-.btn--secondary:hover:not(:disabled) .btn__icon {
-  color: currentColor;
-}
-
-.btn--secondary:active:not(:disabled) {
-  background: var(--btn-secondary-active-bg);
-  border-color: var(--btn-secondary-border);
+  background: var(--btn-primary-hover);
+  border-color: var(--btn-primary-hover);
   color: var(--btn-white);
 }
 
-.btn--secondary:active:not(:disabled) .btn__icon {
+.btn--secondary:active:not(:disabled) {
+  background: var(--btn-primary-active);
+  border-color: var(--btn-primary-active);
   color: var(--btn-white);
 }
 
 .btn--secondary:disabled {
   background: var(--btn-disabled-bg);
   border-color: var(--btn-disabled-border);
-  color: var(--btn-disabled-text);
-}
-
-.btn--secondary:disabled .btn__icon {
   color: var(--btn-disabled-text);
 }
 
@@ -181,7 +186,6 @@
   margin: 0;
 }
 
-/* Icon size */
 .btn__icon {
   width: 24px;
   height: 24px;
@@ -199,7 +203,6 @@
   padding: 8px 0;
   min-height: auto;
   border-bottom: 2px solid transparent;
-  border-radius: 0;
 }
 
 .btn--tab:hover:not(:disabled) {
@@ -222,13 +225,60 @@
   color: var(--btn-disabled-text);
 }
 
+/* ========== Modal close (utility control) ========== */
+.btn-close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 4px;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 10px 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-family: var(--btn-font);
+  font-size: var(--type-atkinson-text-md-size);
+  font-weight: 400;
+  line-height: var(--type-atkinson-text-md-lh);
+  letter-spacing: 0;
+  color: var(--btn-close-text);
+  text-decoration: none;
+  transition: color 0.2s ease, opacity 0.2s ease;
+  z-index: 10;
+}
+
+.btn-close:focus {
+  outline: none;
+}
+
+.btn-close:focus-visible {
+  outline: var(--btn-focus-outline);
+  outline-offset: var(--btn-focus-offset);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-close:hover {
+    color: var(--btn-primary-hover);
+    text-decoration: none;
+  }
+}
+
+.btn-close:active {
+  color: var(--btn-primary-active);
+  opacity: 0.92;
+}
+
+.btn-close__icon {
+  color: currentColor;
+  fill: currentColor;
+  flex-shrink: 0;
+}
+
 /*
  * Usage (Figma Light mode):
  * <button type="button" className="btn btn--primary">View the design</button>
- * <button type="button" className="btn btn--primary btn--icon-left"><span className="btn__icon">...</span>View the design</button>
- * <button type="button" className="btn btn--secondary">View the design</button>
- * <button type="button" className="btn btn--secondary btn--icon-left"><span className="btn__icon">...</span>Listen</button>
- * <a href="#" className="btn btn--tertiary">Button name</a>
- * <button type="button" className="btn btn--primary btn--icon-only" aria-label="..."><span className="btn__icon">...</span></button>
+ * <button type="button" className="btn btn--secondary btn--on-surface">View all cases</button>
  * Add disabled attribute for disabled state. Focus uses :focus-visible (keyboard).
+ * Modal close: <button type="button" className="btn-close">Close <XCircle … className="btn-close__icon" /></button>
  */

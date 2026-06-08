@@ -291,7 +291,7 @@ export const Contact: React.FC = () => {
           <button
             type="submit"
             form={isActive ? formDomId : undefined}
-            className={`contact__submit-btn contact__submit-btn--mobile send-message ${cardIsSubmitting ? 'contact__submit-btn--loading' : ''} ${cardSubmitStatus === 'success' ? 'contact__submit-btn--success' : ''}`}
+            className={`contact__submit-btn contact__submit-btn--mobile btn btn--secondary btn--on-surface btn--icon-left send-message ${cardIsSubmitting ? 'contact__submit-btn--loading' : ''} ${cardSubmitStatus === 'success' ? 'contact__submit-btn--success' : ''}`}
             onMouseEnter={() => setIsSendHovered(true)}
             onMouseLeave={() => setIsSendHovered(false)}
             disabled={!isActive || cardIsSubmitting || isAnimatingRef.current}
@@ -311,12 +311,12 @@ export const Contact: React.FC = () => {
               </>
             ) : cardSubmitStatus === 'success' ? (
               <>
-                <CheckCircle size={24} weight="fill" color="#F6F7F8" aria-hidden="true" />
+                <CheckCircle size={24} weight="fill" color="currentColor" aria-hidden="true" />
                 <span>Message sent!</span>
               </>
             ) : (
               <>
-                <PaperPlaneTilt size={24} weight={isSendHovered ? 'fill' : 'regular'} color={isSendHovered ? '#F6F7F8' : '#7150E5'} aria-hidden="true" />
+                <PaperPlaneTilt size={24} weight={isSendHovered ? 'fill' : 'regular'} color="currentColor" aria-hidden="true" />
                 <span>Send message</span>
               </>
             )}
@@ -381,7 +381,7 @@ export const Contact: React.FC = () => {
                   <button
                     type="submit"
                     form={isFront && isActive ? formDomId : undefined}
-                    className={`contact__submit-btn contact__submit-btn--desktop send-message ${cardIsSubmitting ? 'contact__submit-btn--loading' : ''} ${cardSubmitStatus === 'success' ? 'contact__submit-btn--success' : ''}`}
+                    className={`contact__submit-btn contact__submit-btn--desktop btn btn--secondary btn--on-surface btn--icon-left send-message ${cardIsSubmitting ? 'contact__submit-btn--loading' : ''} ${cardSubmitStatus === 'success' ? 'contact__submit-btn--success' : ''}`}
                     onMouseEnter={() => setIsSendHovered(true)}
                     onMouseLeave={() => setIsSendHovered(false)}
                     disabled={!isFront || !isActive || cardIsSubmitting || isAnimatingRef.current}
@@ -403,12 +403,12 @@ export const Contact: React.FC = () => {
                       </>
                     ) : cardSubmitStatus === 'success' ? (
                       <>
-                        <CheckCircle size={24} weight="fill" color="#F6F7F8" aria-hidden="true" />
+                        <CheckCircle size={24} weight="fill" color="currentColor" aria-hidden="true" />
                         <span>Message sent!</span>
                       </>
                     ) : (
                       <>
-                        <PaperPlaneTilt size={24} weight={isSendHovered ? 'fill' : 'regular'} color={isSendHovered ? '#F6F7F8' : '#7150E5'} aria-hidden="true" />
+                        <PaperPlaneTilt size={24} weight={isSendHovered ? 'fill' : 'regular'} color="currentColor" aria-hidden="true" />
                         <span>Send message</span>
                       </>
                     )}

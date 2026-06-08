@@ -156,7 +156,7 @@
   /* Figma: 40px top, 64px sides, 44px bottom */
   padding: 40px 64px 44px 64px;
   border-radius: 24px;
-  background: #FCFCFD;
+  background: #FBFBFC;
   overflow: auto;
   position: relative;
   box-sizing: border-box;
@@ -191,37 +191,8 @@
   margin: 0;
 }
 
-/* Figma: Close X is purple */
-.publication-modal__close:focus,
-.publication-modal__close:focus-visible {
-  outline: none;
-}
-
+/* publication-modal__close uses .btn-close from ButtonStyles.css */
 .publication-modal__close {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 4px;
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  font-family: var(--font-family-ui);
-  font-size: var(--type-atkinson-text-md-size);
-  font-weight: 400;
-  line-height: var(--type-atkinson-text-md-lh);
-  letter-spacing: 0;
-  color: #7150e5;
-  z-index: 10;
-}
-
-.publication-modal__close:hover {
-  color: #5238a8;
-}
-
-.publication-modal__close-icon {
-  color: currentColor;
-  fill: currentColor;
   flex-shrink: 0;
 }
 
@@ -331,23 +302,37 @@
   gap: 8px;
   min-width: 77px;
   padding: 12px 16px;
-  background: #F7F9FA;
-  border: 1px solid #7150e5;
-  border-radius: 8px;
+  background: var(--btn-secondary-surface-bg);
+  border: 1px solid var(--btn-secondary-border);
+  border-radius: var(--btn-radius);
   cursor: pointer;
   margin-top: auto;
-  transition: background 0.2s ease, border-color 0.2s ease;
+  color: var(--btn-primary);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
-.publication-modal__listen-btn:hover {
-  background: rgba(113, 80, 229, 0.08);
+.publication-modal__listen-btn:hover:not(:disabled) {
+  background: var(--btn-primary-hover);
+  border-color: var(--btn-primary-hover);
+  color: var(--btn-white);
+}
+
+.publication-modal__listen-btn:active:not(:disabled) {
+  background: var(--btn-primary-active);
+  border-color: var(--btn-primary-active);
+  color: var(--btn-white);
+}
+
+.publication-modal__listen-btn:focus-visible {
+  outline: var(--btn-focus-outline);
+  outline-offset: var(--btn-focus-offset);
 }
 
 .publication-modal__listen-icon {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #7150e5;
+  color: currentColor;
   flex-shrink: 0;
 }
 
@@ -356,7 +341,7 @@
   font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
   line-height: var(--type-atkinson-text-md-lh);
-  color: #7150e5;
+  color: currentColor;
 }
 
 /* Right column: counter, main image, 44px gap, thumbnails (Figma) */
@@ -401,17 +386,30 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #f7f9fa;
-  border: 1px solid #7150e5;
-  border-radius: 8px;
+  background: var(--btn-secondary-surface-bg);
+  border: 1px solid var(--btn-secondary-border);
+  border-radius: var(--btn-radius);
   cursor: pointer;
   z-index: 2;
-  transition: background 0.2s ease;
-  color: #7150e5;
+  color: var(--btn-primary);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
-.publication-modal__nav-btn:hover {
-  background: rgba(113, 80, 229, 0.12);
+.publication-modal__nav-btn:hover:not(:disabled) {
+  background: var(--btn-primary-hover);
+  border-color: var(--btn-primary-hover);
+  color: var(--btn-white);
+}
+
+.publication-modal__nav-btn:active:not(:disabled) {
+  background: var(--btn-primary-active);
+  border-color: var(--btn-primary-active);
+  color: var(--btn-white);
+}
+
+.publication-modal__nav-btn:focus-visible {
+  outline: var(--btn-focus-outline);
+  outline-offset: var(--btn-focus-offset);
 }
 
 .publication-modal__nav-btn--prev {
@@ -431,17 +429,30 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #F7F9FA;
-  border: 1px solid #7150e5;
-  border-radius: 8px;
+  background: var(--btn-secondary-surface-bg);
+  border: 1px solid var(--btn-secondary-border);
+  border-radius: var(--btn-radius);
   cursor: pointer;
   z-index: 2;
-  transition: background 0.2s ease;
-  color: #7150e5;
+  color: var(--btn-primary);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
-.publication-modal__expand-btn:hover {
-  background: rgba(113, 80, 229, 0.12);
+.publication-modal__expand-btn:hover:not(:disabled) {
+  background: var(--btn-primary-hover);
+  border-color: var(--btn-primary-hover);
+  color: var(--btn-white);
+}
+
+.publication-modal__expand-btn:active:not(:disabled) {
+  background: var(--btn-primary-active);
+  border-color: var(--btn-primary-active);
+  color: var(--btn-white);
+}
+
+.publication-modal__expand-btn:focus-visible {
+  outline: var(--btn-focus-outline);
+  outline-offset: var(--btn-focus-offset);
 }
 
 /* Thumbnails – Figma: light blue-grey placeholders, rounded corners */

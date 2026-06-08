@@ -14,7 +14,12 @@ export const ColorSwatches: React.FC = () => {
           <img src="/icons/HandSwipeRight.svg" alt="" className="color-swatches__icon" />
         </div>
         <p className="color-swatches__text">
-          Tap, click, or drag the colour swatches to discover my travel colour moods
+          <span className="color-swatches__text-desktop">
+            Click or drag the colour swatches to discover my travel colour moods
+          </span>
+          <span className="color-swatches__text-mobile">
+            Tap, click, or drag the colour swatches to discover my travel colour moods
+          </span>
         </p>
       </header>
 

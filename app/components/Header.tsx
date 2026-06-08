@@ -12,11 +12,7 @@ export const Header: React.FC = () => {
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
   const [activeTheme, setActiveTheme] = useState('light');
   const [hoveredThemeOption, setHoveredThemeOption] = useState<string | null>(null);
-  const [hoveredNavLink, setHoveredNavLink] = useState<string | null>(null);
   const [isTabletViewport, setIsTabletViewport] = useState(false);
-
-  const navIconWeight = (linkId: string, isOpen = false) =>
-    isOpen || hoveredNavLink === linkId ? 'fill' : 'regular';
 
   const themeIconWeight = (themeId: string) =>
     activeTheme === themeId || hoveredThemeOption === themeId ? 'fill' : 'regular';
@@ -208,12 +204,8 @@ export const Header: React.FC = () => {
             onClick={toggleMegaMenu}
             aria-expanded={isMegaMenuOpen}
             aria-haspopup="menu"
-            onMouseEnter={() => setHoveredNavLink('work')}
-            onMouseLeave={() => setHoveredNavLink(null)}
-            onFocus={() => setHoveredNavLink('work')}
-            onBlur={() => setHoveredNavLink(null)}
           >
-            <Palette size={24} weight={navIconWeight('work', isMegaMenuOpen)} className="header__nav-icon" aria-hidden="true" />
+            <Palette size={24} weight="regular" className="header__nav-icon" aria-hidden="true" />
             <span>Work</span>
           </a>
           
@@ -298,24 +290,16 @@ export const Header: React.FC = () => {
           href="#about" 
           className="header__nav-link"
           onClick={(e) => scrollToSection(e, '#about')}
-          onMouseEnter={() => setHoveredNavLink('about')}
-          onMouseLeave={() => setHoveredNavLink(null)}
-          onFocus={() => setHoveredNavLink('about')}
-          onBlur={() => setHoveredNavLink(null)}
         >
-          <User size={24} weight={navIconWeight('about')} className="header__nav-icon" aria-hidden="true" />
+          <User size={24} weight="regular" className="header__nav-icon" aria-hidden="true" />
           <span>About</span>
         </a>
         <a 
           href="#testimonials" 
           className="header__nav-link"
           onClick={(e) => scrollToSection(e, '#testimonials')}
-          onMouseEnter={() => setHoveredNavLink('testimonials')}
-          onMouseLeave={() => setHoveredNavLink(null)}
-          onFocus={() => setHoveredNavLink('testimonials')}
-          onBlur={() => setHoveredNavLink(null)}
         >
-          <ChatsCircle size={24} weight={navIconWeight('testimonials')} className="header__nav-icon" aria-hidden="true" />
+          <ChatsCircle size={24} weight="regular" className="header__nav-icon" aria-hidden="true" />
           <span>Testimonials</span>
         </a>
         <div 
@@ -334,12 +318,8 @@ export const Header: React.FC = () => {
             aria-label="Toggle theme"
             aria-expanded={isThemeMenuOpen}
             aria-haspopup="menu"
-            onMouseEnter={() => setHoveredNavLink('theme')}
-            onMouseLeave={() => setHoveredNavLink(null)}
-            onFocus={() => setHoveredNavLink('theme')}
-            onBlur={() => setHoveredNavLink(null)}
           >
-            <Sun size={24} weight={navIconWeight('theme', isThemeMenuOpen)} className="header__nav-icon" aria-hidden="true" />
+            <Sun size={24} weight="regular" className="header__nav-icon" aria-hidden="true" />
             <span>Light</span>
           </button>
 

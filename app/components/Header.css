@@ -150,6 +150,7 @@
     color: #3c3f43;
   }
 
+  /* Keep outline icons in top nav on hover */
   .header__nav-link .header__nav-icon {
     color: currentColor;
   }

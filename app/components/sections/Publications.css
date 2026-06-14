@@ -487,10 +487,10 @@
   object-position: center;
 }
 
-/* Figma: selected thumbnail has prominent purple glow and purple border */
+/* Figma: selected thumbnail has purple border + soft glow */
 .publication-modal__thumb--selected {
   border: 2px solid #7150e5;
-  box-shadow: 0 0 0 2px #7150e5, 0 4px 16px rgba(113, 80, 229, 0.35);
+  box-shadow: 0 0 0 2px #7150e5, 0 4px 16px rgba(113, 80, 229, 0.18);
 }
 
 .publication-modal__thumb:hover:not(.publication-modal__thumb--selected) {

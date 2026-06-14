@@ -108,9 +108,12 @@
   max-width: var(--content-max-width, 1220px);
   min-height: 720px; /* Trimmed from 851px */
   margin: 0 auto;
-  display: flex;
-  gap: var(--contact-card-gap);
-  align-items: flex-end; /* Align bottoms: message box, divider, button on same baseline */
+  display: grid;
+  grid-template-columns: 560px 1px 1fr;
+  grid-template-rows: 1fr auto;
+  column-gap: var(--contact-card-gap);
+  row-gap: 56px;
+  align-items: end; /* Align bottoms: message box, divider, button on same baseline */
   position: relative;
   /* GPU acceleration - GSAP will handle transforms */
   will-change: transform, opacity;
@@ -241,7 +244,9 @@
 
 /* Left Side - Form */
 .contact__form-side {
-  flex: 0 0 560px; /* Wider so line sits further right (4pt grid: 140×4) */
+  grid-column: 1;
+  grid-row: 1 / -1;
+  align-self: stretch;
   display: flex;
   flex-direction: column;
   gap: 54px;
@@ -374,20 +379,21 @@
 
 /* Divider - stretches to align bottom with message box and button */
 .contact__divider {
+  grid-column: 2;
+  grid-row: 1 / -1;
+  align-self: stretch;
   width: 1px;
-  align-self: stretch; /* Match height of form-side and postcard-side */
   background: #b0b3b8;
-  flex-shrink: 0;
 }
 
-/* Right Side - Postcard - stamp, address, button centred between line and right edge */
+/* Right Side - Postcard - stamp, address centred between line and right edge */
 .contact__postcard-side {
-  flex: 1;
+  grid-column: 3;
+  grid-row: 1;
   display: flex;
   flex-direction: column;
-  align-items: center; /* Centre content between line and right edge */
-  justify-content: flex-end; /* Align button bottom with message box bottom */
-  gap: 56px; /* Figma gap */
+  align-items: center;
+  justify-content: flex-end;
   padding: 0;
   width: 100%;
   min-width: 0;
@@ -402,7 +408,7 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  min-height: 600px; /* Fits stamp(129) + address(300) + button(48) + gaps */
+  min-height: 485px; /* stamp + address + gap */
 }
 
 /* Stack that allows front/back postcard animation */
@@ -410,7 +416,7 @@
   position: relative;
   width: 100%;
   max-width: 420px; /* keep postcard visuals within the right column */
-  min-height: 600px;
+  min-height: 485px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -542,6 +548,8 @@
 
 /* Send Button – uses .btn .btn--secondary; layout + form states below */
 .contact__submit-btn {
+  grid-column: 3;
+  grid-row: 2;
   width: 230px;
   margin: 0 auto;
 }
@@ -680,26 +688,16 @@
    Responsive - Same breakpoints as other sections
    ================================ */
 
-/* Mobile button hidden on desktop by default */
-.contact__submit-btn--mobile {
-  display: none;
-}
-
-/* Desktop button visible on desktop */
-.contact__submit-btn--desktop {
-  display: flex;
-}
-
 /* Large Desktop - 1400px */
 @media (max-width: 1400px) {
   .contact__card {
     --contact-card-gap: 60px;
+    grid-template-columns: 480px 1px 1fr;
     padding: 48px;
     min-height: auto;
   }
 
   .contact__form-side {
-    flex: 0 0 480px;
     gap: 40px;
     padding: 0 24px;
   }
@@ -721,11 +719,11 @@
 @media (max-width: 1200px) {
   .contact__card {
     --contact-card-gap: 48px;
+    grid-template-columns: 400px 1px 1fr;
     padding: 40px;
   }
 
   .contact__form-side {
-    flex: 0 0 400px;
     gap: 32px;
     padding: 0 16px;
   }
@@ -736,9 +734,7 @@
   }
 
   .contact__postcard-side {
-    flex: 1;
     min-width: 0;
-    gap: 40px;
   }
 
   /* Postcard stack fills right column fluidly */
@@ -762,7 +758,7 @@
     aspect-ratio: 340 / 300;
   }
 
-  .contact__submit-btn--desktop {
+  .contact__submit-btn {
     width: 100%;
     max-width: 260px;
   }
@@ -824,6 +820,7 @@
 
   /* Card stacks vertically (Figma tablet: generous horizontal padding) */
   .contact__card {
+    display: flex;
     flex-direction: column;
     align-items: stretch;
     padding: 40px clamp(28px, 5vw, 48px);
@@ -838,15 +835,21 @@
     padding: 0;
     gap: 28px;
     order: 1;
+    grid-column: auto;
+    grid-row: auto;
+    align-self: auto;
   }
 
-  /* ── Mobile button: full-width, same visual style as desktop ── */
-  .contact__submit-btn--mobile {
+  /* ── Submit button: full-width below form on tablet/mobile ── */
+  .contact__submit-btn {
     display: flex;
     width: 100%;
     height: 48px;
+    max-width: none;
     margin-top: 8px;
     order: 2;
+    grid-column: auto;
+    grid-row: auto;
   }
 
   /* ── Horizontal divider ── */
@@ -856,6 +859,8 @@
     align-self: auto;
     margin: 32px 0;
     order: 3;
+    grid-column: auto;
+    grid-row: auto;
   }
 
   /* ── Postcard side: centered like Figma mobile/tablet ── */
@@ -868,6 +873,8 @@
     gap: 0;
     padding: 0;
     order: 4;
+    grid-column: auto;
+    grid-row: auto;
   }
 
   /* Slot/stack: height follows content so composite image is never clipped */
@@ -922,11 +929,6 @@
   /* Split assets hidden; composites use .contact__postcard-composite-img */
   .contact__stamp-area,
   .contact__address-area {
-    display: none;
-  }
-
-  /* Hide desktop button */
-  .contact__submit-btn--desktop {
     display: none;
   }
 }

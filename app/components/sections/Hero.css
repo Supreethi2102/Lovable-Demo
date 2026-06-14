@@ -10,17 +10,16 @@
   overflow: visible;
 }
 
-/* Hero page-level layout: two-column on desktop, stacked on tablet */
+/* Hero page-level layout: .main holds two columns; section is a padded flex wrapper */
 .hero-section {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  align-items: center;
-  gap: 48px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
   /* Clears fixed header; --header-height is set in JS from actual header box (includes safe-area padding) */
   padding-top: calc(var(--header-height, 96px) + clamp(28px, 4vw, 56px));
   padding-bottom: max(80px, env(safe-area-inset-bottom, 0px));
-  padding-left: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
-  padding-right: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
+  padding-left: var(--padding-x, 112px);
+  padding-right: var(--padding-x, 112px);
   min-height: calc(100dvh - var(--header-height, 96px));
   box-sizing: border-box;
 }
@@ -77,19 +76,6 @@
   }
 }
 
-@media (max-width: 1200px) {
-  .hero-section {
-    gap: 32px;
-    padding-left: var(--padding-x);
-    padding-right: var(--padding-x);
-  }
-
-  .hero__content {
-    gap: 40px;
-    max-width: 420px;
-  }
-}
-
 @media (min-width: 1025px) {
   .hero__title {
     font-size: var(--type-romie-display-xl-size);
@@ -97,17 +83,15 @@
   }
 }
 
-@media (max-width: 1024px) {
-  /* Stack hero: text above, globe below */
+@media (max-width: 1200px) {
+  /* Stack hero: text above, globe below (tablet landscape e.g. 1194×834) */
   .hero-section {
-    grid-template-columns: 1fr;
-    justify-items: center;
+    justify-content: flex-start;
     padding-top: calc(var(--header-height, 96px) + clamp(24px, 4vw, 36px));
     padding-bottom: max(48px, env(safe-area-inset-bottom, 0px));
     padding-left: var(--padding-x);
     padding-right: var(--padding-x);
     min-height: auto;
-    gap: 32px;
     overflow: visible;
   }
 

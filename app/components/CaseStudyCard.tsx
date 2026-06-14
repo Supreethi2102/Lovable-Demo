@@ -117,7 +117,10 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
 
   const setLayerBg = (el: HTMLDivElement | null, url: string) => {
     if (!el) return;
-    el.style.backgroundImage = `url(${url})`;
+    const media = el.querySelector<HTMLElement>('.case-study-card__image-media');
+    if (media) {
+      media.style.backgroundImage = `url(${url})`;
+    }
   };
 
   useEffect(() => {
@@ -326,8 +329,12 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               Duration: {study.duration}
             </div>
             <div className="case-study-card__image-viewport" role="img" aria-label={`${study.subtitle} project preview`}>
-              <div ref={imgARef} className="case-study-card__image-layer" aria-hidden="true" />
-              <div ref={imgBRef} className="case-study-card__image-layer" aria-hidden="true" />
+              <div ref={imgARef} className="case-study-card__image-layer" aria-hidden="true">
+                <div className="case-study-card__image-media" aria-hidden="true" />
+              </div>
+              <div ref={imgBRef} className="case-study-card__image-layer" aria-hidden="true">
+                <div className="case-study-card__image-media" aria-hidden="true" />
+              </div>
             </div>
           </figure>
         </div>
@@ -451,16 +458,18 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               Duration: {study.duration}
             </div>
             <div className="case-study-card__image-viewport" role="img" aria-label={`${study.subtitle} project preview`}>
-              <div
-                className="case-study-card__image-layer"
-                style={{
-                  backgroundImage: currentBackTab.image
-                    ? `url(${currentBackTab.image})`
-                    : 'none',
-                  backgroundColor: currentBackTab.background ?? '#ddd',
-                }}
-                aria-hidden="true"
-              />
+              <div className="case-study-card__image-layer" aria-hidden="true">
+                <div
+                  className="case-study-card__image-media"
+                  style={{
+                    backgroundImage: currentBackTab.image
+                      ? `url(${currentBackTab.image})`
+                      : 'none',
+                    backgroundColor: currentBackTab.background ?? '#ddd',
+                  }}
+                  aria-hidden="true"
+                />
+              </div>
             </div>
           </figure>
         </div>

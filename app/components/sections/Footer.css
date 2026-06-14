@@ -107,6 +107,24 @@
   }
 }
 
+@media (max-width: 1024px) {
+  .footer {
+    width: 100%;
+    max-width: 100%;
+    align-self: stretch;
+  }
+
+  .footer__wrapper {
+    width: 100%;
+  }
+
+  .footer__text {
+    width: 100%;
+    max-width: 100%;
+    text-wrap: balance;
+  }
+}
+
 @media (max-width: 768px) {
   .footer {
     width: 100%;

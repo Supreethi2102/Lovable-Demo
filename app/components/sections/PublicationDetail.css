@@ -359,7 +359,6 @@
   appearance: none;
   -webkit-appearance: none;
   box-sizing: border-box;
-  transition: border-color 0.2s ease;
 }
 
 .publication-detail__stage:focus-visible {
@@ -368,10 +367,6 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .publication-detail__stage:hover {
-    border-color: #7150e5;
-  }
-
   .publication-detail__stage:hover .publication-detail__image {
     transform: scale(1.08);
   }
@@ -425,7 +420,7 @@
   overflow-y: visible;
   display: flex;
   gap: 20px;
-  padding: 0 0 16px;
+  padding: 8px 0 20px;
   box-sizing: border-box;
   -webkit-overflow-scrolling: touch;
   scrollbar-width: none;
@@ -456,6 +451,9 @@
 
 .publication-detail__thumb.is-active {
   border-color: #7150e5;
+  box-shadow:
+    0px 2px 4px 0px rgba(76, 60, 172, 0.16),
+    0px 0px 12px 0px rgba(76, 60, 172, 0.28);
   z-index: 1;
 }
 
@@ -479,16 +477,17 @@
   background: #e5eff2;
 }
 
-/* Enlarged modal – images take max width of screen */
+/* Enlarged modal – portaled to body; full viewport width */
 .publication-detail-enlarged__overlay {
   position: fixed;
   top: var(--header-height, 0px);
   left: 0;
   right: 0;
   bottom: 0;
+  width: 100%;
   z-index: 90;
   background: #F7F8F9;
-  padding: 16px 24px 32px;
+  padding: 16px max(24px, var(--padding-x, 112px)) 32px;
   box-sizing: border-box;
   overflow: auto;
   display: flex;
@@ -498,7 +497,8 @@
 
 .publication-detail-enlarged__panel-inner {
   width: 100%;
-  max-width: 80%;
+  max-width: var(--content-max-width, 1220px);
+  margin: 0 auto;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -824,6 +824,19 @@
 }
 
 /* ========== Enlarged overlay – responsive ========== */
+
+@media (max-width: 1100px) {
+  .publication-detail-enlarged__overlay {
+    padding-left: var(--padding-x, 48px);
+    padding-right: var(--padding-x, 48px);
+  }
+}
+
+@media (max-width: 1024px) {
+  .publication-detail-enlarged__panel-inner {
+    --publication-detail-control-gap: 16px;
+  }
+}
 
 /* Tablet / mobile portrait — stack toolbar on narrow portrait */
 @media (max-width: 900px) and (orientation: portrait) {

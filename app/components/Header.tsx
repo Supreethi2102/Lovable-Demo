@@ -1,14 +1,87 @@
 import React, { useState, useEffect, useLayoutEffect, useCallback, useRef } from 'react';
-import { Palette, User, ChatsCircle, Sun, SunHorizon, CloudFog, MoonStars, CloudMoon, Moon, EnvelopeSimple, PaintBrush, Megaphone, Package, BookOpen, Ruler, NotePencil, CaretDown } from '@phosphor-icons/react';
+import type { Icon } from '@phosphor-icons/react';
+import { Palette, User, ChatsCircle, Sun, SunHorizon, CloudFog, MoonStars, CloudMoon, Moon, EnvelopeSimple, Megaphone, Package, BookOpen, Ruler, NotePencil, CaretDown } from '@phosphor-icons/react';
+import {
+  caseStudyCategories,
+  projectHighlightItems,
+  type MegaMenuTab,
+} from '../data/caseStudiesNav';
 import './Header.css';
+
+const CATEGORY_ICONS: Record<string, Icon> = {
+  campaigns: Megaphone,
+  packaging: Package,
+  ui: Ruler,
+  ux: NotePencil,
+};
+
+type WorkMegaMenuContentProps = {
+  tab: MegaMenuTab;
+  onNavigate: (e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => void;
+  linkTabIndex?: number;
+};
+
+const WorkMegaMenuContent: React.FC<WorkMegaMenuContentProps> = ({ tab, onNavigate, linkTabIndex }) => {
+  if (tab === 'case-studies') {
+    return (
+      <div className="mega-menu__groups-grid">
+        {caseStudyCategories.map((category) => {
+          const CategoryIcon = CATEGORY_ICONS[category.id] ?? BookOpen;
+
+          return (
+            <section key={category.id} className="mega-menu__group" aria-label={category.title}>
+              <div className="mega-menu__group-header">
+                <CategoryIcon size={24} weight="regular" className="mega-menu__group-icon" aria-hidden="true" />
+                <span className="mega-menu__group-title">{category.title}</span>
+              </div>
+              <ul className="mega-menu__group-list">
+                {category.items.map((item) => (
+                  <li key={item.label}>
+                    <a
+                      href={item.sectionId}
+                      className="mega-menu__link"
+                      onClick={(e) => onNavigate(e, item.sectionId)}
+                      tabIndex={linkTabIndex}
+                    >
+                      {item.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </section>
+          );
+        })}
+      </div>
+    );
+  }
+
+  return (
+    <ul className="mega-menu__links-grid">
+      {projectHighlightItems.map((item) => (
+        <li key={item.label}>
+          <a
+            href={item.sectionId}
+            className="mega-menu__link"
+            onClick={(e) => onNavigate(e, item.sectionId)}
+            tabIndex={linkTabIndex}
+          >
+            {item.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+  );
+};
 
 export const Header: React.FC = () => {
   const headerRef = useRef<HTMLElement | null>(null);
+  const megaMenuCloseTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isMobileWorkOpen, setIsMobileWorkOpen] = useState(false);
   const [isMobileThemeOpen, setIsMobileThemeOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMegaMenuOpen, setIsMegaMenuOpen] = useState(false);
+  const [megaMenuTab, setMegaMenuTab] = useState<MegaMenuTab>('case-studies');
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
   const [activeTheme, setActiveTheme] = useState('light');
   const [hoveredThemeOption, setHoveredThemeOption] = useState<string | null>(null);
@@ -84,12 +157,37 @@ export const Header: React.FC = () => {
     return () => document.removeEventListener('keydown', handleEscape);
   }, [isMobileMenuOpen]);
 
+  const clearMegaMenuCloseTimer = useCallback(() => {
+    if (megaMenuCloseTimerRef.current) {
+      clearTimeout(megaMenuCloseTimerRef.current);
+      megaMenuCloseTimerRef.current = null;
+    }
+  }, []);
+
+  const openMegaMenuHover = useCallback(() => {
+    if (isTabletViewport) return;
+    clearMegaMenuCloseTimer();
+    setIsMegaMenuOpen(true);
+  }, [isTabletViewport, clearMegaMenuCloseTimer]);
+
+  const scheduleMegaMenuClose = useCallback(() => {
+    if (isTabletViewport) return;
+    clearMegaMenuCloseTimer();
+    megaMenuCloseTimerRef.current = setTimeout(() => {
+      setIsMegaMenuOpen(false);
+      megaMenuCloseTimerRef.current = null;
+    }, 200);
+  }, [isTabletViewport, clearMegaMenuCloseTimer]);
+
+  useEffect(() => () => clearMegaMenuCloseTimer(), [clearMegaMenuCloseTimer]);
+
   // Close desktop dropdown menus when clicking outside the header
   useEffect(() => {
     const handleDocumentPointerDown = (e: MouseEvent) => {
       const headerEl = headerRef.current;
       if (!headerEl) return;
       if (!headerEl.contains(e.target as Node)) {
+        clearMegaMenuCloseTimer();
         setIsMegaMenuOpen(false);
         setIsThemeMenuOpen(false);
       }
@@ -97,7 +195,7 @@ export const Header: React.FC = () => {
 
     document.addEventListener('mousedown', handleDocumentPointerDown);
     return () => document.removeEventListener('mousedown', handleDocumentPointerDown);
-  }, []);
+  }, [clearMegaMenuCloseTimer]);
 
   // Smooth scroll to section using native browser behavior with scroll-padding
   const scrollToSection = useCallback((e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
@@ -120,19 +218,13 @@ export const Header: React.FC = () => {
     }, 100);
   }, []);
 
-  const toggleMegaMenu = useCallback((e: React.MouseEvent<HTMLAnchorElement>) => {
+  const toggleMegaMenu = useCallback((e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {
     e.preventDefault();
     e.stopPropagation();
-    // Check viewport at click time so tablet behavior works even if state was stale (e.g. after resize)
-    const w = typeof window !== 'undefined' ? window.innerWidth : 0;
-    const isTablet = w >= 768 && w <= 1025;
-    if (!isTablet) {
-      scrollToSection(e, '#work');
-      return;
-    }
+    clearMegaMenuCloseTimer();
     setIsThemeMenuOpen(false);
     setIsMegaMenuOpen(prev => !prev);
-  }, [scrollToSection]);
+  }, [clearMegaMenuCloseTimer]);
 
   const toggleThemeMenu = useCallback(() => {
     if (!isTabletViewport) return;
@@ -191,15 +283,11 @@ export const Header: React.FC = () => {
       <nav className="header__nav" aria-label="Main navigation">
         <div 
           className="header__nav-item header__nav-item--has-mega"
-          onMouseEnter={() => {
-            if (!isTabletViewport) setIsMegaMenuOpen(true);
-          }}
-          onMouseLeave={() => {
-            if (!isTabletViewport) setIsMegaMenuOpen(false);
-          }}
+          onMouseEnter={openMegaMenuHover}
+          onMouseLeave={scheduleMegaMenuClose}
         >
-          <a 
-            href="#work" 
+          <a
+            href="#work"
             className="header__nav-link"
             onClick={toggleMegaMenu}
             aria-expanded={isMegaMenuOpen}
@@ -209,79 +297,54 @@ export const Header: React.FC = () => {
             <span>Work</span>
           </a>
           
-          {/* Mega Menu */}
-          <div className={`mega-menu ${isMegaMenuOpen ? 'mega-menu--open' : ''}`}>
-            <div className="mega-menu__content">
-              {/* Branding - hidden for now */}
-              <div className="mega-menu__category mega-menu__category--hidden" aria-hidden="true">
-                <div className="mega-menu__category-header">
-                  <PaintBrush size={24} weight="regular" className="mega-menu__icon" aria-hidden="true" />
-                  <span className="mega-menu__category-title">Branding</span>
+          {/* Work mega menu — Ruul-style panel */}
+          <div
+            className={`mega-menu ${isMegaMenuOpen ? 'mega-menu--open' : ''}`}
+            role="menu"
+            aria-label="Work"
+            onMouseEnter={openMegaMenuHover}
+            onMouseLeave={scheduleMegaMenuClose}
+          >
+            <div className="mega-menu__panel">
+              <div
+                className="mega-menu__tabs"
+                role="tablist"
+                aria-label="Work sections"
+              >
+                <div className="mega-menu__tabs-track" data-active-tab={megaMenuTab}>
+                  <span className="mega-menu__tabs-thumb" aria-hidden="true" />
+                  <button
+                    type="button"
+                    role="tab"
+                    id="mega-tab-case-studies"
+                    aria-selected={megaMenuTab === 'case-studies'}
+                    aria-controls="mega-panel-work"
+                    className="mega-menu__tab"
+                    onClick={() => setMegaMenuTab('case-studies')}
+                  >
+                    Case Studies
+                  </button>
+                  <button
+                    type="button"
+                    role="tab"
+                    id="mega-tab-project-highlights"
+                    aria-selected={megaMenuTab === 'project-highlights'}
+                    aria-controls="mega-panel-work"
+                    className="mega-menu__tab"
+                    onClick={() => setMegaMenuTab('project-highlights')}
+                  >
+                    Project highlights
+                  </button>
                 </div>
               </div>
 
-              {/* Campaigns */}
-              <div className="mega-menu__category">
-                <div className="mega-menu__category-header">
-                  <Megaphone size={24} weight="regular" className="mega-menu__icon" aria-hidden="true" />
-                  <span className="mega-menu__category-title">Campaigns</span>
-                </div>
-                <ul className="mega-menu__list">
-                  <li><a href="#work" onClick={(e) => scrollToSection(e, '#work')}>The Warehouse<br />Mega Toy Month</a></li>
-                  <li><a href="#work" onClick={(e) => scrollToSection(e, '#work')}>The Warehouse<br />Summer Campaign</a></li>
-                </ul>
-              </div>
-
-              {/* Packaging */}
-              <div className="mega-menu__category">
-                <div className="mega-menu__category-header">
-                  <Package size={24} weight="regular" className="mega-menu__icon" aria-hidden="true" />
-                  <span className="mega-menu__category-title">Packaging</span>
-                </div>
-                <ul className="mega-menu__list">
-                  <li><a href="#work" onClick={(e) => scrollToSection(e, '#work')}>Green Cross bags</a></li>
-                </ul>
-              </div>
-
-              {/* Publications */}
-              <div className="mega-menu__category mega-menu__category--publications">
-                <div className="mega-menu__category-header">
-                  <BookOpen size={24} weight="regular" className="mega-menu__icon" aria-hidden="true" />
-                  <span className="mega-menu__category-title">Publications</span>
-                </div>
-                <ul className="mega-menu__list">
-                  <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>Architecture New Zealand Magazine</a></li>
-                  <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>Houses Magazine</a></li>
-                  <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>Life Pharmacy Mailer</a></li>
-                  <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>NZW Grooms Guide Booklet</a></li>
-                  <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>New Zealand Weddings Planner</a></li>
-                  <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>Pumpkin Patch Catalogue</a></li>
-                  <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>Superlife Booklet</a></li>
-                  <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>Little Treasures Magazine</a></li>
-                  <li><a href="#publications" onClick={(e) => scrollToSection(e, '#publications')}>The Warehouse - Big Toy Month Mailer</a></li>
-                </ul>
-              </div>
-
-              {/* UI */}
-              <div className="mega-menu__category">
-                <div className="mega-menu__category-header">
-                  <Ruler size={24} weight="regular" className="mega-menu__icon" aria-hidden="true" />
-                  <span className="mega-menu__category-title">UI</span>
-                </div>
-                <ul className="mega-menu__list">
-                  <li><a href="#work" onClick={(e) => scrollToSection(e, '#work')}>Palmy Bank</a></li>
-                </ul>
-              </div>
-
-              {/* UX - pen and notepad */}
-              <div className="mega-menu__category">
-                <div className="mega-menu__category-header">
-                  <NotePencil size={24} weight="regular" className="mega-menu__icon" aria-hidden="true" />
-                  <span className="mega-menu__category-title">UX</span>
-                </div>
-                <ul className="mega-menu__list">
-                  <li><a href="#work" onClick={(e) => scrollToSection(e, '#work')}>Āmio Airways</a></li>
-                </ul>
+              <div
+                id="mega-panel-work"
+                role="tabpanel"
+                aria-labelledby={megaMenuTab === 'case-studies' ? 'mega-tab-case-studies' : 'mega-tab-project-highlights'}
+                className="mega-menu__content"
+              >
+                <WorkMegaMenuContent tab={megaMenuTab} onNavigate={scrollToSection} />
               </div>
             </div>
           </div>
@@ -451,38 +514,40 @@ export const Header: React.FC = () => {
         </button>
         <div
           id="mobile-work-submenu"
-          className={`header__mobile-submenu ${isMobileWorkOpen ? 'header__mobile-submenu--open' : ''}`}
+          className={`header__mobile-submenu header__mobile-submenu--mega ${isMobileWorkOpen ? 'header__mobile-submenu--open' : ''}`}
           aria-hidden={!isMobileWorkOpen}
         >
-          <div className="header__mobile-subsection">
-            <p className="header__mobile-subtitle"><Megaphone size={18} weight="regular" aria-hidden="true" /> <span>Campaigns</span></p>
-            <a href="#work" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#work')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>The Warehouse Mega Toy Month</a>
-            <a href="#work" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#work')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>The Warehouse Summer Campaign</a>
+          <div className="mega-menu__tabs mega-menu__tabs--mobile" role="tablist" aria-label="Work sections">
+            <div className="mega-menu__tabs-track" data-active-tab={megaMenuTab}>
+              <span className="mega-menu__tabs-thumb" aria-hidden="true" />
+              <button
+                type="button"
+                role="tab"
+                className="mega-menu__tab"
+                aria-selected={megaMenuTab === 'case-studies'}
+                onClick={() => setMegaMenuTab('case-studies')}
+                tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}
+              >
+                Case Studies
+              </button>
+              <button
+                type="button"
+                role="tab"
+                className="mega-menu__tab"
+                aria-selected={megaMenuTab === 'project-highlights'}
+                onClick={() => setMegaMenuTab('project-highlights')}
+                tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}
+              >
+                Project highlights
+              </button>
+            </div>
           </div>
-          <div className="header__mobile-subsection">
-            <p className="header__mobile-subtitle"><Package size={18} weight="regular" aria-hidden="true" /> <span>Packaging</span></p>
-            <a href="#work" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#work')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>Green Cross bags</a>
-          </div>
-          <div className="header__mobile-subsection">
-            <p className="header__mobile-subtitle"><BookOpen size={18} weight="regular" aria-hidden="true" /> <span>Publications</span></p>
-            <a href="#publications" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#publications')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>Architecture New Zealand Magazine</a>
-            <a href="#publications" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#publications')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>Houses Magazine</a>
-            <a href="#publications" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#publications')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>Life Pharmacy Mailer</a>
-            <a href="#publications" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#publications')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>NZW Grooms Guide Booklet</a>
-            <a href="#publications" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#publications')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>New Zealand Weddings Planner</a>
-            <a href="#publications" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#publications')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>Pumpkin Patch Catalogue</a>
-            <a href="#publications" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#publications')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>Superlife Booklet</a>
-            <a href="#publications" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#publications')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>Little Treasures Magazine</a>
-            <a href="#publications" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#publications')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>The Warehouse - Big Toy Month Mailer</a>
-          </div>
-          <div className="header__mobile-subsection">
-            <p className="header__mobile-subtitle"><Ruler size={18} weight="regular" aria-hidden="true" /> <span>UI</span></p>
-            <a href="#work" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#work')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>Palmy Bank</a>
-          </div>
-          <div className="header__mobile-subsection">
-            <p className="header__mobile-subtitle"><NotePencil size={18} weight="regular" aria-hidden="true" /> <span>UX</span></p>
-            <a href="#work" className="header__mobile-subitem" onClick={(e) => scrollToSection(e, '#work')} tabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}>Āmio Airways</a>
-          </div>
+
+          <WorkMegaMenuContent
+            tab={megaMenuTab}
+            onNavigate={scrollToSection}
+            linkTabIndex={isMobileMenuOpen && isMobileWorkOpen ? 0 : -1}
+          />
         </div>
         <a href="#about" className="header__mobile-link" onClick={(e) => scrollToSection(e, '#about')} tabIndex={isMobileMenuOpen ? 0 : -1}>
           <User size={24} weight="regular" className="header__nav-icon" aria-hidden="true" />

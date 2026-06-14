@@ -23,6 +23,52 @@
   padding-top: 20px;
 }
 
+/* Tablet/mobile only — scroll chevrons beside section title */
+.case-studies__filter-nav {
+  display: none;
+}
+
+.case-studies__filter-nav-btn {
+  width: 48px;
+  height: 48px;
+  border: 1px solid var(--btn-secondary-border, #7150e5);
+  border-radius: 12px;
+  background: var(--btn-secondary-surface-bg, #ffffff);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  padding: 12px;
+  color: var(--btn-primary, #7150e5);
+  transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+}
+
+.case-studies__filter-nav-btn:hover:not(:disabled) {
+  background: var(--btn-primary-hover, #7150e5);
+  border-color: var(--btn-primary-hover, #7150e5);
+  color: var(--btn-white, #ffffff);
+}
+
+.case-studies__filter-nav-btn:active:not(:disabled) {
+  background: var(--btn-primary-active, #5a3fd4);
+  border-color: var(--btn-primary-active, #5a3fd4);
+  color: var(--btn-white, #ffffff);
+}
+
+.case-studies__filter-nav-btn:focus-visible {
+  outline: var(--btn-focus-outline, 2px solid #7150e5);
+  outline-offset: var(--btn-focus-offset, 2px);
+}
+
+.case-studies__filter-nav-btn:disabled {
+  background: var(--btn-disabled-bg, #f3f4f6);
+  border-color: var(--btn-disabled-border, #d3d6da);
+  color: var(--btn-disabled-text, #9ca3af);
+  cursor: not-allowed;
+  opacity: 1;
+}
+
 .case-studies__title {
   font-family: var(--font-family-display);
   font-size: var(--type-romie-display-l-size);
@@ -480,11 +526,36 @@
 .case-study-card__image-layer {
   position: absolute;
   inset: 0;
+  overflow: hidden;
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+
+.case-study-card__image-media {
+  position: absolute;
+  inset: 0;
   background-size: cover;
   background-position: center;
   background-color: #ddd;
-  will-change: transform, opacity;
-  transform: translateZ(0);
+  transform: scale(1);
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .case-study-card__image:hover .case-study-card__image-media {
+    transform: scale(1.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .case-study-card__image-media {
+    transition: none;
+  }
+
+  .case-study-card__image:hover .case-study-card__image-media {
+    transform: scale(1);
+  }
 }
 
 .case-study-card__duration {
@@ -726,6 +797,7 @@
 
   .case-study-card__main {
     width: auto;
+    max-width: none;
   }
 
   /* Stacked hero: duration on the left (desktop wide layout keeps top-right) */
@@ -743,18 +815,39 @@
     padding: 48px var(--padding-x, clamp(52px, 5vw + 28px, 80px)) 72px;
   }
 
-  /* Tablet filter strip: align bleed with section gutters */
+  .case-studies__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 20px;
+  }
+
+  .case-studies__title {
+    flex: 1;
+    min-width: 0;
+  }
+
+  .case-studies__filter-nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+    padding-top: 4px;
+  }
+
+  /* Tablet filter strip: clip flush with case study card edges (same width as grid) */
   .case-studies__filter-wrap {
-    margin-left: calc(-1 * var(--padding-x, clamp(52px, 5vw + 28px, 80px)));
-    margin-right: calc(-1 * var(--padding-x, clamp(52px, 5vw + 28px, 80px)));
-    padding-left: var(--padding-x, clamp(52px, 5vw + 28px, 80px));
-    padding-right: var(--padding-x, clamp(52px, 5vw + 28px, 80px));
-    padding-top: 20px;
-    padding-bottom: 12px;
-    margin-top: -20px;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 12px;
+    padding-bottom: 16px;
+    margin-top: 0;
     margin-bottom: 16px;
     overflow-x: auto;
-    overflow-y: visible;
+    overflow-y: hidden;
     -webkit-overflow-scrolling: touch;
     overscroll-behavior-x: contain;
     scrollbar-width: thin;
@@ -778,7 +871,7 @@
     min-width: 100%;
     margin-left: 0;
     margin-right: 0;
-    padding: 12px clamp(20px, 3vw, 28px);
+    padding: 0;
     box-sizing: border-box;
   }
 
@@ -874,12 +967,12 @@
   }
 
   .case-study-card__main {
-    flex: 1;
+    flex: 1 1 0;
     display: flex;
     flex-direction: column;
     min-width: 0;
-    /* Cap line length so body copy doesn’t span the full card width on wide tablets/laptops */
-    max-width: min(42rem, 100%);
+    max-width: none;
+    width: auto;
     align-self: stretch;
   }
 
@@ -887,7 +980,7 @@
     flex: 0 1 auto;
     min-height: 0;
     width: 100%;
-    max-width: 100%;
+    max-width: none;
   }
 
   /* Same face + weight as desktop card title (avoid Romie here vs Atkinson on narrow) */
@@ -910,7 +1003,7 @@
   .case-study-card__description {
     margin-bottom: 24px;
     width: 100%;
-    max-width: 100%;
+    max-width: none;
   }
 
   .view-design-btn {
@@ -925,6 +1018,21 @@
   .case-study-card__content {
     padding-left: var(--padding-x, clamp(52px, 5vw + 28px, 80px));
     padding-right: var(--padding-x, clamp(52px, 5vw + 28px, 80px));
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .case-study-card__content {
+    padding: clamp(28px, 4vw, 36px) clamp(24px, 4vw, 36px);
+    gap: clamp(20px, 3vw, 28px);
+  }
+
+  .case-study-card__sidebar {
+    width: 140px;
+    min-width: 140px;
+    max-width: 140px;
+    padding-right: 20px;
+    --case-card-tab-rail: 20px;
   }
 }
 
@@ -976,6 +1084,13 @@
     line-height: var(--type-atkinson-text-sm-lh);
   }
 
+  .case-studies__filter-nav-btn {
+    width: 40px;
+    height: 40px;
+    padding: 8px;
+    border-radius: 10px;
+  }
+
   .case-studies__grid {
     padding-top: 16px;
   }
@@ -984,19 +1099,22 @@
     top: 80px;
   }
 
-  /* Slightly tighter strip on phones; pills scaled down vs tablet row (see .category-pill below) */
+  /* Filter strip matches card width — hard clip at image edges */
   .case-studies__filter-wrap {
-    margin-left: calc(-1 * clamp(16px, 4vw, 28px));
-    margin-right: calc(-1 * clamp(16px, 4vw, 28px));
-    padding-left: clamp(16px, 4vw, 28px);
-    padding-right: clamp(16px, 4vw, 28px);
-    padding-bottom: 8px;
+    margin-left: 0;
+    margin-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+    padding-top: 10px;
+    padding-bottom: 14px;
+    margin-top: 0;
     margin-bottom: 12px;
+    overflow-y: hidden;
   }
 
   .case-studies__filter {
     gap: 10px;
-    padding: 10px 22px;
+    padding: 0;
   }
 
   /* Slightly smaller category cards than tablet horizontal-scroll row (1024px rule) */
@@ -1319,7 +1437,7 @@
     aspect-ratio: 390 / 280;
   }
 
-  .case-study-card__image-layer {
+  .case-study-card__image-media {
     background-size: cover;
     background-position: center;
   }

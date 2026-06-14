@@ -142,6 +142,47 @@ export const Contact: React.FC = () => {
     // Errors should appear only after the user tries to submit.
   };
 
+  const renderSubmitButton = (
+    cardIsSubmitting: boolean,
+    cardSubmitStatus: typeof submitStatus,
+    formDomId: string,
+    isActive: boolean
+  ) => (
+    <button
+      type="submit"
+      form={isActive ? formDomId : undefined}
+      className={`contact__submit-btn btn btn--secondary btn--on-surface btn--icon-left send-message ${cardIsSubmitting ? 'contact__submit-btn--loading' : ''} ${cardSubmitStatus === 'success' ? 'contact__submit-btn--success' : ''}`}
+      onMouseEnter={() => setIsSendHovered(true)}
+      onMouseLeave={() => setIsSendHovered(false)}
+      disabled={!isActive || cardIsSubmitting || isAnimatingRef.current}
+      aria-busy={cardIsSubmitting}
+      aria-label={
+        cardIsSubmitting
+          ? 'Sending message...'
+          : cardSubmitStatus === 'success'
+            ? 'Message sent successfully'
+            : 'Send message'
+      }
+    >
+      {cardIsSubmitting ? (
+        <>
+          <span className="contact__spinner" aria-hidden="true" />
+          <span>Sending...</span>
+        </>
+      ) : cardSubmitStatus === 'success' ? (
+        <>
+          <CheckCircle size={24} weight="fill" color="currentColor" aria-hidden="true" />
+          <span>Message sent!</span>
+        </>
+      ) : (
+        <>
+          <PaperPlaneTilt size={24} weight={isSendHovered ? 'fill' : 'regular'} color="currentColor" aria-hidden="true" />
+          <span>Send message</span>
+        </>
+      )}
+    </button>
+  );
+
   // Render contact card content (reusable)
   const renderContactCard = (
     cardFormData: typeof formData,
@@ -286,42 +327,9 @@ export const Contact: React.FC = () => {
               )}
             </div>
           </form>
-
-          {/* Mobile/tablet button - shown only on ≤1024px, sits right below form */}
-          <button
-            type="submit"
-            form={isActive ? formDomId : undefined}
-            className={`contact__submit-btn contact__submit-btn--mobile btn btn--secondary btn--on-surface btn--icon-left send-message ${cardIsSubmitting ? 'contact__submit-btn--loading' : ''} ${cardSubmitStatus === 'success' ? 'contact__submit-btn--success' : ''}`}
-            onMouseEnter={() => setIsSendHovered(true)}
-            onMouseLeave={() => setIsSendHovered(false)}
-            disabled={!isActive || cardIsSubmitting || isAnimatingRef.current}
-            aria-busy={cardIsSubmitting}
-            aria-label={
-              cardIsSubmitting
-                ? 'Sending message...'
-                : cardSubmitStatus === 'success'
-                  ? 'Message sent successfully'
-                  : 'Send message'
-            }
-          >
-            {cardIsSubmitting ? (
-              <>
-                <span className="contact__spinner" aria-hidden="true" />
-                <span>Sending...</span>
-              </>
-            ) : cardSubmitStatus === 'success' ? (
-              <>
-                <CheckCircle size={24} weight="fill" color="currentColor" aria-hidden="true" />
-                <span>Message sent!</span>
-              </>
-            ) : (
-              <>
-                <PaperPlaneTilt size={24} weight={isSendHovered ? 'fill' : 'regular'} color="currentColor" aria-hidden="true" />
-                <span>Send message</span>
-              </>
-            )}
-          </button>
       </div>
+
+      {renderSubmitButton(cardIsSubmitting, cardSubmitStatus, formDomId, isActive)}
 
       {/* Divider */}
       <div className="contact__divider" aria-hidden="true" />
@@ -377,42 +385,6 @@ export const Contact: React.FC = () => {
                       decoding="async"
                     />
                   </div>
-                  {/* Desktop button - hidden on mobile/tablet */}
-                  <button
-                    type="submit"
-                    form={isFront && isActive ? formDomId : undefined}
-                    className={`contact__submit-btn contact__submit-btn--desktop btn btn--secondary btn--on-surface btn--icon-left send-message ${cardIsSubmitting ? 'contact__submit-btn--loading' : ''} ${cardSubmitStatus === 'success' ? 'contact__submit-btn--success' : ''}`}
-                    onMouseEnter={() => setIsSendHovered(true)}
-                    onMouseLeave={() => setIsSendHovered(false)}
-                    disabled={!isFront || !isActive || cardIsSubmitting || isAnimatingRef.current}
-                    tabIndex={!isFront ? -1 : 0}
-                    aria-hidden={!isFront}
-                    aria-busy={cardIsSubmitting}
-                    aria-label={
-                      cardIsSubmitting
-                        ? 'Sending message...'
-                        : cardSubmitStatus === 'success'
-                          ? 'Message sent successfully'
-                          : 'Send message'
-                    }
-                  >
-                    {cardIsSubmitting ? (
-                      <>
-                        <span className="contact__spinner" aria-hidden="true" />
-                        <span>Sending...</span>
-                      </>
-                    ) : cardSubmitStatus === 'success' ? (
-                      <>
-                        <CheckCircle size={24} weight="fill" color="currentColor" aria-hidden="true" />
-                        <span>Message sent!</span>
-                      </>
-                    ) : (
-                      <>
-                        <PaperPlaneTilt size={24} weight={isSendHovered ? 'fill' : 'regular'} color="currentColor" aria-hidden="true" />
-                        <span>Send message</span>
-                      </>
-                    )}
-                  </button>
                 </div>
               );
             })}

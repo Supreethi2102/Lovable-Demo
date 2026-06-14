@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { 
   SelectionAll, 
   PaintBrush, 
@@ -8,6 +8,8 @@ import {
   NotePencil,
   SpeakerHigh,
   Folders,
+  CaretLeft,
+  CaretRight,
   IconWeight,
   Icon,
 } from '@phosphor-icons/react';
@@ -294,8 +296,68 @@ export const CaseStudies: React.FC = () => {
   const [hoveredViewAll, setHoveredViewAll] = useState(false);
   const [showAllCaseStudies, setShowAllCaseStudies] = useState(false);
   const caseStudiesSectionRef = useRef<HTMLElement | null>(null);
+  const filterWrapRef = useRef<HTMLDivElement | null>(null);
+  const [canScrollFilterLeft, setCanScrollFilterLeft] = useState(false);
+  const [canScrollFilterRight, setCanScrollFilterRight] = useState(false);
+  const [hoveredFilterNav, setHoveredFilterNav] = useState<'prev' | 'next' | null>(null);
   /** True only when the user chose “Show fewer” — not when the category filter resets the list. */
   const anchorScrollAfterCollapseRef = useRef(false);
+
+  const updateFilterScrollState = useCallback(() => {
+    const el = filterWrapRef.current;
+    if (!el) return;
+
+    const { scrollLeft, scrollWidth, clientWidth } = el;
+    setCanScrollFilterLeft(scrollLeft > 1);
+    setCanScrollFilterRight(scrollLeft + clientWidth < scrollWidth - 1);
+  }, []);
+
+  const scrollFilterCategories = (direction: 'left' | 'right') => {
+    const wrap = filterWrapRef.current;
+    if (!wrap) return;
+
+    const filterRow = wrap.querySelector('.case-studies__filter');
+    const firstPill = wrap.querySelector('.category-pill') as HTMLElement | null;
+    const gap = filterRow
+      ? Number.parseFloat(getComputedStyle(filterRow).columnGap || getComputedStyle(filterRow).gap) || 16
+      : 16;
+    const amount = firstPill ? firstPill.offsetWidth + gap : 170;
+
+    wrap.scrollBy({
+      left: direction === 'left' ? -amount : amount,
+      behavior: 'smooth',
+    });
+  };
+
+  useEffect(() => {
+    const wrap = filterWrapRef.current;
+    if (!wrap) return;
+
+    updateFilterScrollState();
+
+    wrap.addEventListener('scroll', updateFilterScrollState, { passive: true });
+    window.addEventListener('resize', updateFilterScrollState);
+
+    const observer = typeof ResizeObserver !== 'undefined'
+      ? new ResizeObserver(updateFilterScrollState)
+      : null;
+    observer?.observe(wrap);
+
+    return () => {
+      wrap.removeEventListener('scroll', updateFilterScrollState);
+      window.removeEventListener('resize', updateFilterScrollState);
+      observer?.disconnect();
+    };
+  }, [updateFilterScrollState]);
+
+  useLayoutEffect(() => {
+    if (typeof window === 'undefined' || window.innerWidth > 1024) return;
+
+    const wrap = filterWrapRef.current;
+    const activePill = wrap?.querySelector('.category-pill--active') as HTMLElement | null;
+    activePill?.scrollIntoView({ behavior: 'smooth', inline: 'nearest', block: 'nearest' });
+    updateFilterScrollState();
+  }, [activeCategory, updateFilterScrollState]);
 
   const filteredStudies = activeCategory === 'all' 
     ? caseStudies 
@@ -338,10 +400,48 @@ export const CaseStudies: React.FC = () => {
         <h2 id="case-studies-title" className="case-studies__title">
           Case studies <span className="case-studies__subtitle">In-depth design and thinking</span>
         </h2>
+        <div
+          className="case-studies__filter-nav"
+          role="group"
+          aria-label="Scroll case study categories"
+        >
+          <button
+            type="button"
+            className="case-studies__filter-nav-btn"
+            onClick={() => scrollFilterCategories('left')}
+            onMouseEnter={() => setHoveredFilterNav('prev')}
+            onMouseLeave={() => setHoveredFilterNav(null)}
+            aria-label="Scroll categories left"
+            disabled={!canScrollFilterLeft}
+          >
+            <CaretLeft
+              size={24}
+              weight={hoveredFilterNav === 'prev' ? 'bold' : 'regular'}
+              color={hoveredFilterNav === 'prev' ? '#ffffff' : '#7150E5'}
+              aria-hidden="true"
+            />
+          </button>
+          <button
+            type="button"
+            className="case-studies__filter-nav-btn"
+            onClick={() => scrollFilterCategories('right')}
+            onMouseEnter={() => setHoveredFilterNav('next')}
+            onMouseLeave={() => setHoveredFilterNav(null)}
+            aria-label="Scroll categories right"
+            disabled={!canScrollFilterRight}
+          >
+            <CaretRight
+              size={24}
+              weight={hoveredFilterNav === 'next' ? 'bold' : 'regular'}
+              color={hoveredFilterNav === 'next' ? '#ffffff' : '#7150E5'}
+              aria-hidden="true"
+            />
+          </button>
+        </div>
       </header>
 
       {/* Category Filter – outer wrap allows horizontal scroll + padding so active shadow is not clipped */}
-      <div className="case-studies__filter-wrap">
+      <div className="case-studies__filter-wrap" ref={filterWrapRef}>
         <nav
           className="case-studies__filter"
           role="tablist"

@@ -127,13 +127,13 @@ a:focus-visible {
 }
 
 /* Hero Section Wrapper */
-.hero-section {
+  .hero-section {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   background: #F7F8F9;
-  /* Smooth hero gutters: from 1400px down use more padding (min 80px). 1440→112px. */
-  --hero-gutter: clamp(80px, calc((100vw - var(--content-max-width)) / 2), 112px);
+  /* Side inset: --padding-x below 1220px; centering gutter above content max width */
+  --hero-gutter: max(var(--padding-x), calc((100vw - var(--content-max-width)) / 2));
   padding-left: var(--hero-gutter);
   padding-right: var(--hero-gutter);
 }
@@ -263,8 +263,8 @@ a:focus-visible {
   }
 }
 
-/* Responsive - Tablet Landscape (1024px and below) */
-@media (max-width: 1024px) {
+/* Responsive - Tablet landscape / small laptop (1200px and below) */
+@media (max-width: 1200px) {
   :root {
     --padding-y: 32px;
   }
@@ -292,11 +292,13 @@ a:focus-visible {
 
   .main__right {
     width: 100%;
+    max-width: min(520px, 100%);
     gap: 20px;
+    align-items: center;
   }
 
   .main__globe {
-    max-width: min(500px, 93vw);
+    max-width: min(500px, 100%);
     overflow: hidden;
   }
 }

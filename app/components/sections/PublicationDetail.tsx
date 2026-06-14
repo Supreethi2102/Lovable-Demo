@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { createPortal } from 'react-dom';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { ArrowUpRight, CaretLeft, CaretRight, ArrowLeft } from '@phosphor-icons/react';
 import { getGalleryImages, getPublicationById, getPublicationCopy } from '../../data/publications';
@@ -142,46 +143,44 @@ export const PublicationDetail: React.FC = () => {
 
   if (!publication || !copy) return null;
 
-  return (
-    <section className="publication-detail" aria-labelledby="publication-detail-title">
-      {isEnlarged && (
-        <div
-          className="publication-detail-enlarged__overlay"
-          role="dialog"
-          aria-modal="true"
-          aria-label="Enlarged photo gallery"
-        >
-          <div ref={enlargedDialogRef} className="publication-detail-enlarged__panel-inner" tabIndex={-1}>
-            <div className="publication-detail-enlarged__stage-block">
-              <div className="publication-detail-enlarged__carousel">
+  const enlargedView = isEnlarged ? (
+    <div
+      className="publication-detail-enlarged__overlay"
+      role="dialog"
+      aria-modal="true"
+      aria-label="Enlarged photo gallery"
+    >
+      <div ref={enlargedDialogRef} className="publication-detail-enlarged__panel-inner" tabIndex={-1}>
+        <div className="publication-detail-enlarged__stage-block">
+          <div className="publication-detail-enlarged__carousel">
+            <button
+              type="button"
+              className="publication-detail__nav"
+              aria-label="Previous image"
+              onClick={() => setActiveIndex((v) => clampIndex(v - 1, Math.max(totalImages, 1)))}
+            >
+              <CaretLeft size={24} weight="regular" color="#7150E5" aria-hidden="true" />
+            </button>
+
+            <div className="publication-detail-enlarged__stage-column">
+              <div className="publication-detail-enlarged__toolbar">
                 <button
                   type="button"
-                  className="publication-detail__nav"
-                  aria-label="Previous image"
-                  onClick={() => setActiveIndex((v) => clampIndex(v - 1, Math.max(totalImages, 1)))}
+                  className="publication-detail-enlarged__back"
+                  onClick={closeEnlarged}
+                  aria-label="Back to publication"
                 >
-                  <CaretLeft size={24} weight="regular" color="#7150E5" aria-hidden="true" />
+                  <ArrowLeft size={24} weight="regular" color="#7150E5" aria-hidden="true" />
+                  <span>Back</span>
                 </button>
+                <div className="publication-detail-enlarged__counter" aria-live="polite" aria-atomic="true">
+                  <span>{activeIndex + 1}/</span>
+                  <strong>{Math.max(totalImages, 1)}</strong>
+                  <span className="publication-detail__counter-label">images</span>
+                </div>
+              </div>
 
-                <div className="publication-detail-enlarged__stage-column">
-                  <div className="publication-detail-enlarged__toolbar">
-                    <button
-                      type="button"
-                      className="publication-detail-enlarged__back"
-                      onClick={closeEnlarged}
-                      aria-label="Back to publication"
-                    >
-                      <ArrowLeft size={24} weight="regular" color="#7150E5" aria-hidden="true" />
-                      <span>Back</span>
-                    </button>
-                    <div className="publication-detail-enlarged__counter" aria-live="polite" aria-atomic="true">
-                      <span>{activeIndex + 1}/</span>
-                      <strong>{Math.max(totalImages, 1)}</strong>
-                      <span className="publication-detail__counter-label">images</span>
-                    </div>
-                  </div>
-
-                  <div className="publication-detail-enlarged__stage">
+              <div className="publication-detail-enlarged__stage">
                 {activeImage ? (
                   <ResponsivePicture
                     image={activeImage}
@@ -192,28 +191,32 @@ export const PublicationDetail: React.FC = () => {
                 ) : (
                   <div className="publication-detail__image-placeholder" aria-hidden="true" />
                 )}
-                  </div>
-                </div>
-
-                <button
-                  type="button"
-                  className="publication-detail__nav"
-                  aria-label="Next image"
-                  onClick={() => setActiveIndex((v) => clampIndex(v + 1, Math.max(totalImages, 1)))}
-                >
-                  <CaretRight size={24} weight="regular" color="#7150E5" aria-hidden="true" />
-                </button>
-              </div>
-
-              <div className="publication-detail-enlarged__caption-row">
-                <div className="publication-detail__gallery-rail" aria-hidden="true" />
-                <div className="publication-detail-enlarged__caption">{caption}</div>
-                <div className="publication-detail__gallery-rail" aria-hidden="true" />
               </div>
             </div>
+
+            <button
+              type="button"
+              className="publication-detail__nav"
+              aria-label="Next image"
+              onClick={() => setActiveIndex((v) => clampIndex(v + 1, Math.max(totalImages, 1)))}
+            >
+              <CaretRight size={24} weight="regular" color="#7150E5" aria-hidden="true" />
+            </button>
+          </div>
+
+          <div className="publication-detail-enlarged__caption-row">
+            <div className="publication-detail__gallery-rail" aria-hidden="true" />
+            <div className="publication-detail-enlarged__caption">{caption}</div>
+            <div className="publication-detail__gallery-rail" aria-hidden="true" />
           </div>
         </div>
-      )}
+      </div>
+    </div>
+  ) : null;
+
+  return (
+    <section className="publication-detail" aria-labelledby="publication-detail-title">
+      {enlargedView ? createPortal(enlargedView, document.body) : null}
 
       <div className="publication-detail__inner">
         <div className="publication-detail__grid">

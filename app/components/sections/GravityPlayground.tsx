@@ -204,6 +204,45 @@ const allElements: PhysicsElement[] = [
 
 const swatchMoodById = new Map(swatchCards.map(s => [s.id, s.mood]));
 
+type LayoutConfig = {
+  scale: number;
+  sceneHeight: number;
+  elements: PhysicsElement[];
+  spawnCols: number;
+  compact: boolean;
+};
+
+function getLayoutConfig(viewportWidth: number): LayoutConfig {
+  const compact = viewportWidth <= 1024;
+  const phone = viewportWidth <= 480;
+  const tablet = viewportWidth <= 768;
+
+  let scale = 1;
+  if (viewportWidth < 1400) scale = 0.92;
+  if (viewportWidth < 1200) scale = 0.85;
+  if (compact) scale = Math.max(0.56, viewportWidth / 1280);
+  if (tablet) scale = Math.max(0.5, viewportWidth / 1180);
+  if (phone) scale = Math.max(0.44, viewportWidth / 960);
+
+  const elements = compact
+    ? allElements.filter((el) => el.type === 'swatch')
+    : allElements;
+
+  const sceneHeight = phone
+    ? 620
+    : tablet
+      ? 680
+      : compact
+        ? 740
+        : viewportWidth < 1200
+          ? 780
+          : 840;
+
+  const spawnCols = phone ? 4 : compact ? 5 : 7;
+
+  return { scale, sceneHeight, elements, spawnCols, compact };
+}
+
 const PillElement: React.FC<{ content: string; style: React.CSSProperties }> = ({ content, style }) => (
   <div className="gp-pill" style={style}>
     <span>{content}</span>
@@ -235,13 +274,12 @@ const TextElement: React.FC<{ content: string; style: React.CSSProperties }> = (
   </div>
 );
 
-/** Scale factor so swatch cards and small elements (pills, icons, text) scale down on smaller viewports */
-function getScaleFactor(): number {
-  if (typeof window === 'undefined') return 1;
-  if (window.matchMedia('(max-width: 480px)').matches) return 0.65;
-  if (window.matchMedia('(max-width: 768px)').matches) return 0.78;
-  if (window.matchMedia('(max-width: 1024px)').matches) return 0.88;
-  return 1;
+/** Scale factor so swatch cards and small elements fit smaller viewports */
+function getInitialLayoutConfig(): LayoutConfig {
+  if (typeof window === 'undefined') {
+    return getLayoutConfig(1200);
+  }
+  return getLayoutConfig(window.innerWidth);
 }
 
 export const GravityPlayground: React.FC = () => {
@@ -256,12 +294,12 @@ export const GravityPlayground: React.FC = () => {
   const dragBodyRef = useRef<Matter.Body | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const hasStartedRef = useRef(false);
-  const [scale, setScale] = useState(() => getScaleFactor());
-  const scaleRef = useRef(1);
+  const [layoutConfig, setLayoutConfig] = useState<LayoutConfig>(() => getInitialLayoutConfig());
+  const [layoutRevision, setLayoutRevision] = useState(0);
+  const layoutConfigRef = useRef(layoutConfig);
+  layoutConfigRef.current = layoutConfig;
   const [flippedSwatchIds, setFlippedSwatchIds] = useState<Set<string>>(new Set());
   const [activeSwatchId, setActiveSwatchId] = useState<string | null>(null);
-  // Keep scaleRef in sync so physics mouse coords are correct
-  scaleRef.current = scale;
 
   const setSwatchStatic = (swatchId: string, shouldBeStatic: boolean) => {
     const body = bodiesRef.current.get(swatchId);
@@ -294,17 +332,40 @@ export const GravityPlayground: React.FC = () => {
     });
   };
 
-  // Responsive scale: update on resize so swatch cards and small elements scale down
+  // Recompute layout on resize/orientation and reinit physics when it changes materially
   useEffect(() => {
-    const update = () => {
-      const next = getScaleFactor();
-      if (next !== scaleRef.current) {
-        scaleRef.current = next;
-        setScale(next);
-      }
+    let timeoutId: number | undefined;
+
+    const handleLayoutChange = () => {
+      window.clearTimeout(timeoutId);
+      timeoutId = window.setTimeout(() => {
+        const next = getLayoutConfig(window.innerWidth);
+        const prev = layoutConfigRef.current;
+
+        const layoutChanged =
+          Math.abs(next.scale - prev.scale) > 0.035 ||
+          next.sceneHeight !== prev.sceneHeight ||
+          next.elements.length !== prev.elements.length ||
+          next.spawnCols !== prev.spawnCols ||
+          next.compact !== prev.compact;
+
+        if (!layoutChanged) return;
+
+        layoutConfigRef.current = next;
+        setLayoutConfig(next);
+        setLayoutRevision((revision) => revision + 1);
+        setActiveSwatchId(null);
+        setFlippedSwatchIds(new Set());
+      }, 160);
     };
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
+
+    window.addEventListener('resize', handleLayoutChange);
+    window.addEventListener('orientationchange', handleLayoutChange);
+    return () => {
+      window.clearTimeout(timeoutId);
+      window.removeEventListener('resize', handleLayoutChange);
+      window.removeEventListener('orientationchange', handleLayoutChange);
+    };
   }, []);
 
   // Intersection Observer for visibility detection
@@ -327,18 +388,21 @@ export const GravityPlayground: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
-  // Initialize physics ONLY when visible
+  // Initialize physics ONLY when visible (re-runs when layout changes on resize)
   useEffect(() => {
     if (!sceneRef.current || !isVisible || initializedRef.current) return;
     initializedRef.current = true;
 
     const scene = sceneRef.current;
+    const { scale, sceneHeight, elements, spawnCols, compact } = layoutConfigRef.current;
+    scene.style.height = `${sceneHeight}px`;
+
     const width = scene.offsetWidth || 1000;
-    const height = scene.offsetHeight || 500;
+    const height = sceneHeight;
 
     // Create engine with gravity
     const engine = Matter.Engine.create({
-      gravity: { x: 0, y: 0.8, scale: 0.001 },
+      gravity: { x: 0, y: compact ? 0.65 : 0.8, scale: 0.001 },
       enableSleeping: true,
     });
     engineRef.current = engine;
@@ -360,28 +424,35 @@ export const GravityPlayground: React.FC = () => {
     const bodiesMap = new Map<string, Matter.Body>();
     const initialPos = new Map<string, { x: number; y: number; angle: number }>();
 
-    // Position elements ABOVE the scene - they will fall down in mixed order
-    allElements.forEach((el, i) => {
-      const cols = 7;
+    const edgePad = compact ? 48 : 80;
+
+    // Position elements above the scene - spread by column so they don't land in one pile
+    elements.forEach((el, i) => {
+      const cols = Math.max(2, Math.min(spawnCols, elements.length));
       const col = i % cols;
-      
-      // Spread across width
-      const x = 100 + col * (width - 200) / (cols - 1) + (Math.random() - 0.5) * 60;
-      // RANDOM starting height for ALL elements - creates mixed falling order
-      const y = -150 - Math.random() * 600;
-      const angle = (Math.random() - 0.5) * 0.3;
+      const row = Math.floor(i / cols);
+
+      const x =
+        edgePad +
+        col * ((width - edgePad * 2) / Math.max(cols - 1, 1)) +
+        (Math.random() - 0.5) * (compact ? 24 : 60);
+      const y = -120 - row * (compact ? 90 : 70) - Math.random() * (compact ? 180 : 600);
+      const angle = compact ? (Math.random() - 0.5) * 0.12 : (Math.random() - 0.5) * 0.3;
+
+      const bodyWidth = el.width * scale;
+      const bodyHeight = el.height * scale;
 
       // Different chamfer radius based on element type
-      let radius = 12;
-      if (el.type === 'pill') radius = el.height / 2;
-      else if (el.type === 'swatch') radius = 10;
-      else if (el.type === 'icon') radius = 14;
-      
-      const body = Matter.Bodies.rectangle(x, y, el.width, el.height, {
+      let radius = 12 * scale;
+      if (el.type === 'pill') radius = bodyHeight / 2;
+      else if (el.type === 'swatch') radius = 10 * scale;
+      else if (el.type === 'icon') radius = 14 * scale;
+
+      const body = Matter.Bodies.rectangle(x, y, bodyWidth, bodyHeight, {
         chamfer: { radius },
         friction: 0.7,
-        frictionAir: 0.045,
-        restitution: 0.12,
+        frictionAir: compact ? 0.055 : 0.045,
+        restitution: compact ? 0.08 : 0.12,
         angle,
         label: el.id,
         sleepThreshold: 40,
@@ -397,13 +468,12 @@ export const GravityPlayground: React.FC = () => {
 
     Matter.Composite.add(engine.world, allBodies);
 
-    // Custom mouse/touch handling (convert viewport coords to physics space when scaled)
+    // Custom mouse/touch handling
     const getMousePos = (e: MouseEvent | Touch): { x: number; y: number } => {
       const rect = scene.getBoundingClientRect();
-      const s = scaleRef.current || 1;
       return {
-        x: (e.clientX - rect.left) / s,
-        y: (e.clientY - rect.top) / s,
+        x: e.clientX - rect.left,
+        y: e.clientY - rect.top,
       };
     };
 
@@ -488,7 +558,7 @@ export const GravityPlayground: React.FC = () => {
     scene.addEventListener('touchend', () => handleEnd());
 
     // Keep a small visual safe zone so rotated cards/shadows do not appear clipped.
-    const EDGE_PADDING = 20;
+    const EDGE_PADDING = compact ? 28 : 20;
 
     const clampBodyToScene = (body: Matter.Body) => {
       if (body.isStatic || body.isSleeping) return;
@@ -567,7 +637,9 @@ export const GravityPlayground: React.FC = () => {
       if (engineRef.current) Matter.Engine.clear(engineRef.current);
       initializedRef.current = false;
     };
-  }, [isVisible]);
+  }, [isVisible, layoutRevision]);
+
+  const { scale: layoutScale, elements: visibleElements, sceneHeight } = layoutConfig;
 
   const renderElement = (el: PhysicsElement) => {
     const pos = positions.get(el.id);
@@ -576,12 +648,14 @@ export const GravityPlayground: React.FC = () => {
     const angle = pos?.angle ?? 0;
     const isActive = activeSwatchId === el.id;
     const visualAngle = isActive && el.type === 'swatch' ? 0 : angle;
-    const liftY = isActive && el.type === 'swatch' ? 24 : 0;
+    const liftY = isActive && el.type === 'swatch' ? 24 * layoutScale : 0;
+    const renderWidth = el.width * layoutScale;
+    const renderHeight = el.height * layoutScale;
 
     const style: React.CSSProperties = {
-      transform: `translate(${x - el.width / 2}px, ${y - el.height / 2 - liftY}px) rotate(${visualAngle}rad)`,
-      width: el.width,
-      height: el.height,
+      transform: `translate(${x - renderWidth / 2}px, ${y - renderHeight / 2 - liftY}px) rotate(${visualAngle}rad)`,
+      width: renderWidth,
+      height: renderHeight,
       zIndex: isActive ? 220 : undefined,
     };
 
@@ -615,15 +689,16 @@ export const GravityPlayground: React.FC = () => {
   };
 
   return (
-    <div className="gravity-playground__scene" ref={sceneRef}>
+    <div
+      className="gravity-playground__scene"
+      ref={sceneRef}
+      style={{ height: sceneHeight }}
+    >
       <div
         className="gravity-playground__scene-inner"
-        style={{
-          transform: `scale(${scale})`,
-          transformOrigin: '0 0',
-        }}
+        style={{ '--gp-scale': layoutScale } as React.CSSProperties}
       >
-        {allElements.map(renderElement)}
+        {visibleElements.map(renderElement)}
       </div>
     </div>
   );

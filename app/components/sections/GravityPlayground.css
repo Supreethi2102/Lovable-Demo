@@ -3,6 +3,7 @@
   position: relative;
   width: 100%;
   max-width: 100%;
+  min-height: 580px;
   height: 840px;
   cursor: grab;
   user-select: none;
@@ -16,13 +17,14 @@
   cursor: grabbing;
 }
 
-/* Inner wrapper: scaled on smaller viewports so cards/pills/icons shrink; physics uses scale in mouse coords */
+/* Inner wrapper – physics + render share the same coordinate space (no CSS scale) */
 .gravity-playground__scene-inner {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
-  pointer-events: none; /* events go to scene; coords converted in JS */
+  --gp-scale: 1;
+  pointer-events: none; /* events go to scene */
 }
 
 .gravity-playground__scene-inner > * {
@@ -124,8 +126,6 @@
   position: absolute;
   top: 0;
   left: 0;
-  width: 176px;
-  height: 308px;
   border-radius: 12px;
   overflow: hidden;
   will-change: transform;
@@ -139,7 +139,7 @@
   border-radius: 12px;
   background: #ffffff;
   border: 1px solid #76797f;
-  padding: 20px;
+  padding: calc(20px * var(--gp-scale, 1));
   box-shadow: var(--shadow-publication-rest);
   display: flex;
   flex-direction: column;
@@ -206,7 +206,7 @@
 
 .gp-swatch__color {
   width: 100%;
-  height: 112px;
+  height: calc(112px * var(--gp-scale, 1));
   border-radius: 8px 8px 0 0;
   flex-shrink: 0;
   border: none;
@@ -219,8 +219,8 @@
   align-items: center;
   flex: 1;
   min-height: 0;
-  padding-top: 28px;
-  padding-bottom: 16px;
+  padding-top: calc(28px * var(--gp-scale, 1));
+  padding-bottom: calc(16px * var(--gp-scale, 1));
 }
 
 .gp-swatch__text {
@@ -407,24 +407,8 @@
 
 /* Footer link (View / Hide colour mood) – no extra margin; footer has padding-top */
 
-/* Responsive */
-@media (max-width: 1200px) {
-  .gravity-playground__scene {
-    height: 780px;
-  }
-}
-
-@media (max-width: 1024px) {
-  .gravity-playground__scene {
-    height: 720px;
-  }
-}
-
+/* Responsive – height is set in JS; keep type tweaks only */
 @media (max-width: 768px) {
-  .gravity-playground__scene {
-    height: 660px;
-  }
-
   .gp-pill {
     font-size: var(--type-atkinson-text-xs-size);
     padding: 0 18px;
@@ -448,11 +432,5 @@
   .gp-swatch__ideal,
   .gp-swatch__contrast-ratio {
     font-size: var(--type-atkinson-text-xs-size);
-  }
-}
-
-@media (max-width: 480px) {
-  .gravity-playground__scene {
-    height: 580px;
   }
 }

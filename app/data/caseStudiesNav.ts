@@ -39,11 +39,11 @@ export const projectHighlightItems: CaseStudyNavItem[] = [
   { label: 'Architecture New Zealand Magazine', sectionId: '#publications' },
   { label: 'Houses Magazine', sectionId: '#publications' },
   { label: 'Life Pharmacy Mailer', sectionId: '#publications' },
-  { label: 'NZW Grooms Guide Booklet', sectionId: '#publications' },
+  { label: 'Little Treasures Magazine', sectionId: '#publications' },
   { label: 'New Zealand Weddings Planner', sectionId: '#publications' },
+  { label: 'NZW Grooms Guide Booklet', sectionId: '#publications' },
   { label: 'Pumpkin Patch Catalogue', sectionId: '#publications' },
   { label: 'Superlife Booklet', sectionId: '#publications' },
-  { label: 'Little Treasures Magazine', sectionId: '#publications' },
   { label: 'The Warehouse — Big Toy Month Mailer', sectionId: '#publications' },
 ];
 

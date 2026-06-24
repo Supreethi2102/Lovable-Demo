@@ -773,7 +773,8 @@
       border-radius: 20px;
     }
   
-    .case-study-detail__cinema-backdrop {
+    .case-study-detail__cinema-backdrop,
+    .case-study-detail__scroll-hint {
       display: none;
     }
   

@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useLayoutEffect, useRef, useState } from
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   ArrowLeft,
+  ArrowDown,
   ClipboardText,
   SpeakerHigh,
   XCircle,
@@ -718,6 +719,7 @@ export const CaseStudyDetail: React.FC = () => {
   /** 0 = full-bleed cinema; 1 = hero seated in card — driven by wheel/touch only (page does not scroll). */
   const cinemaProgressRef = useRef(0);
   const cinemaBackdropRef = useRef<HTMLDivElement>(null);
+  const scrollHintRef = useRef<HTMLDivElement>(null);
 
   /**
    * Hero “cinema”: full-width image first; wheel/trackpad/touch scrubs it into the card.
@@ -766,6 +768,30 @@ export const CaseStudyDetail: React.FC = () => {
       if (!bd) return;
       bd.style.opacity = visible ? '1' : '0';
       bd.style.visibility = visible ? 'visible' : 'hidden';
+    };
+
+    const syncScrollHint = (
+      visible: boolean,
+      left = 0,
+      top = 0,
+      width = 0,
+      height = 0,
+      progress = 0,
+    ) => {
+      const hint = scrollHintRef.current;
+      if (!hint) return;
+
+      if (!visible) {
+        hint.style.opacity = '0';
+        hint.style.visibility = 'hidden';
+        return;
+      }
+
+      hint.style.visibility = 'visible';
+      hint.style.left = `${Math.round(left + width / 2)}px`;
+      hint.style.top = `${Math.round(top + height - 20)}px`;
+      hint.style.transform = 'translate(-50%, -100%)';
+      hint.style.opacity = String(Math.max(0, 1 - progress * 2.5));
     };
 
     /** ~1.0 progress per typical trackpad “page” of wheel delta */
@@ -828,6 +854,7 @@ export const CaseStudyDetail: React.FC = () => {
       const tr = wrap.getBoundingClientRect();
       applyFixedToRect(tr.left, tr.top, tr.width, tr.height, 24, 0);
       syncBackdrop(false);
+      syncScrollHint(false);
 
       detachMorphHelpers();
 
@@ -881,6 +908,7 @@ export const CaseStudyDetail: React.FC = () => {
       const brBottom = OPEN_CORNER_RADIUS * (1 - t);
 
       applyFixedToRect(left, top, width, height, brTop, brBottom);
+      syncScrollHint(true, left, top, width, height, t);
     };
 
     const scheduleApply = () => {
@@ -952,6 +980,7 @@ export const CaseStudyDetail: React.FC = () => {
       unlockPageScroll();
       clearCinemaStyles();
       syncBackdrop(false);
+      syncScrollHint(false);
     };
   }, [id]);
 
@@ -1098,6 +1127,10 @@ export const CaseStudyDetail: React.FC = () => {
       aria-labelledby="case-study-detail-title"
     >
       <div ref={cinemaBackdropRef} className="case-study-detail__cinema-backdrop" aria-hidden />
+      <div ref={scrollHintRef} className="case-study-detail__scroll-hint" aria-hidden="true">
+        <ArrowDown size={24} weight="regular" color="currentColor" className="case-study-detail__scroll-hint-icon" />
+        <span className="case-study-detail__scroll-hint-label">Scroll to explore</span>
+      </div>
       <div className="case-study-detail__inner">
         <div className="case-study-detail__layout">
           <div className="case-study-detail__toolbar">

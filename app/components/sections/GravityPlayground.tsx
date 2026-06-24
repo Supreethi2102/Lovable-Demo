@@ -300,6 +300,7 @@ export const GravityPlayground: React.FC = () => {
   layoutConfigRef.current = layoutConfig;
   const [flippedSwatchIds, setFlippedSwatchIds] = useState<Set<string>>(new Set());
   const [activeSwatchId, setActiveSwatchId] = useState<string | null>(null);
+  const positionsRef = useRef<Map<string, { x: number; y: number; angle: number }>>(new Map());
 
   const setSwatchStatic = (swatchId: string, shouldBeStatic: boolean) => {
     const body = bodiesRef.current.get(swatchId);
@@ -402,7 +403,7 @@ export const GravityPlayground: React.FC = () => {
 
     // Create engine with gravity
     const engine = Matter.Engine.create({
-      gravity: { x: 0, y: compact ? 0.65 : 0.8, scale: 0.001 },
+      gravity: { x: 0, y: compact ? 0.72 : 0.85, scale: 0.001 },
       enableSleeping: true,
     });
     engineRef.current = engine;
@@ -450,9 +451,9 @@ export const GravityPlayground: React.FC = () => {
 
       const body = Matter.Bodies.rectangle(x, y, bodyWidth, bodyHeight, {
         chamfer: { radius },
-        friction: 0.7,
-        frictionAir: compact ? 0.055 : 0.045,
-        restitution: compact ? 0.08 : 0.12,
+        friction: 0.65,
+        frictionAir: compact ? 0.038 : 0.032,
+        restitution: compact ? 0.1 : 0.14,
         angle,
         label: el.id,
         sleepThreshold: 40,
@@ -464,6 +465,7 @@ export const GravityPlayground: React.FC = () => {
     });
 
     bodiesRef.current = bodiesMap;
+    positionsRef.current = initialPos;
     setPositions(initialPos);
 
     Matter.Composite.add(engine.world, allBodies);
@@ -493,7 +495,9 @@ export const GravityPlayground: React.FC = () => {
     /** Footer / info buttons — must not run preventDefault or drag or clicks break (flip only via these controls). */
     const isSwatchControlTarget = (target: EventTarget | null): boolean => {
       if (!(target instanceof Element)) return false;
-      return Boolean(target.closest('.gp-swatch button'));
+      return Boolean(
+        target.closest('.gp-swatch button') || target.closest('.gp-swatch__back-scroll'),
+      );
     };
 
     // Create a static point body for dragging
@@ -522,8 +526,8 @@ export const GravityPlayground: React.FC = () => {
             x: point.x - body.position.x,
             y: point.y - body.position.y
           },
-          stiffness: 0.1,
-          damping: 0.3,
+          stiffness: 0.18,
+          damping: 0.22,
           length: 0,
         });
 
@@ -609,17 +613,30 @@ export const GravityPlayground: React.FC = () => {
 
     // Update positions
     const tick = () => {
-      const newPos = new Map<string, { x: number; y: number; angle: number }>();
+      let changed = false;
+      const nextPos = new Map<string, { x: number; y: number; angle: number }>(positionsRef.current);
+
       bodiesRef.current.forEach((body, id) => {
         clampBodyToScene(body);
-        // Snap to render pixels to avoid text shimmer from subpixel transforms.
-        newPos.set(id, {
-          x: Math.round(body.position.x),
-          y: Math.round(body.position.y),
-          angle: Math.round(body.angle * 1000) / 1000,
-        });
+
+        const isDragging = dragBodyRef.current === body;
+        const snap = body.isSleeping && !isDragging;
+        const x = snap ? Math.round(body.position.x) : body.position.x;
+        const y = snap ? Math.round(body.position.y) : body.position.y;
+        const angle = snap ? Math.round(body.angle * 1000) / 1000 : body.angle;
+
+        const prev = nextPos.get(id);
+        if (!prev || prev.x !== x || prev.y !== y || prev.angle !== angle) {
+          nextPos.set(id, { x, y, angle });
+          changed = true;
+        }
       });
-      setPositions(newPos);
+
+      if (changed) {
+        positionsRef.current = nextPos;
+        setPositions(new Map(nextPos));
+      }
+
       rafRef.current = requestAnimationFrame(tick);
     };
     rafRef.current = requestAnimationFrame(tick);
@@ -647,6 +664,7 @@ export const GravityPlayground: React.FC = () => {
     const y = pos?.y ?? 100;
     const angle = pos?.angle ?? 0;
     const isActive = activeSwatchId === el.id;
+    const isFlipped = el.type === 'swatch' && flippedSwatchIds.has(el.id);
     const visualAngle = isActive && el.type === 'swatch' ? 0 : angle;
     const liftY = isActive && el.type === 'swatch' ? 24 * layoutScale : 0;
     const renderWidth = el.width * layoutScale;
@@ -671,9 +689,10 @@ export const GravityPlayground: React.FC = () => {
             hex={el.hex!}
             name={el.name!}
             mood={mood}
-            isFlipped={flippedSwatchIds.has(el.id)}
+            isFlipped={isFlipped}
             onToggle={() => focusAndFlipSwatch(el.id)}
             style={style}
+            className={isActive ? 'gp-swatch--active' : undefined}
           />
         );
       }

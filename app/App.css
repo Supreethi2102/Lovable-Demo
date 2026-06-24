@@ -47,7 +47,7 @@ body {
 
 html {
   scroll-behavior: smooth;
-  scroll-padding-top: 100px; /* Account for fixed header */
+  scroll-padding-top: calc(var(--header-height, 96px) + 12px);
   /* 1rem scales slightly on narrow viewports (UA-relative rems inside clamp) */
   font-size: clamp(var(--type-atkinson-text-sm-size), 0.45vw + 0.8375rem, var(--type-atkinson-text-md-size));
 }

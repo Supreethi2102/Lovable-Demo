@@ -8,7 +8,7 @@
   padding-left: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
   padding-right: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
   width: 100%;
-  scroll-margin-top: 100px;
+  scroll-margin-top: calc(var(--header-height, 96px) + 12px);
   position: relative;
   overflow: hidden; /* Hidden for proper clipping during animation */
   min-height: 720px; /* Trimmed - matches card */

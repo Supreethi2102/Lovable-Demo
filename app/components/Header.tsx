@@ -197,7 +197,7 @@ export const Header: React.FC = () => {
     return () => document.removeEventListener('mousedown', handleDocumentPointerDown);
   }, [clearMegaMenuCloseTimer]);
 
-  // Smooth scroll to section using native browser behavior with scroll-padding
+  // Smooth scroll to section — offset matches fixed header height
   const scrollToSection = useCallback((e: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     e.preventDefault();
     setIsMobileMenuOpen(false);
@@ -205,17 +205,26 @@ export const Header: React.FC = () => {
     setIsMobileThemeOpen(false);
     setIsMegaMenuOpen(false);
     setIsThemeMenuOpen(false);
-    
-    // Update URL hash - this triggers native smooth scroll with scroll-padding-top
-    window.location.hash = sectionId;
-    
-    // Set focus for screen readers after a brief delay
-    setTimeout(() => {
-      const element = document.querySelector(sectionId);
-      if (element) {
-        (element as HTMLElement).focus();
-      }
-    }, 100);
+
+    const el = document.querySelector(sectionId);
+    if (!el) return;
+
+    const headerRaw = getComputedStyle(document.documentElement).getPropertyValue('--header-height').trim();
+    const headerH = parseFloat(headerRaw) || 96;
+    const offset = headerH + 12;
+    const reduce =
+      typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+    const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - offset);
+
+    window.scrollTo({ top, behavior: reduce ? 'auto' : 'smooth' });
+
+    if (window.location.hash !== sectionId) {
+      history.pushState(null, '', sectionId);
+    }
+
+    window.setTimeout(() => {
+      (el as HTMLElement).focus({ preventScroll: true });
+    }, reduce ? 0 : 400);
   }, []);
 
   const toggleMegaMenu = useCallback((e: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement>) => {

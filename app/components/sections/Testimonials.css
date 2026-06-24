@@ -9,7 +9,7 @@
   padding-left: max(112px, calc((100vw - var(--content-max-width, 1220px)) / 2));
   padding-right: max(112px, calc((100vw - var(--content-max-width, 1220px)) / 2));
   width: 100%;
-  scroll-margin-top: 100px;
+  scroll-margin-top: calc(var(--header-height, 96px) + 12px);
 }
 
 .testimonials__card {
@@ -71,7 +71,7 @@
   display: flex;
   align-items: center;
   gap: 108px; /* Figma */
-  min-height: 120px;
+  min-height: var(--testimonials-quote-min-h, 192px);
 }
 
 /* Hidden on desktop/tablet; only shown at ≤480px */
@@ -135,11 +135,10 @@
 .testimonials__quote-wrapper {
   flex: 1;
   max-width: 65ch; /* Optimal reading width: 50-75 chars, sweet spot ~66 */
-  height: 192px; /* Fixed height to prevent jumping */
-  min-height: 192px;
+  min-height: var(--testimonials-quote-min-h, 192px);
+  height: var(--testimonials-quote-min-h, 192px);
   display: flex;
   align-items: flex-start;
-  overflow: hidden;
   font-style: normal; /* Override blockquote default italics */
   margin: 0;
 }
@@ -161,13 +160,11 @@
   gap: 0;
   margin-top: 28px;
   margin-bottom: 44px; /* Spacing between author details and dots */
+  min-height: var(--testimonials-author-min-h, 72px);
 }
 
 .testimonials__author {
   margin-left: 160px; /* Align with quote text (nav button width + gap) */
-}
-
-.testimonials__author {
   font-family: var(--font-family-ui);
   font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
@@ -178,6 +175,26 @@
   flex-direction: column;
   gap: 0;
   max-width: 65ch;
+}
+
+/* Off-screen mirror for max quote / author heights at the current breakpoint */
+.testimonials__measure {
+  position: absolute;
+  left: -10000px;
+  top: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.testimonials__measure-item {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.testimonials__author--measure {
+  margin-left: 0;
 }
 
 .testimonials__author-name,
@@ -259,6 +276,7 @@
 
   .testimonials__carousel {
     gap: 60px;
+    align-items: center;
   }
 
   /* Let feedback fill all available width */
@@ -311,8 +329,6 @@
   }
 
   .testimonials__quote-wrapper {
-    height: auto;
-    min-height: unset;
     max-width: 100%;
   }
 
@@ -396,14 +412,6 @@
   }
 
   .testimonials__quote-wrapper {
-    height: auto;
-    min-height: unset;
-    max-width: 100%;
-  }
-
-  .testimonials__quote {
-    font-size: var(--type-atkinson-text-md-size);
-    line-height: var(--type-atkinson-text-md-lh);
     max-width: 100%;
   }
 
@@ -506,8 +514,6 @@
   }
 
   .testimonials__quote-wrapper {
-    height: auto;
-    min-height: unset;
     max-width: 100%;
   }
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
 import './Testimonials.css';
 
@@ -46,7 +46,50 @@ export const Testimonials: React.FC = () => {
   const [hoveredNav, setHoveredNav] = useState<'prev' | 'next' | null>(null);
   const [isPaused, setIsPaused] = useState(false);
   const sectionRef = useRef<HTMLElement | null>(null);
+  const cardRef = useRef<HTMLDivElement | null>(null);
+  const quoteSlotRef = useRef<HTMLQuoteElement | null>(null);
+  const measureRootRef = useRef<HTMLDivElement | null>(null);
   const wasInViewRef = useRef(false);
+
+  /* Equal quote + author slot heights — sized to the tallest testimonial at this width */
+  useLayoutEffect(() => {
+    const card = cardRef.current;
+    const quoteSlot = quoteSlotRef.current;
+    const measureRoot = measureRootRef.current;
+    if (!card || !quoteSlot || !measureRoot) return;
+
+    const syncHeights = () => {
+      measureRoot.style.width = `${quoteSlot.clientWidth}px`;
+
+      const quoteEls = measureRoot.querySelectorAll<HTMLElement>('[data-measure-quote]');
+      const authorEls = measureRoot.querySelectorAll<HTMLElement>('[data-measure-author]');
+
+      let maxQuote = 0;
+      let maxAuthor = 0;
+
+      quoteEls.forEach((el) => {
+        maxQuote = Math.max(maxQuote, el.offsetHeight);
+      });
+      authorEls.forEach((el) => {
+        maxAuthor = Math.max(maxAuthor, el.offsetHeight);
+      });
+
+      card.style.setProperty('--testimonials-quote-min-h', `${maxQuote}px`);
+      card.style.setProperty('--testimonials-author-min-h', `${maxAuthor}px`);
+    };
+
+    syncHeights();
+
+    const observer = new ResizeObserver(syncHeights);
+    observer.observe(quoteSlot);
+    observer.observe(card);
+
+    if (document.fonts?.ready) {
+      void document.fonts.ready.then(syncHeights);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     const node = sectionRef.current;
@@ -103,6 +146,7 @@ export const Testimonials: React.FC = () => {
       tabIndex={-1}
     >
       <div 
+        ref={cardRef}
         className="testimonials__card"
         role="region"
         aria-roledescription="carousel"
@@ -166,6 +210,7 @@ export const Testimonials: React.FC = () => {
 
             {/* Testimonial Quote */}
             <blockquote 
+              ref={quoteSlotRef}
               className="testimonials__quote-wrapper"
               aria-live="polite"
               aria-atomic="true"
@@ -201,6 +246,23 @@ export const Testimonials: React.FC = () => {
           </footer>
         </div>
         
+        <div ref={measureRootRef} className="testimonials__measure" aria-hidden="true">
+          {testimonials.map((testimonial) => (
+            <div key={testimonial.id} className="testimonials__measure-item">
+              <p data-measure-quote className="testimonials__quote">
+                {testimonial.quote}
+              </p>
+              <cite data-measure-author className="testimonials__author testimonials__author--measure">
+                <strong className="testimonials__author-name">{testimonial.author}</strong>
+                <span className="testimonials__author-role">{testimonial.role}</span>
+                {testimonial.company && (
+                  <span className="testimonials__author-company">{testimonial.company}</span>
+                )}
+              </cite>
+            </div>
+          ))}
+        </div>
+
         {/* Pagination Dots - Fixed position */}
         <nav 
           className="testimonials__dots"

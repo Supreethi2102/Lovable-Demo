@@ -133,6 +133,10 @@
   transition: filter 0.25s ease, opacity 0.25s ease;
 }
 
+.gp-swatch--active {
+  filter: drop-shadow(0 10px 28px rgba(17, 18, 19, 0.12));
+}
+
 .gp-swatch__face {
   position: absolute;
   inset: 0;
@@ -165,7 +169,7 @@
   height: 200%;
   display: flex;
   flex-direction: column;
-  transition: transform 0.45s ease;
+  transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .gp-swatch--flipped .gp-swatch__track {
@@ -185,15 +189,15 @@
 }
 
 .gp-swatch__panel--back {
-  overflow-y: auto;
-  overflow-x: hidden;
+  overflow: hidden;
+  min-height: 0;
 }
 
 .gp-swatch__footer {
   position: relative;
   z-index: 2;
   flex-shrink: 0;
-  padding-top: 4px;
+  padding-top: calc(8px * var(--gp-scale, 1));
   display: flex;
   justify-content: center;
   align-items: center;
@@ -300,36 +304,58 @@
   display: flex;
   flex-direction: column;
   align-items: stretch;
-  gap: 12px;
-  padding: 0;
-  height: auto;
-  min-height: 100%; /* fill card when content is short; grow to show full description when long */
+  gap: calc(8px * var(--gp-scale, 1));
+  height: 100%;
+  min-height: 0;
+  box-sizing: border-box;
 }
 
 .gp-swatch__text--back-header {
   flex-shrink: 0;
-  align-items: center;
-  text-align: center;
+  align-items: flex-start;
+  text-align: left;
 }
 
 .gp-swatch__text--back-header .gp-swatch__name,
 .gp-swatch__text--back-header .gp-swatch__hex-row {
-  text-align: center;
-  justify-content: center;
+  text-align: left;
+  justify-content: flex-start;
 }
 
 .gp-swatch__text--back-header .gp-swatch__name {
-  text-align: center;
+  text-align: left;
+}
+
+/* Scrollable mood details — fixed card height, no visible scrollbar */
+.gp-swatch__back-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: calc(8px * var(--gp-scale, 1));
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.gp-swatch__back-scroll::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 .gp-swatch__description {
   font-family: var(--font-family-ui);
   font-size: var(--type-atkinson-text-xs-size);
   font-weight: 400;
-  line-height: var(--type-atkinson-text-sm-lh);
-  letter-spacing: 0px;
+  line-height: 1.4;
+  letter-spacing: 0;
   color: #3c3f43;
-  margin: 0 0 12px 0; /* 12px + 12px gap = 24px between description and contrast bar */
+  margin: 0;
   flex-shrink: 0;
   text-align: left;
 }
@@ -360,12 +386,12 @@
   font-family: var(--font-family-ui);
   font-size: var(--type-atkinson-text-xs-size);
   font-weight: 400;
-  line-height: var(--type-atkinson-text-sm-lh);
-  letter-spacing: 0px;
+  line-height: 1.4;
+  letter-spacing: 0;
   color: #3c3f43;
   flex-shrink: 0;
   text-align: left;
-  margin-top: 2px;
+  margin-top: 0;
 }
 
 .gp-swatch__ideal-line {
@@ -396,11 +422,10 @@
   font-family: var(--font-family-ui);
   font-size: var(--type-atkinson-text-xs-size);
   font-weight: 400;
-  line-height: var(--type-atkinson-text-sm-lh);
-  letter-spacing: 0px;
+  line-height: 1.4;
+  letter-spacing: 0;
   color: #3c3f43;
   margin: 0;
-  margin-top: 4px;
   flex-shrink: 0;
   text-align: left;
 }

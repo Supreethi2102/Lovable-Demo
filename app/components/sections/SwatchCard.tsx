@@ -91,22 +91,28 @@ export const SwatchCard: React.FC<SwatchCardProps> = ({
                       </button>
                     </div>
                   </div>
-                  <p className="gp-swatch__description">{mood.description}</p>
-                  <div className="gp-swatch__contrast-bar" aria-hidden="true">
-                    <span className="gp-swatch__contrast-left" style={{ backgroundColor: color }} />
-                    <span className="gp-swatch__contrast-divider" />
-                    <span className="gp-swatch__contrast-right" style={{ backgroundColor: mood.contrastColor }} />
-                  </div>
-                  <div className="gp-swatch__ideal">
-                    <p className="gp-swatch__ideal-line">
-                      <span className="gp-swatch__ideal-label">My ideal match: </span>
-                      <span className="gp-swatch__ideal-hex">{mood.idealMatchHex}</span>
+                  <div
+                    className="gp-swatch__back-scroll"
+                    onMouseDown={(e) => e.stopPropagation()}
+                    onTouchStart={(e) => e.stopPropagation()}
+                  >
+                    <p className="gp-swatch__description">{mood.description}</p>
+                    <div className="gp-swatch__contrast-bar" aria-hidden="true">
+                      <span className="gp-swatch__contrast-left" style={{ backgroundColor: color }} />
+                      <span className="gp-swatch__contrast-divider" />
+                      <span className="gp-swatch__contrast-right" style={{ backgroundColor: mood.contrastColor }} />
+                    </div>
+                    <div className="gp-swatch__ideal">
+                      <p className="gp-swatch__ideal-line">
+                        <span className="gp-swatch__ideal-label">My ideal match: </span>
+                        <span className="gp-swatch__ideal-hex">{mood.idealMatchHex}</span>
+                      </p>
+                      <p className="gp-swatch__ideal-name">{mood.idealMatchName}</p>
+                    </div>
+                    <p className="gp-swatch__contrast-ratio">
+                      Contrast: {mood.contrastRatio} - ({mood.contrastRating})
                     </p>
-                    <p className="gp-swatch__ideal-name">{mood.idealMatchName}</p>
                   </div>
-                  <p className="gp-swatch__contrast-ratio">
-                    Contrast: {mood.contrastRatio} - ({mood.contrastRating})
-                  </p>
                 </div>
               </div>
             </div>

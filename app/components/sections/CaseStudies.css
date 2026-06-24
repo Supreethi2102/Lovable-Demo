@@ -9,7 +9,7 @@
   padding-left: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
   padding-right: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
   width: 100%;
-  scroll-margin-top: calc(var(--header-height, 96px) + 12px);
+  scroll-margin-top: 100px;
 }
 
 .case-studies__content {
@@ -281,10 +281,6 @@
   gap: 48px;
   padding: 60px 52px;
   flex: 0 0 55%;
-  min-width: 0;
-  min-height: 0;
-  overflow: hidden;
-  box-sizing: border-box;
 }
 
 .case-study-card__sidebar {
@@ -453,22 +449,17 @@
 
 /* Main Content */
 .case-study-card__main {
-  flex: 1 1 0;
+  flex: 1;
   display: flex;
   flex-direction: column;
   max-width: 320px;
-  min-width: 0;
-  min-height: 0;
-  align-self: stretch;
-  box-sizing: border-box;
 }
 
 .case-study-card__copy {
   will-change: transform, opacity;
-  flex: 0 1 auto;
-  min-height: 0;
   width: 100%;
   max-width: 100%;
+  min-width: 0;
 }
 
 .case-study-card__subtitle {
@@ -502,7 +493,7 @@
   font-weight: 400;
   line-height: var(--type-atkinson-text-md-lh);
   color: #3c3f43;
-  margin-bottom: 0;
+  margin-bottom: auto;
   width: 100%;
   max-width: 100%;
   min-width: 0;
@@ -513,28 +504,8 @@
 
 /* View Design Button – uses .btn .btn--primary from ButtonStyles.css */
 .view-design-btn {
-  flex-shrink: 0;
-  margin-top: clamp(16px, 2vw, 24px);
+  margin-top: auto;
   width: 186px;
-}
-
-@media (min-width: 768px) {
-  .case-study-card__main {
-    padding-left: clamp(20px, 3vw, 32px);
-    padding-right: clamp(20px, 3vw, 32px);
-    padding-bottom: clamp(16px, 2vh, 24px);
-    justify-content: flex-start;
-  }
-
-  .case-study-card__copy {
-    flex: 1 1 auto;
-    margin-bottom: clamp(40px, 5vh, 56px);
-  }
-
-  .view-design-btn {
-    margin-top: auto;
-    padding-top: 0;
-  }
 }
 
 /* Image Section */
@@ -736,8 +707,8 @@
   }
 }
 
-/* Stacked card (image on top): phones only — tablets keep desktop-style row layout */
-@media (max-width: 767px) {
+/* Stacked card (image on top): up to large tablets / small laptops in landscape — not only ≤1200 */
+@media (max-width: 1366px) {
   .case-study-card__front,
   .case-study-card__back {
     flex-direction: column;
@@ -846,7 +817,7 @@
 
   .case-studies__header {
     display: flex;
-    align-items: flex-end;
+    align-items: flex-start;
     justify-content: space-between;
     gap: 16px;
     margin-bottom: 20px;
@@ -862,6 +833,7 @@
     align-items: center;
     gap: 12px;
     flex-shrink: 0;
+    padding-top: 4px;
   }
 
   /* Tablet filter strip: clip flush with case study card edges (same width as grid) */
@@ -893,7 +865,7 @@
   .case-studies__filter {
     flex-wrap: nowrap;
     justify-content: flex-start;
-    gap: clamp(20px, 2.8vw, 28px);
+    gap: clamp(12px, 2vw, 18px);
     width: max-content;
     max-width: none;
     min-width: 100%;
@@ -916,10 +888,189 @@
 }
 
 /*
- * Tablet + small laptop (768–1366px): desktop-style row card (image | tabs + copy).
- * Scaled padding and type — phones stack via ≤767 rules above.
+ * Tablet + small laptop (768–1366px): Figma-style two-column copy under image.
+ * Covers portrait tablets, iPad landscape, and many “other tablet” widths past 1200px.
+ * Phones: ≤767px. Image height: 48% from ≤1366; 28% on phones via ≤767 override.
  */
 @media (min-width: 768px) and (max-width: 1366px) {
+  .case-study-card__front,
+  .case-study-card__back {
+    align-items: stretch;
+    min-height: 0;
+  }
+
+  .case-study-card__content {
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: flex-start;
+    gap: clamp(32px, 5vw, 56px);
+    /* Generous horizontal inset like Figma (rail + copy clear of card edges) */
+    padding: clamp(36px, 5vw, 52px) clamp(44px, 8vw, 72px);
+    flex: 1 1 auto;
+    min-height: 0;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+
+  .case-study-card__sidebar {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    align-self: stretch;
+    width: 160px;
+    min-width: 160px;
+    max-width: 160px;
+    flex-shrink: 0;
+    border-right: 1px solid #b0b3b8;
+    border-bottom: none;
+    padding-right: 32px;
+    padding-bottom: 0;
+    margin: 0;
+    gap: 0;
+    box-sizing: border-box;
+  }
+
+  .flip-button {
+    width: 100%;
+    max-width: 128px;
+    align-self: flex-start;
+  }
+
+  .case-study-card__tabs,
+  .case-study-card__back-tabs {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 12px;
+    width: 100%;
+  }
+
+  .case-study-card__tabs .tab,
+  .case-study-card__back-tabs .case-study-card__back-item {
+    justify-content: flex-start;
+    width: 100%;
+  }
+
+  /* Vertical accent flush to column rule (desktop geometry) */
+  .tab--active::after,
+  .case-study-card__back-item.tab--active::after,
+  .tab:not(.tab--active):hover::after,
+  .case-study-card__back-item.tab:not(.tab--active):hover::after {
+    right: calc(-1 * var(--case-card-tab-rail));
+    top: 50%;
+    bottom: auto;
+    left: auto;
+    transform: translateY(-50%);
+    width: var(--case-card-tab-indicator);
+    height: 48px;
+  }
+
+  .case-study-card__main {
+    flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    max-width: none;
+    width: auto;
+    align-self: stretch;
+  }
+
+  .case-study-card__copy {
+    flex: 0 1 auto;
+    min-height: 0;
+    width: 100%;
+    max-width: none;
+  }
+
+  /* Same face + weight as desktop card title (avoid Romie here vs Atkinson on narrow) */
+  .case-study-card__title {
+    font-family: var(--font-family-ui);
+    font-size: clamp(var(--type-atkinson-text-xl-size), 2.75vw, var(--type-romie-display-m-size));
+    font-weight: 600;
+    line-height: var(--type-romie-display-xs-lh);
+    letter-spacing: 0.025em;
+    margin-bottom: 16px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .case-study-card__subtitle {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .case-study-card__description {
+    margin-bottom: 24px;
+    width: 100%;
+    max-width: none;
+  }
+
+  .view-design-btn {
+    margin-top: auto;
+    align-self: flex-start;
+    max-width: 100%;
+  }
+}
+
+/* Narrow tablets / mini portrait — tighter rail + padding so the row doesn’t crowd */
+@media (min-width: 701px) and (max-width: 1200px) {
+  .case-study-card__content {
+    padding-left: var(--padding-x, clamp(52px, 5vw + 28px, 80px));
+    padding-right: var(--padding-x, clamp(52px, 5vw + 28px, 80px));
+  }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) {
+  .case-study-card__content {
+    padding: clamp(28px, 4vw, 36px) clamp(24px, 4vw, 36px);
+    gap: clamp(20px, 3vw, 28px);
+  }
+
+  .case-study-card__sidebar {
+    width: 140px;
+    min-width: 140px;
+    max-width: 140px;
+    padding-right: 20px;
+    --case-card-tab-rail: 20px;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 900px) {
+  .case-study-card__content {
+    padding: clamp(28px, 4vw, 40px) clamp(28px, 6vw, 48px);
+    gap: clamp(20px, 4vw, 36px);
+  }
+
+  .case-study-card__sidebar {
+    width: 148px;
+    min-width: 148px;
+    max-width: 148px;
+    padding-right: 24px;
+    --case-card-tab-rail: 24px;
+  }
+
+  .tab--active::after,
+  .case-study-card__back-item.tab--active::after,
+  .tab:not(.tab--active):hover::after,
+  .case-study-card__back-item.tab:not(.tab--active):hover::after {
+    right: calc(-1 * var(--case-card-tab-rail));
+  }
+}
+
+/* Large tablets & landscape (1025–1366): more horizontal breathing room under wide image */
+@media (min-width: 1025px) and (max-width: 1366px) {
+  .case-study-card__content {
+    padding: clamp(40px, 5vw, 56px) clamp(52px, 8vw, 96px);
+    gap: clamp(40px, 5vw, 64px);
+  }
+}
+
+/*
+ * ~920px viewport — horizontal case study card with tuned copy column.
+ * Other breakpoints keep the layout rules above.
+ */
+@media (min-width: 880px) and (max-width: 960px) {
   .case-study-card-flip {
     min-height: clamp(520px, 54vh, 600px);
     height: auto;
@@ -978,14 +1129,28 @@
     overflow: visible;
   }
 
+  /* Override ≤1366 stacked face — full desktop-style row */
   .case-study-card__front,
   .case-study-card__back {
     flex-direction: row;
     align-items: stretch;
   }
 
-  .case-study-card__image {
+  .case-study-card__front .case-study-card__image,
+  .case-study-card__back .case-study-card__image {
+    order: 0;
+    width: auto;
+    max-width: none;
     flex: 0 0 clamp(34%, 38%, 40%);
+    aspect-ratio: auto;
+    min-height: 0;
+    align-self: stretch;
+  }
+
+  .case-study-card__front .case-study-card__content,
+  .case-study-card__back .case-study-card__content {
+    flex: 1 1 0;
+    flex-grow: 1;
   }
 
   .case-study-card__content {
@@ -1004,29 +1169,16 @@
   }
 
   .case-study-card__sidebar {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    align-items: flex-start;
-    align-self: stretch;
     width: clamp(136px, 14vw, 152px);
     min-width: clamp(136px, 14vw, 152px);
     max-width: clamp(136px, 14vw, 152px);
-    flex-shrink: 0;
-    border-right: 1px solid #b0b3b8;
-    border-bottom: none;
     padding-right: clamp(16px, 2vw, 24px);
-    padding-bottom: 0;
-    margin: 0;
     gap: clamp(32px, 6vh, 56px);
-    box-sizing: border-box;
     --case-card-tab-rail: clamp(16px, 2vw, 24px);
   }
 
   .flip-button {
-    width: 100%;
     max-width: 100%;
-    align-self: flex-start;
   }
 
   .flip-button__text,
@@ -1055,44 +1207,21 @@
     height: clamp(20px, 2.2vw, 24px);
   }
 
-  .case-study-card__tabs,
-  .case-study-card__back-tabs {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 12px;
-    width: 100%;
-  }
-
-  .case-study-card__tabs .tab,
-  .case-study-card__back-tabs .case-study-card__back-item {
-    justify-content: flex-start;
-    width: 100%;
-  }
-  .tab--active::after,
-  .case-study-card__back-item.tab--active::after,
-  .tab:not(.tab--active):hover::after,
-  .case-study-card__back-item.tab:not(.tab--active):hover::after {
-    right: calc(-1 * var(--case-card-tab-rail));
-    top: 50%;
-    bottom: auto;
-    left: auto;
-    transform: translateY(-50%);
-    width: var(--case-card-tab-indicator);
-    height: 48px;
-  }
-
   .case-study-card__main {
+    flex: 1 1 0;
     max-width: none;
     width: auto;
     padding-left: clamp(20px, 3vw, 32px);
     padding-right: clamp(20px, 3vw, 32px);
     padding-top: clamp(8px, 1.5vh, 16px);
     padding-bottom: clamp(20px, 2.5vh, 28px);
+    justify-content: flex-start;
+    align-self: stretch;
+    box-sizing: border-box;
   }
 
   .case-study-card__copy {
-    width: 100%;
-    max-width: none;
+    flex: 1 1 auto;
     margin-bottom: clamp(40px, 5vh, 56px);
   }
 
@@ -1103,30 +1232,23 @@
     line-height: var(--type-atkinson-text-xl-lh);
     letter-spacing: 0.02em;
     margin-bottom: clamp(8px, 1.2vw, 12px);
-    width: 100%;
-    max-width: 100%;
   }
 
   .case-study-card__subtitle {
     font-size: clamp(var(--type-atkinson-text-sm-size), 0.9vw + 0.5rem, var(--type-atkinson-text-md-size));
     line-height: var(--type-atkinson-text-md-lh);
     margin-bottom: clamp(10px, 1.5vw, 16px);
-    width: 100%;
-    max-width: 100%;
   }
 
   .case-study-card__description {
     font-size: clamp(var(--type-atkinson-text-sm-size), 0.75vw + 0.55rem, var(--type-atkinson-text-md-size));
     line-height: 1.45;
     margin-bottom: 0;
-    width: 100%;
-    max-width: none;
   }
 
   .view-design-btn {
     flex-shrink: 0;
     margin-top: auto;
-    padding-top: 0;
     align-self: flex-start;
     width: clamp(160px, 18vw, 186px);
     max-width: 100%;
@@ -1135,6 +1257,7 @@
   .case-study-card__duration {
     left: auto;
     right: clamp(12px, 2vw, 24px);
+    top: 0;
     justify-content: center;
     text-align: center;
     font-size: clamp(var(--type-atkinson-text-xs-size), 1vw + 0.35rem, var(--type-atkinson-text-sm-size));
@@ -1142,42 +1265,6 @@
     min-width: clamp(120px, 14vw, 167px);
     height: clamp(40px, 5vh, 48px);
     padding: 0 clamp(10px, 1.5vw, 16px);
-  }
-}
-
-@media (min-width: 768px) and (max-width: 1024px) {
-  .case-study-card__content {
-    padding: clamp(24px, 3.5vw, 32px) clamp(20px, 3vw, 28px);
-    gap: clamp(10px, 1.5vw, 16px);
-  }
-}
-
-@media (min-width: 768px) and (max-width: 900px) {
-  .case-study-card__content {
-    padding: clamp(24px, 3.5vw, 32px) clamp(20px, 4vw, 28px);
-  }
-}
-
-/* Large tablets & landscape (1025–1366): closer to desktop spacing */
-@media (min-width: 1025px) and (max-width: 1366px) {
-  .case-study-card__content {
-    padding: clamp(36px, 4vw, 48px) clamp(32px, 4vw, 44px);
-    gap: clamp(16px, 2.5vw, 24px);
-  }
-
-  .case-study-card__sidebar {
-    width: 160px;
-    min-width: 160px;
-    max-width: 160px;
-    padding-right: 28px;
-    --case-card-tab-rail: 28px;
-    gap: clamp(48px, 8vh, 88px);
-  }
-
-  .flip-button__text,
-  .case-study-card__tabs .tab,
-  .case-study-card__back-tabs .case-study-card__back-item {
-    font-size: clamp(var(--type-atkinson-text-sm-size), 0.9vw + 0.35rem, var(--type-atkinson-text-md-size));
   }
 }
 
@@ -1483,7 +1570,6 @@
     width: 100%;
     max-width: none;
     min-width: 0;
-    overflow: visible;
   }
 
   .case-study-card__copy {
@@ -1493,7 +1579,6 @@
     width: 100%;
     max-width: 100%;
     min-width: 0;
-    overflow: visible;
   }
 
   /* Body → CTA: tight enough that copy doesn’t feel “cut off” from the actions */

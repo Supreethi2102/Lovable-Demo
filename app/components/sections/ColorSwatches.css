@@ -490,10 +490,12 @@ button.site-footer__link {
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
 }
 
-.sustainability-modal__close {
+.sustainability-modal__close,
+.privacy-cookies-modal__close,
+.accessibility-modal__close {
   position: absolute;
-  top: 32px;
-  right: 32px;
+  top: 48px;
+  right: 48px;
 }
 
 .sustainability-modal__content {
@@ -608,8 +610,8 @@ button.site-footer__link {
   .sustainability-modal__close,
   .privacy-cookies-modal__close,
   .accessibility-modal__close {
-    top: 24px;
-    right: 24px;
+    top: 36px;
+    right: 36px;
   }
 
   .sustainability-modal__content,
@@ -669,15 +671,15 @@ button.site-footer__link {
     max-height: none;
     min-height: 0;
     margin: auto 0;
-    padding: 48px 32px 32px;
+    padding: 56px 32px 32px;
     overflow: visible;
   }
 
   .sustainability-modal__close,
   .privacy-cookies-modal__close,
   .accessibility-modal__close {
-    top: 24px;
-    right: 24px;
+    top: 32px;
+    right: 32px;
   }
 
   .sustainability-modal__content,
@@ -773,7 +775,14 @@ button.site-footer__link {
   .sustainability-modal,
   .privacy-cookies-modal,
   .accessibility-modal {
-    padding: 40px 24px 24px;
+    padding: 48px 28px 24px;
+  }
+
+  .sustainability-modal__close,
+  .privacy-cookies-modal__close,
+  .accessibility-modal__close {
+    top: 32px;
+    right: 28px;
   }
 
   .sustainability-modal__image,
@@ -786,10 +795,12 @@ button.site-footer__link {
 
 @media (max-width: 640px) {
   .sustainability-modal {
-    padding: 40px;
+    padding: 48px 32px 32px;
   }
 
-  .sustainability-modal__close {
+  .sustainability-modal__close,
+  .privacy-cookies-modal__close,
+  .accessibility-modal__close {
     top: 32px;
     right: 32px;
     font-size: var(--type-atkinson-text-sm-size);
@@ -845,12 +856,6 @@ button.site-footer__link {
   position: relative;
   box-sizing: border-box;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-}
-
-.privacy-cookies-modal__close {
-  position: absolute;
-  top: 32px;
-  right: 32px;
 }
 
 .privacy-cookies-modal__content {
@@ -922,12 +927,10 @@ button.site-footer__link {
 
 @media (max-width: 640px) {
   .privacy-cookies-modal {
-    padding: 40px;
+    padding: 48px 32px 32px;
   }
 
   .privacy-cookies-modal__close {
-    top: 32px;
-    right: 32px;
     font-size: var(--type-atkinson-text-sm-size);
   }
 
@@ -984,12 +987,6 @@ button.site-footer__link {
   position: relative;
   box-sizing: border-box;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
-}
-
-.accessibility-modal__close {
-  position: absolute;
-  top: 32px;
-  right: 32px;
 }
 
 .accessibility-modal__content {
@@ -1179,12 +1176,10 @@ button.site-footer__link {
 
 @media (max-width: 640px) {
   .accessibility-modal {
-    padding: 40px;
+    padding: 48px 32px 32px;
   }
 
   .accessibility-modal__close {
-    top: 32px;
-    right: 32px;
     font-size: var(--type-atkinson-text-sm-size);
   }
 

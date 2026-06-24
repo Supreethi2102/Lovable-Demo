@@ -756,9 +756,44 @@ export const CaseStudyDetail: React.FC = () => {
       ].forEach((p) => img?.style.removeProperty(p));
     };
 
-    if (!wrap || !img || reduce || preferSimpleHero) {
-      if (img && preferSimpleHero) clearCinemaStyles();
-      return;
+    if (!wrap || !img) return;
+
+    if (reduce || preferSimpleHero) {
+      if (preferSimpleHero) clearCinemaStyles();
+
+      const hint = scrollHintRef.current;
+      const syncSimpleScrollHint = () => {
+        if (!wrap || !hint) return;
+
+        const rect = wrap.getBoundingClientRect();
+        if (rect.width <= 0 || rect.height <= 0 || rect.bottom < 0 || rect.top > window.innerHeight) {
+          hint.style.opacity = '0';
+          hint.style.visibility = 'hidden';
+          return;
+        }
+
+        hint.style.visibility = 'visible';
+        hint.style.left = `${Math.round(rect.left + rect.width / 2)}px`;
+        hint.style.top = `${Math.round(rect.bottom - 20)}px`;
+        hint.style.transform = 'translate(-50%, -100%)';
+        hint.style.opacity = '1';
+      };
+
+      syncSimpleScrollHint();
+      const simpleOpts: AddEventListenerOptions = { passive: true };
+      window.addEventListener('resize', syncSimpleScrollHint, simpleOpts);
+      window.addEventListener('scroll', syncSimpleScrollHint, simpleOpts);
+      img.addEventListener('load', syncSimpleScrollHint);
+
+      return () => {
+        window.removeEventListener('resize', syncSimpleScrollHint);
+        window.removeEventListener('scroll', syncSimpleScrollHint);
+        img.removeEventListener('load', syncSimpleScrollHint);
+        if (hint) {
+          hint.style.opacity = '0';
+          hint.style.visibility = 'hidden';
+        }
+      };
     }
 
     cinemaProgressRef.current = 0;
@@ -1050,6 +1085,37 @@ export const CaseStudyDetail: React.FC = () => {
     }
     suppressSectionSpyTimerRef.current = window.setTimeout(releaseSpy, 1100);
   }, []);
+
+  const goToCaseStudiesSection = useCallback(() => {
+    const reduce =
+      typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+
+    const scrollToWork = () => {
+      const el = document.getElementById('work');
+      if (!el) return false;
+
+      const headerRaw = getComputedStyle(document.documentElement).getPropertyValue('--header-height').trim();
+      const headerH = parseFloat(headerRaw) || 96;
+      const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - headerH - 12);
+      window.scrollTo({ top, behavior: reduce ? 'auto' : 'smooth' });
+      window.history.replaceState(null, '', '#work');
+      return true;
+    };
+
+    if (window.location.pathname === '/') {
+      scrollToWork();
+      return;
+    }
+
+    navigate({ pathname: '/', hash: 'work' });
+
+    let attempts = 0;
+    const tryScroll = () => {
+      if (scrollToWork() || attempts++ > 30) return;
+      requestAnimationFrame(tryScroll);
+    };
+    requestAnimationFrame(tryScroll);
+  }, [navigate]);
 
   const closeOverviewModal = useCallback(() => {
     setOverviewSummaryOpen(false);
@@ -3305,7 +3371,11 @@ export const CaseStudyDetail: React.FC = () => {
               <CaseStudyCard key={study.subtitle} study={study} />
             ))}
           </div>
-          <button type="button" className="btn btn--secondary btn--on-surface btn--icon-left case-study-detail__view-all">
+          <button
+            type="button"
+            className="btn btn--secondary btn--on-surface btn--icon-left case-study-detail__view-all"
+            onClick={goToCaseStudiesSection}
+          >
             <span className="btn__icon" aria-hidden="true">
               <Folders size={24} weight="regular" color="currentColor" />
             </span>

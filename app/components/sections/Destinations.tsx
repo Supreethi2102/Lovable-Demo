@@ -345,12 +345,43 @@ const SmallCard: React.FC<SmallCardProps> = ({ destination, onClick }) => (
 
 const FLIP_DURATION_MS = 720;
 
+const MOBILE_DESTINATIONS_MQ = '(max-width: 480px)';
+
+/** Visual stack order on mobile (matches column layout in CSS) */
+const MOBILE_CARD_ORDER: DestinationKey[] = [
+  'aarhus',
+  'calpe',
+  'giza',
+  'nevada',
+  'dubai',
+  'marrakech',
+  'jaipur',
+  'naoshima',
+];
+
+function useMatchesMedia(query: string) {
+  const [matches, setMatches] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia(query).matches,
+  );
+
+  useEffect(() => {
+    const mq = window.matchMedia(query);
+    const sync = () => setMatches(mq.matches);
+    sync();
+    mq.addEventListener('change', sync);
+    return () => mq.removeEventListener('change', sync);
+  }, [query]);
+
+  return matches;
+}
+
 export const Destinations: React.FC = () => {
   const [isShareHovered, setIsShareHovered] = useState(false);
   const [expandedCard, setExpandedCard] = useState<DestinationKey | null>(null);
   const expandedCardRef = useRef<HTMLDivElement>(null);
   const expandOriginRef = useRef<DOMRect | null>(null);
   const flipWrapperRef = useRef<HTMLDivElement>(null);
+  const isMobileLayout = useMatchesMedia(MOBILE_DESTINATIONS_MQ);
 
   const handleExpand = (id: DestinationKey, el: HTMLElement) => {
     expandOriginRef.current = el.getBoundingClientRect();
@@ -413,16 +444,22 @@ export const Destinations: React.FC = () => {
 
     const timeoutId = setTimeout(() => {
       const el = expandedCardRef.current;
-      const origin = expandOriginRef.current;
       if (!el) return;
 
       const rect = el.getBoundingClientRect();
       const isMobile = typeof window !== 'undefined' && window.innerWidth <= 480;
 
-      if (isMobile && origin) {
-        // Mobile: scroll so expanded card stays where the user tapped (opens at its own place)
-        const scrollToY = window.scrollY + rect.top - origin.top;
-        window.scrollTo({ top: Math.max(0, scrollToY), behavior: 'smooth' });
+      if (isMobile) {
+        const headerOffset =
+          parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 96;
+        const padding = 12;
+        if (rect.top < headerOffset + padding) {
+          window.scrollTo({
+            top: Math.max(0, window.scrollY + rect.top - headerOffset - padding),
+            behavior: 'smooth',
+          });
+        }
+        return;
       } else {
         const headerOffset = 80;
         const padding = 24;
@@ -464,6 +501,65 @@ export const Destinations: React.FC = () => {
     return 'image-left';
   };
 
+  const renderExpandedAnchor = (key: DestinationKey, assignRefs = true) => (
+    <div
+      ref={assignRefs ? expandedCardRef : undefined}
+      className="destination-expanded__scroll-anchor"
+      key={`expanded-${key}`}
+    >
+      <div ref={assignRefs ? flipWrapperRef : undefined} className="destination-expanded__flip-wrapper">
+        <DestinationCard
+          destination={destinations[key]}
+          destinationKey={key}
+          isExpanded={true}
+          onExpand={handleExpand}
+          onClose={handleClose}
+          layoutDirection={getLayoutDirection(key)}
+        />
+      </div>
+    </div>
+  );
+
+  const renderMobileExpandedStack = () => {
+    if (!expandedCard) return null;
+
+    const expandedInRow1 = isRow1Card(expandedCard);
+
+    return (
+      <div className="destinations__mobile-stack">
+        {MOBILE_CARD_ORDER.map((key) => {
+          if (key === expandedCard) {
+            return renderExpandedAnchor(key);
+          }
+
+          const isCollapsedSibling =
+            (expandedInRow1 && isRow1Card(key)) || (!expandedInRow1 && isRow2Card(key));
+
+          if (isCollapsedSibling) {
+            return (
+              <SmallCard
+                key={key}
+                destination={destinations[key]}
+                onClick={(e) => handleExpand(key, e.currentTarget)}
+              />
+            );
+          }
+
+          return (
+            <DestinationCard
+              key={key}
+              destination={destinations[key]}
+              destinationKey={key}
+              isExpanded={false}
+              onExpand={handleExpand}
+              onClose={handleClose}
+            />
+          );
+        })}
+      </div>
+    );
+  };
+
   return (
     <section 
       className="destinations"
@@ -478,7 +574,9 @@ export const Destinations: React.FC = () => {
 
       {/* Content Area */}
       <div className="destinations__content">
-        {expandedCard ? (
+        {expandedCard && isMobileLayout ? (
+          renderMobileExpandedStack()
+        ) : expandedCard ? (
           <>
             {/* If Row 1 card is expanded: show expanded card, other Row 1 as small cards, Row 2 intact */}
             {isRow1Card(expandedCard) && (
@@ -495,8 +593,6 @@ export const Destinations: React.FC = () => {
                     />
                   </div>
                 </div>
-                
-                {/* Other Row 1 cards as small cards */}
                 <div className="destinations__small-grid destinations__small-grid--row1">
                   {getOtherRow1Cards().map(key => (
                     <SmallCard 

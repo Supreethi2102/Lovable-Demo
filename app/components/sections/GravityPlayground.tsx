@@ -210,37 +210,141 @@ type LayoutConfig = {
   elements: PhysicsElement[];
   spawnCols: number;
   compact: boolean;
+  composedLayout: boolean;
+  portraitTablet: boolean;
+  spawnRowGap: number;
+  maxSpawnAngle: number;
+  maxRestAngle: number | null;
+  edgePad: number;
+  colGap: number;
+  rowGap: number;
 };
+
+type ComposedSlot = { x: number; y: number; angle: number };
+
+function computeComposedSlots(
+  viewportWidth: number,
+  sceneHeight: number,
+  swatchIds: string[],
+  scale: number,
+  cols: number,
+  edgePad: number,
+): Map<string, ComposedSlot> {
+  const slots = new Map<string, ComposedSlot>();
+  const count = swatchIds.length;
+  const columnCount = Math.max(1, Math.min(cols, count));
+  const usableWidth = viewportWidth - edgePad * 2;
+  const colWidth = usableWidth / columnCount;
+  const cardH = SWATCH_HEIGHT * scale;
+  const cardW = SWATCH_WIDTH * scale;
+  const rowGap = 14;
+  const bottomPad = 28;
+  const tiltPattern = [-0.05, 0.045, -0.035, 0.055, -0.04, 0.04, -0.05, 0.035];
+
+  swatchIds.forEach((id, index) => {
+    const col = index % columnCount;
+    const row = Math.floor(index / columnCount);
+    const xOffset = col % 2 === 0 ? cardW * 0.03 : -cardW * 0.03;
+    const x = edgePad + col * colWidth + colWidth / 2 + xOffset;
+    const y = sceneHeight - bottomPad - cardH / 2 - row * (cardH + rowGap);
+
+    slots.set(id, {
+      x,
+      y,
+      angle: tiltPattern[index % tiltPattern.length],
+    });
+  });
+
+  return slots;
+}
+
+function getComposedSceneHeight(
+  swatchCount: number,
+  cols: number,
+  scale: number,
+  edgePad: number,
+): number {
+  const columnCount = Math.max(1, Math.min(cols, swatchCount));
+  const rows = Math.ceil(swatchCount / columnCount);
+  const cardH = SWATCH_HEIGHT * scale;
+  const rowGap = 14;
+  return Math.ceil(24 + rows * cardH + Math.max(0, rows - 1) * rowGap + edgePad);
+}
 
 function getLayoutConfig(viewportWidth: number): LayoutConfig {
   const compact = viewportWidth <= 1024;
+  const composedLayout = compact;
   const phone = viewportWidth <= 480;
   const tablet = viewportWidth <= 768;
+  const portraitTablet = viewportWidth > 768 && viewportWidth <= 900;
 
-  let scale = 1;
-  if (viewportWidth < 1400) scale = 0.92;
-  if (viewportWidth < 1200) scale = 0.85;
-  if (compact) scale = Math.max(0.56, viewportWidth / 1280);
-  if (tablet) scale = Math.max(0.5, viewportWidth / 1180);
-  if (phone) scale = Math.max(0.44, viewportWidth / 960);
+  let spawnCols: number;
+  if (phone) {
+    spawnCols = 2;
+  } else if (portraitTablet) {
+    spawnCols = 3;
+  } else if (compact) {
+    spawnCols = 4;
+  } else {
+    spawnCols = 7;
+  }
 
+  const edgePad = phone ? 14 : portraitTablet ? 32 : compact ? 24 : 80;
+  const colGap = phone ? 12 : compact ? 14 : 20;
+  const rowGap = 14;
   const elements = compact
     ? allElements.filter((el) => el.type === 'swatch')
     : allElements;
 
-  const sceneHeight = phone
-    ? 620
-    : tablet
-      ? 680
-      : compact
-        ? 740
-        : viewportWidth < 1200
-          ? 780
-          : 840;
+  const swatchCount = elements.filter((el) => el.type === 'swatch').length;
+  const availableWidth = Math.max(viewportWidth - edgePad * 2, 220);
+  const targetSwatchWidth = (availableWidth - colGap * (spawnCols - 1)) / spawnCols;
 
-  const spawnCols = phone ? 4 : compact ? 5 : 7;
+  let scale: number;
+  if (compact) {
+    scale = targetSwatchWidth / SWATCH_WIDTH;
+    if (phone) {
+      scale = Math.min(scale, 0.48);
+      scale = Math.max(scale, 0.4);
+    } else if (tablet) {
+      scale = Math.min(scale, 0.54);
+      scale = Math.max(scale, 0.44);
+    } else {
+      scale = Math.min(scale, 0.6);
+      scale = Math.max(scale, 0.48);
+    }
+  } else {
+    scale = 1;
+    if (viewportWidth < 1400) scale = 0.92;
+    if (viewportWidth < 1200) scale = 0.85;
+  }
 
-  return { scale, sceneHeight, elements, spawnCols, compact };
+  let sceneHeight: number;
+  if (composedLayout) {
+    sceneHeight = getComposedSceneHeight(swatchCount, spawnCols, scale, edgePad);
+  } else {
+    sceneHeight = viewportWidth < 1200 ? 780 : 840;
+  }
+
+  const spawnRowGap = phone ? 130 : portraitTablet ? 160 : compact ? 110 : 70;
+  const maxSpawnAngle = composedLayout ? 0 : phone ? 0.1 : portraitTablet ? 0.08 : compact ? 0.15 : 0.3;
+  const maxRestAngle = composedLayout ? null : null;
+
+  return {
+    scale,
+    sceneHeight,
+    elements,
+    spawnCols,
+    compact,
+    composedLayout,
+    portraitTablet,
+    spawnRowGap,
+    maxSpawnAngle,
+    maxRestAngle,
+    edgePad,
+    colGap,
+    rowGap,
+  };
 }
 
 const PillElement: React.FC<{ content: string; style: React.CSSProperties }> = ({ content, style }) => (
@@ -287,7 +391,7 @@ export const GravityPlayground: React.FC = () => {
   const engineRef = useRef<Matter.Engine | null>(null);
   const runnerRef = useRef<Matter.Runner | null>(null);
   const bodiesRef = useRef<Map<string, Matter.Body>>(new Map());
-  const [positions, setPositions] = useState<Map<string, { x: number; y: number; angle: number }>>(new Map());
+  const elementNodesRef = useRef<Map<string, HTMLDivElement>>(new Map());
   const rafRef = useRef<number>();
   const initializedRef = useRef(false);
   const dragConstraintRef = useRef<Matter.Constraint | null>(null);
@@ -300,7 +404,33 @@ export const GravityPlayground: React.FC = () => {
   layoutConfigRef.current = layoutConfig;
   const [flippedSwatchIds, setFlippedSwatchIds] = useState<Set<string>>(new Set());
   const [activeSwatchId, setActiveSwatchId] = useState<string | null>(null);
-  const positionsRef = useRef<Map<string, { x: number; y: number; angle: number }>>(new Map());
+  const activeSwatchIdRef = useRef<string | null>(null);
+  activeSwatchIdRef.current = activeSwatchId;
+  const elementByIdRef = useRef<Map<string, PhysicsElement>>(new Map());
+  const composedSlotsRef = useRef<Map<string, ComposedSlot>>(new Map());
+  const composedSettlingRef = useRef(false);
+
+  const updateElementNode = (id: string, body: Matter.Body, scale: number) => {
+    const node = elementNodesRef.current.get(id);
+    const el = elementByIdRef.current.get(id);
+    if (!node || !el) return;
+
+    const isDragging = dragBodyRef.current === body;
+    const isActive = activeSwatchIdRef.current === id;
+    const snap = body.isSleeping && !isDragging;
+    const x = snap ? Math.round(body.position.x) : body.position.x;
+    const y = snap ? Math.round(body.position.y) : body.position.y;
+    const renderWidth = el.width * scale;
+    const renderHeight = el.height * scale;
+    const visualAngle = isActive && el.type === 'swatch' ? 0 : snap ? Math.round(body.angle * 1000) / 1000 : body.angle;
+    const liftY = isActive && el.type === 'swatch' ? 24 * scale : 0;
+
+    node.style.width = `${renderWidth}px`;
+    node.style.height = `${renderHeight}px`;
+    node.style.zIndex = isActive ? '220' : '';
+    node.style.opacity = '1';
+    node.style.transform = `translate(${x - renderWidth / 2}px, ${y - renderHeight / 2 - liftY}px) rotate(${visualAngle}rad)`;
+  };
 
   const setSwatchStatic = (swatchId: string, shouldBeStatic: boolean) => {
     const body = bodiesRef.current.get(swatchId);
@@ -340,15 +470,18 @@ export const GravityPlayground: React.FC = () => {
     const handleLayoutChange = () => {
       window.clearTimeout(timeoutId);
       timeoutId = window.setTimeout(() => {
-        const next = getLayoutConfig(window.innerWidth);
+        const sceneWidth = sceneRef.current?.offsetWidth ?? window.innerWidth;
+        const next = getLayoutConfig(sceneWidth);
         const prev = layoutConfigRef.current;
 
         const layoutChanged =
-          Math.abs(next.scale - prev.scale) > 0.035 ||
+          Math.abs(next.scale - prev.scale) > 0.03 ||
           next.sceneHeight !== prev.sceneHeight ||
           next.elements.length !== prev.elements.length ||
           next.spawnCols !== prev.spawnCols ||
-          next.compact !== prev.compact;
+          next.compact !== prev.compact ||
+          next.composedLayout !== prev.composedLayout ||
+          next.portraitTablet !== prev.portraitTablet;
 
         if (!layoutChanged) return;
 
@@ -357,7 +490,7 @@ export const GravityPlayground: React.FC = () => {
         setLayoutRevision((revision) => revision + 1);
         setActiveSwatchId(null);
         setFlippedSwatchIds(new Set());
-      }, 160);
+      }, 200);
     };
 
     window.addEventListener('resize', handleLayoutChange);
@@ -395,15 +528,37 @@ export const GravityPlayground: React.FC = () => {
     initializedRef.current = true;
 
     const scene = sceneRef.current;
-    const { scale, sceneHeight, elements, spawnCols, compact } = layoutConfigRef.current;
+    const {
+      scale,
+      sceneHeight,
+      elements,
+      spawnCols,
+      compact,
+      composedLayout,
+      portraitTablet,
+      spawnRowGap,
+      maxSpawnAngle,
+      maxRestAngle,
+      edgePad,
+    } = layoutConfigRef.current;
     scene.style.height = `${sceneHeight}px`;
 
-    const width = scene.offsetWidth || 1000;
+    const width = scene.offsetWidth || window.innerWidth;
     const height = sceneHeight;
+    const phone = width <= 480;
+
+    elementByIdRef.current = new Map(elements.map((el) => [el.id, el]));
+
+    const swatchIds = elements.filter((el) => el.type === 'swatch').map((el) => el.id);
+    const composedSlots = composedLayout
+      ? computeComposedSlots(width, height, swatchIds, scale, spawnCols, edgePad)
+      : new Map<string, ComposedSlot>();
+    composedSlotsRef.current = composedSlots;
+    composedSettlingRef.current = composedLayout;
 
     // Create engine with gravity
     const engine = Matter.Engine.create({
-      gravity: { x: 0, y: compact ? 0.72 : 0.85, scale: 0.001 },
+      gravity: { x: 0, y: composedLayout ? 0 : phone ? 0.52 : portraitTablet ? 0.58 : compact ? 0.66 : 0.85, scale: 0.001 },
       enableSleeping: true,
     });
     engineRef.current = engine;
@@ -423,22 +578,44 @@ export const GravityPlayground: React.FC = () => {
 
     const allBodies: Matter.Body[] = [...walls];
     const bodiesMap = new Map<string, Matter.Body>();
-    const initialPos = new Map<string, { x: number; y: number; angle: number }>();
 
-    const edgePad = compact ? 48 : 80;
+    const swatchCount = elements.filter((el) => el.type === 'swatch').length;
+    const swatchCols = Math.max(2, Math.min(spawnCols, swatchCount));
+    const usableWidth = width - edgePad * 2;
+    const swatchColWidth = usableWidth / swatchCols;
+    let swatchIndex = 0;
+    const dropDistance = composedLayout ? 220 : 0;
 
-    // Position elements above the scene - spread by column so they don't land in one pile
-    elements.forEach((el, i) => {
-      const cols = Math.max(2, Math.min(spawnCols, elements.length));
-      const col = i % cols;
-      const row = Math.floor(i / cols);
+    elements.forEach((el) => {
+      let x: number;
+      let y: number;
+      let angle: number;
 
-      const x =
-        edgePad +
-        col * ((width - edgePad * 2) / Math.max(cols - 1, 1)) +
-        (Math.random() - 0.5) * (compact ? 24 : 60);
-      const y = -120 - row * (compact ? 90 : 70) - Math.random() * (compact ? 180 : 600);
-      const angle = compact ? (Math.random() - 0.5) * 0.12 : (Math.random() - 0.5) * 0.3;
+      if (composedLayout && el.type === 'swatch') {
+        const slot = composedSlots.get(el.id);
+        const slotIndex = swatchIds.indexOf(el.id);
+        x = slot?.x ?? width / 2;
+        y = (slot?.y ?? height / 2) - dropDistance - (slotIndex % spawnCols) * 34;
+        angle = 0;
+        swatchIndex += 1;
+      } else if (el.type === 'swatch') {
+        const col = swatchIndex % swatchCols;
+        const row = Math.floor(swatchIndex / swatchCols);
+        swatchIndex += 1;
+        const rowStagger = portraitTablet && row % 2 === 1 ? swatchColWidth * 0.5 : 0;
+        x =
+          edgePad +
+          col * swatchColWidth +
+          swatchColWidth / 2 +
+          rowStagger +
+          (Math.random() - 0.5) * swatchColWidth * 0.12;
+        y = -140 - row * spawnRowGap - Math.random() * (compact ? 70 : 180);
+        angle = maxSpawnAngle === 0 ? 0 : (Math.random() - 0.5) * maxSpawnAngle * 2;
+      } else {
+        x = edgePad + Math.random() * usableWidth;
+        y = -80 - Math.random() * (compact ? 420 : 620);
+        angle = maxSpawnAngle === 0 ? 0 : (Math.random() - 0.5) * maxSpawnAngle * 2;
+      }
 
       const bodyWidth = el.width * scale;
       const bodyHeight = el.height * scale;
@@ -451,22 +628,26 @@ export const GravityPlayground: React.FC = () => {
 
       const body = Matter.Bodies.rectangle(x, y, bodyWidth, bodyHeight, {
         chamfer: { radius },
-        friction: 0.65,
-        frictionAir: compact ? 0.038 : 0.032,
-        restitution: compact ? 0.1 : 0.14,
+        friction: compact ? 0.72 : 0.65,
+        frictionAir: phone ? 0.058 : portraitTablet ? 0.048 : compact ? 0.044 : 0.032,
+        restitution: phone ? 0.04 : portraitTablet ? 0.06 : compact ? 0.08 : 0.14,
         angle,
         label: el.id,
-        sleepThreshold: 40,
+        sleepThreshold: phone ? 28 : 40,
+        collisionFilter: composedLayout && el.type === 'swatch'
+          ? { group: -1 }
+          : undefined,
       });
+
+      if (composedLayout && el.type === 'swatch') {
+        Matter.Body.setInertia(body, Infinity);
+      }
 
       allBodies.push(body);
       bodiesMap.set(el.id, body);
-      initialPos.set(el.id, { x, y, angle });
     });
 
     bodiesRef.current = bodiesMap;
-    positionsRef.current = initialPos;
-    setPositions(initialPos);
 
     Matter.Composite.add(engine.world, allBodies);
 
@@ -611,30 +792,66 @@ export const GravityPlayground: React.FC = () => {
     runnerRef.current = runner;
     Matter.Runner.run(runner, engine);
 
-    // Update positions
+    const settleComposedBody = (body: Matter.Body, slot: ComposedSlot) => {
+      const dx = slot.x - body.position.x;
+      const dy = slot.y - body.position.y;
+      const distance = Math.hypot(dx, dy);
+      const angleDelta = slot.angle - body.angle;
+
+      if (distance < 0.75 && Math.abs(angleDelta) < 0.01) {
+        Matter.Body.setPosition(body, { x: slot.x, y: slot.y });
+        Matter.Body.setAngle(body, slot.angle);
+        Matter.Body.setVelocity(body, { x: 0, y: 0 });
+        Matter.Body.setAngularVelocity(body, 0);
+        Matter.Sleeping.set(body, true);
+        return true;
+      }
+
+      const ease = distance > 80 ? 0.14 : 0.1;
+      Matter.Body.setPosition(body, {
+        x: body.position.x + dx * ease,
+        y: body.position.y + dy * ease,
+      });
+      Matter.Body.setAngle(body, body.angle + angleDelta * ease);
+      Matter.Body.setVelocity(body, { x: 0, y: 0 });
+      Matter.Body.setAngularVelocity(body, 0);
+      return false;
+    };
+
+    // Update transforms directly on DOM nodes (avoids React re-render jank on mobile)
     const tick = () => {
-      let changed = false;
-      const nextPos = new Map<string, { x: number; y: number; angle: number }>(positionsRef.current);
+      let allSettled = true;
 
       bodiesRef.current.forEach((body, id) => {
-        clampBodyToScene(body);
-
+        const el = elementByIdRef.current.get(id);
         const isDragging = dragBodyRef.current === body;
-        const snap = body.isSleeping && !isDragging;
-        const x = snap ? Math.round(body.position.x) : body.position.x;
-        const y = snap ? Math.round(body.position.y) : body.position.y;
-        const angle = snap ? Math.round(body.angle * 1000) / 1000 : body.angle;
+        const slot = composedSlotsRef.current.get(id);
 
-        const prev = nextPos.get(id);
-        if (!prev || prev.x !== x || prev.y !== y || prev.angle !== angle) {
-          nextPos.set(id, { x, y, angle });
-          changed = true;
+        if (composedSettlingRef.current && slot && !isDragging && !body.isStatic) {
+          const settled = settleComposedBody(body, slot);
+          if (!settled) allSettled = false;
+        } else if (!composedLayout) {
+          clampBodyToScene(body);
+
+          if (
+            maxRestAngle &&
+            el?.type === 'swatch' &&
+            body.isSleeping &&
+            !isDragging &&
+            Math.abs(body.angle) > maxRestAngle
+          ) {
+            Matter.Body.setAngle(body, Math.sign(body.angle) * maxRestAngle);
+            Matter.Body.setAngularVelocity(body, 0);
+          }
+        } else if (composedLayout && !isDragging && !body.isStatic) {
+          clampBodyToScene(body);
         }
+
+        updateElementNode(id, body, scale);
       });
 
-      if (changed) {
-        positionsRef.current = nextPos;
-        setPositions(new Map(nextPos));
+      if (composedSettlingRef.current && allSettled) {
+        composedSettlingRef.current = false;
       }
 
       rafRef.current = requestAnimationFrame(tick);
@@ -656,60 +873,84 @@ export const GravityPlayground: React.FC = () => {
     };
   }, [isVisible, layoutRevision]);
 
+  // Re-sync active swatch lift / rotation when flip state changes
+  useEffect(() => {
+    const { scale } = layoutConfigRef.current;
+    bodiesRef.current.forEach((body, id) => {
+      updateElementNode(id, body, scale);
+    });
+  }, [activeSwatchId, flippedSwatchIds]);
+
   const { scale: layoutScale, elements: visibleElements, sceneHeight } = layoutConfig;
 
+  const registerElementNode = (id: string, node: HTMLDivElement | null) => {
+    if (node) {
+      elementNodesRef.current.set(id, node);
+    } else {
+      elementNodesRef.current.delete(id);
+    }
+  };
+
   const renderElement = (el: PhysicsElement) => {
-    const pos = positions.get(el.id);
-    const x = pos?.x ?? 100;
-    const y = pos?.y ?? 100;
-    const angle = pos?.angle ?? 0;
-    const isActive = activeSwatchId === el.id;
-    const isFlipped = el.type === 'swatch' && flippedSwatchIds.has(el.id);
-    const visualAngle = isActive && el.type === 'swatch' ? 0 : angle;
-    const liftY = isActive && el.type === 'swatch' ? 24 * layoutScale : 0;
     const renderWidth = el.width * layoutScale;
     const renderHeight = el.height * layoutScale;
+    const isActive = activeSwatchId === el.id;
+    const isFlipped = el.type === 'swatch' && flippedSwatchIds.has(el.id);
 
-    const style: React.CSSProperties = {
-      transform: `translate(${x - renderWidth / 2}px, ${y - renderHeight / 2 - liftY}px) rotate(${visualAngle}rad)`,
+    const wrapperStyle: React.CSSProperties = {
       width: renderWidth,
       height: renderHeight,
       zIndex: isActive ? 220 : undefined,
     };
 
-    switch (el.type) {
-      case 'swatch': {
-        const mood = swatchMoodById.get(el.id);
-        if (!mood) return null;
-        return (
-          <SwatchCard
-            key={el.id}
-            id={el.id}
-            color={el.color!}
-            hex={el.hex!}
-            name={el.name!}
-            mood={mood}
-            isFlipped={isFlipped}
-            onToggle={() => focusAndFlipSwatch(el.id)}
-            style={style}
-            className={isActive ? 'gp-swatch--active' : undefined}
-          />
-        );
+    const innerContent = (() => {
+      switch (el.type) {
+        case 'swatch': {
+          const mood = swatchMoodById.get(el.id);
+          if (!mood) return null;
+          return (
+            <SwatchCard
+              id={el.id}
+              color={el.color!}
+              hex={el.hex!}
+              name={el.name!}
+              mood={mood}
+              isFlipped={isFlipped}
+              onToggle={() => focusAndFlipSwatch(el.id)}
+              className={isActive ? 'gp-swatch--active' : undefined}
+              style={{ position: 'relative', width: '100%', height: '100%', top: 'auto', left: 'auto', transform: 'none' }}
+            />
+          );
+        }
+        case 'pill':
+          return <PillElement content={el.content!} style={{ position: 'relative', width: '100%', height: '100%', top: 'auto', left: 'auto', transform: 'none' }} />;
+        case 'icon':
+          return <IconElement icon={el.icon!} style={{ position: 'relative', width: '100%', height: '100%', top: 'auto', left: 'auto', transform: 'none' }} />;
+        case 'text':
+          return <TextElement content={el.content!} style={{ position: 'relative', width: '100%', height: '100%', top: 'auto', left: 'auto', transform: 'none' }} />;
+        default:
+          return null;
       }
-      case 'pill':
-        return <PillElement key={el.id} content={el.content!} style={style} />;
-      case 'icon':
-        return <IconElement key={el.id} icon={el.icon!} style={style} />;
-      case 'text':
-        return <TextElement key={el.id} content={el.content!} style={style} />;
-      default:
-        return null;
-    }
+    })();
+
+    if (!innerContent) return null;
+
+    return (
+      <div
+        key={el.id}
+        ref={(node) => registerElementNode(el.id, node)}
+        className="gp-element"
+        data-gp-id={el.id}
+        style={wrapperStyle}
+      >
+        {innerContent}
+      </div>
+    );
   };
 
   return (
     <div
-      className="gravity-playground__scene"
+      className={`gravity-playground__scene${layoutConfig.composedLayout ? ' gravity-playground__scene--composed' : ''}`}
       ref={sceneRef}
       style={{ height: sceneHeight }}
     >

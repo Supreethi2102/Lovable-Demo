@@ -380,7 +380,7 @@ export const CaseStudies: React.FC = () => {
       ? filteredStudies
       : filteredStudies.slice(0, INITIAL_CASE_STUDIES_VISIBLE);
 
-  const canExpandList = filteredStudies.length > INITIAL_CASE_STUDIES_VISIBLE;
+  const showViewAllFooter = filteredStudies.length > 0;
 
   const getIconWeight = (catId: string): IconWeight => {
     if (activeCategory === catId || hoveredCategory === catId) return 'fill';
@@ -495,8 +495,8 @@ export const CaseStudies: React.FC = () => {
         </div>
       </div>
 
-      {/* View all / show fewer — hidden when every study already fits above the fold */}
-      {canExpandList ? (
+      {/* View all / show fewer — always shown when the active filter has results */}
+      {showViewAllFooter ? (
         <footer className="case-studies__footer">
           <button 
             type="button"

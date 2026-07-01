@@ -1,5 +1,6 @@
 import React from 'react';
 import { Info } from '@phosphor-icons/react';
+import './GravityPlayground.css';
 
 export interface SwatchCardMood {
   description: string;

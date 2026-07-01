@@ -142,7 +142,7 @@ interface Destination {
   country: string;
   city: string;
   image: string;
-  /** Optional image for tablet and mobile (max-width: 1024px) */
+  /** Optional image for tablet and mobile (≤1024px) and compact landscape (1180–1200px) */
   mobileTabletImage?: string;
   expandedImage: string;
   gridImage?: string;
@@ -166,6 +166,10 @@ interface DestinationCardProps {
   onClose: () => void;
   layoutDirection?: 'image-left' | 'image-right';
 }
+
+/** Tablet-optimised crops — portrait/tablet band + compact landscape (1194 class) */
+const DESTINATION_TABLET_IMAGE_MEDIA =
+  '(max-width: 1024px), (min-width: 1180px) and (max-width: 1200px)';
 
 const ExpandedContent: React.FC<{ destination: Destination; titleId: string }> = ({ destination, titleId }) => (
   <div className="destination-expanded__content" role="article">
@@ -279,7 +283,7 @@ const DestinationCard: React.FC<DestinationCardProps> = ({
       <div className="destination-card__image-wrapper">
         <picture>
           {destination.mobileTabletImage && (
-            <source media="(max-width: 1024px)" srcSet={destination.mobileTabletImage} />
+            <source media={DESTINATION_TABLET_IMAGE_MEDIA} srcSet={destination.mobileTabletImage} />
           )}
           <img 
             src={destination.image} 
@@ -323,7 +327,7 @@ const SmallCard: React.FC<SmallCardProps> = ({ destination, onClick }) => (
     <div className="destination-small__image-wrapper">
       <picture>
         {destination.mobileTabletImage && (
-          <source media="(max-width: 1024px)" srcSet={destination.mobileTabletImage} />
+          <source media={DESTINATION_TABLET_IMAGE_MEDIA} srcSet={destination.mobileTabletImage} />
         )}
         <img 
           src={destination.gridImage ?? destination.image} 

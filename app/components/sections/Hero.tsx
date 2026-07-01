@@ -20,9 +20,7 @@ export const Hero: React.FC = () => {
         </h1>
         
         <p className="hero__description">
-          I craft and art direct thoughtful experiences across graphic design, UI, and UX, blending strategy,
-          <br />
-          storytelling, and people-first thinking.
+          I craft and art direct thoughtful experiences across graphic design, UI, and UX, blending strategy, storytelling, and people-first thinking.
         </p>
       </div>
     </article>

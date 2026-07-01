@@ -152,51 +152,49 @@ export const PublicationDetail: React.FC = () => {
     >
       <div ref={enlargedDialogRef} className="publication-detail-enlarged__panel-inner" tabIndex={-1}>
         <div className="publication-detail-enlarged__stage-block">
+          <div className="publication-detail-enlarged__toolbar">
+            <button
+              type="button"
+              className="publication-detail-enlarged__back"
+              onClick={closeEnlarged}
+              aria-label="Back to publication"
+            >
+              <ArrowLeft size={24} weight="regular" color="#7150E5" aria-hidden="true" />
+              <span>Back</span>
+            </button>
+            <div className="publication-detail-enlarged__counter" aria-live="polite" aria-atomic="true">
+              <span>{activeIndex + 1}/</span>
+              <strong>{Math.max(totalImages, 1)}</strong>
+              <span className="publication-detail__counter-label">images</span>
+            </div>
+          </div>
+
           <div className="publication-detail-enlarged__carousel">
             <button
               type="button"
-              className="publication-detail__nav"
+              className="publication-detail__nav publication-detail__nav--prev"
               aria-label="Previous image"
               onClick={() => setActiveIndex((v) => clampIndex(v - 1, Math.max(totalImages, 1)))}
             >
               <CaretLeft size={24} weight="regular" color="#7150E5" aria-hidden="true" />
             </button>
 
-            <div className="publication-detail-enlarged__stage-column">
-              <div className="publication-detail-enlarged__toolbar">
-                <button
-                  type="button"
-                  className="publication-detail-enlarged__back"
-                  onClick={closeEnlarged}
-                  aria-label="Back to publication"
-                >
-                  <ArrowLeft size={24} weight="regular" color="#7150E5" aria-hidden="true" />
-                  <span>Back</span>
-                </button>
-                <div className="publication-detail-enlarged__counter" aria-live="polite" aria-atomic="true">
-                  <span>{activeIndex + 1}/</span>
-                  <strong>{Math.max(totalImages, 1)}</strong>
-                  <span className="publication-detail__counter-label">images</span>
-                </div>
-              </div>
-
-              <div className="publication-detail-enlarged__stage">
-                {activeImage ? (
-                  <ResponsivePicture
-                    image={activeImage}
-                    className="publication-detail-enlarged__image"
-                    loading="eager"
-                    fallbackAlt={activeImageAlt}
-                  />
-                ) : (
-                  <div className="publication-detail__image-placeholder" aria-hidden="true" />
-                )}
-              </div>
+            <div className="publication-detail-enlarged__stage">
+              {activeImage ? (
+                <ResponsivePicture
+                  image={activeImage}
+                  className="publication-detail-enlarged__image"
+                  loading="eager"
+                  fallbackAlt={activeImageAlt}
+                />
+              ) : (
+                <div className="publication-detail__image-placeholder" aria-hidden="true" />
+              )}
             </div>
 
             <button
               type="button"
-              className="publication-detail__nav"
+              className="publication-detail__nav publication-detail__nav--next"
               aria-label="Next image"
               onClick={() => setActiveIndex((v) => clampIndex(v + 1, Math.max(totalImages, 1)))}
             >

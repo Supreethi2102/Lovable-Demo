@@ -27,6 +27,14 @@
   --btn-loading-border: #6b7280;
   --btn-white: #ffffff;
   --btn-radius: 8px;
+  /** Work mega menu tab switcher — tweak here while colours are finalised */
+  --mega-menu-tab-track-bg: #f7f9fa;
+  --mega-menu-tab-track-border: #e1e5e9;
+  --mega-menu-tab-thumb-bg: #ffffff;
+  --mega-menu-tab-thumb-border: transparent;
+  --mega-menu-tab-thumb-shadow: none;
+  --mega-menu-tab-text: #3c3f43;
+  --mega-menu-tab-text-active: #111213;
   --btn-font: var(--font-family-ui);
   --btn-focus-outline: 2px solid var(--btn-primary-focus);
   --btn-focus-offset: 2px;

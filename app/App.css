@@ -35,6 +35,10 @@
   --design-width: 1440px;       /* Figma design width */
   --padding-x: 112px;           /* Desktop horizontal padding (28×4) */
   --padding-y: 56px;            /* Desktop vertical padding */
+  --section-gap-y: calc(var(--padding-y) + 28px); /* Section top/bottom + between-section rhythm */
+  --cta-gap-y: calc(var(--padding-y) + 28px);     /* Space above/below section CTAs */
+  --section-transition-h: 94px;    /* Destinations bottom color transition strip */
+  --surface-card-radius: 24px;   /* About / Testimonials / Contact card corners */
   --publication-aspect-ratio: 3 / 2; /* 6×4 (landscape) – consistent across section for no crop on enlarge */
 }
 
@@ -355,6 +359,7 @@ a:focus-visible {
   :root {
     --padding-x: 24px;
     --padding-y: 20px;
+    --surface-card-radius: 16px;
   }
 
   .main {
@@ -364,6 +369,35 @@ a:focus-visible {
 
   .main__globe {
     max-width: min(360px, 91vw);
+  }
+}
+
+/* Narrow phones (~390px) — give globe footer more horizontal room */
+@media (max-width: 390px) {
+  :root {
+    --padding-x: 16px;
+  }
+
+  .hero-section {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .main__right {
+    width: 100%;
+    max-width: 100%;
+    align-self: stretch;
+  }
+}
+
+@media (max-width: 360px) {
+  :root {
+    --padding-x: 12px;
+  }
+
+  .hero-section {
+    padding-left: 12px;
+    padding-right: 12px;
   }
 }
 

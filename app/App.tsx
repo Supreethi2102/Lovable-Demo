@@ -16,6 +16,8 @@ import {
 } from './components';
 import './App.css';
 import './ButtonStyles.css';
+import './tablet-700-1024.css';
+import './small-laptop-1100.css';
 
 function scheduleGlobeLayoutResize() {
   requestAnimationFrame(() => {

@@ -1,5 +1,7 @@
 export type CaseStudyNavItem = {
   label: string;
+  /** Two-line split for mega menu at desktop; flattened to one line at 700–1024px via CSS */
+  labelLines?: [string, string];
   sectionId: '#work' | '#publications';
 };
 
@@ -14,8 +16,16 @@ export const caseStudyCategories: CaseStudyNavCategory[] = [
     id: 'campaigns',
     title: 'Campaigns',
     items: [
-      { label: 'The Warehouse Mega Toy Month', sectionId: '#work' },
-      { label: 'The Warehouse Summer Campaign', sectionId: '#work' },
+      {
+        label: 'The Warehouse Mega Toy Month',
+        labelLines: ['The Warehouse', 'Mega Toy Month'],
+        sectionId: '#work',
+      },
+      {
+        label: 'The Warehouse Summer Campaign',
+        labelLines: ['The Warehouse', 'Summer Campaign'],
+        sectionId: '#work',
+      },
     ],
   },
   {

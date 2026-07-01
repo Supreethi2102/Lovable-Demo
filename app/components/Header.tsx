@@ -4,6 +4,7 @@ import { Palette, User, ChatsCircle, Sun, SunHorizon, CloudFog, MoonStars, Cloud
 import {
   caseStudyCategories,
   projectHighlightItems,
+  type CaseStudyNavItem,
   type MegaMenuTab,
 } from '../data/caseStudiesNav';
 import './Header.css';
@@ -13,6 +14,22 @@ const CATEGORY_ICONS: Record<string, Icon> = {
   packaging: Package,
   ui: Ruler,
   ux: NotePencil,
+};
+
+const MegaMenuLinkLabel: React.FC<{ item: CaseStudyNavItem }> = ({ item }) => {
+  if (item.labelLines) {
+    return (
+      <span className="mega-menu__link-text">
+        {item.labelLines.map((line) => (
+          <span key={line} className="mega-menu__link-line">
+            {line}
+          </span>
+        ))}
+      </span>
+    );
+  }
+
+  return <>{item.label}</>;
 };
 
 type WorkMegaMenuContentProps = {
@@ -40,10 +57,11 @@ const WorkMegaMenuContent: React.FC<WorkMegaMenuContentProps> = ({ tab, onNaviga
                     <a
                       href={item.sectionId}
                       className="mega-menu__link"
+                      aria-label={item.labelLines ? item.label : undefined}
                       onClick={(e) => onNavigate(e, item.sectionId)}
                       tabIndex={linkTabIndex}
                     >
-                      {item.label}
+                      <MegaMenuLinkLabel item={item} />
                     </a>
                   </li>
                 ))}

@@ -393,8 +393,8 @@
     max-width: 100%;
     padding: 4px;
     border-radius: var(--btn-radius, 8px);
-    border: 1px solid var(--surface-light-stroke, #e1e5e9);
-    background: var(--btn-secondary-surface-bg, #f7f9fa);
+    border: 1px solid var(--mega-menu-tab-track-border, var(--surface-light-stroke, #e1e5e9));
+    background: var(--mega-menu-tab-track-bg, var(--btn-secondary-surface-bg, #f7f9fa));
     box-sizing: border-box;
   }
 
@@ -405,9 +405,9 @@
     left: 4px;
     width: calc((100% - 8px) / 2);
     border-radius: 6px;
-    background: var(--surface-light-bg, #fbfbfc);
-    border: none;
-    box-shadow: none;
+    background: var(--mega-menu-tab-thumb-bg, #ffffff);
+    border: 1px solid var(--mega-menu-tab-thumb-border, transparent);
+    box-shadow: var(--mega-menu-tab-thumb-shadow, none);
     transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     pointer-events: none;
     z-index: 0;
@@ -433,7 +433,7 @@
     font-size: var(--type-atkinson-text-md-size);
     font-weight: 400;
     line-height: var(--type-atkinson-text-md-lh);
-    color: var(--text-secondary, #3c3f43);
+    color: var(--mega-menu-tab-text, var(--text-secondary, #3c3f43));
     cursor: pointer;
     transition: color 0.2s ease, background-color 0.2s ease;
     white-space: nowrap;
@@ -442,7 +442,7 @@
   }
 
   .mega-menu__tab[aria-selected="true"] {
-    color: var(--text-primary, #111213);
+    color: var(--mega-menu-tab-text-active, var(--text-primary, #111213));
     font-weight: 500;
   }
 
@@ -523,6 +523,16 @@
     color: var(--text-secondary, #3c3f43);
     text-decoration: none;
     transition: color 0.2s ease;
+  }
+
+  .mega-menu__link-text {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .mega-menu__link-line {
+    display: block;
   }
 
   @media (hover: hover) and (pointer: fine) {
@@ -648,11 +658,11 @@
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 16px 0;
+    padding: 12px 0;
     font-family: var(--font-family-ui);
-    font-size: var(--type-atkinson-text-xl-size);
-    font-weight: 500;
-    line-height: var(--type-atkinson-text-xl-lh);
+    font-size: var(--type-atkinson-text-md-size);
+    font-weight: 400;
+    line-height: var(--type-atkinson-text-md-lh);
     color: #1F2128;
     text-decoration: none;
     background: none;
@@ -731,8 +741,8 @@
   .header__mobile-submenu--mega {
     display: none;
     flex-direction: column;
-    padding: 16px 0 12px;
-    gap: 16px;
+    padding: 12px 0 12px;
+    gap: 12px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.08);
   }
 
@@ -741,16 +751,30 @@
   }
 
   .mega-menu__tabs--mobile {
-    margin-bottom: 12px;
+    margin-bottom: 8px;
   }
 
   .mega-menu__tabs--mobile .mega-menu__tabs-track {
     width: 100%;
     min-width: 0;
+    max-width: 100%;
+    padding: 3px;
+  }
+
+  .mega-menu__tabs--mobile .mega-menu__tabs-thumb {
+    top: 3px;
+    bottom: 3px;
+    left: 3px;
+    width: calc((100% - 6px) / 2);
+    border: 1px solid rgba(17, 18, 19, 0.06);
+    box-shadow: 0 1px 2px rgba(17, 18, 19, 0.06);
   }
 
   .mega-menu__tabs--mobile .mega-menu__tab {
-    padding: 10px 16px;
+    padding: 8px 10px;
+    min-height: 36px;
+    font-size: var(--type-atkinson-text-sm-size);
+    line-height: var(--type-atkinson-text-sm-lh);
   }
 
   .header__mobile-submenu--mega .mega-menu__groups-grid,
@@ -928,6 +952,69 @@
   
     .header__mobile-nav {
       display: flex;
+      padding: 20px;
+    }
+
+    .header__mobile-link .header__nav-icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    .header__contact-btn--mobile {
+      margin-top: 20px;
+      min-height: 44px;
+      padding: 10px 20px;
+    }
+
+    .header__contact-btn--mobile .btn__icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    /* Work submenu — single-line campaign titles + tighter link sizing */
+    .header__mobile-submenu--mega .mega-menu__groups-grid {
+      gap: 20px;
+    }
+
+    .header__mobile-submenu--mega .mega-menu__group {
+      gap: 10px;
+      width: 100%;
+      max-width: none;
+    }
+
+    .header__mobile-submenu--mega .mega-menu__group-header {
+      gap: 8px;
+    }
+
+    .header__mobile-submenu--mega .mega-menu__group-icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    .header__mobile-submenu--mega .mega-menu__group-title {
+      font-size: var(--type-atkinson-text-sm-size);
+      line-height: var(--type-atkinson-text-sm-lh);
+    }
+
+    .header__mobile-submenu--mega .mega-menu__link {
+      font-size: var(--type-atkinson-text-sm-size);
+      line-height: var(--type-atkinson-text-sm-lh);
+      padding: 4px 0;
+    }
+
+    .header__mobile-submenu--mega .mega-menu__group .mega-menu__link-text {
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 0;
+      white-space: nowrap;
+    }
+
+    .header__mobile-submenu--mega .mega-menu__group .mega-menu__link-line {
+      display: inline;
+    }
+
+    .header__mobile-submenu--mega .mega-menu__group .mega-menu__link-line + .mega-menu__link-line::before {
+      content: ' ';
     }
   
     /* Mobile uses slide-out menu instead of desktop dropdowns */
@@ -973,6 +1060,12 @@
       height: 40px;
       padding: 8px;
     }
+
+    .mega-menu__tabs--mobile .mega-menu__tab {
+      padding: 8px 6px;
+      font-size: var(--type-atkinson-text-xs-size);
+      line-height: var(--type-atkinson-text-xs-lh);
+    }
   }
   
   /* Disable hover underline on touch / coarse pointers (tablet uses click, not hover) */
@@ -1011,5 +1104,54 @@
   
     .header__mobile-toggle:hover {
       background-color: transparent;
+    }
+  }
+
+  /* 700×1024 — Case Studies mega menu: vertical stack + single-line campaign links */
+  @media (min-width: 700px) and (max-width: 1024px) {
+    .mega-menu__panel {
+      padding: 36px 40px;
+    }
+
+    .mega-menu__tabs {
+      margin-bottom: 28px;
+    }
+
+    .mega-menu__groups-grid {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 28px;
+      grid-template-columns: none;
+    }
+
+    .mega-menu__group {
+      gap: 16px;
+      width: 100%;
+      max-width: 320px;
+    }
+
+    .mega-menu__group-header {
+      gap: 10px;
+    }
+
+    .mega-menu__group-list {
+      gap: 12px;
+    }
+
+    /* Campaign titles on one line at this breakpoint only */
+    .mega-menu__group .mega-menu__link-text {
+      flex-direction: row;
+      flex-wrap: nowrap;
+      gap: 0;
+      white-space: nowrap;
+    }
+
+    .mega-menu__group .mega-menu__link-line {
+      display: inline;
+    }
+
+    .mega-menu__group .mega-menu__link-line + .mega-menu__link-line::before {
+      content: ' ';
     }
   }

@@ -4,8 +4,8 @@
 .destinations {
   background: #f7f9fa;
   position: relative;
-  padding-top: 88px; /* Figma vertical padding */
-  padding-bottom: 188px; /* Figma bottom padding from CTA section */
+  padding-top: var(--section-gap-y);
+  padding-bottom: calc(var(--section-gap-y) + var(--section-transition-h));
   /* Dynamic padding: grows on screens larger than 1440px */
   padding-left: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
   padding-right: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
@@ -18,7 +18,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  height: 94px; /* Half of the bottom spacing: transition block between sections */
+  height: var(--section-transition-h); /* Transition block between sections */
   background: #eceef2;
   pointer-events: none;
 }
@@ -259,7 +259,7 @@
 
 .destination-expanded__close {
   position: absolute;
-  top: 32px;
+  top: 24px;
   right: 56px;
   animation: fadeInClose 0.4s ease 0.3s both;
 }
@@ -576,7 +576,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 56px; /* Figma gap */
+  gap: var(--cta-gap-y); /* Figma gap */
   padding: 0 118px; /* Figma horizontal padding */
 }
 
@@ -603,11 +603,6 @@
 
 /* Large Desktop - 1400px */
 @media (max-width: 1400px) {
-  .destinations {
-    padding-top: 72px;
-    padding-bottom: 150px;
-  }
-
   .destinations__grid {
     gap: 40px;
   }
@@ -676,11 +671,6 @@
 
 /* Desktop - 1200px */
 @media (max-width: 1200px) {
-  .destinations {
-    padding-top: 64px;
-    padding-bottom: 120px;
-  }
-
   .destinations__title {
     font-size: var(--type-romie-display-m-size);
     line-height: var(--type-romie-display-m-lh);
@@ -712,28 +702,50 @@
     height: 508px;
   }
 
-  /* Expanded card – small desktop: slightly reduced padding and min-height */
+  /* Expanded card – small desktop: wider text column, balanced split */
   .destination-expanded {
-    padding: 28px 40px;
-    gap: 40px;
-    min-height: 640px;
+    padding: 28px 32px;
+    gap: 32px;
+    min-height: auto;
+    align-items: flex-start;
   }
 
   .destination-expanded__close {
-    top: 28px;
-    right: 40px;
+    top: 20px;
+    right: 32px;
   }
 
   .destination-expanded__image-wrapper {
-    width: 100%;
-    max-width: 620px;
-    margin-top: 48px;
+    flex: 0 1 52%;
+    width: auto;
+    max-width: 520px;
+    min-width: 0;
+    margin-top: 40px;
   }
 
   .destination-expanded__image-clip {
     width: 100%;
     height: auto;
     aspect-ratio: 742 / 624;
+  }
+
+  .destination-expanded__content {
+    flex: 1 1 0;
+    width: auto;
+    max-width: none;
+    min-width: 0;
+    gap: 40px;
+  }
+
+  .destination-expanded__title,
+  .destination-expanded__location,
+  .destination-expanded__section h4,
+  .destination-expanded__section p {
+    max-width: none;
+  }
+
+  .destination-expanded__sections {
+    gap: 20px;
   }
 
   .destinations__cta {
@@ -748,11 +760,10 @@
   }
 }
 
-/* Tablet Landscape - 1024px */
-@media (max-width: 1024px) and (min-width: 769px) {
+/* Tablet Landscape — 769–1024px and compact landscape (e.g. 1194×834) */
+@media (max-width: 1024px) and (min-width: 769px),
+  (min-width: 1180px) and (max-width: 1200px) {
   .destinations {
-    padding-top: 56px;
-    padding-bottom: 100px;
     padding-left: var(--padding-x);
     padding-right: var(--padding-x);
   }
@@ -853,7 +864,7 @@
   }
 
   .destination-expanded__close {
-    top: 24px;
+    top: 16px;
     right: 24px;
   }
 
@@ -934,11 +945,6 @@
 
 /* Tablet Portrait - 768px */
 @media (max-width: 768px) and (min-width: 481px) {
-  .destinations {
-    padding-top: 48px;
-    padding-bottom: 80px;
-  }
-
   .destinations__title {
     font-size: var(--type-romie-display-s-size);
     line-height: var(--type-romie-display-s-lh);
@@ -1043,7 +1049,7 @@
   }
 
   .destination-expanded__close {
-    top: 20px;
+    top: 12px;
     right: 20px;
     font-size: var(--type-atkinson-text-md-size);
   }
@@ -1136,8 +1142,11 @@
 /* Mobile - 480px */
 @media (max-width: 480px) {
   .destinations {
-    padding-top: 40px;
-    padding-bottom: 60px;
+    padding-bottom: calc(var(--section-gap-y) + 24px);
+  }
+
+  .destinations::after {
+    height: 24px;
   }
 
   .destinations__title {
@@ -1186,7 +1195,7 @@
   }
 
   .destination-expanded__close {
-    top: 16px;
+    top: 8px;
     right: 16px;
     font-size: var(--type-atkinson-text-sm-size);
   }
@@ -1257,6 +1266,9 @@
     margin-top: 48px;
     gap: 20px;
     padding: 0;
+    position: relative;
+    z-index: 2;
+    margin-bottom: 32px;
   }
 
   .destinations__cta-text {

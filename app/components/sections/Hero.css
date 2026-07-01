@@ -17,7 +17,7 @@
   align-items: stretch;
   /* Clears fixed header; --header-height is set in JS from actual header box (includes safe-area padding) */
   padding-top: calc(var(--header-height, 96px) + clamp(28px, 4vw, 56px));
-  padding-bottom: max(80px, env(safe-area-inset-bottom, 0px));
+  padding-bottom: max(var(--section-gap-y), env(safe-area-inset-bottom, 0px));
   padding-left: var(--padding-x, 112px);
   padding-right: var(--padding-x, 112px);
   min-height: calc(100dvh - var(--header-height, 96px));
@@ -59,6 +59,7 @@
   color: #3c3f43;
   margin: 0;
   max-width: 100%;
+  text-wrap: pretty;
 }
 
 /* Responsive */
@@ -88,7 +89,7 @@
   .hero-section {
     justify-content: flex-start;
     padding-top: calc(var(--header-height, 96px) + clamp(24px, 4vw, 36px));
-    padding-bottom: max(48px, env(safe-area-inset-bottom, 0px));
+    padding-bottom: max(var(--section-gap-y), env(safe-area-inset-bottom, 0px));
     padding-left: var(--padding-x);
     padding-right: var(--padding-x);
     min-height: auto;
@@ -129,7 +130,7 @@
 @media (max-width: 768px) {
   .hero-section {
     padding-top: calc(var(--header-height, 96px) + clamp(20px, 5vw, 32px));
-    padding-bottom: max(36px, env(safe-area-inset-bottom, 0px));
+    padding-bottom: max(var(--section-gap-y), env(safe-area-inset-bottom, 0px));
     gap: 24px;
     padding-left: var(--padding-x);
     padding-right: var(--padding-x);
@@ -147,7 +148,7 @@
 @media (max-width: 480px) {
   .hero-section {
     padding-top: calc(var(--header-height, 96px) + clamp(20px, 5vw, 28px));
-    padding-bottom: max(28px, env(safe-area-inset-bottom, 0px));
+    padding-bottom: max(var(--section-gap-y), env(safe-area-inset-bottom, 0px));
     padding-left: max(16px, env(safe-area-inset-left, 0px));
     padding-right: max(16px, env(safe-area-inset-right, 0px));
     gap: 20px;

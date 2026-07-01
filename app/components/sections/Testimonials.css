@@ -2,12 +2,11 @@
 
 .testimonials {
   background: #eceef2; /* Figma outer background */
-  padding: 112px; /* Figma padding */
-  padding-top: 80px; /* Reduced gap from About */
-  padding-bottom: 80px; /* Reduced gap to Contact */
+  padding-top: var(--section-gap-y);
+  padding-bottom: var(--section-gap-y);
   /* Dynamic padding for centering on large screens */
-  padding-left: max(112px, calc((100vw - var(--content-max-width, 1220px)) / 2));
-  padding-right: max(112px, calc((100vw - var(--content-max-width, 1220px)) / 2));
+  padding-left: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
+  padding-right: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
   width: 100%;
   scroll-margin-top: calc(var(--header-height, 96px) + 12px);
 }
@@ -15,7 +14,7 @@
 .testimonials__card {
   background: #f7f9fa; /* Figma card background */
   border: 1px solid #b0b3b8; /* Figma border */
-  border-radius: 24px; /* Figma border radius */
+  border-radius: var(--surface-card-radius, 24px); /* Figma border radius */
   padding: 48px 108px 80px 64px; /* Bottom padding after dots */
   max-width: 1216px; /* Figma width */
   min-height: auto; /* Changed from fixed 714px to auto for better spacing */
@@ -254,7 +253,8 @@
 /* Responsive - Large Desktop */
 @media (max-width: 1400px) {
   .testimonials {
-    padding: 80px;
+    padding-top: var(--section-gap-y);
+    padding-bottom: var(--section-gap-y);
     padding-left: max(var(--padding-x, 80px), calc((100vw - var(--content-max-width, 1220px)) / 2));
     padding-right: max(var(--padding-x, 80px), calc((100vw - var(--content-max-width, 1220px)) / 2));
   }
@@ -297,7 +297,8 @@
 /* Tablet Landscape (≤1024px) */
 @media (max-width: 1024px) {
   .testimonials {
-    padding: 64px var(--padding-x, 48px);
+    padding-left: var(--padding-x, 48px);
+    padding-right: var(--padding-x, 48px);
   }
 
   .testimonials__card {
@@ -357,7 +358,8 @@
 /* Tablet Portrait (≤768px) */
 @media (max-width: 768px) {
   .testimonials {
-    padding: 48px var(--padding-x, 32px);
+    padding-left: var(--padding-x, 32px);
+    padding-right: var(--padding-x, 32px);
   }
 
   .testimonials__card {
@@ -435,7 +437,8 @@
 /* Mobile (≤480px) */
 @media (max-width: 480px) {
   .testimonials {
-    padding: 32px var(--padding-x, 20px);
+    padding-left: var(--padding-x, 20px);
+    padding-right: var(--padding-x, 20px);
   }
 
   .testimonials__card {

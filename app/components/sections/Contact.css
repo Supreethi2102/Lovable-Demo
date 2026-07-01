@@ -2,8 +2,8 @@
 
 .contact-wrapper {
   background: #eceef2; /* Figma outer background */
-  padding-top: 80px; /* Reduced gap from Testimonials */
-  padding-bottom: 146px; /* Increased - combined with Destinations top (88) to match visual spacing above About */
+  padding-top: var(--section-gap-y);
+  padding-bottom: var(--section-gap-y);
   /* Dynamic padding: grows on screens larger than 1440px */
   padding-left: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
   padding-right: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
@@ -103,16 +103,16 @@
   --contact-card-gap: 64px; /* 4pt grid: same spacing left↔line and line↔right */
   background: #f7f9fa; /* Figma card background */
   border: 1px solid #b0b3b8; /* Figma border */
-  border-radius: 24px; /* Figma border radius */
+  border-radius: var(--surface-card-radius, 24px); /* Figma border radius */
   padding: 48px 56px 48px 56px; /* Reduced bottom padding */
   max-width: var(--content-max-width, 1220px);
   min-height: 720px; /* Trimmed from 851px */
   margin: 0 auto;
   display: grid;
   grid-template-columns: 560px 1px 1fr;
-  grid-template-rows: 1fr auto;
+  grid-template-rows: auto;
   column-gap: var(--contact-card-gap);
-  row-gap: 56px;
+  row-gap: 0;
   align-items: end; /* Align bottoms: message box, divider, button on same baseline */
   position: relative;
   /* GPU acceleration - GSAP will handle transforms */
@@ -389,11 +389,12 @@
 /* Right Side - Postcard - stamp, address centred between line and right edge */
 .contact__postcard-side {
   grid-column: 3;
-  grid-row: 1;
+  grid-row: 1 / -1;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-end;
+  gap: 56px;
   padding: 0;
   width: 100%;
   min-width: 0;
@@ -548,10 +549,9 @@
 
 /* Send Button – uses .btn .btn--secondary; layout + form states below */
 .contact__submit-btn {
-  grid-column: 3;
-  grid-row: 2;
   width: 230px;
   margin: 0 auto;
+  flex-shrink: 0;
 }
 
 .contact__submit-btn:hover:not(:disabled):not(.contact__submit-btn--loading):not(.contact__submit-btn--success) span,
@@ -764,6 +764,197 @@
   }
 }
 
+/* 1025–1200px: cards in document flow (desktop keeps absolute positioning) */
+@media (max-width: 1200px) and (min-width: 1025px) {
+  .contact-wrapper {
+    min-height: auto;
+  }
+
+  .contact-stage {
+    min-height: auto;
+    display: block;
+  }
+
+  .contact-card.is-active {
+    position: relative !important;
+    top: auto !important;
+    left: auto !important;
+    right: auto !important;
+  }
+
+  .contact-card.is-next {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .contact__card {
+    align-items: stretch;
+    min-height: auto;
+    grid-template-columns: minmax(440px, 1.15fr) 1px minmax(280px, 0.85fr);
+    grid-template-rows: auto;
+    row-gap: 0;
+    --contact-card-gap: 40px;
+  }
+
+  .contact__form-side {
+    grid-row: 1;
+    align-self: start;
+    padding: 0 12px 0 0;
+  }
+
+  .contact__divider {
+    grid-row: 1;
+    align-self: stretch;
+  }
+
+  .contact__postcard-side {
+    grid-row: 1 / -1;
+    justify-content: center;
+    align-self: center;
+    gap: 12px;
+    height: auto;
+  }
+
+  .contact__postcard-slot {
+    overflow: hidden;
+    min-height: unset;
+    height: auto;
+    flex: 0 0 auto;
+    justify-content: flex-start;
+  }
+
+  .contact__postcard-stack {
+    min-height: unset;
+    height: auto;
+    justify-content: flex-start;
+    max-width: 340px;
+  }
+
+  .contact__postcard--front {
+    position: relative !important;
+    inset: auto !important;
+    height: auto;
+    justify-content: flex-start;
+    gap: 12px;
+  }
+
+  /* Keep back layer off-screen — do not stack in flow with front */
+  .contact__postcard--back {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    transform: translateX(-120%) translateZ(0);
+    z-index: 1;
+  }
+
+  .contact__title {
+    font-size: var(--type-romie-display-l-size);
+    line-height: var(--type-romie-display-l-lh);
+  }
+}
+
+/* Tablet landscape in 1025–1200 band (e.g. 1194×834): Figma composite, not split stamp/address */
+@media (min-width: 1180px) and (max-width: 1200px) {
+  .contact__postcard-split {
+    display: none;
+  }
+
+  .contact__postcard-composite.contact__postcard-composite--tablet {
+    display: flex;
+  }
+
+  .contact__postcard-composite.contact__postcard-composite--phone {
+    display: none;
+  }
+
+  .contact__stamp-area,
+  .contact__address-area {
+    display: none;
+  }
+
+  .contact__card {
+    grid-template-columns: minmax(400px, 1.05fr) 1px minmax(340px, 0.95fr);
+  }
+
+  .contact__postcard-side {
+    align-self: center;
+    width: 100%;
+    gap: 28px;
+  }
+
+  .contact__postcard-slot {
+    overflow: visible;
+    width: 100%;
+  }
+
+  .contact__postcard-stack {
+    max-width: min(480px, 100%);
+    width: 100%;
+    margin-inline: auto;
+  }
+
+  .contact__postcard-composite {
+    width: 100%;
+  }
+
+  .contact__postcard-composite-img {
+    width: 100%;
+    max-width: none;
+    height: auto;
+    object-fit: contain;
+    object-position: center top;
+  }
+
+  .contact__submit-btn {
+    margin-top: 8px;
+  }
+}
+
+/* Short viewports in same band — compact card so section fits on screen */
+@media (max-width: 1200px) and (min-width: 1025px) and (max-height: 820px) {
+  .contact__card {
+    padding: 24px 32px;
+    --contact-card-gap: 32px;
+  }
+
+  .contact__form-side {
+    gap: 28px;
+  }
+
+  .contact__form {
+    gap: 20px;
+  }
+
+  .contact__textarea {
+    height: 140px;
+  }
+
+  .contact__postcard-stack {
+    max-width: 320px;
+  }
+
+  .contact__stamp-area {
+    max-width: min(340px, 100%);
+  }
+
+  .contact__address-area {
+    max-width: min(300px, 100%);
+  }
+}
+
+@media (min-width: 1180px) and (max-width: 1200px) and (max-height: 820px) {
+  .contact__postcard-stack {
+    max-width: min(440px, 100%);
+  }
+}
+
 /* ── Tablet & Mobile (≤1024px): single-column stacked layout ── */
 @media (max-width: 1024px) {
   /* Figma tablet: use composite stamp+address asset */
@@ -788,8 +979,6 @@
 
   /* Wrapper */
   .contact-wrapper {
-    padding-top: 64px;
-    padding-bottom: 64px;
     padding-left: var(--padding-x);
     padding-right: var(--padding-x);
     overflow: visible; /* don’t clip tall postcard composite */
@@ -863,18 +1052,19 @@
     grid-row: auto;
   }
 
-  /* ── Postcard side: centered like Figma mobile/tablet ── */
+  /* Children participate in card flex so submit stays below form on tablet */
   .contact__postcard-side {
-    flex: none;
-    width: 100%;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    gap: 0;
-    padding: 0;
+    display: contents;
+  }
+
+  .contact__postcard-slot {
     order: 4;
-    grid-column: auto;
-    grid-row: auto;
+  }
+
+  .contact__submit-error {
+    order: 5;
+    width: 100%;
+    text-align: center;
   }
 
   /* Slot/stack: height follows content so composite image is never clipped */
@@ -943,11 +1133,6 @@
 
 /* Tablet portrait (≤768px): still tablet composite; tighter card padding */
 @media (max-width: 768px) {
-  .contact-wrapper {
-    padding-top: 48px;
-    padding-bottom: 48px;
-  }
-
   .contact__card {
     padding: 32px clamp(20px, 4vw, 32px);
   }
@@ -959,11 +1144,6 @@
 
 /* Mobile (≤480px): Figma phone composite from public/contact */
 @media (max-width: 480px) {
-  .contact-wrapper {
-    padding-top: 40px;
-    padding-bottom: 40px;
-  }
-
   .contact__card {
     padding: 24px 20px;
     min-height: unset;

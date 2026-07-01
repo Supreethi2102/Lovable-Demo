@@ -18,7 +18,10 @@ export const ColorSwatches: React.FC = () => {
             Click or drag the colour swatches to discover my travel colour moods
           </span>
           <span className="color-swatches__text-mobile">
-            Tap, click, or drag the colour swatches to discover my travel colour moods
+            <span className="color-swatches__text-line">
+              Tap, click, or drag the colour swatches
+            </span>
+            <span className="color-swatches__text-line">to discover my travel colour moods</span>
           </span>
         </p>
       </header>

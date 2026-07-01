@@ -3,8 +3,8 @@
 
 .publications {
   background: #f7f9fa;
-  padding-top: var(--padding-y, 56px);
-  padding-bottom: var(--padding-y, 56px);
+  padding-top: var(--section-gap-y);
+  padding-bottom: var(--section-gap-y);
   /* Dynamic padding: grows on screens larger than 1440px */
   padding-left: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
   padding-right: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
@@ -126,7 +126,7 @@
 .publications__footer {
   display: flex;
   justify-content: center;
-  padding-top: 48px;
+  padding-top: var(--cta-gap-y);
 }
 
 /* View publications – uses .btn .btn--secondary from ButtonStyles.css */
@@ -659,8 +659,6 @@
 /* Tablet landscape */
 @media (max-width: 1024px) {
   .publications {
-    padding-top: 48px;
-    padding-bottom: 48px;
     padding-left: var(--padding-x, clamp(24px, 4vw, 48px));
     padding-right: var(--padding-x, clamp(24px, 4vw, 48px));
   }
@@ -683,7 +681,7 @@
   }
 
   .publications__footer {
-    padding-top: 40px;
+    padding-top: var(--cta-gap-y);
   }
 
   .view-publications-btn {
@@ -695,8 +693,6 @@
 /* Tablet portrait */
 @media (max-width: 768px) {
   .publications {
-    padding-top: 40px;
-    padding-bottom: 40px;
     padding-left: var(--padding-x, 24px);
     padding-right: var(--padding-x, 24px);
   }
@@ -733,15 +729,13 @@
   }
 
   .publications__footer {
-    padding-top: 32px;
+    padding-top: var(--cta-gap-y);
   }
 }
 
 /* Mobile */
 @media (max-width: 480px) {
   .publications {
-    padding-top: 32px;
-    padding-bottom: 32px;
     padding-left: 16px;
     padding-right: 16px;
   }
@@ -778,7 +772,7 @@
   }
 
   .publications__footer {
-    padding-top: 24px;
+    padding-top: var(--cta-gap-y);
   }
 
   .view-publications-btn {

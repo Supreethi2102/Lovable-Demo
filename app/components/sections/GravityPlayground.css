@@ -7,6 +7,7 @@
   height: 840px;
   cursor: grab;
   user-select: none;
+  touch-action: none;
   overflow: hidden;
   background: #eceef2;
   margin: 30px 0 0 0;
@@ -29,6 +30,28 @@
 
 .gravity-playground__scene-inner > * {
   pointer-events: auto;
+}
+
+/* Physics-positioned wrapper — transform updated in rAF, not React state */
+.gp-element {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  will-change: transform;
+  backface-visibility: hidden;
+}
+
+.gp-element .gp-pill,
+.gp-element .gp-icon,
+.gp-element .gp-text,
+.gp-element .gp-swatch {
+  position: relative;
+  top: auto;
+  left: auto;
+  width: 100%;
+  height: 100%;
+  transform: none;
 }
 
 :root {
@@ -433,6 +456,24 @@
 /* Footer link (View / Hide colour mood) – no extra margin; footer has padding-top */
 
 /* Responsive – height is set in JS; keep type tweaks only */
+@media (min-width: 769px) and (max-width: 900px) {
+  .gravity-playground__scene {
+    min-height: 880px;
+    margin-top: 24px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .gravity-playground__scene {
+    min-height: 0;
+    margin-top: 20px;
+  }
+
+  .gravity-playground__scene--composed {
+    overflow: hidden;
+  }
+}
+
 @media (max-width: 768px) {
   .gp-pill {
     font-size: var(--type-atkinson-text-xs-size);

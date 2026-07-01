@@ -2,10 +2,10 @@
 
 .about {
   background: #eceef2; /* Outer background from Figma */
-  padding: 112px;
-  padding-left: max(112px, calc((100vw - var(--content-max-width, 1220px)) / 2));
-  padding-right: max(112px, calc((100vw - var(--content-max-width, 1220px)) / 2));
-  padding-bottom: 80px; /* Reduced gap to Testimonials */
+  padding-top: var(--section-gap-y);
+  padding-bottom: var(--section-gap-y);
+  padding-left: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
+  padding-right: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
   width: 100%;
   scroll-margin-top: calc(var(--header-height, 96px) + 12px);
 }
@@ -14,7 +14,7 @@
 .about__card {
   background: #f7f9fa;
   border: 1px solid #b0b3b8;
-  border-radius: 24px;
+  border-radius: var(--surface-card-radius, 24px);
   padding: 48px 64px;
   max-width: 1216px;
   margin: 0 auto;
@@ -46,12 +46,16 @@
   overflow: visible;
 }
 
-/* BLOCK 1 - with bottom spacing */
+/* BLOCK 1 - with bottom spacing when expanded content follows */
 .about-block1 {
   margin-bottom: 48px;
   display: flex;
   gap: 64px;
   align-items: center;
+}
+
+.about__card:not(:has(.about__expandable--visible)) .about-block1 {
+  margin-bottom: 0;
 }
 
 .about-block1__illustration {
@@ -88,6 +92,9 @@
 }
 
 .about-block1__text {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   font-family: var(--font-family-ui);
   font-size: var(--type-atkinson-text-md-size);
   font-weight: 400;
@@ -101,7 +108,7 @@
 }
 
 .about-block1__spacer {
-  line-height: var(--type-romie-display-s-lh);
+  display: none;
 }
 
 .about-block1__subtitle {
@@ -127,13 +134,14 @@
 
 .about-block1__more-link {
   display: inline-block;
+  align-self: flex-start;
   font-family: var(--font-family-ui);
   font-size: var(--type-atkinson-text-md-size);
   font-weight: 500;
   line-height: var(--type-atkinson-text-md-lh);
   color: #7150e5;
   text-decoration: none;
-  margin-top: 16px;
+  margin-top: 0;
   background: none;
   border: none;
   padding: 0;
@@ -152,13 +160,14 @@
 
 .about-block3__collapse-link {
   display: inline-block;
+  align-self: flex-start;
   font-family: var(--font-family-ui);
   font-size: var(--type-atkinson-text-md-size);
   font-weight: 500;
   line-height: var(--type-atkinson-text-md-lh);
   color: #7150e5;
   text-decoration: none;
-  margin-top: 16px;
+  margin-top: 0;
   background: none;
   border: none;
   padding: 0;
@@ -248,15 +257,16 @@
   position: relative;
   overflow: visible;
   margin-left: 60px; /* Push cards to the right */
+  --about-card-layout-scale: 1;
 }
 
 /* Color Card */
 .about-color-card {
   position: absolute;
-  top: calc(var(--card-top, 0) * 0.75);
-  left: calc(var(--card-left, 0) * 0.75);
-  width: 176px;
-  height: 308px;
+  top: calc(var(--card-top, 0) * 0.75 * var(--about-card-layout-scale, 1));
+  left: calc(var(--card-left, 0) * 0.75 * var(--about-card-layout-scale, 1));
+  width: calc(176px * var(--about-card-layout-scale, 1));
+  height: calc(308px * var(--about-card-layout-scale, 1));
   background: transparent;
   border: none;
   border-radius: 0;
@@ -265,6 +275,42 @@
   transform: rotate(var(--card-rotation, 0deg)) translateY(-225px);
   opacity: 0;
   overflow: visible;
+}
+
+/* SwatchCard in About — override playground absolute positioning */
+.about-color-card .gp-swatch {
+  position: relative;
+  top: auto;
+  left: auto;
+  width: 100%;
+  height: 100%;
+  --gp-scale: 0.75;
+  border-radius: 9px;
+  overflow: hidden;
+  pointer-events: auto;
+}
+
+.about-color-card .gp-swatch__face {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  padding: 15px;
+  box-sizing: border-box;
+  border-radius: 9px;
+}
+
+.about-color-card .gp-swatch__color {
+  height: 110px;
+}
+
+.about-color-card .gp-swatch__content {
+  padding-top: 16px;
+  padding-bottom: 12px;
+}
+
+.about-color-card .gp-swatch__back-scroll {
+  max-height: none;
 }
 
 .about-color-card--animate {
@@ -561,6 +607,9 @@
 }
 
 .about-block3__text-block {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
   width: 100%;
   max-width: 464px;
   font-family: var(--font-family-ui);
@@ -597,7 +646,7 @@
 }
 
 .about-block3__spacer {
-  line-height: var(--type-atkinson-text-md-size);
+  display: none;
 }
 
 .about-block3__signature {
@@ -607,8 +656,13 @@
 
 /* RESPONSIVE */
 @media (max-width: 1400px) {
-  .about { padding: 80px; }
-  .about__card { padding: 40px 48px; overflow: hidden; }
+  .about {
+    padding-top: var(--section-gap-y);
+    padding-bottom: var(--section-gap-y);
+    padding-left: var(--padding-x, 80px);
+    padding-right: var(--padding-x, 80px);
+  }
+  .about__card { padding: 40px 48px; overflow: visible; }
   .about-block1 { gap: 48px; }
   .about-block1__illustration { width: 450px; height: 450px; }
   .about-block2__quote { width: 100%; max-width: 931px; }
@@ -630,30 +684,63 @@
 
 @media (max-width: 900px) {
   .about {
-    padding: clamp(24px, 4vw, 48px);
+    padding-top: var(--section-gap-y);
+    padding-bottom: var(--section-gap-y);
+    padding-left: clamp(24px, 4vw, 48px);
+    padding-right: clamp(24px, 4vw, 48px);
   }
   .about__card {
     padding: 32px;
   }
 }
 
+@media (min-width: 700px) and (max-width: 1024px) {
+  .about {
+    padding-left: var(--padding-x);
+    padding-right: var(--padding-x);
+  }
+}
+
 @media (max-width: 768px) {
   .about__label { font-size: var(--type-atkinson-text-xl-size); margin-bottom: 24px; }
+  .about-block1 { gap: 24px; }
   .about-block1__illustration { width: 320px; height: 320px; }
-  .about-block1__title { font-size: var(--type-romie-display-m-size); line-height: var(--type-romie-display-m-lh); }
+  .about-block1__title {
+    font-size: var(--type-romie-display-m-size);
+    line-height: var(--type-romie-display-m-lh);
+    margin-bottom: 16px;
+  }
   .about-block1__text { font-size: var(--type-atkinson-text-sm-size); line-height: var(--type-atkinson-text-sm-lh); }
   .about-block2__quote p { font-size: var(--type-atkinson-text-xl-size); line-height: var(--type-romie-display-m-lh); }
-  .about-block3__cards { width: 340px; height: 460px; }
+  .about-block3__cards {
+    width: 340px;
+    height: 460px;
+    --about-card-layout-scale: 0.88;
+  }
   .about-block3__title { font-size: var(--type-atkinson-text-md-size); line-height: var(--type-atkinson-text-md-lh); }
   .about-block3__text-block { font-size: var(--type-atkinson-text-sm-size); line-height: var(--type-atkinson-text-sm-lh); }
 }
 
 @media (max-width: 480px) {
-  .about { padding: 16px; }
-  .about__card { padding: 20px 16px; border-radius: 16px; }
+  .about {
+    padding-top: var(--section-gap-y);
+    padding-bottom: var(--section-gap-y);
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+  .about__card { padding: 20px 16px; }
   .about-block1__illustration { width: 260px; height: 260px; }
-  .about-block1__title { font-size: var(--type-romie-display-s-size); line-height: var(--type-romie-display-s-lh); }
+  .about-block1 { gap: 20px; }
+  .about-block1__title {
+    font-size: var(--type-romie-display-s-size);
+    line-height: var(--type-romie-display-s-lh);
+    margin-bottom: 12px;
+  }
   .about-block2__quote p { font-size: var(--type-atkinson-text-md-size); line-height: var(--type-romie-display-m-lh); }
-  .about-block3__cards { width: 280px; height: 380px; }
+  .about-block3__cards {
+    width: 280px;
+    height: 380px;
+    --about-card-layout-scale: 0.72;
+  }
   .about-block3__signature { width: 200px; height: auto; }
 }

@@ -329,8 +329,6 @@ export const Contact: React.FC = () => {
           </form>
       </div>
 
-      {renderSubmitButton(cardIsSubmitting, cardSubmitStatus, formDomId, isActive)}
-
       {/* Divider */}
       <div className="contact__divider" aria-hidden="true" />
 
@@ -395,6 +393,8 @@ export const Contact: React.FC = () => {
             </div>
           </div>
         </div>
+
+        {renderSubmitButton(cardIsSubmitting, cardSubmitStatus, formDomId, isActive)}
 
         {cardSubmitStatus === 'error' && (
           <p className="contact__submit-error" role="alert">

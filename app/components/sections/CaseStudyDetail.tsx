@@ -21,6 +21,8 @@ import { CaseStudyCard, type CaseStudyCardStudy } from '../CaseStudyCard';
 import './CaseStudyDetail.css';
 import './case-study-detail-responsive.css';
 import { useCaseStudyListenHeroSync } from './useCaseStudyListenHeroSync';
+import { useCaseStudyScrollPinNav } from './useCaseStudyScrollPinNav';
+import { useCaseStudyActiveTabScroll } from './useCaseStudyActiveTabScroll';
 
 type NavSectionId =
   | 'overview'
@@ -221,6 +223,40 @@ const GCH_INSIGHTS = [
     body: 'Strong teamwork allows design to scale beyond concept',
   },
 ];
+
+function syncScrollHintContrast(
+  hint: HTMLDivElement,
+  img: HTMLImageElement,
+  sampleX: number,
+  sampleY: number,
+) {
+  let isDark = false;
+
+  if (img.complete && img.naturalWidth > 0) {
+    try {
+      const rect = img.getBoundingClientRect();
+      if (rect.width > 0 && rect.height > 0) {
+        const canvas = document.createElement('canvas');
+        canvas.width = 1;
+        canvas.height = 1;
+        const ctx = canvas.getContext('2d', { willReadFrequently: true });
+        if (ctx) {
+          const relX = (sampleX - rect.left) / rect.width;
+          const relY = (sampleY - rect.top) / rect.height;
+          const sx = Math.max(0, Math.min(img.naturalWidth - 2, relX * img.naturalWidth - 1));
+          const sy = Math.max(0, Math.min(img.naturalHeight - 2, relY * img.naturalHeight - 1));
+          ctx.drawImage(img, sx, sy, 2, 2, 0, 0, 1, 1);
+          const [r, g, b] = ctx.getImageData(0, 0, 1, 1).data;
+          isDark = (0.299 * r + 0.587 * g + 0.114 * b) / 255 < 0.5;
+        }
+      }
+    } catch {
+      /* Tainted canvas or unsupported — keep default contrast */
+    }
+  }
+
+  hint.classList.toggle('case-study-detail__scroll-hint--on-dark', isDark);
+}
 
 const MORE_PROJECTS: CaseStudyCardStudy[] = [
   {
@@ -715,11 +751,15 @@ export const CaseStudyDetail: React.FC = () => {
   const heroImageRef = useRef<HTMLImageElement>(null);
   const heroCardRef = useRef<HTMLElement>(null);
   const sidebarRef = useRef<HTMLElement>(null);
+  const navSentinelRef = useRef<HTMLDivElement>(null);
+  const scrollNavRef = useRef<HTMLDivElement>(null);
+  const tabsNavRef = useRef<HTMLElement>(null);
   const heroScrollRafRef = useRef(0);
   /** 0 = full-bleed cinema; 1 = hero seated in card — driven by wheel/touch only (page does not scroll). */
   const cinemaProgressRef = useRef(0);
   const cinemaBackdropRef = useRef<HTMLDivElement>(null);
   const scrollHintRef = useRef<HTMLDivElement>(null);
+  const CINEMA_MORPH_CLASS = 'case-study-detail__hero-image--cinema-morphing';
 
   /**
    * Hero “cinema”: full-width image first; wheel/trackpad/touch scrubs it into the card.
@@ -732,10 +772,11 @@ export const CaseStudyDetail: React.FC = () => {
     const img = heroImageRef.current;
     const reduce =
       typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    const preferSimpleHero =
+    const compactViewport =
       typeof window !== 'undefined' && window.matchMedia?.('(max-width: 1300px)').matches;
 
     const clearCinemaStyles = () => {
+      img?.classList.remove(CINEMA_MORPH_CLASS);
       [
         'position',
         'left',
@@ -758,9 +799,31 @@ export const CaseStudyDetail: React.FC = () => {
 
     if (!wrap || !img) return;
 
-    if (reduce || preferSimpleHero) {
-      if (preferSimpleHero) clearCinemaStyles();
+    if (compactViewport) {
+      const hint = scrollHintRef.current;
+      const bd = cinemaBackdropRef.current;
 
+      clearCinemaStyles();
+      document.documentElement.style.removeProperty('overflow');
+      document.body.style.removeProperty('overflow');
+
+      if (hint) {
+        hint.style.opacity = '0';
+        hint.style.visibility = 'hidden';
+      }
+      if (bd) {
+        bd.style.opacity = '0';
+        bd.style.visibility = 'hidden';
+      }
+
+      return () => {
+        clearCinemaStyles();
+        document.documentElement.style.removeProperty('overflow');
+        document.body.style.removeProperty('overflow');
+      };
+    }
+
+    if (reduce) {
       const hint = scrollHintRef.current;
       const syncSimpleScrollHint = () => {
         if (!wrap || !hint) return;
@@ -769,6 +832,7 @@ export const CaseStudyDetail: React.FC = () => {
         if (rect.width <= 0 || rect.height <= 0 || rect.bottom < 0 || rect.top > window.innerHeight) {
           hint.style.opacity = '0';
           hint.style.visibility = 'hidden';
+          hint.classList.remove('case-study-detail__scroll-hint--on-dark');
           return;
         }
 
@@ -777,6 +841,7 @@ export const CaseStudyDetail: React.FC = () => {
         hint.style.top = `${Math.round(rect.bottom - 20)}px`;
         hint.style.transform = 'translate(-50%, -100%)';
         hint.style.opacity = '1';
+        syncScrollHintContrast(hint, img, rect.left + rect.width / 2, rect.bottom - 20);
       };
 
       syncSimpleScrollHint();
@@ -819,6 +884,7 @@ export const CaseStudyDetail: React.FC = () => {
       if (!visible) {
         hint.style.opacity = '0';
         hint.style.visibility = 'hidden';
+        hint.classList.remove('case-study-detail__scroll-hint--on-dark');
         return;
       }
 
@@ -827,6 +893,9 @@ export const CaseStudyDetail: React.FC = () => {
       hint.style.top = `${Math.round(top + height - 20)}px`;
       hint.style.transform = 'translate(-50%, -100%)';
       hint.style.opacity = String(Math.max(0, 1 - progress * 2.5));
+      if (img) {
+        syncScrollHintContrast(hint, img, left + width / 2, top + height - 20);
+      }
     };
 
     /** ~1.0 progress per typical trackpad “page” of wheel delta */
@@ -855,6 +924,7 @@ export const CaseStudyDetail: React.FC = () => {
       brTop: number,
       brBottom = 0,
     ) => {
+      img.classList.add(CINEMA_MORPH_CLASS);
       img.style.position = 'fixed';
       img.style.left = `${Math.round(left)}px`;
       img.style.top = `${Math.round(top)}px`;
@@ -898,6 +968,7 @@ export const CaseStudyDetail: React.FC = () => {
         settleRaf = 0;
         clearCinemaStyles();
         unlockPageScroll();
+        window.dispatchEvent(new Event('resize'));
       });
     };
 
@@ -1019,44 +1090,9 @@ export const CaseStudyDetail: React.FC = () => {
     };
   }, [id]);
 
-  /** Strip cinema inline styles when entering tablet/mobile so CSS responsive rules apply. */
-  useLayoutEffect(() => {
-    const img = heroImageRef.current;
-    if (!img || typeof window === 'undefined') return;
-
-    const mq = window.matchMedia('(max-width: 1300px)');
-    const clearHeroInlineStyles = () => {
-      [
-        'position',
-        'left',
-        'top',
-        'right',
-        'bottom',
-        'width',
-        'height',
-        'z-index',
-        'object-fit',
-        'border-top-left-radius',
-        'border-top-right-radius',
-        'border-bottom-left-radius',
-        'border-bottom-right-radius',
-        'max-width',
-        'margin',
-        'transform',
-      ].forEach((p) => img.style.removeProperty(p));
-    };
-
-    if (mq.matches) clearHeroInlineStyles();
-
-    const onMqChange = () => {
-      if (mq.matches) clearHeroInlineStyles();
-    };
-
-    mq.addEventListener('change', onMqChange);
-    return () => mq.removeEventListener('change', onMqChange);
-  }, [id]);
-
   useCaseStudyListenHeroSync(heroCardRef, sidebarRef, [id, overview.title, overview.body]);
+  const navPinned = useCaseStudyScrollPinNav(navSentinelRef, scrollNavRef, sidebarRef);
+  useCaseStudyActiveTabScroll(tabsNavRef, activeSection);
 
   useEffect(() => {
     return () => {
@@ -1182,6 +1218,7 @@ export const CaseStudyDetail: React.FC = () => {
     <section
       className={[
         'case-study-detail',
+        navPinned && 'case-study-detail--nav-pinned',
         isPalmy && 'case-study-detail--palmy',
         isSummer && 'case-study-detail--summer',
         isGreenCross && 'case-study-detail--gch',
@@ -1199,48 +1236,54 @@ export const CaseStudyDetail: React.FC = () => {
       </div>
       <div className="case-study-detail__inner">
         <div className="case-study-detail__layout">
-          <div className="case-study-detail__toolbar">
-            <div className="case-study-detail__back-wrap">
-              <button
-                type="button"
-                className="case-study-detail__back"
-                onClick={() => navigate(-1)}
-                aria-label="Back to case studies"
-              >
-                <ArrowLeft size={24} weight="regular" color="currentColor" aria-hidden="true" />
-                <span>Back</span>
-              </button>
-            </div>
-            <button
-              ref={overviewToolbarBtnRef}
-              type="button"
-              className="case-study-detail__toolbar-overview"
-              onClick={() => setOverviewSummaryOpen(true)}
-              aria-label="Open overview details"
-              aria-expanded={overviewSummaryOpen}
-              aria-haspopup="dialog"
-            >
-              <span>Overview</span>
-              <ClipboardText size={24} weight="regular" color="currentColor" aria-hidden="true" />
-            </button>
-          </div>
-
-          <div className="case-study-detail__layout-body">
-          <aside ref={sidebarRef} className="case-study-detail__sidebar" aria-label="Case study sections">
-            <div className="case-study-detail__sidebar-top">
-              <div className="case-study-detail__back-wrap case-study-detail__back-wrap--sidebar">
+          <div
+            ref={sidebarRef}
+            className="case-study-detail__scroll-nav-anchor"
+            aria-label="Case study sections"
+          >
+            <div ref={navSentinelRef} className="case-study-detail__nav-sentinel" aria-hidden="true" />
+            <div ref={scrollNavRef} className="case-study-detail__scroll-nav">
+              <div className="case-study-detail__toolbar">
+                <div className="case-study-detail__back-wrap">
+                  <button
+                    type="button"
+                    className="case-study-detail__back"
+                    onClick={() => navigate(-1)}
+                    aria-label="Back to case studies"
+                  >
+                    <ArrowLeft size={24} weight="regular" color="currentColor" aria-hidden="true" />
+                    <span>Back</span>
+                  </button>
+                </div>
                 <button
+                  ref={overviewToolbarBtnRef}
                   type="button"
-                  className="case-study-detail__back"
-                  onClick={() => navigate(-1)}
-                  aria-label="Back to case studies"
+                  className="case-study-detail__toolbar-overview"
+                  onClick={() => setOverviewSummaryOpen(true)}
+                  aria-label="Open overview details"
+                  aria-expanded={overviewSummaryOpen}
+                  aria-haspopup="dialog"
                 >
-                  <ArrowLeft size={24} weight="regular" color="currentColor" aria-hidden="true" />
-                  <span>Back</span>
+                  <span>Overview</span>
+                  <ClipboardText size={24} weight="regular" color="currentColor" aria-hidden="true" />
                 </button>
               </div>
 
-              <nav className="case-study-detail__tabs" aria-label="Jump to section">
+              <div className="case-study-detail__sidebar-top">
+                <div className="case-study-detail__back-wrap case-study-detail__back-wrap--sidebar">
+                  <button
+                    type="button"
+                    className="case-study-detail__back"
+                    onClick={() => navigate(-1)}
+                    aria-label="Back to case studies"
+                  >
+                    <ArrowLeft size={24} weight="regular" color="currentColor" aria-hidden="true" />
+                    <span>Back</span>
+                  </button>
+                </div>
+              </div>
+
+              <nav ref={tabsNavRef} className="case-study-detail__tabs" aria-label="Jump to section">
                 {NAV_ITEMS.map((section) => {
                   const isActive = activeSection === section.id;
                   const SectionIcon = SECTION_ICON_COMPONENTS[section.id];
@@ -1274,8 +1317,9 @@ export const CaseStudyDetail: React.FC = () => {
               </span>
               <span className="case-study-detail__listen-label">Listen</span>
             </button>
-          </aside>
+          </div>
 
+          <div className="case-study-detail__layout-body">
           <div className="case-study-detail__content">
             <section
               id="overview"
@@ -3365,7 +3409,7 @@ export const CaseStudyDetail: React.FC = () => {
         </div>
         <section className="case-study-detail__more-projects" aria-label="Explore more projects">
           <div className="case-study-detail__more-projects-rule" aria-hidden="true" />
-          <h2>Explore More Projects</h2>
+          <h2>Explore more projects</h2>
           <div className="case-study-detail__more-projects-list">
             {moreProjects.map((study) => (
               <CaseStudyCard key={study.subtitle} study={study} />

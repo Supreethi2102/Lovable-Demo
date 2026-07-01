@@ -17,6 +17,8 @@ import { SiteFooter } from './SiteFooter';
 import { CaseStudyCard, type CaseStudyCardStudy } from '../CaseStudyCard';
 import './CaseStudyDetail.css';
 import { useCaseStudyListenHeroSync } from './useCaseStudyListenHeroSync';
+import { useCaseStudyScrollPinNav } from './useCaseStudyScrollPinNav';
+import { useCaseStudyActiveTabScroll } from './useCaseStudyActiveTabScroll';
 import './case-study-detail-responsive.css';
 
 type NavSectionId =
@@ -138,6 +140,9 @@ export const CaseStudyDetailGch: React.FC = () => {
   const sectionsRef = useRef<Record<string, HTMLElement | null>>({});
   const heroCardRef = useRef<HTMLElement>(null);
   const sidebarRef = useRef<HTMLElement>(null);
+  const navSentinelRef = useRef<HTMLDivElement>(null);
+  const scrollNavRef = useRef<HTMLDivElement>(null);
+  const tabsNavRef = useRef<HTMLElement>(null);
   const suppressSectionSpyRef = useRef(false);
   const suppressSectionSpyTimerRef = useRef(0);
 
@@ -199,26 +204,52 @@ export const CaseStudyDetailGch: React.FC = () => {
   }, []);
 
   useCaseStudyListenHeroSync(heroCardRef, sidebarRef, [id]);
+  const navPinned = useCaseStudyScrollPinNav(navSentinelRef, scrollNavRef, sidebarRef);
+  useCaseStudyActiveTabScroll(tabsNavRef, activeSection);
 
   return (
-    <section className="case-study-detail" aria-labelledby="case-study-detail-title">
+    <section
+      className={['case-study-detail', navPinned && 'case-study-detail--nav-pinned'].filter(Boolean).join(' ')}
+      aria-labelledby="case-study-detail-title"
+    >
       <div className="case-study-detail__inner">
         <div className="case-study-detail__layout">
-          <aside ref={sidebarRef} className="case-study-detail__sidebar" aria-label="Case study sections">
-            <div className="case-study-detail__sidebar-top">
-              <div className="case-study-detail__back-wrap">
-                <button
-                  type="button"
-                  className="case-study-detail__back"
-                  onClick={() => navigate(-1)}
-                  aria-label="Back to case studies"
-                >
-                  <ArrowLeft size={24} weight="regular" color="#3C3F43" aria-hidden="true" />
-                  <span>Back</span>
-                </button>
+          <div
+            ref={sidebarRef}
+            className="case-study-detail__scroll-nav-anchor"
+            aria-label="Case study sections"
+          >
+            <div ref={navSentinelRef} className="case-study-detail__nav-sentinel" aria-hidden="true" />
+            <div ref={scrollNavRef} className="case-study-detail__scroll-nav">
+              <div className="case-study-detail__toolbar case-study-detail__toolbar--back-only">
+                <div className="case-study-detail__back-wrap">
+                  <button
+                    type="button"
+                    className="case-study-detail__back"
+                    onClick={() => navigate(-1)}
+                    aria-label="Back to case studies"
+                  >
+                    <ArrowLeft size={24} weight="regular" color="#3C3F43" aria-hidden="true" />
+                    <span>Back</span>
+                  </button>
+                </div>
               </div>
 
-              <nav className="case-study-detail__tabs" aria-label="Jump to section">
+              <div className="case-study-detail__sidebar-top">
+                <div className="case-study-detail__back-wrap">
+                  <button
+                    type="button"
+                    className="case-study-detail__back"
+                    onClick={() => navigate(-1)}
+                    aria-label="Back to case studies"
+                  >
+                    <ArrowLeft size={24} weight="regular" color="#3C3F43" aria-hidden="true" />
+                    <span>Back</span>
+                  </button>
+                </div>
+              </div>
+
+              <nav ref={tabsNavRef} className="case-study-detail__tabs" aria-label="Jump to section">
                 {NAV_ITEMS.map((section) => {
                   const isActive = activeSection === section.id;
                   const SectionIcon = SECTION_ICON_COMPONENTS[section.id];
@@ -254,7 +285,7 @@ export const CaseStudyDetailGch: React.FC = () => {
               </span>
               <span className="case-study-detail__listen-label">Listen</span>
             </button>
-          </aside>
+          </div>
 
           <div className="case-study-detail__content">
             <section
@@ -690,7 +721,7 @@ export const CaseStudyDetailGch: React.FC = () => {
         </div>
         <section className="case-study-detail__more-projects" aria-label="Explore more projects">
           <div className="case-study-detail__more-projects-rule" aria-hidden="true" />
-          <h2>Explore More Projects</h2>
+          <h2>Explore more projects</h2>
           <div className="case-study-detail__more-projects-list">
             {MORE_PROJECTS.map((study) => (
               <CaseStudyCard key={study.subtitle} study={study} />

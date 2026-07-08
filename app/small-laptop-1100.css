@@ -242,7 +242,7 @@
     justify-content: flex-start;
     gap: clamp(8px, 1vw, 12px);
     padding: clamp(28px, 4vw, 48px) clamp(16px, 2.5vw, 28px);
-    min-height: 0;
+    min-height: 100%;
     min-width: 0;
     width: auto;
     max-width: none;
@@ -255,7 +255,9 @@
     min-width: clamp(136px, 14vw, 152px);
     max-width: clamp(136px, 14vw, 152px);
     padding-right: 12px;
-    gap: clamp(32px, 6vh, 56px);
+    gap: 0;
+    justify-content: space-between;
+    align-self: stretch;
     --case-card-tab-rail: 12px;
   }
 
@@ -291,20 +293,23 @@
 
   .case-study-card__main {
     flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
     max-width: none;
     width: auto;
     padding-left: clamp(8px, 1vw, 12px);
     padding-right: clamp(16px, 2vw, 24px);
-    padding-top: clamp(8px, 1.5vh, 16px);
-    padding-bottom: clamp(20px, 2.5vh, 28px);
-    justify-content: flex-start;
+    padding-top: 0;
+    padding-bottom: 0;
     align-self: stretch;
+    min-height: 100%;
     box-sizing: border-box;
   }
 
   .case-study-card__copy {
     flex: 1 1 auto;
-    margin-bottom: clamp(40px, 5vh, 56px);
+    min-height: 0;
+    margin-bottom: 0;
   }
 
   .case-study-card__title {
@@ -363,6 +368,23 @@
   /* ── Destinations — gap above heading matches contact bottom padding ── */
   .destinations {
     padding-bottom: calc(var(--section-gap-y) + var(--section-transition-h));
+  }
+
+  /* More space between inner + tall columns (~1194×834) */
+  .destinations__grid {
+    gap: 40px;
+  }
+
+  .destinations__row:not(.destinations__row--inner) {
+    gap: 40px;
+  }
+
+  .destinations__row--inner {
+    gap: 40px;
+  }
+
+  .destinations__small-grid {
+    gap: 40px;
   }
 
   .destinations__cta {

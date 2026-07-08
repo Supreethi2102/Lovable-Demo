@@ -254,9 +254,18 @@
     width: clamp(136px, 14vw, 152px);
     min-width: clamp(136px, 14vw, 152px);
     max-width: clamp(136px, 14vw, 152px);
+    display: flex;
+    flex-direction: column;
+    align-self: stretch;
+    justify-content: flex-start;
     padding-right: 12px;
-    gap: clamp(32px, 6vh, 56px);
+    gap: 0;
     --case-card-tab-rail: 12px;
+  }
+
+  .case-study-card__tabs,
+  .case-study-card__back-tabs {
+    margin-top: auto;
   }
 
   .flip-button {
@@ -291,19 +300,23 @@
 
   .case-study-card__main {
     flex: 1 1 0;
+    display: flex;
+    flex-direction: column;
     max-width: none;
     width: auto;
+    min-height: 0;
     padding-left: clamp(8px, 1vw, 12px);
     padding-right: clamp(16px, 2vw, 24px);
     padding-top: clamp(8px, 1.5vh, 16px);
-    padding-bottom: clamp(20px, 2.5vh, 28px);
+    padding-bottom: 0;
     justify-content: flex-start;
     align-self: stretch;
   }
 
   .case-study-card__copy {
-    flex: 1 1 auto;
-    margin-bottom: clamp(40px, 5vh, 56px);
+    flex: 0 1 auto;
+    min-height: 0;
+    margin-bottom: 0;
   }
 
   .case-study-card__title {

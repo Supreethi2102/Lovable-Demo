@@ -36,6 +36,7 @@
   --padding-x: 112px;           /* Desktop horizontal padding (28×4) */
   --padding-y: 56px;            /* Desktop vertical padding */
   --section-gap-y: calc(var(--padding-y) + 28px); /* Section top/bottom + between-section rhythm */
+  --about-stack-gap-y: calc(var(--section-gap-y) / 2); /* Tighter rhythm between About / Testimonials / Contact */
   --cta-gap-y: calc(var(--padding-y) + 28px);     /* Space above/below section CTAs */
   --section-transition-h: 94px;    /* Destinations bottom color transition strip */
   --surface-card-radius: 24px;   /* About / Testimonials / Contact card corners */

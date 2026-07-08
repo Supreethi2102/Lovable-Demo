@@ -2,8 +2,8 @@
 
 .testimonials {
   background: #eceef2; /* Figma outer background */
-  padding-top: var(--section-gap-y);
-  padding-bottom: var(--section-gap-y);
+  padding-top: var(--about-stack-gap-y);
+  padding-bottom: var(--about-stack-gap-y);
   /* Dynamic padding for centering on large screens */
   padding-left: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
   padding-right: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
@@ -253,8 +253,8 @@
 /* Responsive - Large Desktop */
 @media (max-width: 1400px) {
   .testimonials {
-    padding-top: var(--section-gap-y);
-    padding-bottom: var(--section-gap-y);
+    padding-top: var(--about-stack-gap-y);
+    padding-bottom: var(--about-stack-gap-y);
     padding-left: max(var(--padding-x, 80px), calc((100vw - var(--content-max-width, 1220px)) / 2));
     padding-right: max(var(--padding-x, 80px), calc((100vw - var(--content-max-width, 1220px)) / 2));
   }

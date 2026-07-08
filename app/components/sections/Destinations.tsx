@@ -792,7 +792,10 @@ export const Destinations: React.FC = () => {
       {/* CTA Section */}
       <footer className="destinations__cta" role="contentinfo">
         <p className="destinations__cta-text">
-          Been to any of these places? Spotted great design?
+          Been to any of these places?
+          <br className="destinations__cta-text-break" aria-hidden="true" />
+          {' '}
+          Spotted great design?
           <br />
           Let me know, I'd love to hear about it
         </p>

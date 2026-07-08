@@ -93,13 +93,23 @@
 
 /* Category Filter - From Figma (desktop: row fills content width, equal columns) */
 .case-studies__filter-wrap {
+  /* Active pill shadow blur is 25px — bleed extends left without shifting pills */
   --case-studies-filter-shadow-inset: 28px;
+  --case-studies-filter-edge-pad: 12px;
+  --case-studies-filter-shadow-bleed: calc(
+    var(--case-studies-filter-shadow-inset) - var(--case-studies-filter-edge-pad)
+  );
   margin-bottom: 24px;
-  width: 100%;
+  margin-left: calc(-1 * var(--case-studies-filter-shadow-bleed));
+  width: calc(100% + var(--case-studies-filter-shadow-bleed));
   min-width: 0;
   box-sizing: border-box;
   padding-top: var(--case-studies-filter-shadow-inset);
   padding-bottom: var(--case-studies-filter-shadow-inset);
+  padding-left: var(--case-studies-filter-shadow-inset);
+  padding-right: 0;
+  scroll-padding-left: var(--case-studies-filter-shadow-inset);
+  scroll-padding-right: var(--case-studies-filter-edge-pad);
   scrollbar-width: thin;
   scrollbar-color: rgba(60, 63, 67, 0.35) transparent;
 }
@@ -123,8 +133,7 @@
   width: 100%;
   min-width: 0;
   box-sizing: border-box;
-  /* Room for active-pill box-shadow on first/last columns */
-  padding: 4px 12px;
+  padding: 4px var(--case-studies-filter-edge-pad, 12px) 4px 0;
   margin-left: 0;
   margin-right: 0;
   margin-bottom: 0;
@@ -330,10 +339,18 @@
   width: 136px;
 }
 
-.flip-button__icon {
-  display: flex;
+.flip-button:not(.flip-button--footer) {
+  color: var(--btn-primary, #7150e5);
   align-items: center;
   justify-content: center;
+}
+
+.flip-button__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 0;
   width: 48px;
   height: 48px;
   background: var(--btn-secondary-surface-bg);
@@ -345,7 +362,17 @@
 .flip-button__icon img {
   width: 24px;
   height: 24px;
+  display: block;
+  flex-shrink: 0;
   filter: brightness(0) saturate(100%) invert(36%) sepia(68%) saturate(1352%) hue-rotate(229deg) brightness(88%) contrast(96%);
+}
+
+.flip-button:not(.flip-button--footer) .flip-button__icon svg {
+  display: block;
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  color: var(--btn-primary, #7150e5);
 }
 
 .flip-button__text {
@@ -355,6 +382,14 @@
   color: var(--btn-primary);
   text-align: center;
   transition: color 0.2s ease;
+  margin: 0;
+  padding: 0;
+}
+
+.flip-button:not(.flip-button--footer) .flip-button__text {
+  display: block;
+  width: 100%;
+  align-self: center;
 }
 
 .flip-button:not(.flip-button--footer):hover .flip-button__icon {
@@ -371,6 +406,7 @@
 /* Second flip control — only shown on mobile (full-width outline under CTA) */
 .flip-button--footer {
   display: none;
+  color: var(--btn-primary, #7150e5);
 }
 
 /* Tabs */
@@ -729,8 +765,8 @@
   }
 }
 
-/* Stacked card (image on top): up to large tablets / small laptops in landscape — not only ≤1200 */
-@media (max-width: 1366px) {
+/* Stacked card (image on top): tablets — excludes ~920px desktop-style row band */
+@media (max-width: 879px), (min-width: 961px) and (max-width: 1366px) {
   .case-study-card__front,
   .case-study-card__back {
     flex-direction: column;
@@ -859,14 +895,18 @@
     padding-top: 4px;
   }
 
-  /* Tablet filter strip: horizontal scroll; vertical inset prevents active shadow clip */
+  /* Tablet filter strip: extend left for shadow; pills keep original horizontal position */
   .case-studies__filter-wrap {
-    margin-left: 0;
+    --case-studies-filter-edge-pad: 16px;
+    margin-left: calc(-1 * var(--case-studies-filter-shadow-bleed));
     margin-right: 0;
-    padding-left: 0;
-    padding-right: 0;
+    width: calc(100% + var(--case-studies-filter-shadow-bleed));
     padding-top: var(--case-studies-filter-shadow-inset, 28px);
     padding-bottom: var(--case-studies-filter-shadow-inset, 28px);
+    padding-left: var(--case-studies-filter-shadow-inset, 28px);
+    padding-right: 0;
+    scroll-padding-left: var(--case-studies-filter-shadow-inset, 28px);
+    scroll-padding-right: var(--case-studies-filter-edge-pad);
     margin-top: 0;
     margin-bottom: 16px;
     overflow-x: auto;
@@ -884,7 +924,7 @@
     min-width: 100%;
     margin-left: 0;
     margin-right: 0;
-    padding: 4px 16px;
+    padding: 4px var(--case-studies-filter-edge-pad) 4px 0;
     box-sizing: border-box;
   }
 
@@ -906,7 +946,8 @@
  * Covers portrait tablets, iPad landscape, and many “other tablet” widths past 1200px.
  * Phones: ≤767px. Image height: 48% from ≤1366; 28% on phones via ≤767 override.
  */
-@media (min-width: 768px) and (max-width: 1366px) {
+@media (min-width: 768px) and (max-width: 879px),
+  (min-width: 961px) and (max-width: 1366px) {
   .case-study-card__front,
   .case-study-card__back {
     align-items: stretch;
@@ -1027,15 +1068,17 @@
   }
 }
 
-/* Narrow tablets / mini portrait — tighter rail + padding so the row doesn’t crowd */
-@media (min-width: 701px) and (max-width: 1200px) {
+/* Narrow tablets — section gutter on stacked cards only (not ~920 horizontal row) */
+@media (min-width: 701px) and (max-width: 879px),
+  (min-width: 961px) and (max-width: 1200px) {
   .case-study-card__content {
     padding-left: var(--padding-x, clamp(52px, 5vw + 28px, 80px));
     padding-right: var(--padding-x, clamp(52px, 5vw + 28px, 80px));
   }
 }
 
-@media (min-width: 768px) and (max-width: 1024px) {
+@media (min-width: 768px) and (max-width: 879px),
+  (min-width: 961px) and (max-width: 1024px) {
   .case-study-card__content {
     padding: clamp(28px, 4vw, 36px) clamp(24px, 4vw, 36px);
     gap: clamp(20px, 3vw, 28px);
@@ -1085,209 +1128,194 @@
 }
 
 /*
- * ~920px viewport — horizontal case study card with tuned copy column.
- * Other breakpoints keep the layout rules above.
+ * ~920px — desktop row; fixed card height + bottom-pinned CTA (same as other breakpoints).
  */
 @media (min-width: 880px) and (max-width: 960px) {
-  .case-study-card-flip {
-    min-height: clamp(520px, 54vh, 600px);
-    height: auto;
-  }
-
+  .case-study-card-flip,
   .case-study-card-flip > .case-study-card,
   .case-study-card {
-    min-height: clamp(520px, 54vh, 600px);
-    height: auto;
+    height: 420px;
+    min-height: 420px;
+    max-height: 420px;
   }
 
   .case-study-card__face {
-    min-height: 0;
+    align-items: stretch;
   }
 
-  .case-study-card__face.case-study-card__front,
-  .case-study-card--flipped .case-study-card__face.case-study-card__back {
-    overflow: hidden;
-  }
-
-  .case-study-card__face.case-study-card__front {
-    position: relative;
-    inset: auto;
-    width: 100%;
-    height: auto;
-    min-height: clamp(520px, 54vh, 600px);
-  }
-
-  .case-study-card__face.case-study-card__back {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    min-height: 100%;
-    overflow: hidden;
-  }
-
-  .case-study-card--flipped .case-study-card__face.case-study-card__front {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    width: 100%;
-    height: 100%;
-    min-height: 100%;
-    overflow: hidden;
-    pointer-events: none;
-  }
-
-  .case-study-card--flipped .case-study-card__face.case-study-card__back {
-    position: relative;
-    inset: auto;
-    width: 100%;
-    height: auto;
-    min-height: clamp(520px, 54vh, 600px);
-  }
-
-  /* Override ≤1366 stacked face — full desktop-style row */
   .case-study-card__front,
   .case-study-card__back {
     flex-direction: row;
     align-items: stretch;
   }
 
-  .case-study-card__front .case-study-card__image,
-  .case-study-card__back .case-study-card__image {
-    order: 0;
-    width: auto;
-    max-width: none;
-    flex: 0 0 clamp(38%, 42%, 44%);
-    aspect-ratio: auto;
-    min-height: 0;
-    align-self: stretch;
-    border-radius: 0 16px 16px 0;
-    overflow: hidden;
-  }
-
-  .case-study-card__front .case-study-card__content,
-  .case-study-card__back .case-study-card__content {
-    flex: 1 1 0;
-    flex-grow: 1;
-  }
-
   .case-study-card__content {
-    flex: 1 1 0;
+    flex: 0 0 55%;
     flex-direction: row;
     align-items: stretch;
-    justify-content: flex-start;
-    gap: clamp(8px, 1vw, 12px);
-    padding: clamp(28px, 4vw, 48px) clamp(16px, 2.5vw, 28px);
-    min-height: 0;
+    gap: 0;
+    padding: 28px 16px 28px 24px;
     min-width: 0;
-    width: auto;
-    max-width: none;
-    overflow: visible;
+    min-height: 0;
+    height: 100%;
     box-sizing: border-box;
   }
 
+  .case-study-card__image {
+    flex: 0 0 45%;
+    align-self: stretch;
+    height: 100%;
+    min-height: 100%;
+    width: auto;
+    max-width: none;
+    display: block;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .case-study-card__image-viewport,
+  .case-study-card__image-layer,
+  .case-study-card__image-media {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+  }
+
   .case-study-card__sidebar {
-    width: clamp(136px, 14vw, 152px);
-    min-width: clamp(136px, 14vw, 152px);
-    max-width: clamp(136px, 14vw, 152px);
-    padding-right: 12px;
-    gap: clamp(32px, 6vh, 56px);
-    --case-card-tab-rail: 12px;
+    width: 124px;
+    min-width: 124px;
+    max-width: 124px;
+    padding-right: 16px;
+    gap: 0;
+    justify-content: space-between;
+    align-self: stretch;
+    border-right: 1px solid #b0b3b8;
+    box-sizing: border-box;
+    --case-card-tab-rail: 16px;
+  }
+
+  .case-study-card__sidebar .case-study-card__tabs .tab,
+  .case-study-card__sidebar .case-study-card__back-tabs .case-study-card__back-item.tab {
+    padding-left: 6px;
+    gap: 6px;
+  }
+
+  .tab--active::after,
+  .case-study-card__back-item.tab--active::after,
+  .tab:not(.tab--active):hover::after,
+  .case-study-card__back-item.tab:not(.tab--active):hover::after {
+    right: calc(-1 * var(--case-card-tab-rail));
+    top: 50%;
+    bottom: auto;
+    left: auto;
+    transform: translateY(-50%);
+    width: var(--case-card-tab-indicator, 4px);
+    height: 32px;
   }
 
   .flip-button {
-    max-width: 100%;
+    width: 100%;
+    max-width: 96px;
+  }
+
+  .flip-button__icon {
+    width: 40px;
+    height: 40px;
+  }
+
+  .flip-button:not(.flip-button--footer) .flip-button__icon svg {
+    width: 20px;
+    height: 20px;
   }
 
   .flip-button__text,
   .case-study-card__tabs .tab,
   .case-study-card__back-tabs .case-study-card__back-item {
-    font-size: clamp(var(--type-atkinson-text-xs-size), 0.85vw + 0.4rem, var(--type-atkinson-text-sm-size));
-    line-height: 1.25;
+    font-size: var(--type-atkinson-text-xs-size);
+    line-height: 1.2;
+  }
+
+  .case-study-card__tabs,
+  .case-study-card__back-tabs {
+    gap: 8px;
   }
 
   .case-study-card__tabs .tab,
   .case-study-card__back-tabs .case-study-card__back-item {
     height: auto;
-    min-height: clamp(40px, 5vh, 48px);
-    align-items: center;
-  }
-
-  .case-study-card__tabs .tab > span,
-  .case-study-card__back-tabs .case-study-card__back-item > span {
-    text-align: left;
-    overflow-wrap: anywhere;
+    min-height: 32px;
   }
 
   .case-study-card__tabs .tab svg,
   .case-study-card__back-tabs .case-study-card__back-item svg {
-    width: clamp(20px, 2.2vw, 24px);
-    height: clamp(20px, 2.2vw, 24px);
+    width: 18px;
+    height: 18px;
   }
 
   .case-study-card__main {
     flex: 1 1 0;
-    max-width: none;
-    width: auto;
-    padding-left: clamp(8px, 1vw, 12px);
-    padding-right: clamp(16px, 2vw, 24px);
-    padding-top: clamp(8px, 1.5vh, 16px);
-    padding-bottom: clamp(20px, 2.5vh, 28px);
-    justify-content: flex-start;
+    display: flex;
+    flex-direction: column;
     align-self: stretch;
+    justify-content: flex-start;
+    gap: 14px;
+    max-width: none;
+    min-width: 0;
+    min-height: 0;
+    height: 100%;
+    padding: 8px 16px 0;
     box-sizing: border-box;
   }
 
   .case-study-card__copy {
     flex: 1 1 auto;
-    margin-bottom: clamp(40px, 5vh, 56px);
-  }
-
-  .case-study-card__title {
-    font-family: var(--font-family-ui);
-    font-size: clamp(1.125rem, 1.4vw + 0.55rem, var(--type-atkinson-text-xl-size));
-    font-weight: 600;
-    line-height: var(--type-atkinson-text-xl-lh);
-    letter-spacing: 0.02em;
-    margin-bottom: clamp(8px, 1.2vw, 12px);
+    min-height: 0;
+    margin-bottom: 0;
+    overflow: hidden;
   }
 
   .case-study-card__subtitle {
-    font-size: clamp(var(--type-atkinson-text-sm-size), 0.9vw + 0.5rem, var(--type-atkinson-text-md-size));
-    line-height: var(--type-atkinson-text-md-lh);
-    margin-bottom: clamp(10px, 1.5vw, 16px);
+    margin-bottom: 8px;
+    font-size: var(--type-atkinson-text-sm-size);
+    line-height: var(--type-atkinson-text-sm-lh);
+  }
+
+  .case-study-card__title {
+    margin-bottom: 8px;
+    font-size: 1.125rem;
+    line-height: 1.3;
   }
 
   .case-study-card__description {
-    font-size: clamp(var(--type-atkinson-text-sm-size), 0.75vw + 0.55rem, var(--type-atkinson-text-md-size));
+    font-size: var(--type-atkinson-text-sm-size);
     line-height: 1.45;
     margin-bottom: 0;
   }
 
   .view-design-btn {
-    flex-shrink: 0;
     margin-top: auto;
+    margin-bottom: 0;
+    width: 168px;
+    flex-shrink: 0;
     align-self: flex-start;
-    width: clamp(160px, 18vw, 186px);
-    max-width: 100%;
+    padding-top: 4px;
   }
 
   .case-study-card__duration {
+    right: 12px;
     left: auto;
-    right: clamp(12px, 2vw, 24px);
-    top: 0;
-    justify-content: center;
-    text-align: center;
-    font-size: clamp(var(--type-atkinson-text-xs-size), 1vw + 0.35rem, var(--type-atkinson-text-sm-size));
-    width: auto;
-    min-width: clamp(120px, 14vw, 167px);
-    height: clamp(40px, 5vh, 48px);
-    padding: 0 clamp(10px, 1.5vw, 16px);
+    font-size: var(--type-atkinson-text-xs-size);
+    min-width: 120px;
+    height: 36px;
+    padding: 0 10px;
+  }
+
+  .listen-button {
+    bottom: 12px;
+    right: 12px;
+    width: 68px;
+    padding: 8px 10px 0;
   }
 }
 
@@ -1325,14 +1353,18 @@
     top: 80px;
   }
 
-  /* Filter strip — same shadow inset + scroll behaviour as tablet */
+  /* Filter strip — same left bleed + scroll behaviour as tablet */
   .case-studies__filter-wrap {
-    margin-left: 0;
+    --case-studies-filter-edge-pad: 12px;
+    margin-left: calc(-1 * var(--case-studies-filter-shadow-bleed));
     margin-right: 0;
-    padding-left: 0;
-    padding-right: 0;
+    width: calc(100% + var(--case-studies-filter-shadow-bleed));
     padding-top: var(--case-studies-filter-shadow-inset, 28px);
     padding-bottom: var(--case-studies-filter-shadow-inset, 28px);
+    padding-left: var(--case-studies-filter-shadow-inset, 28px);
+    padding-right: 0;
+    scroll-padding-left: var(--case-studies-filter-shadow-inset, 28px);
+    scroll-padding-right: var(--case-studies-filter-edge-pad);
     margin-top: 0;
     margin-bottom: 12px;
     overflow-x: auto;
@@ -1343,7 +1375,7 @@
 
   .case-studies__filter {
     gap: 10px;
-    padding: 4px 12px;
+    padding: 4px var(--case-studies-filter-edge-pad) 4px 0;
   }
 
   /* Slightly smaller category cards than tablet horizontal-scroll row (1024px rule) */
@@ -1565,23 +1597,38 @@
   }
 
   .flip-button--footer .flip-button__icon {
-    width: auto;
-    height: auto;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 24px;
+    height: 24px;
+    min-width: 24px;
+    min-height: 24px;
     padding: 0;
     border: none;
     background: transparent;
+    line-height: 0;
   }
 
   .flip-button--footer .flip-button__icon svg {
+    display: block;
+    flex-shrink: 0;
+    width: 24px;
+    height: 24px;
     color: currentColor;
     filter: none;
   }
 
   .flip-button--footer .flip-button__text {
+    display: inline-flex;
+    align-items: center;
     color: currentColor;
     font-size: var(--type-atkinson-text-md-size);
-    line-height: var(--type-atkinson-text-md-lh);
+    line-height: 1.25;
     font-weight: 400;
+    text-align: left;
+    margin: 0;
+    padding: 0;
   }
 
   .flip-button--footer:hover {
@@ -1728,7 +1775,7 @@
 
   .case-studies__filter {
     gap: 12px;
-    padding: 4px 12px;
+    padding: 4px var(--case-studies-filter-edge-pad, 12px) 4px 0;
   }
 
   /* Card height comes from content (see ≤767); no extra min-height here */
@@ -1774,12 +1821,13 @@
   }
 
   .case-studies__filter-wrap {
+    --case-studies-filter-edge-pad: 8px;
     margin-bottom: 8px;
   }
 
   .case-studies__filter {
     gap: 18px;
-    padding: 4px 8px;
+    padding: 4px var(--case-studies-filter-edge-pad) 4px 0;
   }
 
   .case-studies__filter .category-pill {

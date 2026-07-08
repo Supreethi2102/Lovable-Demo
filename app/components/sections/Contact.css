@@ -2,7 +2,7 @@
 
 .contact-wrapper {
   background: #eceef2; /* Figma outer background */
-  padding-top: var(--section-gap-y);
+  padding-top: var(--about-stack-gap-y);
   padding-bottom: var(--section-gap-y);
   /* Dynamic padding: grows on screens larger than 1440px */
   padding-left: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));

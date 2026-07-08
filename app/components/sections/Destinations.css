@@ -592,6 +592,10 @@
   max-width: 968px; /* Figma width */
 }
 
+.destinations__cta-text-break {
+  display: none;
+}
+
 /* Share inspiration – uses .btn .btn--secondary from ButtonStyles.css */
 .destinations__share-btn {
   width: 198px;
@@ -1309,5 +1313,12 @@
   .destinations__share-btn {
     width: 100%;
     max-width: 180px;
+  }
+}
+
+/* ~390px phones — break before “Spotted” */
+@media (max-width: 390px) {
+  .destinations__cta-text-break {
+    display: block;
   }
 }

@@ -209,7 +209,7 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
                   <ArrowsClockwise
                     size={24}
                     weight={hoveredBtn === 'flip' ? 'fill' : 'regular'}
-                    color={hoveredBtn === 'flip' ? '#fbfbfb' : '#7150E5'}
+                    color={hoveredBtn === 'flip' ? '#fbfbfb' : 'currentColor'}
                     aria-hidden="true"
                   />
                 </div>
@@ -354,7 +354,7 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
                   <ArrowsClockwise
                     size={24}
                     weight={hoveredBtn === 'flipBack' ? 'fill' : 'regular'}
-                    color={hoveredBtn === 'flipBack' ? '#fbfbfb' : '#7150E5'}
+                    color={hoveredBtn === 'flipBack' ? '#fbfbfb' : 'currentColor'}
                     aria-hidden="true"
                   />
                 </div>

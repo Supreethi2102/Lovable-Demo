@@ -3,7 +3,7 @@
 .about {
   background: #eceef2; /* Outer background from Figma */
   padding-top: var(--section-gap-y);
-  padding-bottom: var(--section-gap-y);
+  padding-bottom: var(--about-stack-gap-y);
   padding-left: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
   padding-right: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
   width: 100%;
@@ -658,7 +658,7 @@
 @media (max-width: 1400px) {
   .about {
     padding-top: var(--section-gap-y);
-    padding-bottom: var(--section-gap-y);
+    padding-bottom: var(--about-stack-gap-y);
     padding-left: var(--padding-x, 80px);
     padding-right: var(--padding-x, 80px);
   }
@@ -685,7 +685,7 @@
 @media (max-width: 900px) {
   .about {
     padding-top: var(--section-gap-y);
-    padding-bottom: var(--section-gap-y);
+    padding-bottom: var(--about-stack-gap-y);
     padding-left: clamp(24px, 4vw, 48px);
     padding-right: clamp(24px, 4vw, 48px);
   }
@@ -724,7 +724,7 @@
 @media (max-width: 480px) {
   .about {
     padding-top: var(--section-gap-y);
-    padding-bottom: var(--section-gap-y);
+    padding-bottom: var(--about-stack-gap-y);
     padding-left: 16px;
     padding-right: 16px;
   }

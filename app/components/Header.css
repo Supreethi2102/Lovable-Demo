@@ -1107,8 +1107,8 @@
     }
   }
 
-  /* 700×1024 — Case Studies mega menu: vertical stack + single-line campaign links */
-  @media (min-width: 700px) and (max-width: 1024px) {
+  /* 700–879px portrait tablet — Case Studies mega menu: vertical stack + single-line campaign links */
+  @media (min-width: 700px) and (max-width: 879px) {
     .mega-menu__panel {
       padding: 36px 40px;
     }

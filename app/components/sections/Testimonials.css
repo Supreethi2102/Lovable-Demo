@@ -292,6 +292,17 @@
   .testimonials__author {
     margin-left: 112px; /* nav(52) + gap(60) */
   }
+
+  .testimonials__author-block {
+    margin-bottom: 0;
+  }
+
+  /* Inline dots — avoid absolute overlap with author on narrower desktops (~1100px) */
+  .testimonials__dots {
+    position: static;
+    margin-top: 48px;
+    bottom: auto;
+  }
 }
 
 /* Tablet Landscape (≤1024px) */

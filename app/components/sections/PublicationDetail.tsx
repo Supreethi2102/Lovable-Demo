@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useLayoutEffect, useMemo, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { useNavigate, useParams, useSearchParams } from 'react-router-dom';
 import { ArrowUpRight, CaretLeft, CaretRight, ArrowLeft } from '@phosphor-icons/react';
@@ -67,6 +67,10 @@ export const PublicationDetail: React.FC = () => {
     setActiveIndex(0);
   }, [id]);
 
+  useLayoutEffect(() => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }, [id]);
+
   // Fullscreen enlarged gallery: lock scroll + escape to close + restore focus.
   useEffect(() => {
     if (!isEnlarged) return;
@@ -91,7 +95,7 @@ export const PublicationDetail: React.FC = () => {
     };
   }, [isEnlarged, totalImages]);
 
-  // Keep the active thumbnail visible (auto-scroll the bottom row).
+  // Keep the active thumbnail visible — horizontal scroll only (avoid scrollIntoView moving the page).
   useEffect(() => {
     const scroller = thumbsScrollerRef.current;
     if (!scroller) return;
@@ -102,17 +106,11 @@ export const PublicationDetail: React.FC = () => {
     const prefersReducedMotion =
       typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
-    try {
-      active.scrollIntoView({
-        behavior: prefersReducedMotion ? 'auto' : 'smooth',
-        block: 'nearest',
-        inline: 'center',
-      });
-    } catch {
-      // Older Safari fallback
-      const left = active.offsetLeft - scroller.clientWidth / 2 + active.clientWidth / 2;
-      scroller.scrollTo({ left, behavior: prefersReducedMotion ? 'auto' : 'smooth' });
-    }
+    const left = active.offsetLeft - scroller.clientWidth / 2 + active.clientWidth / 2;
+    scroller.scrollTo({
+      left: Math.max(0, left),
+      behavior: prefersReducedMotion ? 'auto' : 'smooth',
+    });
   }, [activeIndex]);
 
   useEffect(() => {

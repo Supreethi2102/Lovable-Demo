@@ -1717,12 +1717,12 @@
     min-width: 0;
   }
 
-  /* Body → CTA: tight enough that copy doesn’t feel “cut off” from the actions */
+  /* Body → CTA: breathing room before stacked actions */
   .view-design-btn {
     width: 100%;
     max-width: none;
     height: 48px;
-    margin-top: 16px;
+    margin-top: 24px;
     justify-content: center;
     flex-shrink: 0;
   }
@@ -1813,6 +1813,28 @@
   .listen-button__text {
     padding: 12px 0;
     font-size: var(--type-atkinson-text-sm-size);
+  }
+}
+
+/* 700px portrait tablet — restore section inset (≤767 phone rule is too tight here) */
+@media (min-width: 700px) and (max-width: 767px) {
+  .case-studies {
+    padding-left: var(--padding-x);
+    padding-right: var(--padding-x);
+  }
+
+  .case-study-card__sidebar {
+    padding-left: clamp(28px, 5vw, 32px);
+    padding-right: clamp(28px, 5vw, 32px);
+  }
+
+  .case-study-card__main {
+    padding-left: clamp(28px, 5vw, 32px);
+    padding-right: clamp(28px, 5vw, 32px);
+  }
+
+  .view-design-btn {
+    margin-top: clamp(32px, 5vw, 40px);
   }
 }
 

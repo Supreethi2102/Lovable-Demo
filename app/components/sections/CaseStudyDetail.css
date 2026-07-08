@@ -343,10 +343,9 @@
 
 .case-study-detail__hero-image-wrap {
   width: 592px;
-  height: auto;
-  aspect-ratio: 3 / 2;
+  height: 398px;
   margin: 0;
-  flex: 0 0 auto;
+  flex: 0 0 398px;
   position: relative;
   overflow: hidden;
   /* Placeholder while hero img is position:fixed during cinema scroll */
@@ -708,24 +707,9 @@
   align-self: stretch;
 }
 
-/* Standard content images & placeholders — 3:2 */
-.case-study-detail__media--placeholder,
-.media-side:not(.media-side--tall):not(.case-study-detail__digital-media),
-.case-study-detail__brief-media,
-.case-study-detail__solution-media:not(.case-study-detail__digital-media),
-.case-study-detail__impact-media,
-.case-study-detail__reflection-media,
-.case-study-detail__sources-media,
-.full-bleed-media,
-.case-study-detail__panel--gch-image,
-.case-study-detail__four-up-tile {
-  aspect-ratio: 3 / 2;
-  height: auto;
-  min-height: 0;
-}
-
 .media-side {
   margin: 0;
+  min-height: 428px;
   position: relative;
   overflow: hidden;
 }
@@ -744,15 +728,15 @@
 }
 
 .case-study-detail__solution-media {
-  min-height: 0;
+  min-height: 504px;
 }
 
 .case-study-detail__split-card--solution-gch .case-study-detail__solution-media {
-  min-height: 0;
+  min-height: 620px;
 }
 
 .case-study-detail__split-card--solution-toy .case-study-detail__solution-media {
-  min-height: 0;
+  min-height: 600px;
 }
 
 /* Amio design-solution cards should size to content (no forced empty bottom area). */
@@ -980,7 +964,7 @@
 }
 
 .case-study-detail__split-card--brief .case-study-detail__brief-media.case-study-detail__media--placeholder {
-  min-height: 0;
+  min-height: 416px;
 }
 
 .case-study-detail__split-card--brief:has(.case-study-detail__media--placeholder) {
@@ -993,12 +977,12 @@
 }
 
 .case-study-detail__split-card#research .case-study-detail__media--placeholder {
-  min-height: 0 !important;
+  min-height: 416px !important;
   height: auto;
 }
 
 .case-study-detail__split-card#process .case-study-detail__media--placeholder {
-  min-height: 0 !important;
+  min-height: 392px !important;
   height: auto;
 }
 
@@ -1007,7 +991,7 @@
 .case-study-detail__split-card#reflection .case-study-detail__reflection-media.case-study-detail__media--placeholder,
 .case-study-detail__split-card#sources .case-study-detail__sources-media.case-study-detail__media--placeholder,
 .case-study-detail__split-card--digital .case-study-detail__digital-media.case-study-detail__media--placeholder {
-  min-height: 0 !important;
+  min-height: 416px !important;
   height: auto;
 }
 
@@ -1789,13 +1773,28 @@
   overflow: hidden;
 }
 
-.case-study-detail__panel--gch-image-550,
-.case-study-detail__panel--gch-image-555,
-.case-study-detail__panel--gch-image-764,
-.case-study-detail__panel--gch-image-1112,
-.case-study-detail__panel--gch-image-624,
+.case-study-detail__panel--gch-image-550 {
+  height: 550px;
+}
+
+.case-study-detail__panel--gch-image-555 {
+  height: 555px;
+}
+
+.case-study-detail__panel--gch-image-764 {
+  height: 764px;
+}
+
+.case-study-detail__panel--gch-image-1112 {
+  height: 1112px;
+}
+
+.case-study-detail__panel--gch-image-624 {
+  height: 624px;
+}
+
 .case-study-detail__panel--gch-image-595 {
-  height: auto;
+  height: 595px;
 }
 
 .case-study-detail__toy-girl-panel {
@@ -1846,8 +1845,7 @@
 
 .full-bleed-media {
   width: 100%;
-  min-height: 0;
-  aspect-ratio: 3 / 2;
+  min-height: 420px;
   object-fit: cover;
   display: block;
 }
@@ -2240,7 +2238,7 @@
 .case-study-detail__toy-tvc-panel__figure {
   margin: 0;
   width: 100%;
-  aspect-ratio: 3 / 2;
+  aspect-ratio: 984 / 554;
   overflow: hidden;
   border: none;
   border-radius: 0;
@@ -2437,9 +2435,8 @@
 }
 
 .case-study-detail__store-image {
-  min-height: 0;
+  min-height: 732px;
   height: auto;
-  aspect-ratio: 3 / 2;
   position: static;
   width: 100%;
   max-width: 100%;
@@ -2448,9 +2445,8 @@
 }
 
 .case-study-detail__retail-display-image {
-  min-height: 0;
+  min-height: 672px;
   height: auto;
-  aspect-ratio: 3 / 2;
   position: static;
   width: 100%;
   max-width: 100%;
@@ -2478,8 +2474,7 @@
 .case-study-detail__four-up-tile {
   margin: 0;
   width: 468px;
-  height: auto;
-  aspect-ratio: 3 / 2;
+  height: 476px;
   border: 1px solid #b0b3b8;
   border-radius: 24px;
   overflow: hidden;
@@ -2527,22 +2522,18 @@
 }
 
 .case-study-detail__panel--commercial-bay {
-  height: auto;
-  aspect-ratio: 3 / 2;
+  height: 696px;
   position: relative;
 }
 
 .case-study-detail__commercial-bay-image {
   position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
+  width: 124.06%;
+  height: 131.51%;
   max-width: none;
-  left: 0;
-  top: 0;
-  min-height: 0;
-  object-fit: cover;
-  object-position: center;
+  left: -12.69%;
+  top: -20.44%;
+  min-height: 696px;
 }
 
 .case-study-detail__commercial-bay-poster {

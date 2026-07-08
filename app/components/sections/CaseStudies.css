@@ -1824,13 +1824,11 @@
   }
 
   .case-study-card__sidebar {
-    padding-left: clamp(28px, 5vw, 32px);
-    padding-right: clamp(28px, 5vw, 32px);
+    padding: clamp(28px, 5vw, 32px) clamp(28px, 5vw, 32px) 0;
   }
 
   .case-study-card__main {
-    padding-left: clamp(28px, 5vw, 32px);
-    padding-right: clamp(28px, 5vw, 32px);
+    padding: 24px clamp(28px, 5vw, 32px) clamp(28px, 5vw, 36px);
   }
 
   .view-design-btn {

@@ -126,27 +126,13 @@
   }
 }
 
-/* Small tablet portrait (768–900, e.g. 834px) — 3:2 hero */
+/* Small tablet portrait (768–900, e.g. 834px) — 3:2 case study card hero only */
 @media (min-width: 768px) and (max-width: 900px) {
   .case-study-card__front .case-study-card__image,
   .case-study-card__back .case-study-card__image {
     aspect-ratio: 3 / 2;
     max-height: none;
     width: 100%;
-  }
-
-  .case-study-detail__hero-image-wrap,
-  .case-study-detail__media--placeholder,
-  .media-side:not(.media-side--tall):not(.case-study-detail__digital-media),
-  .case-study-detail__brief-media,
-  .case-study-detail__solution-media:not(.case-study-detail__digital-media),
-  .case-study-detail__impact-media,
-  .case-study-detail__reflection-media,
-  .case-study-detail__sources-media,
-  .full-bleed-media {
-    aspect-ratio: 3 / 2;
-    min-height: 0;
-    height: auto;
   }
 }
 

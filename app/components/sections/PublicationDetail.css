@@ -1047,6 +1047,13 @@
   }
 }
 
+/* 700px portrait tablet — hide View larger (stage tap still opens gallery) */
+@media (min-width: 700px) and (max-width: 767px) {
+  .publication-detail__view-larger {
+    display: none;
+  }
+}
+
 /* 700×1024 tablet — keep Back + counter aligned with image stage */
 @media (min-width: 700px) and (max-width: 1024px) {
   .publication-detail-enlarged__caption-row {

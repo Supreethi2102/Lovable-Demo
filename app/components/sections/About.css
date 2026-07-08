@@ -713,6 +713,13 @@
   }
 }
 
+/* 700px portrait tablet — match case study card inset */
+@media (min-width: 700px) and (max-width: 767px) {
+  .about__card {
+    padding: clamp(28px, 5vw, 32px) clamp(28px, 5vw, 32px) clamp(28px, 5vw, 36px);
+  }
+}
+
 @media (max-width: 768px) {
   .about__card {
     padding: 32px clamp(20px, 4vw, 32px);

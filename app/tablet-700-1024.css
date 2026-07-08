@@ -37,18 +37,39 @@
     padding-right: var(--padding-x);
   }
 
-  /* ── Hero / globe footer — reduce motion on right end of instruction line ── */
+  /* ── Hero / globe footer — full content width so reduce motion aligns with case-study filter chevrons ── */
+  .main__right {
+    max-width: 100%;
+    align-items: stretch;
+  }
+
+  .main__globe {
+    align-self: center;
+  }
+
+  .footer {
+    width: 100%;
+    max-width: 100%;
+    align-self: stretch;
+  }
+
+  .footer__wrapper {
+    width: 100%;
+  }
+
   .footer__text {
     grid-column: 1 / 3;
     grid-row: 2;
     width: auto;
     max-width: none;
+    align-self: end;
   }
 
   .footer__link {
     grid-column: 3;
     grid-row: 2;
-    align-self: center;
+    align-self: end;
+    justify-self: end;
   }
 
   /* ── Case studies section ── */

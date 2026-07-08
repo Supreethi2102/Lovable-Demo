@@ -496,18 +496,19 @@
   width: 100%;
   z-index: 90;
   background: #F7F8F9;
-  padding: 16px max(24px, var(--padding-x, 112px)) 32px;
+  padding: max(32px, 4vh) max(24px, var(--padding-x, 112px));
   box-sizing: border-box;
   overflow: auto;
   display: flex;
   justify-content: center;
-  align-items: flex-start;
+  align-items: center;
 }
 
 .publication-detail-enlarged__panel-inner {
   width: 100%;
   max-width: var(--content-max-width, 1220px);
-  margin: 0 auto;
+  margin: auto;
+  flex-shrink: 0;
   display: flex;
   flex-direction: column;
   align-items: stretch;
@@ -530,7 +531,22 @@
   width: 100%;
 }
 
+/* Shared 3-column grid — matches detail-page gallery rails */
+.publication-detail-enlarged__toolbar,
+.publication-detail-enlarged__carousel,
+.publication-detail-enlarged__caption-row {
+  display: grid;
+  grid-template-columns: var(--publication-detail-control-size) minmax(0, 1fr) var(--publication-detail-control-size);
+  gap: var(--publication-detail-control-gap);
+  align-items: center;
+  width: 100%;
+}
+
 .publication-detail-enlarged__toolbar {
+  min-width: 0;
+}
+
+.publication-detail-enlarged__toolbar-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -574,7 +590,7 @@
 }
 
 .publication-detail-enlarged__counter {
-  margin: 0 0 0 auto;
+  margin: 0;
   padding: 0;
   font-family: var(--font-family-ui);
   font-size: var(--type-atkinson-text-md-size);
@@ -591,16 +607,6 @@
 .publication-detail-enlarged__counter strong {
   font-weight: 600;
   color: #111213;
-}
-
-/* Shared 3-column grid — matches detail-page gallery rails */
-.publication-detail-enlarged__carousel,
-.publication-detail-enlarged__caption-row {
-  display: grid;
-  grid-template-columns: var(--publication-detail-control-size) minmax(0, 1fr) var(--publication-detail-control-size);
-  gap: var(--publication-detail-control-gap);
-  align-items: center;
-  width: 100%;
 }
 
 .publication-detail-enlarged__carousel {
@@ -904,6 +910,8 @@
   .publication-detail-enlarged__overlay {
     padding-left: var(--padding-x, 48px);
     padding-right: var(--padding-x, 48px);
+    padding-top: max(28px, 3.5vh);
+    padding-bottom: max(28px, 3.5vh);
   }
 }
 
@@ -913,22 +921,11 @@
   }
 }
 
-/* Tablet / mobile portrait — stack toolbar on narrow portrait */
+/* Tablet / mobile portrait — caption full width; toolbar stays one row aligned to stage */
 @media (max-width: 900px) and (orientation: portrait) {
   .publication-detail-enlarged__caption-row {
     grid-template-columns: 1fr;
     gap: 0;
-  }
-
-  .publication-detail-enlarged__toolbar {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .publication-detail-enlarged__counter {
-    margin-left: 0;
-    justify-content: flex-start;
   }
 
   .publication-detail-enlarged__caption-row .publication-detail__gallery-rail {
@@ -938,7 +935,7 @@
 
 @media (max-width: 768px) {
   .publication-detail-enlarged__overlay {
-    padding: 12px 16px 24px;
+    padding: max(20px, 3vh) 16px;
   }
 
   .publication-detail-enlarged__panel-inner {
@@ -1009,6 +1006,12 @@
     gap: 0;
   }
 
+  .publication-detail-enlarged__toolbar {
+    grid-template-columns: 1fr;
+    gap: 0;
+  }
+
+  .publication-detail-enlarged__toolbar .publication-detail__gallery-rail,
   .publication-detail-enlarged__caption-row .publication-detail__gallery-rail {
     display: none;
   }
@@ -1016,7 +1019,7 @@
 
 @media (max-width: 480px) {
   .publication-detail-enlarged__overlay {
-    padding: 8px 12px 20px;
+    padding: max(16px, 2.5vh) 12px;
   }
 
   .publication-detail-enlarged__panel-inner {
@@ -1047,20 +1050,8 @@
   }
 }
 
-/* 700×1024 tablet — keep Back + counter on one row (override portrait stack) */
+/* 700×1024 tablet — keep Back + counter aligned with image stage */
 @media (min-width: 700px) and (max-width: 1024px) {
-  .publication-detail-enlarged__toolbar {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    width: 100%;
-  }
-
-  .publication-detail-enlarged__counter {
-    margin-left: auto;
-    justify-content: flex-end;
-  }
-
   .publication-detail-enlarged__caption-row {
     display: grid;
     grid-template-columns: var(--publication-detail-control-size) minmax(0, 1fr) var(--publication-detail-control-size);

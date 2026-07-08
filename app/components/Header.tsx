@@ -103,6 +103,7 @@ export const Header: React.FC = () => {
   const [isThemeMenuOpen, setIsThemeMenuOpen] = useState(false);
   const [activeTheme, setActiveTheme] = useState('light');
   const [hoveredThemeOption, setHoveredThemeOption] = useState<string | null>(null);
+  const [isContactHovered, setIsContactHovered] = useState(false);
   const [isTabletViewport, setIsTabletViewport] = useState(false);
 
   const themeIconWeight = (themeId: string) =>
@@ -500,9 +501,13 @@ export const Header: React.FC = () => {
         href="#contact"
         className="btn btn--primary btn--icon-left header__contact-btn"
         onClick={(e) => scrollToSection(e, '#contact')}
+        onMouseEnter={() => setIsContactHovered(true)}
+        onMouseLeave={() => setIsContactHovered(false)}
+        onFocus={() => setIsContactHovered(true)}
+        onBlur={() => setIsContactHovered(false)}
       >
         <span className="btn__icon" aria-hidden="true">
-          <EnvelopeSimple size={24} weight="regular" color="currentColor" />
+          <EnvelopeSimple size={24} weight={isContactHovered ? 'fill' : 'regular'} color="currentColor" />
         </span>
         <span>Contact</span>
       </a>
@@ -613,10 +618,14 @@ export const Header: React.FC = () => {
           href="#contact" 
           className="btn btn--primary btn--icon-left header__contact-btn header__contact-btn--mobile" 
           onClick={(e) => scrollToSection(e, '#contact')}
+          onMouseEnter={() => setIsContactHovered(true)}
+          onMouseLeave={() => setIsContactHovered(false)}
+          onFocus={() => setIsContactHovered(true)}
+          onBlur={() => setIsContactHovered(false)}
           tabIndex={isMobileMenuOpen ? 0 : -1}
         >
           <span className="btn__icon" aria-hidden="true">
-            <EnvelopeSimple size={24} weight="regular" color="currentColor" />
+            <EnvelopeSimple size={24} weight={isContactHovered ? 'fill' : 'regular'} color="currentColor" />
           </span>
           <span>Contact</span>
         </a>

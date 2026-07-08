@@ -15,7 +15,7 @@
   background: #f7f9fa;
   border: 1px solid #b0b3b8;
   border-radius: var(--surface-card-radius, 24px);
-  padding: 48px 64px;
+  padding: 48px 56px;
   max-width: 1216px;
   margin: 0 auto;
 }
@@ -662,7 +662,7 @@
     padding-left: var(--padding-x, 80px);
     padding-right: var(--padding-x, 80px);
   }
-  .about__card { padding: 40px 48px; overflow: visible; }
+  .about__card { padding: 48px; overflow: visible; }
   .about-block1 { gap: 48px; }
   .about-block1__illustration { width: 450px; height: 450px; }
   .about-block2__quote { width: 100%; max-width: 931px; }
@@ -671,6 +671,10 @@
 }
 
 @media (max-width: 1200px) {
+  .about__card {
+    padding: 40px;
+  }
+
   .about-block1 { flex-direction: column; align-items: center; gap: 40px; }
   .about-block1__illustration { width: 400px; height: 400px; }
   .about-block1__content { width: 100%; max-width: 600px; }
@@ -689,8 +693,11 @@
     padding-left: clamp(24px, 4vw, 48px);
     padding-right: clamp(24px, 4vw, 48px);
   }
+}
+
+@media (max-width: 1024px) {
   .about__card {
-    padding: 32px;
+    padding: 40px clamp(28px, 5vw, 48px);
   }
 }
 
@@ -702,6 +709,10 @@
 }
 
 @media (max-width: 768px) {
+  .about__card {
+    padding: 32px clamp(20px, 4vw, 32px);
+  }
+
   .about__label { font-size: var(--type-atkinson-text-xl-size); margin-bottom: 24px; }
   .about-block1 { gap: 24px; }
   .about-block1__illustration { width: 320px; height: 320px; }
@@ -728,7 +739,7 @@
     padding-left: 16px;
     padding-right: 16px;
   }
-  .about__card { padding: 20px 16px; }
+  .about__card { padding: 24px 20px; }
   .about-block1__illustration { width: 260px; height: 260px; }
   .about-block1 { gap: 20px; }
   .about-block1__title {

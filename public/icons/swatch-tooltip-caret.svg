@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="16" height="9" viewBox="0 0 16 9" fill="none" aria-hidden="true">
+  <!-- Flat top overlaps the tooltip border so the caret joins the box -->
+  <path d="M1.92894 0H14.0711L14.7782 1.70711L8.70711 7.77818C8.31658 8.16871 7.68342 8.16871 7.29289 7.77818L1.22183 1.70711L1.92894 0Z" fill="#FEFEFF"/>
+  <!-- Stroke only the two diagonals + tip (not the top edge) -->
+  <path d="M1.22183 1.70711L7.29289 7.77818C7.68342 8.16871 8.31658 8.16871 8.70711 7.77818L14.7782 1.70711" stroke="#E1E5E9" stroke-width="1" stroke-linejoin="round" stroke-linecap="square"/>
+</svg>

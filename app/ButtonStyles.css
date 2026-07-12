@@ -81,10 +81,12 @@
   border: 1px solid var(--btn-primary);
 }
 
-.btn--primary:hover:not(:disabled) {
-  background: var(--btn-primary-hover);
-  border-color: var(--btn-primary-hover);
-  color: var(--btn-white);
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+  .btn--primary:hover:not(:disabled) {
+    background: var(--btn-primary-hover);
+    border-color: var(--btn-primary-hover);
+    color: var(--btn-white);
+  }
 }
 
 .btn--primary:active:not(:disabled) {
@@ -115,10 +117,12 @@
   background: var(--btn-secondary-surface-bg);
 }
 
-.btn--secondary:hover:not(:disabled) {
-  background: var(--btn-primary-hover);
-  border-color: var(--btn-primary-hover);
-  color: var(--btn-white);
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+  .btn--secondary:hover:not(:disabled) {
+    background: var(--btn-primary-hover);
+    border-color: var(--btn-primary-hover);
+    color: var(--btn-white);
+  }
 }
 
 .btn--secondary:active:not(:disabled) {
@@ -147,8 +151,10 @@
   min-height: auto;
 }
 
-.btn--tertiary:hover:not(:disabled) {
-  color: var(--btn-primary-hover);
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+  .btn--tertiary:hover:not(:disabled) {
+    color: var(--btn-primary-hover);
+  }
 }
 
 .btn--tertiary:active:not(:disabled) {
@@ -213,8 +219,10 @@
   border-bottom: 2px solid transparent;
 }
 
-.btn--tab:hover:not(:disabled) {
-  color: var(--btn-primary-hover);
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+  .btn--tab:hover:not(:disabled) {
+    color: var(--btn-primary-hover);
+  }
 }
 
 .btn--tab.btn--tab-active {
@@ -265,7 +273,7 @@
   outline-offset: var(--btn-focus-offset);
 }
 
-@media (hover: hover) and (pointer: fine) {
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
   .btn-close:hover {
     color: var(--btn-primary-hover);
     text-decoration: none;

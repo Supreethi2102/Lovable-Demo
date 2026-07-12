@@ -15,6 +15,7 @@ import {
 } from '@phosphor-icons/react';
 import './CaseStudies.css';
 import { CaseStudyCard, type CaseStudyCardStudy } from '../CaseStudyCard';
+import { canUseHover } from '../../utils/canUseHover';
 
 /** Cards shown before “View all cases”; remainder loads without sticky-stack scrolling. */
 const INITIAL_CASE_STUDIES_VISIBLE = 3;
@@ -409,7 +410,9 @@ export const CaseStudies: React.FC = () => {
             type="button"
             className="case-studies__filter-nav-btn"
             onClick={() => scrollFilterCategories('left')}
-            onMouseEnter={() => setHoveredFilterNav('prev')}
+            onMouseEnter={() => {
+              if (canUseHover()) setHoveredFilterNav('prev');
+            }}
             onMouseLeave={() => setHoveredFilterNav(null)}
             aria-label="Scroll categories left"
             disabled={!canScrollFilterLeft}
@@ -425,7 +428,9 @@ export const CaseStudies: React.FC = () => {
             type="button"
             className="case-studies__filter-nav-btn"
             onClick={() => scrollFilterCategories('right')}
-            onMouseEnter={() => setHoveredFilterNav('next')}
+            onMouseEnter={() => {
+              if (canUseHover()) setHoveredFilterNav('next');
+            }}
             onMouseLeave={() => setHoveredFilterNav(null)}
             aria-label="Scroll categories right"
             disabled={!canScrollFilterRight}
@@ -456,7 +461,9 @@ export const CaseStudies: React.FC = () => {
               aria-controls="case-studies-grid"
               className={`category-pill ${activeCategory === cat.id ? 'category-pill--active' : ''}`}
               onClick={() => setActiveCategory(cat.id)}
-              onMouseEnter={() => setHoveredCategory(cat.id)}
+              onMouseEnter={() => {
+                if (canUseHover()) setHoveredCategory(cat.id);
+              }}
               onMouseLeave={() => setHoveredCategory(null)}
             >
               <div className="category-pill__icon" aria-hidden="true">
@@ -501,7 +508,9 @@ export const CaseStudies: React.FC = () => {
           <button 
             type="button"
             className={`btn btn--secondary btn--on-surface btn--icon-left view-all-btn ${hoveredViewAll ? 'view-all-btn--hovered' : ''}`}
-            onMouseEnter={() => setHoveredViewAll(true)}
+            onMouseEnter={() => {
+              if (canUseHover()) setHoveredViewAll(true);
+            }}
             onMouseLeave={() => setHoveredViewAll(false)}
             aria-expanded={showAllCaseStudies}
             aria-label={

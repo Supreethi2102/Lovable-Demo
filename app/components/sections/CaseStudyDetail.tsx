@@ -23,6 +23,7 @@ import './case-study-detail-responsive.css';
 import { useCaseStudyListenHeroSync } from './useCaseStudyListenHeroSync';
 import { useCaseStudyScrollPinNav } from './useCaseStudyScrollPinNav';
 import { useCaseStudyActiveTabScroll } from './useCaseStudyActiveTabScroll';
+import { canUseHover } from '../../utils/canUseHover';
 
 type NavSectionId =
   | 'overview'
@@ -1293,7 +1294,9 @@ export const CaseStudyDetail: React.FC = () => {
                         type="button"
                         className={`case-study-detail__tab ${isActive ? 'is-active' : ''}`}
                         onClick={() => scrollToNavSection(section.id)}
-                        onMouseEnter={() => setHoveredNavId(section.id)}
+                        onMouseEnter={() => {
+                          if (canUseHover()) setHoveredNavId(section.id);
+                        }}
                         onMouseLeave={() => setHoveredNavId(null)}
                         aria-current={isActive ? 'location' : undefined}
                       >

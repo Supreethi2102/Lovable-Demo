@@ -95,7 +95,7 @@ export const PublicationDetail: React.FC = () => {
     };
   }, [isEnlarged, totalImages]);
 
-  // Keep the active thumbnail visible — horizontal scroll only (avoid scrollIntoView moving the page).
+  // Keep the active thumbnail fully visible in the bottom carousel (including wrap-around).
   useEffect(() => {
     const scroller = thumbsScrollerRef.current;
     if (!scroller) return;
@@ -106,12 +106,35 @@ export const PublicationDetail: React.FC = () => {
     const prefersReducedMotion =
       typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
-    const left = active.offsetLeft - scroller.clientWidth / 2 + active.clientWidth / 2;
-    scroller.scrollTo({
-      left: Math.max(0, left),
-      behavior: prefersReducedMotion ? 'auto' : 'smooth',
-    });
-  }, [activeIndex]);
+    const edgePad = 8;
+    const maxScroll = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
+    const activeLeft = active.offsetLeft;
+    const activeRight = activeLeft + active.offsetWidth;
+    const viewLeft = scroller.scrollLeft;
+    const viewRight = viewLeft + scroller.clientWidth;
+    const lastIndex = Math.max(totalImages - 1, 0);
+
+    let nextScroll = viewLeft;
+    // Wrap-around: jump fully to the start/end so the highlight is never off-screen.
+    if (activeIndex === 0) {
+      nextScroll = 0;
+    } else if (activeIndex === lastIndex) {
+      nextScroll = maxScroll;
+    } else if (activeLeft < viewLeft + edgePad) {
+      nextScroll = Math.max(0, activeLeft - edgePad);
+    } else if (activeRight > viewRight - edgePad) {
+      nextScroll = Math.min(maxScroll, activeRight - scroller.clientWidth + edgePad);
+    }
+
+    if (Math.abs(nextScroll - viewLeft) < 1) return;
+
+    // Large jumps (wrap) use instant scroll so scroll-snap can't stop mid-strip.
+    const distance = Math.abs(nextScroll - viewLeft);
+    const behavior: ScrollBehavior =
+      prefersReducedMotion || distance > scroller.clientWidth ? 'auto' : 'smooth';
+
+    scroller.scrollTo({ left: nextScroll, behavior });
+  }, [activeIndex, galleryImages, totalImages]);
 
   useEffect(() => {
     if (!params.id) return;

@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Cookie, Leaf, LinkedinLogo, PersonSimpleCircle, XCircle } from '@phosphor-icons/react';
+import { canUseHover } from '../../utils/canUseHover';
 import './ColorSwatches.css';
 
 export const SiteFooter: React.FC = () => {
@@ -79,7 +80,9 @@ export const SiteFooter: React.FC = () => {
               ref={sustainabilityBtnRef}
               type="button"
               className={`site-footer__link ${hoveredLink === 'sustainability' ? 'site-footer__link--hovered' : ''}`}
-              onMouseEnter={() => setHoveredLink('sustainability')}
+              onMouseEnter={() => {
+                if (canUseHover()) setHoveredLink('sustainability');
+                }}
               onMouseLeave={() => setHoveredLink(null)}
               onClick={() => setSustainabilityOpen(true)}
               aria-expanded={sustainabilityOpen}
@@ -98,7 +101,9 @@ export const SiteFooter: React.FC = () => {
               ref={privacyCookiesBtnRef}
               type="button"
               className={`site-footer__link ${hoveredLink === 'privacy' ? 'site-footer__link--hovered' : ''}`}
-              onMouseEnter={() => setHoveredLink('privacy')}
+              onMouseEnter={() => {
+                if (canUseHover()) setHoveredLink('privacy');
+                }}
               onMouseLeave={() => setHoveredLink(null)}
               onClick={() => setPrivacyCookiesOpen(true)}
               aria-expanded={privacyCookiesOpen}
@@ -117,7 +122,9 @@ export const SiteFooter: React.FC = () => {
               ref={accessibilityBtnRef}
               type="button"
               className={`site-footer__link ${hoveredLink === 'accessibility' ? 'site-footer__link--hovered' : ''}`}
-              onMouseEnter={() => setHoveredLink('accessibility')}
+              onMouseEnter={() => {
+                if (canUseHover()) setHoveredLink('accessibility');
+                }}
               onMouseLeave={() => setHoveredLink(null)}
               onClick={() => setAccessibilityOpen(true)}
               aria-expanded={accessibilityOpen}
@@ -137,7 +144,9 @@ export const SiteFooter: React.FC = () => {
               target="_blank"
               rel="noopener noreferrer"
               className={`site-footer__link ${hoveredLink === 'linkedin' ? 'site-footer__link--hovered' : ''}`}
-              onMouseEnter={() => setHoveredLink('linkedin')}
+              onMouseEnter={() => {
+                if (canUseHover()) setHoveredLink('linkedin');
+                }}
               onMouseLeave={() => setHoveredLink(null)}
               aria-label="LinkedIn profile (opens in new tab)"
             >

@@ -251,9 +251,9 @@
   }
 
   .case-study-card__sidebar {
-    width: clamp(136px, 14vw, 152px);
-    min-width: clamp(136px, 14vw, 152px);
-    max-width: clamp(136px, 14vw, 152px);
+    width: clamp(168px, 16vw, 180px);
+    min-width: clamp(168px, 16vw, 180px);
+    max-width: clamp(168px, 16vw, 180px);
     display: flex;
     flex-direction: column;
     align-self: stretch;
@@ -269,7 +269,12 @@
   }
 
   .flip-button {
-    max-width: 100%;
+    max-width: none;
+    width: 100%;
+  }
+
+  .flip-button:not(.flip-button--footer) .flip-button__text {
+    white-space: nowrap;
   }
 
   .flip-button__text,

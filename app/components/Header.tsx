@@ -7,6 +7,7 @@ import {
   type CaseStudyNavItem,
   type MegaMenuTab,
 } from '../data/caseStudiesNav';
+import { canUseHover } from '../utils/canUseHover';
 import './Header.css';
 
 const CATEGORY_ICONS: Record<string, Icon> = {
@@ -184,7 +185,7 @@ export const Header: React.FC = () => {
   }, []);
 
   const openMegaMenuHover = useCallback(() => {
-    if (isTabletViewport) return;
+    if (isTabletViewport || !canUseHover()) return;
     clearMegaMenuCloseTimer();
     setIsMegaMenuOpen(true);
   }, [isTabletViewport, clearMegaMenuCloseTimer]);
@@ -423,7 +424,9 @@ export const Header: React.FC = () => {
                 type="button"
                 className={`theme-menu__option ${activeTheme === 'light' ? 'theme-menu__option--active' : ''}`}
                 onClick={() => setActiveTheme('light')}
-                onMouseEnter={() => setHoveredThemeOption('light')}
+                onMouseEnter={() => {
+                  if (canUseHover()) setHoveredThemeOption('light');
+                  }}
                 onMouseLeave={() => setHoveredThemeOption(null)}
                 onFocus={() => setHoveredThemeOption('light')}
                 onBlur={() => setHoveredThemeOption(null)}
@@ -435,7 +438,9 @@ export const Header: React.FC = () => {
                 type="button"
                 className={`theme-menu__option ${activeTheme === 'dawn' ? 'theme-menu__option--active' : ''}`}
                 onClick={() => setActiveTheme('dawn')}
-                onMouseEnter={() => setHoveredThemeOption('dawn')}
+                onMouseEnter={() => {
+                  if (canUseHover()) setHoveredThemeOption('dawn');
+                  }}
                 onMouseLeave={() => setHoveredThemeOption(null)}
                 onFocus={() => setHoveredThemeOption('dawn')}
                 onBlur={() => setHoveredThemeOption(null)}
@@ -447,7 +452,9 @@ export const Header: React.FC = () => {
                 type="button"
                 className={`theme-menu__option ${activeTheme === 'aurora' ? 'theme-menu__option--active' : ''}`}
                 onClick={() => setActiveTheme('aurora')}
-                onMouseEnter={() => setHoveredThemeOption('aurora')}
+                onMouseEnter={() => {
+                  if (canUseHover()) setHoveredThemeOption('aurora');
+                  }}
                 onMouseLeave={() => setHoveredThemeOption(null)}
                 onFocus={() => setHoveredThemeOption('aurora')}
                 onBlur={() => setHoveredThemeOption(null)}
@@ -459,7 +466,9 @@ export const Header: React.FC = () => {
                 type="button"
                 className={`theme-menu__option ${activeTheme === 'nebula' ? 'theme-menu__option--active' : ''}`}
                 onClick={() => setActiveTheme('nebula')}
-                onMouseEnter={() => setHoveredThemeOption('nebula')}
+                onMouseEnter={() => {
+                  if (canUseHover()) setHoveredThemeOption('nebula');
+                  }}
                 onMouseLeave={() => setHoveredThemeOption(null)}
                 onFocus={() => setHoveredThemeOption('nebula')}
                 onBlur={() => setHoveredThemeOption(null)}
@@ -471,7 +480,9 @@ export const Header: React.FC = () => {
                 type="button"
                 className={`theme-menu__option ${activeTheme === 'eclipse' ? 'theme-menu__option--active' : ''}`}
                 onClick={() => setActiveTheme('eclipse')}
-                onMouseEnter={() => setHoveredThemeOption('eclipse')}
+                onMouseEnter={() => {
+                  if (canUseHover()) setHoveredThemeOption('eclipse');
+                  }}
                 onMouseLeave={() => setHoveredThemeOption(null)}
                 onFocus={() => setHoveredThemeOption('eclipse')}
                 onBlur={() => setHoveredThemeOption(null)}
@@ -483,7 +494,9 @@ export const Header: React.FC = () => {
                 type="button"
                 className={`theme-menu__option ${activeTheme === 'dark' ? 'theme-menu__option--active' : ''}`}
                 onClick={() => setActiveTheme('dark')}
-                onMouseEnter={() => setHoveredThemeOption('dark')}
+                onMouseEnter={() => {
+                  if (canUseHover()) setHoveredThemeOption('dark');
+                  }}
                 onMouseLeave={() => setHoveredThemeOption(null)}
                 onFocus={() => setHoveredThemeOption('dark')}
                 onBlur={() => setHoveredThemeOption(null)}
@@ -501,7 +514,7 @@ export const Header: React.FC = () => {
         href="#contact"
         className="btn btn--primary btn--icon-left header__contact-btn"
         onClick={(e) => scrollToSection(e, '#contact')}
-        onMouseEnter={() => setIsContactHovered(true)}
+        onMouseEnter={() => { if (canUseHover()) setIsContactHovered(true); }}
         onMouseLeave={() => setIsContactHovered(false)}
         onFocus={() => setIsContactHovered(true)}
         onBlur={() => setIsContactHovered(false)}
@@ -618,7 +631,7 @@ export const Header: React.FC = () => {
           href="#contact" 
           className="btn btn--primary btn--icon-left header__contact-btn header__contact-btn--mobile" 
           onClick={(e) => scrollToSection(e, '#contact')}
-          onMouseEnter={() => setIsContactHovered(true)}
+          onMouseEnter={() => { if (canUseHover()) setIsContactHovered(true); }}
           onMouseLeave={() => setIsContactHovered(false)}
           onFocus={() => setIsContactHovered(true)}
           onBlur={() => setIsContactHovered(false)}

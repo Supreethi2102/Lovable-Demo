@@ -4,6 +4,7 @@ import { gsap } from 'gsap';
 // import { toPng } from 'html-to-image'; // Legacy snapshot-fold experiment (kept for future)
 import emailjs from '@emailjs/browser';
 import { emailjsConfig } from '../../config/emailjs';
+import { canUseHover } from '../../utils/canUseHover';
 import './Contact.css';
 
 // Character limit for message field
@@ -152,7 +153,9 @@ export const Contact: React.FC = () => {
       type="submit"
       form={isActive ? formDomId : undefined}
       className={`contact__submit-btn btn btn--secondary btn--on-surface btn--icon-left send-message ${cardIsSubmitting ? 'contact__submit-btn--loading' : ''} ${cardSubmitStatus === 'success' ? 'contact__submit-btn--success' : ''}`}
-      onMouseEnter={() => setIsSendHovered(true)}
+      onMouseEnter={() => {
+        if (canUseHover()) setIsSendHovered(true);
+      }}
       onMouseLeave={() => setIsSendHovered(false)}
       disabled={!isActive || cardIsSubmitting || isAnimatingRef.current}
       aria-busy={cardIsSubmitting}

@@ -136,8 +136,10 @@
   box-shadow: none !important;
 }
 
-.destination-card:hover .destination-card__image {
-  transform: scale(1.05);
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+  .destination-card:hover .destination-card__image {
+    transform: scale(1.05);
+  }
 }
 
 /* Card Size Variants - Figma exact dimensions */
@@ -541,8 +543,10 @@
   transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
 
-.destination-small:hover .destination-small__image {
-  transform: scale(1.05);
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+  .destination-small:hover .destination-small__image {
+    transform: scale(1.05);
+  }
 }
 
 .destination-small__info {

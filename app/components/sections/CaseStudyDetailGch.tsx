@@ -19,6 +19,7 @@ import './CaseStudyDetail.css';
 import { useCaseStudyListenHeroSync } from './useCaseStudyListenHeroSync';
 import { useCaseStudyScrollPinNav } from './useCaseStudyScrollPinNav';
 import { useCaseStudyActiveTabScroll } from './useCaseStudyActiveTabScroll';
+import { canUseHover } from '../../utils/canUseHover';
 import './case-study-detail-responsive.css';
 
 type NavSectionId =
@@ -259,7 +260,9 @@ export const CaseStudyDetailGch: React.FC = () => {
                         type="button"
                         className={`case-study-detail__tab ${isActive ? 'is-active' : ''}`}
                         onClick={() => scrollToNavSection(section.id)}
-                        onMouseEnter={() => setHoveredNavId(section.id)}
+                        onMouseEnter={() => {
+                          if (canUseHover()) setHoveredNavId(section.id);
+                        }}
                         onMouseLeave={() => setHoveredNavId(null)}
                         onFocus={() => setHoveredNavId(section.id)}
                         onBlur={() => setHoveredNavId(null)}

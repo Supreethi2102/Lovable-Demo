@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect, useId } from 'react';
 import { ArrowSquareOut, XCircle } from '@phosphor-icons/react';
+import { canUseHover } from '../../utils/canUseHover';
 import './Destinations.css';
 
 // Destination data — expanded card layout matches Figma node 1408-2357 (Your rainbow panorama)
@@ -802,7 +803,9 @@ export const Destinations: React.FC = () => {
         <button 
           type="button"
           className="btn btn--secondary btn--on-surface btn--icon-left destinations__share-btn"
-          onMouseEnter={() => setIsShareHovered(true)}
+          onMouseEnter={() => {
+            if (canUseHover()) setIsShareHovered(true);
+          }}
           onMouseLeave={() => setIsShareHovered(false)}
           aria-label="Share your design inspiration with me"
         >

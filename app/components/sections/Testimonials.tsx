@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useLayoutEffect, useRef } from 'react';
 import { CaretLeft, CaretRight } from '@phosphor-icons/react';
+import { canUseHover } from '../../utils/canUseHover';
 import './Testimonials.css';
 
 const testimonials = [
@@ -161,7 +162,9 @@ export const Testimonials: React.FC = () => {
               type="button"
               className="testimonials__nav testimonials__nav--mobile"
               onClick={handlePrev}
-              onMouseEnter={() => setHoveredNav('prev')}
+              onMouseEnter={() => {
+                if (canUseHover()) setHoveredNav('prev');
+              }}
               onMouseLeave={() => setHoveredNav(null)}
               aria-label="Previous testimonial"
               disabled={currentIndex === 0}
@@ -172,7 +175,9 @@ export const Testimonials: React.FC = () => {
               type="button"
               className="testimonials__nav testimonials__nav--mobile"
               onClick={handleNext}
-              onMouseEnter={() => setHoveredNav('next')}
+              onMouseEnter={() => {
+                if (canUseHover()) setHoveredNav('next');
+              }}
               onMouseLeave={() => setHoveredNav(null)}
               aria-label="Next testimonial"
               disabled={currentIndex === testimonials.length - 1}
@@ -200,7 +205,9 @@ export const Testimonials: React.FC = () => {
               type="button"
               className="testimonials__nav" 
               onClick={handlePrev}
-              onMouseEnter={() => setHoveredNav('prev')}
+              onMouseEnter={() => {
+                if (canUseHover()) setHoveredNav('prev');
+              }}
               onMouseLeave={() => setHoveredNav(null)}
               aria-label="Previous testimonial"
               disabled={currentIndex === 0}
@@ -225,7 +232,9 @@ export const Testimonials: React.FC = () => {
               type="button"
               className="testimonials__nav" 
               onClick={handleNext}
-              onMouseEnter={() => setHoveredNav('next')}
+              onMouseEnter={() => {
+                if (canUseHover()) setHoveredNav('next');
+              }}
               onMouseLeave={() => setHoveredNav(null)}
               aria-label="Next testimonial"
               disabled={currentIndex === testimonials.length - 1}

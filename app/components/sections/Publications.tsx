@@ -4,6 +4,7 @@ import { BookOpen } from '@phosphor-icons/react';
 import { publications } from '../../data/publications';
 import type { PublicationDetail } from '../../data/publications';
 import { ResponsivePicture } from '../ResponsivePicture';
+import { canUseHover } from '../../utils/canUseHover';
 import './Publications.css';
 
 interface PublicationCardProps {
@@ -76,7 +77,9 @@ export const Publications: React.FC = () => {
           <button 
             type="button"
             className="btn btn--secondary btn--on-surface btn--icon-left view-publications-btn"
-            onMouseEnter={() => setIsViewHovered(true)}
+            onMouseEnter={() => {
+              if (canUseHover()) setIsViewHovered(true);
+            }}
             onMouseLeave={() => setIsViewHovered(false)}
             onClick={() => setShowAll(!showAll)}
             aria-label={showAll ? 'Show fewer publications' : 'View all publications'}

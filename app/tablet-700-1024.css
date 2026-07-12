@@ -79,12 +79,7 @@
   }
 
   .case-studies__header {
-    align-items: flex-end;
-  }
-
-  .case-studies__filter-nav {
-    padding-top: 0;
-    align-self: flex-end;
+    align-items: flex-start;
   }
 
   .case-studies__filter {
@@ -92,7 +87,6 @@
   }
 
   .case-studies__filter .category-pill {
-    min-width: 132px;
     min-height: 120px;
   }
 
@@ -126,22 +120,12 @@
   }
 }
 
-/* Small tablet portrait (768–900, e.g. 834px) — 3:2 case study card hero only */
-@media (min-width: 768px) and (max-width: 900px) {
+/* Tablet stacked heroes — consistent landscape band (overrides conflicting ratios) */
+@media (min-width: 768px) and (max-width: 1024px) {
   .case-study-card__front .case-study-card__image,
   .case-study-card__back .case-study-card__image {
-    aspect-ratio: 3 / 2;
-    max-height: none;
-    width: 100%;
-  }
-}
-
-/* Mid tablet landscape (901–1024) — taller hero band */
-@media (min-width: 901px) and (max-width: 1024px) {
-  .case-study-card__front .case-study-card__image,
-  .case-study-card__back .case-study-card__image {
-    aspect-ratio: 3 / 4;
-    max-height: min(280px, 36vh);
+    aspect-ratio: 16 / 9;
+    max-height: min(360px, 38vh);
     width: 100%;
   }
 }

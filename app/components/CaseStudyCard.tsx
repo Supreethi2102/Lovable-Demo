@@ -14,6 +14,7 @@ import {
   Binoculars,
 } from '@phosphor-icons/react';
 import { gsap } from 'gsap';
+import { canUseHover } from '../utils/canUseHover';
 import './sections/CaseStudies.css';
 
 export type CaseStudyCardStudy = {
@@ -200,7 +201,9 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               <button
                 type="button"
                 className="flip-button flip-button--sidebar"
-                onMouseEnter={() => setHoveredBtn('flip')}
+                onMouseEnter={() => {
+                  if (canUseHover()) setHoveredBtn('flip');
+                  }}
                 onMouseLeave={() => setHoveredBtn(null)}
                 onClick={() => setIsFlipped(true)}
                 aria-label="Flip card for design inspiration"
@@ -225,7 +228,9 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
                   aria-controls={tabPanelId}
                   className={`tab ${activeTab === 'challenge' ? 'tab--active' : ''}`}
                   onClick={() => animateToTab('challenge')}
-                  onMouseEnter={() => setHoveredBtn('challenge')}
+                  onMouseEnter={() => {
+                  if (canUseHover()) setHoveredBtn('challenge');
+                  }}
                   onMouseLeave={() => setHoveredBtn(null)}
                 >
                   <PuzzlePiece
@@ -244,7 +249,9 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
                   aria-controls={tabPanelId}
                   className={`tab ${activeTab === 'focus' ? 'tab--active' : ''}`}
                   onClick={() => animateToTab('focus')}
-                  onMouseEnter={() => setHoveredBtn('focus')}
+                  onMouseEnter={() => {
+                  if (canUseHover()) setHoveredBtn('focus');
+                  }}
                   onMouseLeave={() => setHoveredBtn(null)}
                 >
                   <Target
@@ -263,7 +270,9 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
                   aria-controls={tabPanelId}
                   className={`tab ${activeTab === 'impact' ? 'tab--active' : ''}`}
                   onClick={() => animateToTab('impact')}
-                  onMouseEnter={() => setHoveredBtn('impact')}
+                  onMouseEnter={() => {
+                  if (canUseHover()) setHoveredBtn('impact');
+                  }}
                   onMouseLeave={() => setHoveredBtn(null)}
                 >
                   <ChartBar
@@ -293,7 +302,9 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               <button
                 type="button"
                 className="btn btn--primary btn--icon-left view-design-btn"
-                onMouseEnter={() => setHoveredBtn('viewDesign')}
+                onMouseEnter={() => {
+                  if (canUseHover()) setHoveredBtn('viewDesign');
+                  }}
                 onMouseLeave={() => setHoveredBtn(null)}
                 onClick={() => navigate(`/case-studies/${study.id}`)}
                 aria-label={`View the design for ${study.subtitle}`}
@@ -306,7 +317,9 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               <button
                 type="button"
                 className="flip-button flip-button--footer"
-                onMouseEnter={() => setHoveredBtn('flip')}
+                onMouseEnter={() => {
+                  if (canUseHover()) setHoveredBtn('flip');
+                  }}
                 onMouseLeave={() => setHoveredBtn(null)}
                 onClick={() => setIsFlipped(true)}
                 aria-label="Flip card for design inspiration"
@@ -345,7 +358,9 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               <button
                 type="button"
                 className="flip-button flip-button--sidebar"
-                onMouseEnter={() => setHoveredBtn('flipBack')}
+                onMouseEnter={() => {
+                  if (canUseHover()) setHoveredBtn('flipBack');
+                  }}
                 onMouseLeave={() => setHoveredBtn(null)}
                 onClick={() => setIsFlipped(false)}
                 aria-label="Back to insights"
@@ -367,7 +382,9 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
                   aria-selected={activeBackTab === 'place'}
                   className={`case-study-card__back-item tab ${activeBackTab === 'place' ? 'tab--active' : ''}`}
                   onClick={() => setActiveBackTab('place')}
-                  onMouseEnter={() => setHoveredBtn('place')}
+                  onMouseEnter={() => {
+                  if (canUseHover()) setHoveredBtn('place');
+                  }}
                   onMouseLeave={() => setHoveredBtn(null)}
                 >
                   <MapPin
@@ -384,7 +401,9 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
                   aria-selected={activeBackTab === 'influence'}
                   className={`case-study-card__back-item tab ${activeBackTab === 'influence' ? 'tab--active' : ''}`}
                   onClick={() => setActiveBackTab('influence')}
-                  onMouseEnter={() => setHoveredBtn('influence')}
+                  onMouseEnter={() => {
+                  if (canUseHover()) setHoveredBtn('influence');
+                  }}
                   onMouseLeave={() => setHoveredBtn(null)}
                 >
                   <Sparkle
@@ -401,7 +420,9 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
                   aria-selected={activeBackTab === 'discoveries'}
                   className={`case-study-card__back-item tab ${activeBackTab === 'discoveries' ? 'tab--active' : ''}`}
                   onClick={() => setActiveBackTab('discoveries')}
-                  onMouseEnter={() => setHoveredBtn('discoveries')}
+                  onMouseEnter={() => {
+                  if (canUseHover()) setHoveredBtn('discoveries');
+                  }}
                   onMouseLeave={() => setHoveredBtn(null)}
                 >
                   <Binoculars
@@ -423,7 +444,9 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               <button
                 type="button"
                 className="btn btn--primary btn--icon-left view-design-btn"
-                onMouseEnter={() => setHoveredBtn('viewDesignBack')}
+                onMouseEnter={() => {
+                  if (canUseHover()) setHoveredBtn('viewDesignBack');
+                  }}
                 onMouseLeave={() => setHoveredBtn(null)}
                 onClick={() => navigate(`/case-studies/${study.id}`)}
                 aria-label={`View the design for ${study.subtitle}`}
@@ -436,7 +459,9 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               <button
                 type="button"
                 className="flip-button flip-button--footer"
-                onMouseEnter={() => setHoveredBtn('flipBack')}
+                onMouseEnter={() => {
+                  if (canUseHover()) setHoveredBtn('flipBack');
+                  }}
                 onMouseLeave={() => setHoveredBtn(null)}
                 onClick={() => setIsFlipped(false)}
                 aria-label="Back to insights"

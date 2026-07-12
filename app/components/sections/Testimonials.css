@@ -94,10 +94,16 @@
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
-.testimonials__nav:hover:not(:disabled) {
-  background: var(--btn-primary-hover);
-  border-color: var(--btn-primary-hover);
-  color: var(--btn-white);
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+  .testimonials__nav:hover:not(:disabled) {
+    background: var(--btn-primary-hover);
+    border-color: var(--btn-primary-hover);
+    color: var(--btn-white);
+  }
+
+  .testimonials__nav:hover:not(:disabled) svg path {
+    stroke: currentColor;
+  }
 }
 
 .testimonials__nav:active:not(:disabled) {
@@ -111,7 +117,6 @@
   outline-offset: var(--btn-focus-offset);
 }
 
-.testimonials__nav:hover:not(:disabled) svg path,
 .testimonials__nav:active:not(:disabled) svg path {
   stroke: currentColor;
 }
@@ -246,8 +251,10 @@
   border-color: #7150e5;
 }
 
-.testimonials__dot:hover {
-  border-color: #7150e5;
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+  .testimonials__dot:hover {
+    border-color: #7150e5;
+  }
 }
 
 /* Responsive - Large Desktop */

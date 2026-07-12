@@ -43,10 +43,12 @@
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
-.case-studies__filter-nav-btn:hover:not(:disabled) {
-  background: var(--btn-primary-hover, #7150e5);
-  border-color: var(--btn-primary-hover, #7150e5);
-  color: var(--btn-white, #ffffff);
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+  .case-studies__filter-nav-btn:hover:not(:disabled) {
+    background: var(--btn-primary-hover, #7150e5);
+    border-color: var(--btn-primary-hover, #7150e5);
+    color: var(--btn-white, #ffffff);
+  }
 }
 
 .case-studies__filter-nav-btn:active:not(:disabled) {
@@ -158,14 +160,16 @@
   transition: background 0.2s ease, border-color 0.2s ease;
 }
 
-.category-pill:hover {
-  background: #7150E5;
-  border-color: rgba(255, 255, 255, 0.4);
-}
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+  .category-pill:hover {
+    background: #7150E5;
+    border-color: rgba(255, 255, 255, 0.4);
+  }
 
-.category-pill:hover .category-pill__label {
-  color: #ffffff;
-  border-top-color: rgba(255, 255, 255, 0.4);
+  .category-pill:hover .category-pill__label {
+    color: #ffffff;
+    border-top-color: rgba(255, 255, 255, 0.4);
+  }
 }
 
 .category-pill--active {
@@ -317,7 +321,7 @@
   display: flex;
   flex-direction: column;
   gap: 148px;
-  width: 160px;
+  width: 176px;
   border-right: 1px solid #b0b3b8;
   padding-right: 32px;
   /* Vertical tab rail: padding matches indicator alignment math below */
@@ -335,7 +339,7 @@
   border: none;
   cursor: pointer;
   padding: 0;
-  width: 136px;
+  width: 168px;
 }
 
 .flip-button:not(.flip-button--footer) {
@@ -389,6 +393,7 @@
   display: block;
   width: 100%;
   align-self: center;
+  white-space: nowrap;
 }
 
 .flip-button:not(.flip-button--footer):hover .flip-button__icon {
@@ -599,7 +604,7 @@
   will-change: transform;
 }
 
-@media (hover: hover) and (pointer: fine) {
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
   .case-study-card__image:hover .case-study-card__image-media {
     transform: scale(1.08);
   }
@@ -777,7 +782,9 @@
     width: 100%;
     max-width: none;
     flex: 0 0 auto;
-    aspect-ratio: 390 / 280;
+    /* Landscape hero — shorter than 390/280 so card proportions balance with copy */
+    aspect-ratio: 16 / 9;
+    max-height: min(420px, 42vh);
     min-height: 0;
     align-self: stretch;
   }
@@ -886,15 +893,12 @@
     min-width: 0;
   }
 
+  /* Filter chevrons are phone-only — not needed on tablet (pills span card width) */
   .case-studies__filter-nav {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-shrink: 0;
-    padding-top: 4px;
+    display: none;
   }
 
-  /* Tablet filter strip: extend left for shadow; pills keep original horizontal position */
+  /* Tablet: same content width as cards; left bleed only for active pill shadow */
   .case-studies__filter-wrap {
     margin-left: calc(-1 * var(--case-studies-filter-shadow-inset, 28px));
     margin-right: 0;
@@ -907,29 +911,28 @@
     scroll-padding-right: 0;
     margin-top: 0;
     margin-bottom: 16px;
-    overflow-x: auto;
-    overflow-y: hidden;
-    -webkit-overflow-scrolling: touch;
-    overscroll-behavior-x: contain;
+    overflow-x: visible;
+    overflow-y: visible;
   }
 
   .case-studies__filter {
     flex-wrap: nowrap;
     justify-content: flex-start;
-    gap: clamp(12px, 2vw, 18px);
-    width: max-content;
-    max-width: none;
-    min-width: 100%;
+    gap: clamp(12px, 2vw, 24px);
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
     margin-left: 0;
     margin-right: 0;
     padding: 4px 0;
     box-sizing: border-box;
   }
 
+  /* Equal columns — left/right edges match case study cards */
   .case-studies__filter .category-pill {
-    flex: 0 0 auto;
-    min-width: 152px;
-    min-height: 136px;
+    flex: 1 1 0%;
+    min-width: 0;
+    min-height: 120px;
     justify-content: center;
   }
 
@@ -972,13 +975,14 @@
     justify-content: space-between;
     align-items: flex-start;
     align-self: stretch;
-    width: 160px;
-    min-width: 160px;
-    max-width: 160px;
+    /* Wide enough for “Flip for inspiration” on one line */
+    width: 176px;
+    min-width: 176px;
+    max-width: 176px;
     flex-shrink: 0;
     border-right: 1px solid #b0b3b8;
     border-bottom: none;
-    padding-right: 32px;
+    padding-right: 24px;
     padding-bottom: 0;
     margin: 0;
     gap: 0;
@@ -987,8 +991,12 @@
 
   .flip-button {
     width: 100%;
-    max-width: 128px;
+    max-width: none;
     align-self: flex-start;
+  }
+
+  .flip-button:not(.flip-button--footer) .flip-button__text {
+    white-space: nowrap;
   }
 
   .case-study-card__tabs,
@@ -1082,11 +1090,15 @@
   }
 
   .case-study-card__sidebar {
-    width: 140px;
-    min-width: 140px;
-    max-width: 140px;
-    padding-right: 20px;
-    --case-card-tab-rail: 20px;
+    width: 168px;
+    min-width: 168px;
+    max-width: 168px;
+    padding-right: 16px;
+    --case-card-tab-rail: 16px;
+  }
+
+  .flip-button:not(.flip-button--footer) .flip-button__text {
+    white-space: nowrap;
   }
 }
 
@@ -1097,9 +1109,9 @@
   }
 
   .case-study-card__sidebar {
-    width: 148px;
-    min-width: 148px;
-    max-width: 148px;
+    width: 168px;
+    min-width: 168px;
+    max-width: 168px;
     padding-right: 16px;
     --case-card-tab-rail: 16px;
   }
@@ -1233,9 +1245,9 @@
   }
 
   .case-study-card__sidebar {
-    width: 124px;
-    min-width: 124px;
-    max-width: 124px;
+    width: 152px;
+    min-width: 152px;
+    max-width: 152px;
     padding-right: 16px;
     gap: 0;
     justify-content: space-between;
@@ -1266,7 +1278,7 @@
 
   .flip-button {
     width: 100%;
-    max-width: 96px;
+    max-width: none;
   }
 
   .flip-button__icon {
@@ -1388,6 +1400,15 @@
     line-height: var(--type-atkinson-text-sm-lh);
   }
 
+  /* Phone only: category scroll chevrons */
+  .case-studies__filter-nav {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+    padding-top: 4px;
+  }
+
   .case-studies__filter-nav-btn {
     width: 40px;
     height: 40px;
@@ -1403,7 +1424,7 @@
     top: 80px;
   }
 
-  /* Filter strip — same left bleed + scroll behaviour as tablet */
+  /* Filter strip — horizontal scroll; left bleed for active shadow */
   .case-studies__filter-wrap {
     margin-left: calc(-1 * var(--case-studies-filter-shadow-inset, 28px));
     margin-right: 0;
@@ -1424,11 +1445,15 @@
 
   .case-studies__filter {
     gap: 10px;
+    width: max-content;
+    max-width: none;
+    min-width: 100%;
     padding: 4px 0;
   }
 
-  /* Slightly smaller category cards than tablet horizontal-scroll row (1024px rule) */
+  /* Slightly smaller category cards than tablet equal-column row */
   .case-studies__filter .category-pill {
+    flex: 0 0 auto;
     min-width: 128px;
     min-height: 118px;
     border-radius: 14px;

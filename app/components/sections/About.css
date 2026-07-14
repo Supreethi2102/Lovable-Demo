@@ -321,7 +321,12 @@
 .about-color-card .gp-swatch__back-scroll {
   flex: 0 1 auto;
   max-height: none;
-  gap: 6px;
+  gap: 0;
+}
+
+.about-color-card .gp-swatch__description {
+  margin-bottom: 8px;
+  line-height: 1.25;
 }
 
 .about-color-card .gp-swatch__footer {
@@ -330,6 +335,15 @@
 
 .about-color-card .gp-swatch__contrast-bar {
   height: 8px;
+  margin-bottom: 6px;
+}
+
+.about-color-card .gp-swatch__ideal {
+  margin-bottom: 0;
+}
+
+.about-color-card .gp-swatch__contrast-ratio {
+  margin-top: 4px;
 }
 
 .about-color-card--animate {

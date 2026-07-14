@@ -201,7 +201,11 @@ further, I'd love to hear them.
                 </p>
               </div>
               <div className="sustainability-modal__image-wrap">
-                <img src="/Illustrations/Laptop.svg" alt="" className="sustainability-modal__image" aria-hidden="true" />
+                <img
+                  src={encodeURI('/Images/Illustrations 2/illustration-sustainability-laptop-flowers.svg')}
+                  alt="Illustration of a laptop with flowers representing sustainable digital design."
+                  className="sustainability-modal__image"
+                />
               </div>
             </div>
           </div>
@@ -244,7 +248,11 @@ further, I'd love to hear them.
                 </p>
               </div>
               <div className="privacy-cookies-modal__image-wrap">
-                <img src="/Illustrations/Cookie%20jar.svg" alt="" className="privacy-cookies-modal__image" aria-hidden="true" />
+                <img
+                  src={encodeURI('/Images/Illustrations 2/illustration-cookies-privacy.svg')}
+                  alt="Illustration of a cookie jar representing website cookies and privacy settings."
+                  className="privacy-cookies-modal__image"
+                />
               </div>
             </div>
           </div>
@@ -306,7 +314,11 @@ further, I'd love to hear them.
                 </div>
               </div>
               <div className="accessibility-modal__image-wrap">
-                <img src="/Illustrations/Balloons.svg" alt="" className="accessibility-modal__image" aria-hidden="true" />
+                <img
+                  src={encodeURI('/Images/Illustrations 2/illustration-accessibility-balloons.svg')}
+                  alt="Illustration of balloons representing accessible and inclusive digital experiences."
+                  className="accessibility-modal__image"
+                />
               </div>
             </div>
           </div>

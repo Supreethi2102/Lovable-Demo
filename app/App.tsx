@@ -86,13 +86,21 @@ const HomePage: React.FC = () => {
           
           {/* Right Side - Globe + Footer */}
           <div className="main__right">
-            <div 
-              className="main__globe" 
-              ref={globeContainerRef}
+            <div
+              className="main__globe"
               role="img"
-              aria-label="Interactive 3D globe showing design inspiration locations around the world"
+              aria-label="Interactive rotating globe highlighting places that inspire design and UX work around the world"
             >
-              {/* Globe will be moved here */}
+              <div className="main__globe-inner" ref={globeContainerRef}>
+                <img
+                  className="main__globe-ring"
+                  src={encodeURI('/Images/Illustrations 2/illustration-global-outline-circle.svg')}
+                  alt=""
+                  aria-hidden="true"
+                  draggable={false}
+                />
+                {/* #globe is moved here from index.html */}
+              </div>
             </div>
             <Footer />
           </div>

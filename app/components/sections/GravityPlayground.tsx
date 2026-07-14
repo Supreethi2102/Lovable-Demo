@@ -46,7 +46,7 @@ const swatchCards: Array<{
     hex: '#FC95B1',
     color: '#FC95B1',
     mood: {
-      description: "The San Diego Zoo brought a pop of joy. Sunlight, the flamingos' feathers, and a vivid, bright pink that knew how to make an entrance.",
+      description: "The San Diego Zoo brought a pop of joy. Sunlight, the flamingos' feathers, and a vivid, bright pink that knew how to make entrance.",
       contrastColor: '#060591',
       idealMatchHex: '#060591',
       idealMatchName: 'Gaudí Cathedral Blue',

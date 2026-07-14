@@ -12,6 +12,11 @@
   padding-left: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
   padding-right: max(var(--padding-x, 112px), calc((100vw - var(--content-max-width, 1220px)) / 2));
   box-sizing: border-box;
+  /*
+   * Product shots include studio margins around angled props.
+   * Zoom into the frame so mockups read a bit larger across the gallery.
+   */
+  --publication-image-frame-zoom: 1.17;
 }
 
 .publication-detail__inner {
@@ -381,7 +386,7 @@
 
 @media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
   .publication-detail__stage:hover .publication-detail__image {
-    transform: scale(1.08);
+    transform: scale(calc(var(--publication-image-frame-zoom, 1.17) * 1.06));
   }
 }
 
@@ -399,6 +404,7 @@
   object-fit: cover;
   object-position: center;
   display: block;
+  transform: scale(var(--publication-image-frame-zoom, 1.17));
   transform-origin: center center;
   transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -515,6 +521,8 @@
   display: flex;
   justify-content: center;
   align-items: flex-start;
+  /* Outside .publication-detail — keep the same frame zoom */
+  --publication-image-frame-zoom: 1.17;
 }
 
 .publication-detail-enlarged__panel-inner {
@@ -665,6 +673,8 @@
   object-fit: cover;
   object-position: center;
   display: block;
+  transform: scale(var(--publication-image-frame-zoom, 1.17));
+  transform-origin: center center;
   box-shadow: none;
 }
 

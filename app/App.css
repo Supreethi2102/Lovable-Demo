@@ -209,9 +209,37 @@ a:focus-visible {
   transform: none !important;
 }
 
+/* Shrink-wrap to #globe so the circle stroke scales with the sphere, not the column */
+.main__globe-inner {
+  position: relative;
+  width: fit-content;
+  max-width: 100%;
+  overflow: visible;
+}
+
 .main__globe #globe {
+  position: relative;
+  z-index: 1;
   box-sizing: border-box;
   max-width: 100%;
+}
+
+/* Hand-drawn circle stroke from Illustrations 2 — frames the globe limb.
+   Sized to the projected sphere (not the full WebGL canvas). */
+.main__globe-ring {
+  --globe-ring-scale: 0.97;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: calc(100% * var(--globe-ring-scale));
+  height: calc(100% * var(--globe-ring-scale));
+  max-width: none;
+  /* Slight left nudge — continents were leaking past the left arc */
+  transform: translate(calc(-50% - 0.6%), -50%);
+  object-fit: contain;
+  pointer-events: none;
+  user-select: none;
+  z-index: 2;
 }
 
 /* Ultra-wide desktop centering fix */
@@ -304,7 +332,7 @@ a:focus-visible {
 
   .main__globe {
     max-width: min(500px, 100%);
-    overflow: hidden;
+    overflow: visible;
   }
 }
 

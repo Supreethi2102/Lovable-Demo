@@ -589,6 +589,8 @@ button.site-footer__link {
 .sustainability-modal__image {
   width: 100%;
   height: auto;
+  /* Match previous Laptop.svg slot (692×676) */
+  aspect-ratio: 692 / 676;
   max-height: 480px;
   object-fit: contain;
   object-position: center;
@@ -687,6 +689,8 @@ button.site-footer__link {
 .privacy-cookies-modal__image {
   width: 100%;
   height: auto;
+  /* Match previous Cookie jar.svg slot (564×587) */
+  aspect-ratio: 564 / 587;
   max-height: 460px;
   object-fit: contain;
   object-position: center;
@@ -936,6 +940,8 @@ button.site-footer__link {
 .accessibility-modal__image {
   width: 100%;
   height: auto;
+  /* Match previous Balloons.svg slot (454×492) */
+  aspect-ratio: 454 / 492;
   max-height: 480px;
   object-fit: contain;
   object-position: center;

@@ -124,7 +124,8 @@ export class Renderer extends EventTarget {
       depthTest: true
     });
     this.globeOutline = new Mesh(outlineGeometry, outlineMaterial);
-    this.globeOutline.visible = this.renderMode === RenderMode.GLOBE;
+    // Decorative circle stroke is an HTML/SVG overlay; keep shader outline off
+    this.globeOutline.visible = false;
     this.scene.add(this.globeOutline);
 
     this.configureControls();
@@ -148,7 +149,7 @@ export class Renderer extends EventTarget {
     this.globeControls.enabled = this.renderMode === RenderMode.GLOBE;
     this.mapControls.enabled = this.renderMode === RenderMode.MAP;
     this.atmosphere.visible = this.renderMode === RenderMode.GLOBE;
-    this.globeOutline.visible = this.renderMode === RenderMode.GLOBE;
+    this.globeOutline.visible = false;
 
     this.tileManager.setRenderMode(renderMode);
   }

@@ -7,7 +7,7 @@ const distance = 20_000_000;
 
 // Use a single PNG image for the globe
 // Place your flat map image in the public directory and update the filename below
-const customImageUrl = '/globe/world-map-outline.png'; // Update this to match your image filename
+const customImageUrl = encodeURI('/Images/Illustrations 2/illustration-global-inspiration-map.png');
 
 const globe = new WebGlGlobe(document.querySelector('#globe')!, {
   renderMode: RenderMode.GLOBE,

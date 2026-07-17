@@ -55,6 +55,12 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
   const [hoveredBtn, setHoveredBtn] = useState<string | null>(null);
   const [isFlipped, setIsFlipped] = useState(false);
   const [activeBackTab, setActiveBackTab] = useState<'place' | 'influence' | 'discoveries'>('place');
+  const [contentBackTab, setContentBackTab] = useState<'place' | 'influence' | 'discoveries'>('place');
+  const [imageBackFrontSlot, setImageBackFrontSlot] = useState<0 | 1>(0);
+  const isBackTabAnimatingRef = useRef(false);
+  const backCopyRef = useRef<HTMLDivElement>(null);
+  const backImgARef = useRef<HTMLDivElement>(null);
+  const backImgBRef = useRef<HTMLDivElement>(null);
   const tabPanelId = useId();
   const cardTitleId = useId();
 
@@ -93,10 +99,19 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
     [study],
   );
   const currentFrontTab = frontTabs[contentTab];
-  const currentBackTab = backTabs[activeBackTab];
+  const currentBackTab = backTabs[contentBackTab];
 
   const getTabImage = (tab: 'challenge' | 'focus' | 'impact') => {
     return frontTabs[tab].image;
+  };
+
+  const setBackLayer = (el: HTMLDivElement | null, tab: 'place' | 'influence' | 'discoveries') => {
+    if (!el) return;
+    const media = el.querySelector<HTMLElement>('.case-study-card__image-media');
+    if (!media) return;
+    const data = backTabs[tab];
+    media.style.backgroundImage = data.image ? `url(${data.image})` : 'none';
+    media.style.backgroundColor = data.background ?? '#ddd';
   };
 
   const renderViewDesignIcon = (isHovered: boolean) => {
@@ -130,14 +145,22 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
     setImageFrontSlot(0);
     setIsFlipped(false);
     setActiveBackTab('place');
+    setContentBackTab('place');
+    setImageBackFrontSlot(0);
     isTabAnimatingRef.current = false;
+    isBackTabAnimatingRef.current = false;
 
     setLayerBg(imgARef.current, getTabImage('challenge'));
     setLayerBg(imgBRef.current, getTabImage('challenge'));
+    setBackLayer(backImgARef.current, 'place');
+    setBackLayer(backImgBRef.current, 'place');
 
     gsap.set(imgARef.current, { x: '0%', opacity: 1 });
     gsap.set(imgBRef.current, { x: '-120%', opacity: 1 });
     gsap.set(copyRef.current, { x: 0, opacity: 1 });
+    gsap.set(backImgARef.current, { x: '0%', opacity: 1 });
+    gsap.set(backImgBRef.current, { x: '-120%', opacity: 1 });
+    gsap.set(backCopyRef.current, { x: 0, opacity: 1 });
   }, [study.id]); // eslint-disable-line react-hooks/exhaustive-deps
 
   const animateToTab = (nextTab: 'challenge' | 'focus' | 'impact') => {
@@ -182,6 +205,55 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
       setContentTab(nextTab);
       requestAnimationFrame(() => {
         const el = copyRef.current;
+        if (!el) return;
+        gsap.set(el, { x: -16, opacity: 0 });
+        gsap.to(el, { duration: 0.25, x: 0, opacity: 1, ease: 'power2.out' });
+      });
+    }, 0.12);
+  };
+
+  const animateToBackTab = (nextTab: 'place' | 'influence' | 'discoveries') => {
+    if (isBackTabAnimatingRef.current) return;
+    if (nextTab === activeBackTab) return;
+
+    setActiveBackTab(nextTab);
+
+    if (prefersReducedMotion) {
+      setContentBackTab(nextTab);
+      setBackLayer(backImgARef.current, nextTab);
+      setBackLayer(backImgBRef.current, nextTab);
+      gsap.set(backImgARef.current, { x: '0%', opacity: 1 });
+      gsap.set(backImgBRef.current, { x: '-120%', opacity: 1 });
+      return;
+    }
+
+    const copyEl = backCopyRef.current;
+    const frontEl = (imageBackFrontSlot === 0 ? backImgARef.current : backImgBRef.current) as HTMLDivElement | null;
+    const incomingEl = (imageBackFrontSlot === 0 ? backImgBRef.current : backImgARef.current) as HTMLDivElement | null;
+    if (!copyEl || !frontEl || !incomingEl) return;
+
+    isBackTabAnimatingRef.current = true;
+
+    setBackLayer(incomingEl, nextTab);
+    gsap.set(incomingEl, { x: '-120%', opacity: 1 });
+    gsap.set(frontEl, { x: '0%', opacity: 1 });
+
+    const tl = gsap.timeline({
+      defaults: { ease: 'power2.out' },
+      onComplete: () => {
+        setImageBackFrontSlot((s) => (s === 0 ? 1 : 0));
+        isBackTabAnimatingRef.current = false;
+      },
+    });
+
+    tl.to(copyEl, { duration: 0.12, x: 8, opacity: 0 }, 0);
+    tl.to(frontEl, { duration: 0.45, x: '120%', opacity: 0, force3D: true }, 0);
+    tl.to(incomingEl, { duration: 0.5, x: '0%', opacity: 1, ease: 'power3.out', force3D: true }, 0.08);
+
+    tl.add(() => {
+      setContentBackTab(nextTab);
+      requestAnimationFrame(() => {
+        const el = backCopyRef.current;
         if (!el) return;
         gsap.set(el, { x: -16, opacity: 0 });
         gsap.to(el, { duration: 0.25, x: 0, opacity: 1, ease: 'power2.out' });
@@ -381,7 +453,7 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
                   role="tab"
                   aria-selected={activeBackTab === 'place'}
                   className={`case-study-card__back-item tab ${activeBackTab === 'place' ? 'tab--active' : ''}`}
-                  onClick={() => setActiveBackTab('place')}
+                  onClick={() => animateToBackTab('place')}
                   onMouseEnter={() => {
                   if (canUseHover()) setHoveredBtn('place');
                   }}
@@ -400,7 +472,7 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
                   role="tab"
                   aria-selected={activeBackTab === 'influence'}
                   className={`case-study-card__back-item tab ${activeBackTab === 'influence' ? 'tab--active' : ''}`}
-                  onClick={() => setActiveBackTab('influence')}
+                  onClick={() => animateToBackTab('influence')}
                   onMouseEnter={() => {
                   if (canUseHover()) setHoveredBtn('influence');
                   }}
@@ -419,7 +491,7 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
                   role="tab"
                   aria-selected={activeBackTab === 'discoveries'}
                   className={`case-study-card__back-item tab ${activeBackTab === 'discoveries' ? 'tab--active' : ''}`}
-                  onClick={() => setActiveBackTab('discoveries')}
+                  onClick={() => animateToBackTab('discoveries')}
                   onMouseEnter={() => {
                   if (canUseHover()) setHoveredBtn('discoveries');
                   }}
@@ -436,7 +508,7 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               </div>
             </aside>
             <div className="case-study-card__main">
-              <div className="case-study-card__copy">
+              <div ref={backCopyRef} className="case-study-card__copy">
                 <p className="case-study-card__subtitle">{study.subtitle}</p>
                 <h3 className="case-study-card__title">{currentBackTab.title}</h3>
                 <p className="case-study-card__description">{currentBackTab.description}</p>
@@ -483,17 +555,11 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               Duration: {study.duration}
             </div>
             <div className="case-study-card__image-viewport" role="img" aria-label={`${study.subtitle} project preview`}>
-              <div className="case-study-card__image-layer" aria-hidden="true">
-                <div
-                  className="case-study-card__image-media"
-                  style={{
-                    backgroundImage: currentBackTab.image
-                      ? `url(${currentBackTab.image})`
-                      : 'none',
-                    backgroundColor: currentBackTab.background ?? '#ddd',
-                  }}
-                  aria-hidden="true"
-                />
+              <div ref={backImgARef} className="case-study-card__image-layer" aria-hidden="true">
+                <div className="case-study-card__image-media" aria-hidden="true" />
+              </div>
+              <div ref={backImgBRef} className="case-study-card__image-layer" aria-hidden="true">
+                <div className="case-study-card__image-media" aria-hidden="true" />
               </div>
             </div>
           </figure>

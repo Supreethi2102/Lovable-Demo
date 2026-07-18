@@ -159,26 +159,36 @@ type LayoutConfig = {
 function getLayoutConfig(viewportWidth: number): LayoutConfig {
   const compact = viewportWidth <= 1024;
   const phone = viewportWidth <= 480;
+  const narrow = viewportWidth <= 600;
   const tablet = viewportWidth <= 768;
 
   let scale = 1;
   if (viewportWidth < 1400) scale = 0.92;
   if (viewportWidth < 1200) scale = 0.85;
-  if (compact) scale = Math.max(0.56, viewportWidth / 1280);
-  if (tablet) scale = Math.max(0.5, viewportWidth / 1180);
-  if (phone) scale = Math.max(0.44, viewportWidth / 960);
+  if (compact) scale = Math.max(0.62, viewportWidth / 1200);
+  if (tablet) scale = Math.max(0.64, viewportWidth / 1000);
+  /* Under ~600px: smaller cards so a random pile still fits the scene */
+  if (narrow) {
+    scale = Math.min(0.56, Math.max(0.46, (viewportWidth - 24) / (SWATCH_WIDTH * 2.5)));
+  }
+  if (phone) {
+    scale = Math.min(0.52, Math.max(0.44, (viewportWidth - 16) / (SWATCH_WIDTH * 2.4)));
+  }
 
   const sceneHeight = phone
-    ? 620
-    : tablet
+    ? 640
+    : narrow
       ? 680
-      : compact
-        ? 740
-        : viewportWidth < 1200
-          ? 780
-          : 840;
+      : tablet
+        ? 780
+        : compact
+          ? 800
+          : viewportWidth < 1200
+            ? 780
+            : 840;
 
-  const spawnCols = phone ? 4 : compact ? 5 : 7;
+  /* spawnCols only used for wide desktops; compact uses random scatter */
+  const spawnCols = compact ? 5 : 7;
 
   return { scale, sceneHeight, spawnCols, compact };
 }
@@ -210,6 +220,7 @@ export const GravityPlayground: React.FC = () => {
   const [activeSwatchId, setActiveSwatchId] = useState<string | null>(null);
   const activeSwatchIdRef = useRef<string | null>(null);
   activeSwatchIdRef.current = activeSwatchId;
+  const settleReadyRef = useRef(false);
   const elementByIdRef = useRef<Map<string, PhysicsElement>>(new Map());
 
   const updateElementNode = (id: string, body: Matter.Body, scale: number) => {
@@ -219,12 +230,31 @@ export const GravityPlayground: React.FC = () => {
 
     const isDragging = dragBodyRef.current === body;
     const isActive = activeSwatchIdRef.current === id;
-    const snap = body.isSleeping && !isDragging;
+    const compact = layoutConfigRef.current.compact;
+
+    /* Only freeze after the fall window — never sleep cards while they’re still dropping */
+    if (
+      compact &&
+      settleReadyRef.current &&
+      !isDragging &&
+      !isActive &&
+      !body.isStatic
+    ) {
+      const speed = Math.hypot(body.velocity.x, body.velocity.y);
+      const spin = Math.abs(body.angularVelocity);
+      if (speed < 0.08 && spin < 0.003) {
+        Matter.Body.setVelocity(body, { x: 0, y: 0 });
+        Matter.Body.setAngularVelocity(body, 0);
+        if (!body.isSleeping) Matter.Sleeping.set(body, true);
+      }
+    }
+
+    const snap = (body.isSleeping || body.isStatic) && !isDragging;
     const x = snap ? Math.round(body.position.x) : body.position.x;
     const y = snap ? Math.round(body.position.y) : body.position.y;
     const renderWidth = el.width * scale;
     const renderHeight = el.height * scale;
-    const visualAngle = isActive ? 0 : snap ? Math.round(body.angle * 1000) / 1000 : body.angle;
+    const visualAngle = isActive ? 0 : snap ? Math.round(body.angle * 200) / 200 : body.angle;
     const liftY = isActive ? 24 * scale : 0;
 
     node.style.width = `${renderWidth}px`;
@@ -325,6 +355,7 @@ export const GravityPlayground: React.FC = () => {
     const scene = sceneRef.current;
     const { scale, sceneHeight, spawnCols, compact } = layoutConfigRef.current;
     scene.style.height = `${sceneHeight}px`;
+    settleReadyRef.current = false;
 
     const width = scene.offsetWidth || 1000;
     const height = sceneHeight;
@@ -333,13 +364,20 @@ export const GravityPlayground: React.FC = () => {
     elementByIdRef.current = new Map(elements.map((el) => [el.id, el]));
 
     const engine = Matter.Engine.create({
-      gravity: { x: 0, y: compact ? 0.72 : 0.8, scale: 0.001 },
+      gravity: { x: 0, y: compact ? 1 : 0.8, scale: 0.001 },
       enableSleeping: true,
+      positionIterations: compact ? 8 : 6,
+      velocityIterations: compact ? 6 : 4,
     });
     engineRef.current = engine;
 
     const wallThickness = 100;
-    const wallOpts = { isStatic: true, render: { visible: false }, friction: 0.3, restitution: 0.4 };
+    const wallOpts = {
+      isStatic: true,
+      render: { visible: false },
+      friction: compact ? 0.8 : 0.3,
+      restitution: compact ? 0 : 0.4,
+    };
     const walls = [
       Matter.Bodies.rectangle(width / 2, height + wallThickness / 2, width * 2, wallThickness, wallOpts),
       Matter.Bodies.rectangle(-wallThickness / 2, 0, wallThickness, height * 6, wallOpts),
@@ -348,36 +386,73 @@ export const GravityPlayground: React.FC = () => {
 
     const allBodies: Matter.Body[] = [...walls];
     const bodiesMap = new Map<string, Matter.Body>();
-    const edgePad = compact ? 48 : 80;
+    const edgePad = Math.min(compact ? 36 : 80, Math.max(14, width * 0.05));
+    /* Fit so at least ~2 cards can sit across without bursting the walls */
+    const fitScale = Math.min(scale, (width - edgePad * 2) * 0.42 / SWATCH_WIDTH);
+    const halfW = (SWATCH_WIDTH * fitScale) / 2;
+    const halfH = (SWATCH_HEIGHT * fitScale) / 2;
+    const minX = edgePad + halfW;
+    const maxX = width - edgePad - halfW;
 
-    elements.forEach((el, i) => {
-      const cols = Math.max(2, Math.min(spawnCols, elements.length));
-      const col = i % cols;
-      const row = Math.floor(i / cols);
+    /* Shuffle so drop order isn’t always the same card sequence */
+    const spawnOrder = [...elements].sort(() => Math.random() - 0.5);
 
-      const x =
-        edgePad +
-        col * ((width - edgePad * 2) / Math.max(cols - 1, 1)) +
-        (Math.random() - 0.5) * (compact ? 24 : 60);
-      const y = -120 - row * (compact ? 90 : 70) - Math.random() * (compact ? 180 : 600);
-      const angle = compact ? (Math.random() - 0.5) * 0.12 : (Math.random() - 0.5) * 0.3;
+    spawnOrder.forEach((el, i) => {
+      const bodyWidth = el.width * fitScale;
+      const bodyHeight = el.height * fitScale;
 
-      const bodyWidth = el.width * scale;
-      const bodyHeight = el.height * scale;
+      let x: number;
+      let y: number;
+      let angle: number;
+
+      if (compact) {
+        /* Random cloud just above the scene — keep drops short so they enter view quickly */
+        x = minX + Math.random() * Math.max(8, maxX - minX);
+        y = -halfH - 20 - Math.random() * 180 - i * (18 + Math.random() * 22);
+        angle = (Math.random() - 0.5) * 0.5;
+      } else {
+        const cols = Math.max(2, Math.min(spawnCols, elements.length));
+        const col = i % cols;
+        const row = Math.floor(i / cols);
+        const slotWidth = (width - edgePad * 2) / cols;
+        x =
+          edgePad +
+          slotWidth * (col + 0.5) +
+          (Math.random() - 0.5) * 60;
+        y = -bodyHeight - row * 70 - Math.random() * 600;
+        angle = (Math.random() - 0.5) * 0.3;
+      }
 
       const body = Matter.Bodies.rectangle(x, y, bodyWidth, bodyHeight, {
-        chamfer: { radius: 10 * scale },
-        friction: 0.4,
-        frictionAir: compact ? 0.038 : 0.02,
-        restitution: compact ? 0.1 : 0.4,
+        chamfer: { radius: 10 * fitScale },
+        friction: compact ? 0.55 : 0.4,
+        frictionStatic: compact ? 0.7 : 0.5,
+        frictionAir: compact ? 0.02 : 0.02,
+        restitution: compact ? 0.12 : 0.4,
         angle,
         label: el.id,
-        sleepThreshold: 40,
+        sleepThreshold: compact ? 35 : 40,
       });
+
+      Matter.Sleeping.set(body, false);
+      if (compact) {
+        Matter.Body.setVelocity(body, {
+          x: (Math.random() - 0.5) * 2.2,
+          y: 2 + Math.random() * 2.5,
+        });
+        Matter.Body.setAngularVelocity(body, (Math.random() - 0.5) * 0.05);
+      }
 
       allBodies.push(body);
       bodiesMap.set(el.id, body);
     });
+
+    /* Keep DOM card size in sync with the physics fit scale (no layoutRevision — avoid re-init loop) */
+    if (Math.abs(fitScale - scale) > 0.001) {
+      const next = { ...layoutConfigRef.current, scale: fitScale };
+      layoutConfigRef.current = next;
+      setLayoutConfig(next);
+    }
 
     bodiesRef.current = bodiesMap;
     Matter.Composite.add(engine.world, allBodies);
@@ -475,15 +550,35 @@ export const GravityPlayground: React.FC = () => {
     runnerRef.current = runner;
     Matter.Runner.run(runner, engine);
 
+    /* Allow a full fall before freezing — early sleep was leaving cards stuck mid-air */
+    let settleTimer: number | undefined;
+    let freezeArmTimer: number | undefined;
+    if (compact) {
+      freezeArmTimer = window.setTimeout(() => {
+        settleReadyRef.current = true;
+      }, 2800);
+      settleTimer = window.setTimeout(() => {
+        bodiesRef.current.forEach((body) => {
+          if (dragBodyRef.current === body || body.isStatic) return;
+          Matter.Body.setVelocity(body, { x: 0, y: 0 });
+          Matter.Body.setAngularVelocity(body, 0);
+          Matter.Sleeping.set(body, true);
+        });
+      }, 4200);
+    }
+
     const tick = () => {
       bodiesRef.current.forEach((body, id) => {
-        updateElementNode(id, body, scale);
+        updateElementNode(id, body, fitScale);
       });
       rafRef.current = requestAnimationFrame(tick);
     };
     rafRef.current = requestAnimationFrame(tick);
 
     return () => {
+      if (settleTimer) window.clearTimeout(settleTimer);
+      if (freezeArmTimer) window.clearTimeout(freezeArmTimer);
+      settleReadyRef.current = false;
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
       scene.removeEventListener('mousedown', handleStart);
       scene.removeEventListener('mousemove', handleMove);

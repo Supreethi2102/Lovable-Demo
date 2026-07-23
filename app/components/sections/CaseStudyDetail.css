@@ -461,14 +461,15 @@
 .case-study-detail__hero-title {
   margin: 0 0 16px;
   width: 488px;
-  height: 56px;
+  height: auto;
+  min-height: 56px;
   color: #111213;
   font-family: var(--font-family-display);
-  font-size: var(--type-romie-h8-size);
+  font-size: var(--type-romie-case-title-size);
   font-style: normal;
   font-weight: 500;
-  line-height: var(--type-romie-h8-lh);
-  letter-spacing: 1.6px;
+  line-height: var(--type-romie-case-title-lh);
+  letter-spacing: var(--type-romie-heading-tracking);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -524,12 +525,13 @@
   margin: 0;
   color: #111213;
   font-family: var(--font-family-ui);
-  font-size: var(--type-atkinson-text-xl-size);
+  font-size: var(--type-atkinson-large-subhead-size);
   font-style: normal;
-  font-weight: 600;
-  line-height: var(--type-atkinson-text-md-lh);
-  letter-spacing: 0.4px;
-  height: 28px;
+  font-weight: 500;
+  line-height: var(--type-atkinson-large-subhead-lh);
+  letter-spacing: 0;
+  height: auto;
+  min-height: 28px;
   align-self: stretch;
 }
 
@@ -1074,13 +1076,14 @@
   margin: 0;
   color: #111213;
   font-family: var(--font-family-display);
-  font-size: var(--type-romie-display-l-size);
+  font-size: var(--type-romie-case-subhead-size);
   font-style: normal;
   font-weight: 500;
-  line-height: var(--type-romie-display-l-lh);
-  letter-spacing: 1.28px;
+  line-height: var(--type-romie-case-subhead-lh);
+  letter-spacing: var(--type-romie-heading-tracking);
   width: 399px;
-  height: 32px;
+  height: auto;
+  min-height: 32px;
   display: flex;
   align-items: center;
 }
@@ -1089,11 +1092,11 @@
   margin: 0;
   color: #111213;
   font-family: var(--font-family-ui);
-  font-size: var(--type-atkinson-text-md-size);
+  font-size: var(--type-atkinson-large-subhead-size);
   font-style: normal;
-  font-weight: 600;
-  line-height: var(--type-atkinson-text-md-lh);
-  letter-spacing: 0.32px;
+  font-weight: 500;
+  line-height: var(--type-atkinson-large-subhead-lh);
+  letter-spacing: 0;
 }
 
 .case-study-detail__brief-text.text-side p {
@@ -1515,11 +1518,11 @@
   color: #111213;
   text-align: center;
   font-family: var(--font-family-display);
-  font-size: var(--type-romie-display-m-size);
+  font-size: var(--type-romie-case-pull-quote-size);
   font-style: normal;
   font-weight: 500;
-  line-height: var(--type-romie-display-m-lh);
-  letter-spacing: 0.02em;
+  line-height: var(--type-romie-case-pull-quote-lh);
+  letter-spacing: var(--type-romie-heading-tracking);
 }
 
 .case-study-detail__palmy-process-quote-line {
@@ -1712,11 +1715,11 @@
 .case-study-detail__text-stack h3 {
   color: #111213;
   font-family: var(--font-family-display);
-  font-size: var(--type-romie-display-l-size);
+  font-size: var(--type-romie-case-subhead-size);
   font-style: normal;
   font-weight: 500;
-  line-height: var(--type-romie-display-l-lh);
-  letter-spacing: 1.28px;
+  line-height: var(--type-romie-case-subhead-lh);
+  letter-spacing: var(--type-romie-heading-tracking);
   min-height: 32px;
   display: flex;
   align-items: center;
@@ -1725,11 +1728,11 @@
 .case-study-detail__text-stack h4 {
   color: #111213;
   font-family: var(--font-family-ui);
-  font-size: var(--type-atkinson-text-md-size);
+  font-size: var(--type-atkinson-large-subhead-size);
   font-style: normal;
-  line-height: var(--type-atkinson-text-md-lh);
-  letter-spacing: 0.32px;
-  font-weight: 600;
+  line-height: var(--type-atkinson-large-subhead-lh);
+  letter-spacing: 0;
+  font-weight: 500;
 }
 
 .case-study-detail__text-stack p,
@@ -2219,11 +2222,11 @@
   text-align: center;
   color: #111213;
   font-family: var(--font-family-display);
-  font-size: 24px;
+  font-size: var(--type-romie-case-pull-quote-size);
   font-weight: 500;
   font-style: normal;
-  line-height: 36px;
-  letter-spacing: 0.04em;
+  line-height: var(--type-romie-case-pull-quote-lh);
+  letter-spacing: var(--type-romie-heading-tracking);
   hyphens: none;
 }
 
@@ -2721,11 +2724,11 @@
   max-width: min(38ch, 100%);
   color: #111213;
   font-family: var(--font-family-display);
-  font-size: var(--type-romie-display-s-size);
+  font-size: var(--type-romie-case-pull-quote-size);
   font-style: normal;
   font-weight: 500;
-  line-height: var(--type-romie-display-s-lh);
-  letter-spacing: 0.02em;
+  line-height: var(--type-romie-case-pull-quote-lh);
+  letter-spacing: var(--type-romie-heading-tracking);
   text-align: center;
   text-wrap: balance;
   hyphens: manual;
@@ -3006,11 +3009,11 @@
   margin: 0;
   color: #111213;
   font-family: var(--font-family-display);
-  font-size: var(--type-romie-display-m-size);
+  font-size: var(--type-romie-case-pull-quote-size);
   font-style: normal;
   font-weight: 500;
-  line-height: var(--type-atkinson-display-s-lh);
-  letter-spacing: 0.96px;
+  line-height: var(--type-romie-case-pull-quote-lh);
+  letter-spacing: var(--type-romie-heading-tracking);
 }
 
 .case-study-detail__gch-testimonial-quote--bottom {
@@ -3250,11 +3253,11 @@
   margin: 94px 0 28px;
   color: #111213;
   font-family: var(--font-family-display);
-  font-size: var(--type-romie-display-l-size);
+  font-size: var(--type-romie-section-size);
   font-style: normal;
   font-weight: 500;
-  line-height: var(--type-romie-display-l-lh);
-  letter-spacing: 1.28px;
+  line-height: var(--type-romie-section-lh);
+  letter-spacing: var(--type-romie-heading-tracking);
 }
 
 .case-study-detail__more-projects-list {

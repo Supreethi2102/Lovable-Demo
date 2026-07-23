@@ -263,10 +263,10 @@
 
 .contact__title {
   font-family: var(--font-family-display);
-  font-size: var(--type-romie-display-l-size);
+  font-size: var(--type-romie-section-size);
   font-weight: 500;
-  line-height: var(--type-romie-display-l-lh);
-  letter-spacing: 1.28px; /* Figma */
+  line-height: var(--type-romie-section-lh);
+  letter-spacing: var(--type-romie-heading-tracking);
   color: #111213;
   margin: 0;
 }
@@ -728,11 +728,6 @@
     padding: 0 16px;
   }
 
-  .contact__title {
-    font-size: var(--type-romie-display-m-size);
-    line-height: var(--type-romie-display-m-lh);
-  }
-
   .contact__postcard-side {
     min-width: 0;
   }
@@ -854,10 +849,6 @@
     z-index: 1;
   }
 
-  .contact__title {
-    font-size: var(--type-romie-display-l-size);
-    line-height: var(--type-romie-display-l-lh);
-  }
 }
 
 /* Tablet landscape in 1025–1200 band (e.g. 1194×834): Figma composite, not split stamp/address */
@@ -1125,10 +1116,6 @@
 
 /* Tablet landscape (769–1024px): typography only – composite height stays intrinsic */
 @media (min-width: 769px) and (max-width: 1024px) {
-  .contact__title {
-    font-size: clamp(var(--type-romie-display-m-size), 2.8vw, var(--type-romie-display-l-size));
-    line-height: var(--type-romie-display-m-lh);
-  }
 }
 
 /* Tablet portrait (≤768px): still tablet composite; tighter card padding */

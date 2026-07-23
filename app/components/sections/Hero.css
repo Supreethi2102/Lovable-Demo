@@ -38,10 +38,9 @@
 .hero__title {
   font-family: var(--font-family-display);
   font-weight: 500;
-  /* Smallest rung used here: Display S (24/32); ramps per Figma Romie display + H8 */
-  font-size: var(--type-romie-display-s-size);
-  line-height: var(--type-romie-display-s-lh);
-  letter-spacing: var(--type-romie-section-title-tracking);
+  font-size: var(--type-romie-hero-size);
+  line-height: var(--type-romie-hero-lh);
+  letter-spacing: var(--type-romie-heading-tracking);
   color: #111213;
   margin: 0;
   overflow: visible;
@@ -62,27 +61,7 @@
   text-wrap: pretty;
 }
 
-/* Responsive */
-@media (min-width: 480px) {
-  .hero__title {
-    font-size: var(--type-romie-display-m-size);
-    line-height: var(--type-romie-display-m-lh);
-  }
-}
-
-@media (min-width: 768px) {
-  .hero__title {
-    font-size: var(--type-romie-display-l-size);
-    line-height: var(--type-romie-display-l-lh);
-  }
-}
-
-@media (min-width: 1025px) {
-  .hero__title {
-    font-size: var(--type-romie-display-xl-size);
-    line-height: var(--type-romie-display-xl-lh);
-  }
-}
+/* Type scales via --type-romie-hero-* tokens (desktop / tablet / mobile) */
 
 @media (max-width: 1200px) {
   /* Stack hero: text above, globe below (tablet landscape e.g. 1194×834) */
@@ -121,10 +100,7 @@
 }
 
 @media (min-width: 1440px) {
-  .hero__title {
-    font-size: var(--type-romie-h8-size);
-    line-height: var(--type-romie-h8-lh);
-  }
+  /* Hero type stays on semantic tokens — no upscale past Figma desktop */
 }
 
 @media (max-width: 768px) {

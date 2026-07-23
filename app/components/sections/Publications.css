@@ -19,10 +19,10 @@
 
 .publications__title {
   font-family: var(--font-family-display);
-  font-size: var(--type-romie-display-l-size);
+  font-size: var(--type-romie-section-size);
   font-weight: 500;
-  line-height: var(--type-romie-display-l-lh);
-  letter-spacing: var(--type-romie-section-title-tracking);
+  line-height: var(--type-romie-section-lh);
+  letter-spacing: var(--type-romie-heading-tracking);
   color: #111213;
   margin: 0 0 40px 0;
   display: flex;
@@ -662,8 +662,6 @@
   }
 
   .publications__title {
-    font-size: var(--type-romie-display-m-size);
-    line-height: var(--type-romie-display-m-lh);
     margin-bottom: 40px;
   }
 
@@ -696,8 +694,6 @@
   }
 
   .publications__title {
-    font-size: var(--type-romie-display-s-size);
-    line-height: var(--type-romie-display-s-lh);
     margin-bottom: 32px;
   }
 
@@ -739,8 +735,6 @@
   }
 
   .publications__title {
-    font-size: var(--type-romie-display-xs-size);
-    line-height: var(--type-romie-display-xs-lh);
     margin-bottom: 24px;
   }
 

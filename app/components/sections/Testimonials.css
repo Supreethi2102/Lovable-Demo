@@ -49,10 +49,10 @@
 
 .testimonials__title {
   font-family: var(--font-family-display);
-  font-size: var(--type-romie-display-l-size);
+  font-size: var(--type-romie-section-size);
   font-weight: 500;
-  line-height: var(--type-romie-display-l-lh);
-  letter-spacing: 1.6px; /* Figma */
+  line-height: var(--type-romie-section-lh);
+  letter-spacing: var(--type-romie-heading-tracking);
   color: #111213;
   margin: 0 0 8px 0;
 }
@@ -391,11 +391,6 @@
     line-height: var(--type-atkinson-text-xl-lh);
   }
 
-  .testimonials__title {
-    font-size: var(--type-romie-display-l-size);
-    line-height: var(--type-romie-h8-lh);
-  }
-
   .testimonials__subtitle {
     font-size: var(--type-atkinson-text-md-size);
     line-height: var(--type-atkinson-text-md-lh);
@@ -490,12 +485,6 @@
   .testimonials__carousel > .testimonials__nav,
   .testimonials__content .testimonials__nav:not(.testimonials__nav--mobile) {
     display: none !important;
-  }
-
-  .testimonials__title {
-    font-size: var(--type-romie-display-m-size);
-    line-height: var(--type-romie-display-m-lh);
-    letter-spacing: 1px;
   }
 
   .testimonials__subtitle {

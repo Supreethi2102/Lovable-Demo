@@ -72,10 +72,10 @@
 
 .case-studies__title {
   font-family: var(--font-family-display);
-  font-size: var(--type-romie-display-l-size);
+  font-size: var(--type-romie-section-size);
   font-weight: 500;
-  line-height: var(--type-romie-display-l-lh);
-  letter-spacing: var(--type-romie-section-title-tracking);
+  line-height: var(--type-romie-section-lh);
+  letter-spacing: var(--type-romie-heading-tracking);
   color: #111213;
   margin: 0;
   display: flex;
@@ -1389,8 +1389,6 @@
   }
 
   .case-studies__title {
-    font-size: var(--type-romie-display-m-size);
-    line-height: var(--type-romie-display-m-lh);
     flex-direction: column;
     gap: 4px;
   }

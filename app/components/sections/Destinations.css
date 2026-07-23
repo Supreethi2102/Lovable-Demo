@@ -31,10 +31,10 @@
 
 .destinations__title {
   font-family: var(--font-family-display);
-  font-size: var(--type-romie-display-l-size);
+  font-size: var(--type-romie-section-size);
   font-weight: 500;
-  line-height: var(--type-romie-display-m-lh);
-  letter-spacing: 1.28px;
+  line-height: var(--type-romie-section-lh);
+  letter-spacing: var(--type-romie-heading-tracking);
   color: #111213;
   margin: 0;
   display: flex;
@@ -418,10 +418,10 @@
 
 .destination-expanded__title {
   font-family: var(--font-family-display);
-  font-size: var(--type-romie-display-l-size);
+  font-size: var(--type-romie-section-size);
   font-weight: 500;
-  line-height: var(--type-romie-display-l-lh);
-  letter-spacing: 1.28px;
+  line-height: var(--type-romie-section-lh);
+  letter-spacing: var(--type-romie-heading-tracking);
   color: #111213;
   margin: 0;
   max-width: 308px;
@@ -679,11 +679,6 @@
 
 /* Desktop - 1200px */
 @media (max-width: 1200px) {
-  .destinations__title {
-    font-size: var(--type-romie-display-m-size);
-    line-height: var(--type-romie-display-m-lh);
-  }
-
   .destinations__grid {
     gap: 32px;
   }
@@ -949,11 +944,6 @@
     max-width: 100%;
   }
 
-  .destination-expanded__title {
-    font-size: var(--type-romie-display-m-size);
-    line-height: var(--type-romie-display-m-lh);
-  }
-
   .destination-expanded__section h4,
   .destination-expanded__section p {
     font-size: var(--type-atkinson-text-md-size);
@@ -991,11 +981,6 @@
 
 /* Tablet Portrait - 768px */
 @media (max-width: 768px) and (min-width: 481px) {
-  .destinations__title {
-    font-size: var(--type-romie-display-s-size);
-    line-height: var(--type-romie-display-s-lh);
-  }
-
   .destinations__grid {
     gap: 16px;
   }
@@ -1151,11 +1136,6 @@
     max-width: 100%;
   }
 
-  .destination-expanded__title {
-    font-size: var(--type-romie-display-s-size);
-    line-height: var(--type-romie-display-s-lh);
-  }
-
   .destination-expanded__section h4,
   .destination-expanded__section p {
     font-size: var(--type-atkinson-text-md-size);
@@ -1210,11 +1190,6 @@
 
   .destinations::after {
     height: 24px;
-  }
-
-  .destinations__title {
-    font-size: var(--type-romie-display-xs-size);
-    line-height: var(--type-atkinson-text-xl-lh);
   }
 
   .destinations__subtitle {
@@ -1319,11 +1294,6 @@
   .destination-expanded__section h4,
   .destination-expanded__section p {
     max-width: 100%;
-  }
-
-  .destination-expanded__title {
-    font-size: var(--type-atkinson-text-xl-size);
-    line-height: var(--type-romie-display-xs-lh);
   }
 
   .destination-expanded__section h4,

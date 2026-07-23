@@ -106,7 +106,7 @@ export const PublicationDetail: React.FC = () => {
     const prefersReducedMotion =
       typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
 
-    const edgePad = 8;
+    const edgePad = 20;
     const maxScroll = Math.max(0, scroller.scrollWidth - scroller.clientWidth);
     const activeLeft = active.offsetLeft;
     const activeRight = activeLeft + active.offsetWidth;
@@ -116,6 +116,7 @@ export const PublicationDetail: React.FC = () => {
 
     let nextScroll = viewLeft;
     // Wrap-around: jump fully to the start/end so the highlight is never off-screen.
+    // Keep a left inset at the start so the active ring/glow isn’t clipped.
     if (activeIndex === 0) {
       nextScroll = 0;
     } else if (activeIndex === lastIndex) {

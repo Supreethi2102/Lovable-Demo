@@ -10,13 +10,10 @@ export const Hero: React.FC = () => {
       <div className="hero__content">
         {/* Plain h1 (no text-wrap: balance + no sr-only/aria-hidden) so every line, including the first, paints reliably on mobile */}
         <h1 className="hero__title" id="hero-heading">
-          I&rsquo;m Samantha.
-          <br />
-          Inspired by the world.
-          <br />
-          Driven by insight.
-          <br />
-          From places to pixels.
+          <span className="hero__title-line">I&rsquo;m Samantha.</span>
+          <span className="hero__title-line">Inspired by the world.</span>
+          <span className="hero__title-line">Driven by insight.</span>
+          <span className="hero__title-line">From places to pixels.</span>
         </h1>
         
         <p className="hero__description">

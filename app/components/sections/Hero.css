@@ -29,7 +29,7 @@
   flex-direction: column;
   gap: 48px;
   width: 100%;
-  max-width: 462px;
+  max-width: 560px;
   min-width: 0;
   padding-left: 4px; /* Prevent first-letter clipping (e.g. Romie "I") */
   box-sizing: border-box;
@@ -47,6 +47,10 @@
   padding-block-start: 0.2em;
   box-decoration-break: clone;
   -webkit-box-decoration-break: clone;
+}
+
+.hero__title-line {
+  display: block;
 }
 
 .hero__description {

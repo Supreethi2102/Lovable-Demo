@@ -81,9 +81,13 @@
     flex-shrink: 0;
   }
   
-  .header__logo:hover .header__logo-expand {
+  
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+.header__logo:hover .header__logo-expand {
     width: 223px;
   }
+}
+
   
   /* Desktop Navigation — stretch to content row (~48px; vertical pad halved vs Figma frame so bar sits closer) */
   .header__nav {
@@ -134,22 +138,31 @@
     z-index: 1;
   }
 
+  
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
   .header__nav-link:hover::after,
-  .header__nav-link:focus-visible::after,
   .header__nav-item--has-mega:hover .header__nav-link::after,
   .header__nav-item--has-mega .header__nav-link[aria-expanded="true"]::after {
     transform: scaleX(1);
   }
 
-  /* Primary text colour on hover (not full purple — avoids heavy treatment) */
-  .header__nav-link:hover,
-  .header__nav-link:focus-visible {
+  .header__nav-link:hover {
     color: #3c3f43;
   }
 
   .header__nav-item--has-mega:hover .header__nav-link {
     color: #3c3f43;
   }
+}
+
+.header__nav-link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.header__nav-link:focus-visible {
+  color: #3c3f43;
+}
+
 
   /* Keep outline icons in top nav on hover */
   .header__nav-link .header__nav-icon {
@@ -293,7 +306,7 @@
     outline-offset: var(--btn-focus-offset, 2px);
   }
   
-  @media (hover: hover) and (pointer: fine) {
+  @media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
     .theme-menu__option:hover:not(.theme-menu__option--active) {
       background: var(--btn-purple-100-bg, #eee8fe);
       color: var(--btn-purple-100-text, #4c3cac);
@@ -310,11 +323,19 @@
     overflow: hidden;
   }
   
-  .theme-menu__option:hover svg,
-  .theme-menu__option--active svg {
+  
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+  .theme-menu__option:hover svg {
     opacity: 1;
     width: 24px;
   }
+}
+
+.theme-menu__option--active svg {
+  opacity: 1;
+  width: 24px;
+}
+
   
   /* Nav Item Container (for mega menu) */
   .header__nav-item {
@@ -535,19 +556,19 @@
     display: block;
   }
 
-  @media (hover: hover) and (pointer: fine) {
+  @media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
     .mega-menu__tab:hover:not([aria-selected="true"]) {
       background: var(--btn-purple-100-bg, #eee8fe);
       color: var(--btn-purple-100-text, #4c3cac);
     }
 
-    .mega-menu__link:hover,
-    .mega-menu__link:focus-visible {
+    .mega-menu__link:hover {
       color: var(--btn-purple-100-text, #4c3cac);
     }
   }
 
   .mega-menu__link:focus-visible {
+    color: var(--btn-purple-100-text, #4c3cac);
     outline: var(--btn-focus-outline, 2px solid #5340c4);
     outline-offset: var(--btn-focus-offset, 2px);
     border-radius: 4px;
@@ -573,9 +594,13 @@
     transition: background-color 0.2s;
   }
   
-  .header__mobile-toggle:hover {
+  
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+.header__mobile-toggle:hover {
     background-color: rgba(0, 0, 0, 0.05);
   }
+}
+
   
   .header__hamburger {
     display: block;
@@ -834,8 +859,10 @@
       padding-left: var(--padding-x, 48px);
       padding-right: var(--padding-x, 48px);
     }
+  }
 
-    /* Logo expand overlaps icon nav in the awkward 769–1200px band (e.g. 920×700) */
+  /* Logo expand overlaps icon nav in the awkward 1025–1200px band (e.g. 920×700) */
+  @media (min-width: 1025px) and (max-width: 1200px) and (hover: hover) and (pointer: fine) {
     .header__logo:hover .header__logo-expand {
       width: 0;
     }
@@ -934,11 +961,7 @@
       height: 28px;
       width: 185px;
     }
-  
-    .header__logo:hover .header__logo-expand {
-      width: 196px;
-    }
-  
+
     .header__nav,
     .header__contact-btn:not(.header__contact-btn--mobile) {
       display: none;
@@ -1050,11 +1073,7 @@
       height: 24px;
       width: 160px;
     }
-  
-    .header__logo:hover .header__logo-expand {
-      width: 169px;
-    }
-  
+
     .header__mobile-toggle {
       width: 40px;
       height: 40px;
@@ -1068,40 +1087,39 @@
     }
   }
   
-  /* Disable hover underline on touch / coarse pointers (tablet uses click, not hover) */
-  @media (max-width: 1024px) and (hover: none) {
+  /* Neutralize any sticky :hover styles on tablet/phone (≤1024) */
+  @media (max-width: 1024px) {
     .header__logo:hover .header__logo-expand {
       width: 0 !important;
     }
-  
+
     .header__nav-link:hover,
     .header__nav-item--has-mega:hover .header__nav-link {
       color: #3c3f43;
     }
-  
+
     .header__nav-link:hover::after,
     .header__nav-item--has-mega:hover .header__nav-link::after {
       transform: scaleX(0);
     }
-  
+
     .header__nav-link:hover .header__nav-icon,
     .header__nav-item--has-mega:hover .header__nav-link .header__nav-icon {
       color: inherit;
     }
-  
+
     .theme-menu__option:hover:not(.theme-menu__option--active) {
       background: transparent;
     }
-  
-    .mega-menu__link:hover,
-    .mega-menu__link:focus-visible {
+
+    .mega-menu__link:hover {
       color: var(--text-secondary, #3c3f43);
     }
 
     .mega-menu__tab:hover:not([aria-selected="true"]) {
       color: var(--text-secondary, #3c3f43);
     }
-  
+
     .header__mobile-toggle:hover {
       background-color: transparent;
     }

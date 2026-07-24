@@ -309,11 +309,15 @@
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .publication-modal__listen-btn:hover:not(:disabled) {
   background: var(--btn-primary-hover);
   border-color: var(--btn-primary-hover);
   color: var(--btn-white);
 }
+}
+
 
 .publication-modal__listen-btn:active:not(:disabled) {
   background: var(--btn-primary-active);
@@ -393,11 +397,15 @@
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .publication-modal__nav-btn:hover:not(:disabled) {
   background: var(--btn-primary-hover);
   border-color: var(--btn-primary-hover);
   color: var(--btn-white);
 }
+}
+
 
 .publication-modal__nav-btn:active:not(:disabled) {
   background: var(--btn-primary-active);
@@ -436,11 +444,15 @@
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .publication-modal__expand-btn:hover:not(:disabled) {
   background: var(--btn-primary-hover);
   border-color: var(--btn-primary-hover);
   color: var(--btn-white);
 }
+}
+
 
 .publication-modal__expand-btn:active:not(:disabled) {
   background: var(--btn-primary-active);
@@ -491,9 +503,13 @@
   box-shadow: 0 0 0 2px #7150e5, 0 4px 16px rgba(113, 80, 229, 0.18);
 }
 
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .publication-modal__thumb:hover:not(.publication-modal__thumb--selected) {
   border-color: #b0b3b8;
 }
+}
+
 
 /* Expand overlay – fullscreen image */
 .publication-modal__expand-overlay {
@@ -524,9 +540,13 @@
   z-index: 10;
 }
 
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .publication-modal__expand-close:hover {
   background: rgba(255, 255, 255, 0.2);
 }
+}
+
 
 .publication-modal__expand-image {
   max-width: 100%;
@@ -552,9 +572,13 @@
   color: #fff;
 }
 
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .publication-modal__expand-nav:hover {
   background: rgba(255, 255, 255, 0.2);
 }
+}
+
 
 .publication-modal__expand-nav--prev {
   left: 24px;

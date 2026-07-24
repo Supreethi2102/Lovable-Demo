@@ -239,8 +239,9 @@
       display: block;
     }
   
-    .case-study-detail__tab-row:hover::before {
+    .case-study-detail__tab-row::before {
       content: none;
+      display: none;
     }
   
     .case-study-detail__tab {
@@ -1295,8 +1296,9 @@
       display: none;
     }
   
-    .case-study-detail__tab-row:hover::before {
+    .case-study-detail__tab-row::before {
       content: none;
+      display: none;
     }
   
     /* Tab button: icon + label side by side, underline for active */
@@ -1320,7 +1322,7 @@
       font-weight: 600;
     }
   
-    @media (hover: hover) and (pointer: fine) {
+    @media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
       .case-study-detail__tab:not(.is-active):hover {
         color: var(--btn-purple-100-text, #4c3cac);
         border-bottom-color: transparent;
@@ -1331,7 +1333,7 @@
     .case-study-detail__sidebar > .case-study-detail__listen {
       display: none;
     }
-  
+
     .case-study-detail__listen--in-content {
       display: flex;
       width: 100%;

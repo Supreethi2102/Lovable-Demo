@@ -201,7 +201,13 @@ export const Contact: React.FC = () => {
       {/* Left Side - Form */}
       <div className="contact__form-side">
         <span className="contact__label">Contact</span>
-        <h2 className="contact__title">Say hello from anywhere</h2>
+        <h2
+          className="contact__title"
+          id={isActive ? 'contact-title' : undefined}
+          aria-hidden={isActive ? undefined : true}
+        >
+          Say hello from anywhere
+        </h2>
         
         <form 
           id={formDomId}
@@ -348,7 +354,7 @@ export const Contact: React.FC = () => {
                   key={slot}
                   className={postcardClass}
                   data-postcard-slot={slot}
-                  aria-hidden={isFront ? 'false' : 'true'}
+                  aria-hidden={!isFront || undefined}
                 >
                   {/* Desktop: separate stamp + address (Figma desktop) */}
                   <div className="contact__postcard-split">
@@ -887,7 +893,12 @@ export const Contact: React.FC = () => {
           </div>
         </div>
         {/* Active card */}
-        <div ref={cardARef} className={`contact-card ${activeSlot === 0 ? 'is-active' : 'is-next'}`}>
+        <div
+          ref={cardARef}
+          className={`contact-card ${activeSlot === 0 ? 'is-active' : 'is-next'}`}
+          aria-hidden={activeSlot === 0 ? undefined : true}
+          inert={activeSlot === 0 ? undefined : true}
+        >
           {renderContactCard(
             activeSlot === 0 ? formData : { name: '', email: '', message: '' },
             activeSlot === 0 ? errors : {},
@@ -901,7 +912,12 @@ export const Contact: React.FC = () => {
         </div>
 
         {/* Next card */}
-        <div ref={cardBRef} className={`contact-card ${activeSlot === 1 ? 'is-active' : 'is-next'}`}>
+        <div
+          ref={cardBRef}
+          className={`contact-card ${activeSlot === 1 ? 'is-active' : 'is-next'}`}
+          aria-hidden={activeSlot === 1 ? undefined : true}
+          inert={activeSlot === 1 ? undefined : true}
+        >
           {renderContactCard(
             activeSlot === 1 ? formData : { name: '', email: '', message: '' },
             activeSlot === 1 ? errors : {},

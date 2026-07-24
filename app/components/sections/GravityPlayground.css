@@ -496,7 +496,7 @@
   font-family: var(--font-family-ui);
   font-size: var(--type-atkinson-text-xs-size);
   font-weight: 400;
-  line-height: 1.4;
+  line-height: 1.25;
   letter-spacing: 0;
   color: #3c3f43;
   flex-shrink: 0;
@@ -510,6 +510,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 0;
+  line-height: 1.25;
 }
 
 .gp-swatch__ideal-label {
@@ -520,25 +521,27 @@
   display: block;
   font-weight: 600;
   text-transform: uppercase;
+  line-height: 1.25;
 }
 
 .gp-swatch__ideal-name {
+  display: block;
   margin: 0;
-  font-size: var(--type-atkinson-text-xs-size);
+  font-size: inherit;
   font-weight: 400;
   line-height: 1.25;
   color: #3c3f43;
 }
 
 .gp-swatch__contrast-ratio {
-  font-family: var(--font-family-ui);
-  font-size: var(--type-atkinson-text-xs-size);
+  display: block;
+  font-family: inherit;
+  font-size: inherit;
   font-weight: 400;
   line-height: 1.25;
   letter-spacing: 0;
   color: #3c3f43;
-  margin: 4px 0 0;
-  flex-shrink: 0;
+  margin: 0;
   text-align: left;
 }
 

@@ -38,6 +38,8 @@
   transition: none !important;
 }
 
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .color-swatches__header:hover .color-swatches__icon,
 .color-swatches__header:hover .color-swatches__icon:nth-child(1),
 .color-swatches__header:hover .color-swatches__icon:nth-child(2),
@@ -46,6 +48,8 @@
   transform: none !important;
   transition: none !important;
 }
+}
+
 
 .color-swatches__text {
   font-family: var(--font-family-ui);
@@ -115,12 +119,16 @@
 }
 
 /* Jump animation on hover */
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .swatch-card:hover,
 .swatch-card--jumping {
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
   z-index: 100;
   animation: cardJump 0.5s cubic-bezier(0.34, 1.56, 0.64, 1);
 }
+}
+
 
 .swatch-card:active {
   cursor: grabbing;
@@ -225,9 +233,13 @@
   padding: 0;
 }
 
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .swatch-card__link:hover {
   text-decoration: underline;
 }
+}
+
 
 /* Canvas Wrapper */
 .color-swatches__canvas-wrapper {
@@ -268,14 +280,21 @@
   transition: all 0.2s ease;
 }
 
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .back-to-top__btn:hover {
   background: #7150e5;
   box-shadow: 0 4px 12px rgba(113, 80, 229, 0.35);
 }
+}
 
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .back-to-top__btn:hover svg path {
   stroke: #ffffff;
 }
+}
+
 
 .back-to-top__btn svg {
   width: 24px;
@@ -437,10 +456,14 @@
   white-space: nowrap;
 }
 
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .site-footer__link:hover,
 .site-footer__link--hovered {
   color: #7150e5;
 }
+}
+
 
 .site-footer__link:focus-visible {
   outline: 2px solid #7150e5;
@@ -455,9 +478,13 @@
   transition: filter 0.2s ease;
 }
 
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .site-footer__link:hover img {
   filter: brightness(0) saturate(100%) invert(36%) sepia(68%) saturate(1352%) hue-rotate(229deg) brightness(88%) contrast(96%);
 }
+}
+
 
 button.site-footer__link {
   background: none;
@@ -564,10 +591,14 @@ button.site-footer__link {
   border-bottom: 1px solid #7150E5;
   transition: color 0.2s ease, border-color 0.2s ease;
 }
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .modal__inline-link:hover {
   color: #5238a8;
   border-bottom-color: #5238a8;
 }
+}
+
 
 /* Contact me link – new line with spacing below body text */
 .modal__contact-wrap {

@@ -53,6 +53,13 @@
   display: block;
 }
 
+/* Keep intentional phrase breaks (don’t orphan “world.” / “pixels.”) from tablet up */
+@media (min-width: 700px) {
+  .hero__title-line {
+    white-space: nowrap;
+  }
+}
+
 .hero__description {
   font-family: var(--font-family-ui);
   font-size: var(--type-atkinson-intro-size);
@@ -86,7 +93,7 @@
 
   .hero__content {
     gap: 28px;
-    max-width: 520px;
+    max-width: min(560px, 100%);
     align-items: flex-start;
     margin-inline: auto;
     overflow: visible;

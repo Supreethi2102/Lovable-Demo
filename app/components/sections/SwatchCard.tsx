@@ -262,12 +262,12 @@ export const SwatchCard: React.FC<SwatchCardProps> = ({
                       <p className="gp-swatch__ideal-line">
                         <span className="gp-swatch__ideal-label">My ideal match: </span>
                         <span className="gp-swatch__ideal-hex">{mood.idealMatchHex}</span>
+                        <span className="gp-swatch__ideal-name">{mood.idealMatchName}</span>
+                        <span className="gp-swatch__contrast-ratio">
+                          Contrast: {mood.contrastRatio} - ({mood.contrastRating})
+                        </span>
                       </p>
-                      <p className="gp-swatch__ideal-name">{mood.idealMatchName}</p>
                     </div>
-                    <p className="gp-swatch__contrast-ratio">
-                      Contrast: {mood.contrastRatio} - ({mood.contrastRating})
-                    </p>
                   </div>
                 </div>
               </div>

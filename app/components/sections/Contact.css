@@ -554,10 +554,14 @@
   flex-shrink: 0;
 }
 
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .contact__submit-btn:hover:not(:disabled):not(.contact__submit-btn--loading):not(.contact__submit-btn--success) span,
 .contact__submit-btn:hover:not(:disabled):not(.contact__submit-btn--loading):not(.contact__submit-btn--success) svg {
   color: currentColor;
 }
+}
+
 
 .contact__submit-btn svg {
   width: 24px;
@@ -645,11 +649,15 @@
   color: var(--btn-white);
 }
 
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .contact__submit-btn--success:hover:not(:disabled) {
   background: var(--btn-primary-hover);
   border-color: var(--btn-primary-hover);
   color: var(--btn-white);
 }
+}
+
 
 .contact__submit-btn--success:active:not(:disabled) {
   background: var(--btn-primary-active);

@@ -182,11 +182,15 @@
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .publication-detail__listen:hover:not(:disabled) {
   background: var(--btn-primary-hover);
   border-color: var(--btn-primary-hover);
   color: var(--btn-white);
 }
+}
+
 
 .publication-detail__listen:active:not(:disabled) {
   background: var(--btn-primary-active);
@@ -216,9 +220,13 @@
   box-sizing: border-box;
 }
 
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .publication-detail__listen:hover:not(:disabled) .publication-detail__listen-bottom {
   border-top-color: rgba(255, 255, 255, 0.35);
 }
+}
+
 
 .publication-detail__listen-label {
   text-align: center;

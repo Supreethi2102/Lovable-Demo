@@ -163,9 +163,13 @@
   background: #111213;
 }
 
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .case-study-detail__tab-row:hover:not(:has(.case-study-detail__tab.is-active))::after {
   background: var(--btn-purple-100-text, #4c3cac);
 }
+}
+
 
 .case-study-detail__tab {
   grid-column: 1;
@@ -196,12 +200,19 @@
   letter-spacing: 0.32px;
 }
 
-.case-study-detail__tab.is-active:hover,
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+  .case-study-detail__tab.is-active:hover {
+    color: #111213;
+  }
+}
+
 .case-study-detail__tab.is-active:focus-visible {
   color: #111213;
 }
 
-@media (hover: hover) and (pointer: fine) {
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
   .case-study-detail__tab:not(.is-active):hover {
     color: var(--btn-purple-100-text, #4c3cac);
   }
@@ -219,7 +230,9 @@
     box-sizing: border-box;
   }
 
-  .case-study-detail__tab-row:not(:has(.case-study-detail__tab.is-active)):hover::before {
+  
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+.case-study-detail__tab-row:not(:has(.case-study-detail__tab.is-active)):hover::before {
     content: '';
     position: absolute;
     z-index: 0;
@@ -231,6 +244,8 @@
     border-radius: 8px;
     pointer-events: none;
   }
+}
+
 }
 
 .case-study-detail__listen {
@@ -253,10 +268,14 @@
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .case-study-detail__listen:hover:not(:disabled) {
   background: var(--btn-primary-hover);
   border-color: var(--btn-primary-hover);
 }
+}
+
 
 .case-study-detail__listen:active:not(:disabled) {
   background: var(--btn-primary-active);
@@ -277,10 +296,14 @@
   color: var(--btn-primary);
 }
 
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .case-study-detail__listen:hover:not(:disabled) .case-study-detail__listen-icon,
 .case-study-detail__listen:active:not(:disabled) .case-study-detail__listen-icon {
   color: var(--btn-white);
 }
+}
+
 
 .case-study-detail__listen-label {
   border-left: 1px solid var(--btn-disabled-border);
@@ -298,11 +321,15 @@
   transition: color 0.2s ease, border-color 0.2s ease;
 }
 
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .case-study-detail__listen:hover:not(:disabled) .case-study-detail__listen-label,
 .case-study-detail__listen:active:not(:disabled) .case-study-detail__listen-label {
   color: var(--btn-white);
   border-left-color: rgba(255, 255, 255, 0.35);
 }
+}
+
 
 .case-study-detail__content {
   display: flex;

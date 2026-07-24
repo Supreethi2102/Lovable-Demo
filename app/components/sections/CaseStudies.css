@@ -396,16 +396,23 @@
   white-space: nowrap;
 }
 
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .flip-button:not(.flip-button--footer):hover .flip-button__icon {
   background: var(--btn-primary);
   border-color: var(--btn-primary);
 }
+}
 
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .flip-button:not(.flip-button--footer):hover .flip-button__icon img,
 .flip-button:not(.flip-button--footer):hover .flip-button__icon svg {
   filter: brightness(0) invert(1);
   color: #fbfbfb;
 }
+}
+
 
 /* Second flip control — only shown on mobile (full-width outline under CTA) */
 .flip-button--footer {
@@ -453,16 +460,20 @@
   letter-spacing: 0.32px;
 }
 
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .tab:not(.tab--active):hover {
   color: var(--btn-purple-100-text, #4c3cac);
 }
+}
+
 .tab--active img {
   /* Dark icon for active - #111213 */
   filter: brightness(0) saturate(100%) invert(5%) sepia(5%) saturate(500%) hue-rotate(180deg) brightness(95%) contrast(95%);
 }
 
-.tab--active::after,
-.tab:not(.tab--active):hover::after {
+
+.tab--active::after {
   content: '';
   position: absolute;
   z-index: 1;
@@ -472,15 +483,24 @@
   width: var(--case-card-tab-indicator, 4px);
   height: 48px;
   border-radius: 2px;
-}
-
-.tab--active::after {
   background: #111213;
 }
 
-.tab:not(.tab--active):hover::after {
-  background: var(--btn-purple-100-text, #4c3cac);
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+  .tab:not(.tab--active):hover::after {
+    content: '';
+    position: absolute;
+    z-index: 1;
+    right: calc(-1 * var(--case-card-tab-rail, 32px));
+    top: 50%;
+    transform: translateY(-50%);
+    width: var(--case-card-tab-indicator, 4px);
+    height: 48px;
+    border-radius: 2px;
+    background: var(--btn-purple-100-text, #4c3cac);
+  }
 }
+
 
 /*
  * Vertical sidebar tabs only (not horizontal mobile row): hover tint + left inset.
@@ -493,7 +513,9 @@
     box-sizing: border-box;
   }
 
-  .case-study-card__sidebar .tab:not(.tab--active):hover::before,
+  
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+.case-study-card__sidebar .tab:not(.tab--active):hover::before,
   .case-study-card__sidebar .case-study-card__back-item.tab:not(.tab--active):hover::before {
     content: '';
     position: absolute;
@@ -507,6 +529,8 @@
     background: var(--btn-purple-100-bg, #eee8fe);
     border-radius: 8px;
   }
+}
+
 }
 
 /* Main Content */
@@ -615,9 +639,13 @@
     transition: none;
   }
 
-  .case-study-card__image:hover .case-study-card__image-media {
+  
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+.case-study-card__image:hover .case-study-card__image-media {
     transform: scale(1);
   }
+}
+
 }
 
 .case-study-card__duration {
@@ -685,11 +713,15 @@
   transition: background-color 0.2s ease, border-color 0.2s ease, color 0.2s ease;
 }
 
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .listen-button:hover:not(:disabled) {
   background: var(--btn-primary-hover);
   border-color: var(--btn-primary-hover);
   color: var(--btn-white);
 }
+}
+
 
 .listen-button:active:not(:disabled) {
   background: var(--btn-primary-active);
@@ -724,10 +756,14 @@
   margin-top: 16px;
 }
 
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
 .listen-button:hover:not(:disabled) .listen-button__divider,
 .listen-button:active:not(:disabled) .listen-button__divider {
   background: rgba(255, 255, 255, 0.35);
 }
+}
+
 
 .listen-button__text {
   font-family: var(--font-family-ui);
@@ -1015,9 +1051,7 @@
 
   /* Vertical accent flush to column rule (desktop geometry) */
   .tab--active::after,
-  .case-study-card__back-item.tab--active::after,
-  .tab:not(.tab--active):hover::after,
-  .case-study-card__back-item.tab:not(.tab--active):hover::after {
+  .case-study-card__back-item.tab--active::after {
     right: calc(-1 * var(--case-card-tab-rail));
     top: 50%;
     bottom: auto;
@@ -1026,6 +1060,20 @@
     width: var(--case-card-tab-indicator);
     height: 48px;
   }
+
+  @media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+    .tab:not(.tab--active):hover::after,
+    .case-study-card__back-item.tab:not(.tab--active):hover::after {
+      right: calc(-1 * var(--case-card-tab-rail));
+      top: 50%;
+      bottom: auto;
+      left: auto;
+      transform: translateY(-50%);
+      width: var(--case-card-tab-indicator);
+      height: 48px;
+    }
+  }
+
 
   .case-study-card__main {
     flex: 1 1 0;
@@ -1120,12 +1168,19 @@
     padding-left: clamp(8px, 1.5vw, 12px);
   }
 
+  
   .tab--active::after,
-  .case-study-card__back-item.tab--active::after,
-  .tab:not(.tab--active):hover::after,
-  .case-study-card__back-item.tab:not(.tab--active):hover::after {
+  .case-study-card__back-item.tab--active::after {
     right: calc(-1 * var(--case-card-tab-rail));
   }
+
+  @media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+    .tab:not(.tab--active):hover::after,
+    .case-study-card__back-item.tab:not(.tab--active):hover::after {
+      right: calc(-1 * var(--case-card-tab-rail));
+    }
+  }
+
 }
 
 /* Small tablet portrait (768–879, e.g. 834px) — balanced text band; CTA bottom-aligned with tabs */
@@ -1263,10 +1318,9 @@
     gap: 6px;
   }
 
+  
   .tab--active::after,
-  .case-study-card__back-item.tab--active::after,
-  .tab:not(.tab--active):hover::after,
-  .case-study-card__back-item.tab:not(.tab--active):hover::after {
+  .case-study-card__back-item.tab--active::after {
     right: calc(-1 * var(--case-card-tab-rail));
     top: 50%;
     bottom: auto;
@@ -1275,6 +1329,20 @@
     width: var(--case-card-tab-indicator, 4px);
     height: 32px;
   }
+
+  @media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+    .tab:not(.tab--active):hover::after,
+    .case-study-card__back-item.tab:not(.tab--active):hover::after {
+      right: calc(-1 * var(--case-card-tab-rail));
+      top: 50%;
+      bottom: auto;
+      left: auto;
+      transform: translateY(-50%);
+      width: var(--case-card-tab-indicator, 4px);
+      height: 32px;
+    }
+  }
+
 
   .flip-button {
     width: 100%;
@@ -1624,7 +1692,9 @@
     z-index: 1;
   }
 
-  .case-study-card__tabs .tab:not(.tab--active):hover::after,
+  
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+.case-study-card__tabs .tab:not(.tab--active):hover::after,
   .case-study-card__back-item.tab:not(.tab--active):hover::after {
     content: '';
     position: absolute;
@@ -1638,11 +1708,17 @@
     background: var(--btn-purple-100-text, #4c3cac);
     z-index: 1;
   }
+}
 
-  .case-study-card__tabs .tab.tab--active:hover::after,
+
+  
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+.case-study-card__tabs .tab.tab--active:hover::after,
   .case-study-card__back-item.tab.tab--active:hover::after {
     background: #111213;
   }
+}
+
 
   .flip-button--sidebar {
     display: none !important;
@@ -1703,11 +1779,15 @@
     padding: 0;
   }
 
-  .flip-button--footer:hover {
+  
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+.flip-button--footer:hover {
     background: var(--btn-primary-hover);
     border-color: var(--btn-primary-hover);
     color: var(--btn-white);
   }
+}
+
 
   .flip-button--footer:active {
     background: var(--btn-primary-active);

@@ -6,8 +6,9 @@ import {RenderMode, WebGlGlobe} from './src';
 
 const distance = 20_000_000;
 
-// Equirectangular PNG (from public/illustration-global-inspiration-map revised copy test 3.svg)
-const customImageUrl = encodeURI('/Images/Illustrations 2/illustration-global-inspiration-map.png');
+// Equirectangular PNG (from public/illustration-global-inspiration-globe 2.svg)
+// Cache-bust when the texture file is replaced (browser/CDN may keep the old PNG).
+const customImageUrl = encodeURI('/Images/Illustrations 2/illustration-global-inspiration-map.png') + '?v=3';
 
 const globeEl = document.querySelector('#globe')! as HTMLElement;
 const globe = new WebGlGlobe(globeEl, {

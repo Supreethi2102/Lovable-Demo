@@ -25,7 +25,8 @@ const globe = new WebGlGlobe(globeEl, {
       getUrl: () => customImageUrl
     } as LayerProps
   ],
-  cameraView: {lng: 155, lat: -10, altitude: distance, isAnimated: false}
+  // Tip view north so Antarctica sits lower; continents read more centered
+  cameraView: {lng: 155, lat: 18, altitude: distance, isAnimated: false}
 });
 
 function resizeGlobeIfVisible() {

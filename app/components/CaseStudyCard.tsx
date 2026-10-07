@@ -87,7 +87,14 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
   const cardTitleId = useId();
   const lightboxCloseRef = useRef<HTMLButtonElement>(null);
   const enlargeTriggerRef = useRef<HTMLElement | null>(null);
-  const [enlarged, setEnlarged] = useState<{ src: string; alt: string } | null>(null);
+  const [enlarged, setEnlarged] = useState<{
+    src: string;
+    alt: string;
+    top: number;
+    left: number;
+    width: number;
+    height: number;
+  } | null>(null);
 
   const frontTabs = useMemo(
     () =>
@@ -133,8 +140,28 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
   const canEnlargeBack = Boolean(currentBackTab.image);
 
   const openEnlarged = (src: string, alt: string, trigger?: EventTarget | null) => {
-    if (trigger instanceof HTMLElement) enlargeTriggerRef.current = trigger;
-    setEnlarged({ src, alt });
+    const node = trigger instanceof HTMLElement ? trigger : enlargeTriggerRef.current;
+    if (node) enlargeTriggerRef.current = node;
+    const rect = node?.getBoundingClientRect();
+    const pad = 20;
+    const header = 88;
+    const closeRow = 36;
+    const vw = window.innerWidth;
+    const vh = window.innerHeight;
+    const source = rect ?? { top: vh / 2 - 200, left: vw / 2 - 280, width: 560, height: 400 };
+    const maxWidth = vw - pad * 2;
+    const maxHeight = vh - header - closeRow - pad;
+    const scale = 1.42;
+    let width = Math.min(source.width * scale, maxWidth);
+    let height = Math.min(source.height * scale, maxHeight);
+    const aspect = source.width / Math.max(source.height, 1);
+    if (width / height > aspect) width = height * aspect;
+    else height = width / aspect;
+    let left = source.left + source.width / 2 - width / 2;
+    let top = source.top + source.height / 2 - height / 2;
+    left = Math.min(Math.max(left, pad), vw - width - pad);
+    top = Math.min(Math.max(top, header + closeRow), vh - height - pad);
+    setEnlarged({ src, alt, top, left, width, height });
   };
 
   const closeEnlarged = () => setEnlarged(null);
@@ -683,7 +710,11 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               aria-label={enlarged.alt}
               onClick={closeEnlarged}
             >
-              <div className="case-study-card__lightbox-panel" onClick={(event) => event.stopPropagation()}>
+              <div
+                className="case-study-card__lightbox-panel"
+                style={{ top: enlarged.top, left: enlarged.left, width: enlarged.width }}
+                onClick={(event) => event.stopPropagation()}
+              >
                 <button
                   ref={lightboxCloseRef}
                   type="button"
@@ -693,7 +724,12 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
                   <span>Close</span>
                   <X size={16} weight="bold" aria-hidden="true" />
                 </button>
-                <img className="case-study-card__lightbox-image" src={enlarged.src} alt={enlarged.alt} />
+                <img
+                  className="case-study-card__lightbox-image"
+                  src={enlarged.src}
+                  alt={enlarged.alt}
+                  style={{ height: enlarged.height }}
+                />
               </div>
             </div>,
             document.body,

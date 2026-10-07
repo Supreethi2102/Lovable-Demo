@@ -86,8 +86,18 @@ function buildVimeoSrc(vimeoId: string) {
     portrait: '0',
     dnt: '1',
     transparent: '0',
+    pip: '0',
+    airplay: '0',
+    chromecast: '0',
+    keyboard: '0',
+    vimeo_logo: '0',
+    quality_selector: '0',
   });
   return `https://player.vimeo.com/video/${vimeoId}?${params.toString()}`;
+}
+
+function blockMediaMenu(event: React.MouseEvent) {
+  event.preventDefault();
 }
 
 function ChromeTooltip({ label }: { label: string }) {
@@ -200,7 +210,11 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
     const iframe = iframeRef.current;
     if (!iframe) return;
 
-    const player = new Player(iframe);
+    const player = new Player(iframe, {
+      controls: false,
+      pip: false,
+      keyboard: false,
+    });
     vimeoRef.current = player;
 
     const onTime = (event: { seconds: number; duration: number }) => {
@@ -403,6 +417,7 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
           className={`case-study-mockup-video__screen${hasStarted ? ' is-started' : ' is-idle'}`}
           onMouseMove={revealChrome}
           onPointerDown={revealChrome}
+          onContextMenu={blockMediaMenu}
           onClick={(event) => {
             const target = event.target as HTMLElement;
             if (target === event.currentTarget || target.classList.contains('case-study-mockup-video__player')) {
@@ -417,7 +432,11 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
               src={src}
               playsInline
               preload="metadata"
+              controls={false}
+              controlsList="nodownload noplaybackrate noremoteplayback"
               disablePictureInPicture
+              disableRemotePlayback
+              onContextMenu={blockMediaMenu}
               onPlay={() => setIsPlaying(true)}
               onPause={() => setIsPlaying(false)}
               onTimeUpdate={() => {
@@ -447,8 +466,9 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
               className="case-study-mockup-video__player"
               src={buildVimeoSrc(vimeoId)}
               title={`${label} interface demonstration`}
-              allow="autoplay; fullscreen"
+              allow="autoplay"
               tabIndex={-1}
+              onContextMenu={blockMediaMenu}
             />
           ) : null}
 

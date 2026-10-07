@@ -287,8 +287,8 @@ const MORE_PROJECTS: CaseStudyCardStudy[] = [
     subtitle: 'Green Cross Health | Packaging',
     title: 'What if the most-seen brand asset wasn’t digital at all?',
     description:
-      'When New Zealand banned single-use plastic, Green Cross Health needed new bags that felt purposeful. The challenge was to create a system for Life Pharmacy and Unichem that communicated care, sustainability, and identity across a nationwide rollout.',
-    image: '/case-study-gch/9912d40ae739a7575ec4a7abed1a19cf05d03244.png',
+      'When New Zealand banned single-use plastic, Green Cross Health needed new bags that felt purposeful. The brief: create a system for Life Pharmacy and Unichem that brought care, sustainability, and brand identity to a nationwide rollout.',
+    image: '/misc/green-cross-health-challenge-card.avif',
     duration: '4 weeks',
     category: 'packaging',
   },

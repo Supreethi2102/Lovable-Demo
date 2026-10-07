@@ -44,28 +44,31 @@ const caseStudies: CaseStudyCardStudy[] = [
     title: 'What if the most-seen brand asset wasn\u2019t digital at all?',
     subtitle: 'Green Cross Health | Packaging',
     description:
-      'When New Zealand banned single-use plastic, Green Cross Health needed new bags that felt purposeful. The challenge was to create a system for Life Pharmacy and Unichem that communicated care, sustainability, and identity across a nationwide rollout.',
+      'When New Zealand banned single-use plastic, Green Cross Health needed new bags that felt purposeful. The brief: create a system for Life Pharmacy and Unichem that brought care, sustainability, and brand identity to a nationwide rollout.',
     duration: '4 weeks',
     category: 'packaging',
-    image: '/misc/retail-bags-tab-challenge.png',
+    image: '/misc/green-cross-health-challenge-card.avif',
     frontTabs: {
       challenge: {
         title: 'What if the most-seen brand asset wasn\u2019t digital at all?',
         description:
-          'When New Zealand banned single-use plastic, Green Cross Health needed new bags that felt purposeful. The challenge was to create a system for Life Pharmacy and Unichem that communicated care, sustainability, and identity across a nationwide rollout.',
-        image: '/misc/retail-bags-tab-challenge.png',
+          'When New Zealand banned single-use plastic, Green Cross Health needed new bags that felt purposeful. The brief: create a system for Life Pharmacy and Unichem that brought care, sustainability, and brand identity to a nationwide rollout.',
+        image: '/misc/green-cross-health-challenge-card.avif',
+        alt: 'A person in cream trousers holding a Life Pharmacy Aroha nui bag in one hand and a Unichem kia ora bag in the other.',
       },
       focus: {
         title: 'What makes a bag feel unmistakably Kiwi at a glance?',
         description:
-          'I set out to create two distinct bag systems that felt warm, local, and unmistakably Kiwi while carrying essential information. The challenge was to balance brand expression through hero phrases and Kiwi cues with clear messaging, sustainability, and constraints.',
-        image: '/misc/retail-bags-tab-focus.png',
+          'I created two distinct bag systems that felt warm and distinctly local while carrying essential information. Hero phrases and Kiwi cues gave each brand its own voice, while balancing sustainability and real-world production constraints.',
+        image: '/misc/green-cross-health-focus-card.avif',
+        alt: 'Three Unichem kraft bags in different sizes, including one reading Our greatest wealth is health and a large kia ora carry bag.',
       },
       impact: {
         title: 'How far can a single bag travel in one week?',
         description:
           'Seen across around 360 stores nationwide each week, the new packaging turned a mandatory change into a recognisable brand moment. Clear hierarchy, local cues, and sustainability messaging enabled consistent production while reinforcing recall and loyalty.',
-        image: '/misc/retail-bags-tab-impact.png',
+        image: '/misc/green-cross-health-impact-card.avif',
+        alt: 'A shopper walking through a Life Pharmacy store with two Life Pharmacy bags, one reading Aroha nui and the other It\u2019s what\u2019s inside that counts.',
       },
     },
     backTabs: {
@@ -73,19 +76,22 @@ const caseStudies: CaseStudyCardStudy[] = [
         title: 'How does Venetian craft meet Kiwi clarity?',
         description:
           'Burano, Italy, sparked the concept. Its lacework echoed Life Pharmacy\u2019s stencil-like illustrations and informed Unichem\u2019s cut-out typography. This link between lace and paper-cut design shaped abstract NZ motifs, bringing warmth to Life Pharmacy and structure to Unichem.',
-        image: '/misc/retail-bags-tab-place.png',
+        image: '/misc/green-cross-health-place-card.avif',
+        alt: 'Close view of Burano lace in the foreground, with a canal and coloured houses behind it at dusk.',
       },
       influence: {
         title: 'What happens when craft meets type and language?',
         description:
           'Burano lace informed precision, negative space, and rhythm. Paper-cut artists and bold, graphic typography inspired by Barbara Kruger added structure and impact, while te reo Māori phrases grounded the work in culture. Together, these influences bridged craft and strategy.',
         image: '/misc/retail-bags-tab-influence.png',
+        alt: 'Reference image for the influences behind the Green Cross Health bag system.',
       },
       discoveries: {
         title: 'What unexpected lessons hide inside a simple bag?',
         description:
           'Small details carried more weight than expected. Bags are seen in motion, so clarity and contrast had to land instantly. Scaling across sizes revealed when to simplify, letting larger formats lead while smaller ones rely on typography systems.',
-        image: '/misc/retail-bags-tab-discoveries.png',
+        image: '/misc/green-cross-health-discoveries-card.avif',
+        alt: 'Unichem kia ora and Life Pharmacy Aroha bags standing with two smaller bags showing a New Zealand map and Health Beauty Wellness.',
       },
     },
   },

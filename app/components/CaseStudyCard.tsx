@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState, useId } from 'react';
+import { createPortal } from 'react-dom';
 import { useNavigate } from 'react-router-dom';
 import {
   ArrowsClockwise,
@@ -12,11 +13,27 @@ import {
   MapPin,
   Sparkle,
   Binoculars,
+  X,
 } from '@phosphor-icons/react';
 import { gsap } from 'gsap';
 import { canUseHover } from '../utils/canUseHover';
 import { CaseStudyMockupVideo } from './CaseStudyMockupVideo';
 import './sections/CaseStudies.css';
+
+export type CaseStudyTabContent = {
+  title: string;
+  description: string;
+  image: string;
+  alt?: string;
+};
+
+export type CaseStudyBackTabContent = {
+  title: string;
+  description: string;
+  image?: string;
+  background?: string;
+  alt?: string;
+};
 
 export type CaseStudyCardStudy = {
   id: number;
@@ -31,14 +48,14 @@ export type CaseStudyCardStudy = {
     vimeoId?: string;
   };
   frontTabs?: {
-    challenge: { title: string; description: string; image: string };
-    focus: { title: string; description: string; image: string };
-    impact: { title: string; description: string; image: string };
+    challenge: CaseStudyTabContent;
+    focus: CaseStudyTabContent;
+    impact: CaseStudyTabContent;
   };
   backTabs?: {
-    place: { title: string; description: string; image?: string; background?: string };
-    influence: { title: string; description: string; image?: string; background?: string };
-    discoveries: { title: string; description: string; image?: string; background?: string };
+    place: CaseStudyBackTabContent;
+    influence: CaseStudyBackTabContent;
+    discoveries: CaseStudyBackTabContent;
   };
 };
 
@@ -68,6 +85,9 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
   const backImgBRef = useRef<HTMLDivElement>(null);
   const tabPanelId = useId();
   const cardTitleId = useId();
+  const lightboxCloseRef = useRef<HTMLButtonElement>(null);
+  const enlargeTriggerRef = useRef<HTMLElement | null>(null);
+  const [enlarged, setEnlarged] = useState<{ src: string; alt: string } | null>(null);
 
   const frontTabs = useMemo(
     () =>
@@ -105,6 +125,19 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
   );
   const currentFrontTab = frontTabs[contentTab];
   const currentBackTab = backTabs[contentBackTab];
+  const frontImageAlt = currentFrontTab.alt ?? `${study.subtitle} project preview`;
+  const backImageAlt = currentBackTab.alt ?? `${study.subtitle} project preview`;
+  const hasChallengeVideo =
+    Boolean(study.challengeVideo && contentTab === 'challenge' && !isFlipped && !prefersReducedMotion);
+  const canEnlargeFront = !hasChallengeVideo;
+  const canEnlargeBack = Boolean(currentBackTab.image);
+
+  const openEnlarged = (src: string, alt: string, trigger?: EventTarget | null) => {
+    if (trigger instanceof HTMLElement) enlargeTriggerRef.current = trigger;
+    setEnlarged({ src, alt });
+  };
+
+  const closeEnlarged = () => setEnlarged(null);
 
   const getTabImage = (tab: 'challenge' | 'focus' | 'impact') => {
     return frontTabs[tab].image;
@@ -167,6 +200,27 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
     gsap.set(backImgBRef.current, { x: '-120%', opacity: 1 });
     gsap.set(backCopyRef.current, { x: 0, opacity: 1 });
   }, [study.id]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (!enlarged) return;
+    const { body, documentElement } = document;
+    const previousOverflow = body.style.overflow;
+    const previousHtmlOverflow = documentElement.style.overflow;
+    body.style.overflow = 'hidden';
+    documentElement.style.overflow = 'hidden';
+    lightboxCloseRef.current?.focus({ preventScroll: true });
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') closeEnlarged();
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => {
+      body.style.overflow = previousOverflow;
+      documentElement.style.overflow = previousHtmlOverflow;
+      enlargeTriggerRef.current?.focus({ preventScroll: true });
+      window.removeEventListener('keydown', onKeyDown);
+    };
+  }, [enlarged]);
 
   const animateToTab = (nextTab: 'challenge' | 'focus' | 'impact') => {
     if (isTabAnimatingRef.current) return;
@@ -426,7 +480,22 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
             <div className="case-study-card__duration" aria-label={`Project duration: ${study.duration}`}>
               Duration: {study.duration}
             </div>
-            <div className="case-study-card__image-viewport" role="img" aria-label={`${study.subtitle} project preview`}>
+            <div
+              className={`case-study-card__image-viewport${canEnlargeFront ? ' case-study-card__image-viewport--enlarge' : ''}`}
+              role={canEnlargeFront ? 'button' : 'img'}
+              tabIndex={canEnlargeFront ? 0 : undefined}
+              aria-label={canEnlargeFront ? `View larger image. ${frontImageAlt}` : frontImageAlt}
+              onClick={(event) => {
+                if (canEnlargeFront) openEnlarged(currentFrontTab.image, frontImageAlt, event.currentTarget);
+              }}
+              onKeyDown={(event) => {
+                if (!canEnlargeFront) return;
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  openEnlarged(currentFrontTab.image, frontImageAlt, event.currentTarget);
+                }
+              }}
+            >
               <div ref={imgARef} className="case-study-card__image-layer" aria-hidden="true">
                 <div className="case-study-card__image-media" aria-hidden="true" />
               </div>
@@ -577,7 +646,24 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
             <div className="case-study-card__duration" aria-label={`Project duration: ${study.duration}`}>
               Duration: {study.duration}
             </div>
-            <div className="case-study-card__image-viewport" role="img" aria-label={`${study.subtitle} project preview`}>
+            <div
+              className={`case-study-card__image-viewport${canEnlargeBack ? ' case-study-card__image-viewport--enlarge' : ''}`}
+              role={canEnlargeBack ? 'button' : 'img'}
+              tabIndex={canEnlargeBack ? 0 : undefined}
+              aria-label={canEnlargeBack ? `View larger image. ${backImageAlt}` : backImageAlt}
+              onClick={(event) => {
+                if (canEnlargeBack && currentBackTab.image) {
+                  openEnlarged(currentBackTab.image, backImageAlt, event.currentTarget);
+                }
+              }}
+              onKeyDown={(event) => {
+                if (!canEnlargeBack || !currentBackTab.image) return;
+                if (event.key === 'Enter' || event.key === ' ') {
+                  event.preventDefault();
+                  openEnlarged(currentBackTab.image, backImageAlt, event.currentTarget);
+                }
+              }}
+            >
               <div ref={backImgARef} className="case-study-card__image-layer" aria-hidden="true">
                 <div className="case-study-card__image-media" aria-hidden="true" />
               </div>
@@ -588,6 +674,31 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
           </figure>
         </div>
       </article>
+      {enlarged
+        ? createPortal(
+            <div
+              className="case-study-card__lightbox"
+              role="dialog"
+              aria-modal="true"
+              aria-label={enlarged.alt}
+              onClick={closeEnlarged}
+            >
+              <div className="case-study-card__lightbox-panel" onClick={(event) => event.stopPropagation()}>
+                <button
+                  ref={lightboxCloseRef}
+                  type="button"
+                  className="case-study-card__lightbox-close"
+                  onClick={closeEnlarged}
+                >
+                  <span>Close</span>
+                  <X size={16} weight="bold" aria-hidden="true" />
+                </button>
+                <img className="case-study-card__lightbox-image" src={enlarged.src} alt={enlarged.alt} />
+              </div>
+            </div>,
+            document.body,
+          )
+        : null}
     </div>
   );
 };

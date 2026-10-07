@@ -15,6 +15,7 @@ export type GlobeMarker = {
   /** Fallback only — live placement flips from pin screen Y */
   tooltipAbove: boolean;
   image: string;
+  imageAlt?: string;
 };
 
 /**
@@ -76,7 +77,8 @@ export const GLOBE_MARKERS: GlobeMarker[] = [
     cta: 'View Retail Bags',
     caseStudyId: 2,
     tooltipAbove: false,
-    image: '/globe-tooltips/burano.png',
+    image: '/globe-tooltips/green-cross-health-globe.avif',
+    imageAlt: 'Life Pharmacy Aroha nui bag standing beside a Unichem kia ora bag.',
   },
   {
     id: 'leiden',
@@ -140,7 +142,12 @@ export function buildGlobeMarkerHtml(marker: GlobeMarker): string {
           ${bubbleSvgs('fill')}
           <span class="globe-marker__body">
             <span class="globe-marker__media">
-              <img src="${encodeURI(marker.image)}" alt="" width="160" height="184" loading="lazy" decoding="async" />
+              ${marker.image.endsWith('.avif')
+                ? `<picture>
+                    <source type="image/avif" srcset="${encodeURI(marker.image)}" />
+                    <img src="${encodeURI(marker.image.replace(/\\.avif$/, '.webp'))}" alt="${marker.imageAlt ?? ''}" width="160" height="184" loading="lazy" decoding="async" />
+                  </picture>`
+                : `<img src="${encodeURI(marker.image)}" alt="${marker.imageAlt ?? ''}" width="160" height="184" loading="lazy" decoding="async" />`}
             </span>
             <span class="globe-marker__copy">
               <span class="globe-marker__place">${marker.place}</span>

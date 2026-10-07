@@ -4,8 +4,8 @@ import { ResponsivePicture } from '../ResponsivePicture';
 import './About.css';
 
 const ABOUT_PORTRAIT = {
-  avif: '/about/samantha-smith-portrait.avif',
-  webp: '/about/samantha-smith-portrait.webp',
+  avif: '/about/portrait-about.avif',
+  webp: '/about/portrait-about.webp',
   alt: 'Portrait of Samantha seated in the studio',
 };
 

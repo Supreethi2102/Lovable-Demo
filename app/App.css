@@ -1,5 +1,14 @@
 @import './typography-tokens.css';
 
+img,
+picture,
+video,
+.case-study-card__image-media {
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
 /* App Layout - 4pt Grid */
 
 /* Fonts */

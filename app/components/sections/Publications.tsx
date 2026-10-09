@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { BookOpen } from '@phosphor-icons/react';
+import { Images } from '@phosphor-icons/react';
 import { publications } from '../../data/publications';
 import type { PublicationDetail } from '../../data/publications';
 import { ResponsivePicture } from '../ResponsivePicture';
@@ -82,12 +82,12 @@ export const Publications: React.FC = () => {
             }}
             onMouseLeave={() => setIsViewHovered(false)}
             onClick={() => setShowAll(!showAll)}
-            aria-label={showAll ? 'Show fewer publications' : 'View all publications'}
+            aria-label={showAll ? 'Show fewer projects' : 'View all projects'}
           >
             <span className="btn__icon" aria-hidden="true">
-              <BookOpen size={24} weight={isViewHovered ? 'fill' : 'regular'} color="currentColor" />
+              <Images size={24} weight={isViewHovered ? 'fill' : 'regular'} color="currentColor" />
             </span>
-            <span>{showAll ? 'View fewer publications' : 'View all publications'}</span>
+            <span>{showAll ? 'View fewer projects' : 'View all projects'}</span>
           </button>
         </footer>
       )}

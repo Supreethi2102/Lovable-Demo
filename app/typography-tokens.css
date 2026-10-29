@@ -23,9 +23,9 @@
   /* Case study subheads — 27 / 37 */
   --type-romie-case-subhead-size: 1.6875rem;
   --type-romie-case-subhead-lh: 2.3125rem;
-  /* Pull quote — 28 / 38 */
+  /* Pull quote — 28 / 32 */
   --type-romie-pull-quote-size: 1.75rem;
-  --type-romie-pull-quote-lh: 2.375rem;
+  --type-romie-pull-quote-lh: 2rem;
   /* Case study pull quote — 22 / 32 */
   --type-romie-case-pull-quote-size: 1.375rem;
   --type-romie-case-pull-quote-lh: 2rem;
@@ -76,12 +76,12 @@
   /* Large subhead Medium — 20 / 28 */
   --type-atkinson-large-subhead-size: 1.25rem;
   --type-atkinson-large-subhead-lh: 1.75rem;
-  /* Small subhead Medium — 14 / 20 */
-  --type-atkinson-small-subhead-size: 0.875rem;
-  --type-atkinson-small-subhead-lh: 1.25rem;
-  /* Credit Regular — 12 / 12 */
-  --type-atkinson-credit-size: 0.75rem;
-  --type-atkinson-credit-lh: 0.75rem;
+  /* Small subhead Semibold — 16 / 24 */
+  --type-atkinson-small-subhead-size: 1rem;
+  --type-atkinson-small-subhead-lh: 1.5rem;
+  /* Credit Regular — 14 / 20 */
+  --type-atkinson-credit-size: 0.875rem;
+  --type-atkinson-credit-lh: 1.25rem;
 
   /* Legacy Atkinson scale (kept for UI body / misc) */
   --type-atkinson-h0-size: 4.5rem;
@@ -110,8 +110,8 @@
   --type-atkinson-text-xl-lh: var(--type-atkinson-large-subhead-lh);
   --type-atkinson-text-md-size: 1rem;
   --type-atkinson-text-md-lh: 1.5rem;
-  --type-atkinson-text-sm-size: var(--type-atkinson-small-subhead-size);
-  --type-atkinson-text-sm-lh: var(--type-atkinson-small-subhead-lh);
+  --type-atkinson-text-sm-size: 0.875rem;
+  --type-atkinson-text-sm-lh: 1.25rem;
   --type-atkinson-text-xs-size: var(--type-atkinson-credit-size);
   --type-atkinson-text-xs-lh: var(--type-atkinson-credit-lh);
 }
@@ -128,9 +128,9 @@
     /* General section heading — 28 / 38 */
     --type-romie-section-size: 1.75rem;
     --type-romie-section-lh: 2.375rem;
-    /* Case study subheads — 25 / 35 */
+    /* Case study subheads — 25 / 36 */
     --type-romie-case-subhead-size: 1.5625rem;
-    --type-romie-case-subhead-lh: 2.1875rem;
+    --type-romie-case-subhead-lh: 2.25rem;
     /* Pull quote — 26 / 36 */
     --type-romie-pull-quote-size: 1.625rem;
     --type-romie-pull-quote-lh: 2.25rem;
@@ -138,15 +138,15 @@
     --type-romie-case-pull-quote-size: 1.3125rem;
     --type-romie-case-pull-quote-lh: 1.9375rem;
 
-    /* Intro — 18 / 26 */
-    --type-atkinson-intro-size: 1.125rem;
-    --type-atkinson-intro-lh: 1.625rem;
-    /* Large subhead — 18 / 26 */
-    --type-atkinson-large-subhead-size: 1.125rem;
-    --type-atkinson-large-subhead-lh: 1.625rem;
-    /* Credit — 11 / 11 */
-    --type-atkinson-credit-size: 0.6875rem;
-    --type-atkinson-credit-lh: 0.6875rem;
+    /* Intro — 20 / 28 */
+    --type-atkinson-intro-size: 1.25rem;
+    --type-atkinson-intro-lh: 1.75rem;
+    /* Large subhead — 20 / 28 */
+    --type-atkinson-large-subhead-size: 1.25rem;
+    --type-atkinson-large-subhead-lh: 1.75rem;
+    /* Credit — 14 / 20 */
+    --type-atkinson-credit-size: 0.875rem;
+    --type-atkinson-credit-lh: 1.25rem;
   }
 }
 
@@ -159,8 +159,8 @@
     /* Case study title — 25 / 33 */
     --type-romie-case-title-size: 1.5625rem;
     --type-romie-case-title-lh: 2.0625rem;
-    /* General section heading — 22 / 30 */
-    --type-romie-section-size: 1.375rem;
+    /* General section heading — 26 / 30 */
+    --type-romie-section-size: 1.625rem;
     --type-romie-section-lh: 1.875rem;
     /* Case study subheads — 23 / 33 */
     --type-romie-case-subhead-size: 1.4375rem;
@@ -172,9 +172,9 @@
     --type-romie-case-pull-quote-size: 1.25rem;
     --type-romie-case-pull-quote-lh: 1.875rem;
 
-    /* Intro — 18 / 28 */
+    /* Intro — 18 / 26 */
     --type-atkinson-intro-size: 1.125rem;
-    --type-atkinson-intro-lh: 1.75rem;
+    --type-atkinson-intro-lh: 1.625rem;
     /* Large subhead — 20 / 28 */
     --type-atkinson-large-subhead-size: 1.25rem;
     --type-atkinson-large-subhead-lh: 1.75rem;

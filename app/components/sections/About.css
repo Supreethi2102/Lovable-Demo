@@ -72,6 +72,8 @@
 .about-block1__illustration {
   grid-column: 1;
   grid-row: 1;
+  position: relative;
+  align-self: stretch;
   width: 100%;
   min-height: 0;
   background: #d5d7db;
@@ -79,16 +81,22 @@
   overflow: hidden;
 }
 
-.about-block1__illustration picture {
+.about-block1__illustration picture,
+.about-block1__illustration img {
   display: block;
   width: 100%;
   height: 100%;
 }
 
+@media (min-width: 1201px) {
+  .about-block1__illustration picture,
+  .about-block1__illustration img {
+    position: absolute;
+    inset: 0;
+  }
+}
+
 .about-block1__illustration img {
-  display: block;
-  width: 100%;
-  height: 100%;
   object-fit: cover;
   object-position: 50% 32%;
 }

@@ -24,9 +24,11 @@
     .case-study-detail__split-card,
     .case-study-detail__split-card--digital,
     .case-study-detail__panel,
+    .case-study-detail__gch-captioned,
     .case-study-detail__two-up,
     .case-study-detail__full-bleed-wrap,
     .case-study-detail__insight-trio,
+    .case-study-detail__gch-block,
     .case-study-detail__testimonials,
     .case-study-detail__more-projects,
     .case-study-detail__toy-flow,
@@ -660,9 +662,6 @@
   
     .case-study-detail__brief-text.text-side h3,
     .text-side h3 {
-      font-size: 28px;
-      line-height: 32px;
-      letter-spacing: 1.12px;
       height: auto;
     }
   
@@ -709,8 +708,8 @@
     .case-study-detail__insight-trio {
       width: 100%;
       grid-template-columns: 1fr;
-      margin-top: 32px;
-      margin-bottom: 40px;
+      margin-top: 0;
+      margin-bottom: 0;
     }
   
     .case-study-detail__insight-card {
@@ -1033,9 +1032,6 @@
     }
   
     .case-study-detail__text-stack h3 {
-      font-size: 28px;
-      line-height: 32px;
-      letter-spacing: 1.12px;
       min-height: 0;
       height: auto;
       width: 100%;
@@ -1538,6 +1534,7 @@
     .case-study-detail__content > section[id],
     .case-study-detail__content > article[id],
     .case-study-detail__content > .case-study-detail__panel,
+    .case-study-detail__content > .case-study-detail__gch-captioned,
     .case-study-detail__content > .case-study-detail__panel--poster-wall,
     .case-study-detail__content > .case-study-detail__panel--retail-display,
     .case-study-detail__content > .case-study-detail__two-up,
@@ -1546,12 +1543,14 @@
     .case-study-detail__content > .case-study-detail__text-panel--retail-reality,
     .case-study-detail__content > .case-study-detail__text-panel--scaling,
     .case-study-detail__content > .case-study-detail__insight-trio,
+    .case-study-detail__content > .case-study-detail__gch-block,
     .case-study-detail__content > .case-study-detail__testimonials,
     .case-study-detail__content > .case-study-detail__composite-panel,
     .case-study-detail__content > .case-study-detail__full-bleed-wrap,
     .case-study-detail__content > .case-study-detail__text-panel--amio-intro,
     .case-study-detail__content > .case-study-detail__palmy-process-quote,
     .case-study-detail__content > .case-study-detail__gch-testimonials,
+    .case-study-detail__content > .case-study-detail__gch-block,
     .case-study-detail__content > .case-study-detail__toy-flow-panel,
     .case-study-detail__content > .case-study-detail__toy-website-mockup-panel,
     .case-study-detail__content > .case-study-detail__toy-activity-stills-panel,
@@ -1756,17 +1755,10 @@
     }
 
     .case-study-detail__brief-text.text-side h3,
-    .case-study-detail__split-card--brief .text-side h3 {
-      font-size: 20px;
-      line-height: 32px;
-      letter-spacing: 0.8px;
-    }
-
+    .case-study-detail__split-card--brief .text-side h3,
     .case-study-detail__text-stack h3,
     .text-side h3 {
-      font-size: 24px;
-      line-height: 32px;
-      letter-spacing: 0.96px;
+      height: auto;
     }
 
     /* Media side heights — Figma brief ~240px, research ~268px */
@@ -2048,8 +2040,8 @@
   
     /* --- Insight trio: single column --- */
     .case-study-detail__insight-trio {
-      margin-top: 16px;
-      margin-bottom: 16px;
+      margin-top: 0;
+      margin-bottom: 0;
       gap: 16px;
       grid-template-columns: 1fr;
     }
@@ -2143,9 +2135,7 @@
   
     .case-study-detail__text-stack h3,
     .text-side h3 {
-      font-size: 22px;
-      line-height: 30px;
-      letter-spacing: 0.88px;
+      height: auto;
     }
   
     .case-study-detail__color-bars span {
@@ -3122,11 +3112,12 @@
       color: #111213;
       font-family: var(--font-family-display);
       font-size: 20px;
+      font-style: italic;
       font-weight: 500;
+      font-synthesis: none;
       line-height: 32px;
-      letter-spacing: 0.8px;
+      letter-spacing: 0.4px;
       text-align: center;
-      text-wrap: balance;
     }
 
     .case-study-detail__gch-testimonial-author {
@@ -3361,9 +3352,9 @@
     }
 
     .case-study-detail__text-panel h4 {
-      font-size: 20px;
-      line-height: 32px;
-      letter-spacing: 0.8px;
+      font-size: var(--type-atkinson-small-subhead-size);
+      line-height: var(--type-atkinson-small-subhead-lh);
+      letter-spacing: 0.32px;
     }
 
     /* GCH image panels — kill fixed desktop heights */
@@ -3708,3 +3699,69 @@
       object-fit: cover;
     }
   }
+
+@media (max-width: 1300px) {
+  .gch-face-switcher__sizer {
+    height: auto;
+  }
+
+  .gch-switch-tabs {
+    padding-inline: 16px;
+  }
+
+  .gch-switch-tabs__track {
+    width: min(384px, 100%);
+  }
+
+  .gch-switch-tabs__tab {
+    min-width: 0;
+    padding: 8px 12px;
+  }
+}
+
+/* GCH brand switcher — tablet/phone: moodboard, copy, then full-width tabs */
+@media (max-width: 1300px) {
+  .case-study-detail__gch-brand-pair,
+  .case-study-detail__gch-brand-pair.case-study-detail__split-card--reverse {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'media'
+      'copy';
+    width: 100%;
+    max-width: 100%;
+    height: auto;
+    min-height: 0;
+  }
+
+  .case-study-detail__gch-brand-pair .media-side,
+  .case-study-detail__gch-brand-pair.case-study-detail__split-card--reverse .media-side {
+    order: 0;
+    grid-area: media;
+    min-height: min(392px, 52vw);
+  }
+
+  .case-study-detail__gch-brand-pair .text-side,
+  .case-study-detail__gch-brand-pair.case-study-detail__split-card--reverse .text-side {
+    order: 0;
+    grid-area: copy;
+  }
+
+  .gch-brand-pair .gch-switch-tabs,
+  .gch-face-switcher .gch-switch-tabs {
+    padding-inline: 16px;
+  }
+
+  .case-study-detail__gch-brand-pair .media-side img,
+  .case-study-detail__gch-brand-pair .media-side picture {
+    position: absolute;
+    inset: 0;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: none;
+    left: 0 !important;
+    top: 0 !important;
+    margin: 0;
+    transform: none !important;
+    object-fit: cover;
+  }
+}

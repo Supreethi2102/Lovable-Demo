@@ -1,0 +1,181 @@
+.case-study-enlarge {
+  position: relative;
+}
+
+.case-study-enlarge__hit {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  cursor: zoom-in;
+  color: inherit;
+}
+
+.case-study-enlarge__hit:focus,
+.case-study-enlarge__hit:focus-visible {
+  outline: none;
+}
+
+.case-study-enlarge__hit:focus-visible {
+  box-shadow: inset 0 0 0 2px #7150e5;
+}
+
+.case-study-enlarge__cue {
+  position: absolute;
+  right: 12px;
+  bottom: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 12px;
+  border-radius: var(--btn-radius, 8px);
+  background: #ffffff;
+  color: #111213;
+  font-family: var(--font-family-ui);
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  letter-spacing: 0;
+  border: 1px solid #b0b3b8;
+  box-shadow: 0 2px 8px rgba(17, 18, 19, 0.12);
+  pointer-events: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .case-study-enlarge__cue {
+    opacity: 0;
+    transform: translateY(4px);
+    transition:
+      opacity 160ms ease,
+      transform 160ms ease;
+  }
+
+  .case-study-enlarge__hit:hover .case-study-enlarge__cue,
+  .case-study-enlarge__hit:focus-visible .case-study-enlarge__cue {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 700px) {
+  .case-study-enlarge__cue {
+    padding: 8px;
+  }
+
+  .case-study-enlarge__cue-label {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+}
+
+.case-study-enlarge-dialog {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  flex-direction: column;
+  background: #f7f8f9;
+  box-sizing: border-box;
+}
+
+.case-study-enlarge-dialog__bar {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  min-height: 64px;
+  padding: 16px 20px 8px;
+  box-sizing: border-box;
+}
+
+.case-study-enlarge-dialog__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #7150e5;
+  font-family: var(--font-family-ui);
+  font-size: var(--type-atkinson-text-md-size);
+  font-weight: 400;
+  line-height: var(--type-atkinson-text-md-lh);
+  cursor: pointer;
+}
+
+.case-study-enlarge-dialog__back:focus,
+.case-study-enlarge-dialog__back:focus-visible {
+  outline: none;
+}
+
+.case-study-enlarge-dialog__back:focus-visible {
+  outline: 2px solid #7150e5;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (min-width: 1025px) and (hover: hover) and (pointer: fine) {
+  .case-study-enlarge-dialog__back:hover {
+    color: #5e3ec9;
+  }
+}
+
+.case-study-enlarge-dialog__stage {
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 0;
+  padding: 8px 20px 24px;
+  box-sizing: border-box;
+  cursor: zoom-out;
+}
+
+.case-study-enlarge-dialog__frame {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  max-width: 1220px;
+  cursor: default;
+}
+
+.case-study-enlarge-dialog__frame picture {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+}
+
+.case-study-enlarge-dialog__image {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  object-position: center;
+  touch-action: pinch-zoom;
+}
+
+@media (max-width: 700px) {
+  .case-study-enlarge-dialog__bar {
+    min-height: 56px;
+    padding: 12px 16px 4px;
+  }
+
+  .case-study-enlarge-dialog__stage {
+    padding: 4px 16px 20px;
+  }
+}

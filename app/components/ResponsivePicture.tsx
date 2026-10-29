@@ -26,7 +26,7 @@ export const ResponsivePicture: React.FC<ResponsivePictureProps> = ({
   if (!isRasterImageSources(image)) {
     return (
       <img
-        src={image}
+        src={encodeURI(image)}
         alt={alt}
         className={className}
         loading={loading}
@@ -40,9 +40,9 @@ export const ResponsivePicture: React.FC<ResponsivePictureProps> = ({
 
   return (
     <picture>
-      <source type="image/avif" srcSet={image.avif} />
+      <source type="image/avif" srcSet={encodeURI(image.avif)} />
       <img
-        src={image.webp}
+        src={encodeURI(image.webp)}
         alt={alt}
         className={className}
         loading={loading}

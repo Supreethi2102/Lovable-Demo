@@ -83,8 +83,8 @@ const caseStudies: CaseStudyCardStudy[] = [
         title: 'What happens when craft meets type and language?',
         description:
           'Burano lace informed precision, negative space, and rhythm. Paper-cut artists and bold, graphic typography inspired by Barbara Kruger added structure and impact, while te reo Māori phrases grounded the work in culture. Together, these influences bridged craft and strategy.',
-        image: '/misc/retail-bags-tab-influence.png',
-        alt: 'Reference image for the influences behind the Green Cross Health bag system.',
+        image: '/misc/green-cross-health-influence-card.avif',
+        alt: 'Paper-cut moodboard with lace, fantail, and kraft studies behind the Green Cross Health bag system.',
       },
       discoveries: {
         title: 'What unexpected lessons hide inside a simple bag?',

@@ -18,6 +18,11 @@ import {
 } from '@phosphor-icons/react';
 import { SiteFooter } from './SiteFooter';
 import { CaseStudyCard, type CaseStudyCardStudy } from '../CaseStudyCard';
+import { GchBrandPair } from '../GchBrandPair';
+import { GchFaceSwitcher } from '../GchFaceSwitcher';
+import { ResponsivePicture } from '../ResponsivePicture';
+import { CaseStudyEnlargeProvider, EnlargeTrigger } from '../CaseStudyEnlarge';
+import type { RasterImageSources } from '../../utils/imageFormats';
 import './CaseStudyDetail.css';
 import './case-study-detail-responsive.css';
 import { useCaseStudyListenHeroSync } from './useCaseStudyListenHeroSync';
@@ -90,15 +95,88 @@ const IMG = {
   explore1: '/case-study/c8cdbdceb1fbf0c9bca7307bcba47c77cfbb2e81.png',
 };
 
+const GCH_PACK_AVIF = '/Images/Packaging images 2/avif files';
+const GCH_PACK_WEBP = '/Images/Packaging images 2/webp files';
+const GCH_BAGS_AVIF = '/Images/Green Cross bags/Avif files';
+const GCH_BAGS_WEBP = '/Images/Green Cross bags/Webp files';
+
+const gchPack = (name: string, alt: string): RasterImageSources => ({
+  avif: `${GCH_PACK_AVIF}/${name}.avif`,
+  webp: `${GCH_PACK_WEBP}/${name}.webp`,
+  alt,
+});
+
+const gchBags = (name: string, alt: string): RasterImageSources => ({
+  avif: `${GCH_BAGS_AVIF}/${name}.avif`,
+  webp: `${GCH_BAGS_WEBP}/${name}.webp`,
+  alt,
+});
+
 const GCH_IMG = {
-  hero: '/case-study-gch/9912d40ae739a7575ec4a7abed1a19cf05d03244.png',
-  brief: '/case-study-gch/d65aed70beb865887889dd3c5f06cd6bf5c9d477.png',
-  research: '/case-study-gch/f4b71e3100c327a76d4ed5c72d9b0279829c97a0.png',
-  process: '/case-study-gch/6921425df3fbd47838860bb0b5ca35d29859de9e.png',
-  lifeFrontBack: '/case-study-gch/06d7fcc67fd2e50425416638866d9a8ffffe1f48.png',
-  paperBagDesign: '/case-study-gch/1ed717e27b4208d7579d7f929d28b0624fde988e.png',
-  unichemFrontBack: '/case-study-gch/ae57819f1182ad7e22b284384065d1925c6aabd7.png',
-  imageFrame: '/case-study-gch/c8cdbdceb1fbf0c9bca7307bcba47c77cfbb2e81.png',
+  hero: gchPack(
+    'green-cross-health-hero-case',
+    'Unichem kia ora bag standing beside a Life Pharmacy Aroha nui bag on a sunlit studio surface',
+  ),
+  typography: gchBags(
+    'green-cross-health-typography-case',
+    'Kraft sheet showing Viva Beautiful and Avant Garde Gothic type specimens for the two bag brands',
+  ),
+  colours: gchPack(
+    'green-cross-health-colours-case',
+    'Colour palette board on kraft paper for Life Pharmacy and Unichem, including the shared white',
+  ),
+  messaging: gchBags(
+    'green-cross-health-credits-case',
+    'Life Pharmacy Treat yourself bag beside a Unichem kia ora bag, showing loyalty and sustainability copy',
+  ),
+  exploring: gchBags(
+    'green-cross-health-research-case',
+    'Stack of kraft bags with handwritten notes on ink, fibre, colour, and print contrast',
+  ),
+  front: gchPack(
+    'green-cross-health-group-front-case',
+    'Life Pharmacy and Unichem paper bags in four sizes, showing the front faces of the system',
+  ),
+  back: gchPack(
+    'green-cross-health-group-back-case',
+    'Life Pharmacy and Unichem paper bags in four sizes, showing the back faces and secondary messages',
+  ),
+  impact: gchBags(
+    'green-cross-health-impact-learning-case copy',
+    'Person in cream trousers walking through a pharmacy, holding a small Unichem bag with a New Zealand map',
+  ),
+  reflection: gchPack(
+    'green-cross-health-reflection-case',
+    'Person walking away through a mall carrying two Unichem bags, one reading kia ora and one Good health starts inside',
+  ),
+  brief: gchPack(
+    'green-cross-health-group-front-case',
+    'Life Pharmacy and Unichem paper bags in four sizes, showing the front faces of the system',
+  ),
+  research: gchPack(
+    'green-cross-health-influence-card',
+    'Paper-cut moodboard with lace, fantail, kōwhai, and kraft studies for the Green Cross Health bag system',
+  ),
+  credits: gchBags(
+    'green-cross-health-credits-case',
+    'Life Pharmacy Treat yourself bag beside a Unichem kia ora bag on a cream studio background',
+  ),
+};
+
+const GCH_BRAND_IMAGES = {
+  lifeMoodboard: gchPack(
+    'green-cross-health-process-life-case',
+    'Life Pharmacy moodboard with lace, fantail papercuts, Aroha nui, and kōwhai notes on kraft paper',
+  ),
+  unichemMoodboard: gchPack(
+    'green-cross-health-process-unichem-case',
+    'Unichem moodboard with bold type, paper-cutting, kia ora, and New Zealand map studies on kraft paper',
+  ),
+  unichemBags: {
+    avif: '/misc/green-cross-health-focus-card.avif',
+    webp: '/misc/green-cross-health-focus-card.webp',
+    alt: 'Three Unichem kraft bags in different sizes, including one reading Our greatest wealth is health and a large kia ora carry bag.',
+  },
 };
 
 const TOY_IMG = {
@@ -155,7 +233,7 @@ const TOY_ACTIVITY_STILLS: Array<{ src: string; alt: string; width: number; heig
  * which flashes if the image is still loading.
  */
 export function getCaseStudyHeroImage(id?: string): string {
-  if (id === '2') return GCH_IMG.hero;
+  if (id === '2') return GCH_IMG.hero.webp;
   if (id === '4') return TOY_IMG.hero;
   if (id === '1' || id === '5') return PALE_YELLOW_PLACEHOLDER;
   return IMG.hero;
@@ -219,21 +297,36 @@ const TESTIMONIALS = [
   },
 ];
 
-const GCH_INSIGHTS = [
+function GchImageCaption({ title, children }: { title: string; children: React.ReactNode }) {
+  return (
+    <div className="case-study-detail__gch-caption">
+      <p className="case-study-detail__gch-caption-title">{title}</p>
+      <p>{children}</p>
+    </div>
+  );
+}
+
+const GCH_INSIGHTS: Array<{ number: string; title: string; body: React.ReactNode }> = [
   {
     number: '1',
     title: 'Strategy',
-    body: 'Small touchpoints carry significant brand weight when applied intentionally',
+    body: 'Everyday packaging can become a powerful brand touchpoint when designed with intention.',
   },
   {
     number: '2',
     title: 'Execution',
-    body: 'Creative ambition works best when grounded in production reality',
+    body: 'Creative ideas gain strength when balanced with production and rollout requirements.',
   },
   {
     number: '3',
     title: 'Collaboration',
-    body: 'Strong teamwork allows design to scale beyond concept',
+    body: (
+      <>
+        Clear creative direction
+        <br />
+        and close teamwork help maintain brand consistency at scale.
+      </>
+    ),
   },
 ];
 
@@ -334,7 +427,7 @@ const MORE_PROJECTS_TOY: CaseStudyCardStudy[] = [
     title: 'How do you turn a plastics ban into a brand moment?',
     description:
       'A plastics ban opened the door to rethink how Life Pharmacy and Unichem show up. I designed paper bags as small moments of brand identity and culture',
-    image: '/case-study-gch/9912d40ae739a7575ec4a7abed1a19cf05d03244.png',
+    image: GCH_IMG.hero.webp,
     duration: '4 weeks',
     category: 'packaging',
   },
@@ -355,7 +448,7 @@ export const CaseStudyDetail: React.FC = () => {
   const overview = isGreenCross
     ? {
         heroImage,
-        heroAlt: 'Brown paper retail bags in warm sunlight',
+        heroAlt: GCH_IMG.hero.alt,
         subtitle: 'Packaging | Green Cross Health',
         title: 'More than a carry bag',
         body:
@@ -395,7 +488,7 @@ export const CaseStudyDetail: React.FC = () => {
       };
   const overviewSummaryItems = isGreenCross
     ? [
-        { label: 'Role', value: 'Lead Designer', size: 'summary-item--24' },
+        { label: 'Role', value: 'Lead Designer & Art Direction', size: 'summary-item--24' },
         {
           label: 'Context',
           value: 'Green Cross Health plastic bag ban, requiring a scalable nationwide rollout across a large retail network.',
@@ -410,13 +503,19 @@ export const CaseStudyDetail: React.FC = () => {
         },
         {
           label: 'Audience',
-          value: 'Women 40-60, primary household decision-makers, community-focused',
+          value: (
+            <>
+              Women 40–60, primary household decision-makers,
+              <br />
+              community-focused
+            </>
+          ),
           size: 'summary-item--48',
         },
         {
           label: 'Focus',
           value:
-            'Sustainable, brand-led paper bags grounded in cultural authenticity, designed to balance everyday usability, brand expression, and a more thoughtful retail experience',
+            'Sustainable, brand-led paper bags drawing on te reo Māori and New Zealand motifs, balancing usability, brand expression, and a thoughtful retail experience.',
           size: 'summary-item--auto',
         },
         {
@@ -424,8 +523,18 @@ export const CaseStudyDetail: React.FC = () => {
           value: 'Word-based storytelling, abstract NZ motifs, cohesive visual language',
           size: 'summary-item--48',
         },
-        { label: 'Accessibility', value: 'High contrast, legible', size: 'summary-item--24' },
-        { label: 'Team', value: 'Morgan Paige Taitoko (illustrator)', size: 'summary-item--24' },
+        { label: 'Accessibility', value: 'High contrast, clear legibility', size: 'summary-item--24' },
+        {
+          label: 'Team',
+          value: (
+            <>
+              Morgan Paige Taitoko
+              <br />
+              (illustration + production support)
+            </>
+          ),
+          size: 'summary-item--48',
+        },
       ]
     : isMegaToy
       ? [
@@ -552,23 +661,23 @@ export const CaseStudyDetail: React.FC = () => {
       ];
   const briefContent = isGreenCross
     ? {
-        image: PALE_YELLOW_PLACEHOLDER,
-        imageAlt: 'Soft yellow section background',
+        image: GCH_IMG.brief.webp,
+        imageAlt: GCH_IMG.brief.alt,
         business:
-          'With New Zealand’s single-use plastics ban kicking in, Green Cross Health needed packaging that felt like a step forward.',
+          'New Zealand’s plastics ban called for a new approach to everyday packaging.',
         priorities: [
-          'Make sustainability visible',
+          'Make the shift to paper meaningful',
           'Strengthen each brand’s individual presence',
           'Turn a regulatory shift into a customer moment',
         ],
-        question: 'How might we create paper bags that double as small billboards:',
+        question: 'How might we create paper bags that double as small billboards?',
         bullets: [
-          'Shows sustainability upfront',
+          'Give each brand a distinct, recognisable voice',
           'Reflects Aotearoa’s (New Zealand) culture',
-          'Help the two brands feel distinct at a glance',
+          'Build sustainability messaging into the wider design',
         ],
-        postBriefImage: '/case-study-gch/06d7fcc67fd2e50425416638866d9a8ffffe1f48.png',
-        postBriefAlt: 'Life Pharmacy paper bag front and back design',
+        postBriefImage: GCH_IMG.front.webp,
+        postBriefAlt: GCH_IMG.front.alt,
       }
     : isMegaToy
       ? {
@@ -652,13 +761,13 @@ export const CaseStudyDetail: React.FC = () => {
         subheading: 'Sustainability and material',
         intro: 'With a tight timeline, I focused on what would directly impact the outcome.',
         paragraphs: [
-          'I reviewed recycled bag design. Many relied on bright greens and leaf symbols that felt surface-level.',
-          'I focused on kraft behaviour in print, ink absorption, fibre strength, dielines, and detail limits, grounding decisions in production and avoiding greenwashing.',
+          'I explored how sustainability messaging could support each brand without dominating the design.',
+          'Research into kraft paper, ink absorption, fibre strength, and print limits informed production decisions and kept sustainability claims grounded.',
         ],
         secondHeading: 'How people see a bag',
         bullets: [
-          'Bags aren’t studied. They’re glimpsed.',
-          'Insights from Nielsen Norman Group shaped layouts. Hierarchy and contrast drive instant recognition.',
+          'Bags are often glimpsed, not studied.',
+          'Scale, contrast, and typographic hierarchy helped create distinctive, recognisable packaging in busy retail environments.',
         ],
       }
     : isMegaToy
@@ -773,7 +882,38 @@ export const CaseStudyDetail: React.FC = () => {
   const cinemaProgressRef = useRef(0);
   const cinemaBackdropRef = useRef<HTMLDivElement>(null);
   const scrollHintRef = useRef<HTMLDivElement>(null);
+  const gchQuotesRef = useRef<HTMLDivElement>(null);
   const CINEMA_MORPH_CLASS = 'case-study-detail__hero-image--cinema-morphing';
+
+  useEffect(() => {
+    if (!isGreenCross) return;
+    const root = gchQuotesRef.current;
+    if (!root) return;
+
+    const bubbles = Array.from(root.querySelectorAll<HTMLElement>('.case-study-detail__gch-testimonial'));
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      return;
+    }
+
+    root.classList.add('case-study-detail__gch-testimonials--motion');
+    let nextSlot = 0;
+    const io = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          const el = entry.target as HTMLElement;
+          if (el.classList.contains('is-popped')) return;
+          el.style.setProperty('--gch-pop-delay', `${nextSlot * 180}ms`);
+          nextSlot += 1;
+          el.classList.add('is-popped');
+          io.unobserve(el);
+        });
+      },
+      { threshold: 0.4, rootMargin: '0px 0px -8% 0px' },
+    );
+    bubbles.forEach((bubble) => io.observe(bubble));
+    return () => io.disconnect();
+  }, [isGreenCross]);
 
   /**
    * Hero “cinema”: full-width image first; wheel/trackpad/touch scrubs it into the card.
@@ -1229,6 +1369,7 @@ export const CaseStudyDetail: React.FC = () => {
   }, []);
 
   return (
+    <CaseStudyEnlargeProvider>
     <section
       className={[
         'case-study-detail',
@@ -1382,8 +1523,8 @@ export const CaseStudyDetail: React.FC = () => {
                 <span className="case-study-detail__listen-label">Listen</span>
               </button>
 
-              <aside className="case-study-detail__summary case-study-detail__summary--layout" aria-label="Overview">
-                <h2>Overview</h2>
+              <aside className="case-study-detail__summary case-study-detail__summary--layout" aria-label={isGreenCross ? 'Project summary' : 'Overview'}>
+                <h2>{isGreenCross ? 'Project summary' : 'Overview'}</h2>
                 {overviewSummaryItems.map(({ label, value, size }, idx, arr) => (
                   <React.Fragment key={label}>
                     <div className={`case-study-detail__summary-item ${size}`}>
@@ -1408,29 +1549,48 @@ export const CaseStudyDetail: React.FC = () => {
             >
               <figure
                 className={`media-side case-study-detail__brief-media${
-                  usesPlaceholderMedia ? ' case-study-detail__media--placeholder' : ''
+                  usesPlaceholderMedia && !isGreenCross ? ' case-study-detail__media--placeholder' : ''
                 }`}
               >
-                <img
-                  src={briefContent.image}
-                  alt={usesPlaceholderMedia ? '' : briefContent.imageAlt}
-                  aria-hidden={usesPlaceholderMedia ? true : undefined}
-                />
+                {isGreenCross ? (
+                  <>
+                    <ResponsivePicture image={GCH_IMG.brief} />
+                    <EnlargeTrigger image={GCH_IMG.brief} />
+                  </>
+                ) : (
+                  <img
+                    src={briefContent.image}
+                    alt={usesPlaceholderMedia ? '' : briefContent.imageAlt}
+                    aria-hidden={usesPlaceholderMedia ? true : undefined}
+                  />
+                )}
               </figure>
               <div className="text-side case-study-detail__brief-text">
                 <div className="case-study-detail__brief-content">
                   <div className="case-study-detail__brief-top-group">
                     <div className="case-study-detail__brief-intro">
-                      <h3>The brief</h3>
+                      <h3>{isGreenCross ? 'Brief' : 'The brief'}</h3>
                       <div className="case-study-detail__brief-business">
-                        {!isAmioLayout && <h4>Business context</h4>}
+                        {!isAmioLayout && !isGreenCross && <h4>Business context</h4>}
                         {isPalmy ? (
                           <>
                             <p>Palmy is a concept for a digital-first challenger bank designed for people often underserved by traditional financial systems.</p>
                             <p>The challenge wasn’t just visual. It was behavioural.</p>
                           </>
                         ) : (
-                          <p>{briefContent.business}</p>
+                          <p className={isGreenCross ? 'case-study-detail__display-subhead' : undefined}>
+                            {isGreenCross ? (
+                              <>
+                                New Zealand’s plastics ban
+                                <br />
+                                called for a new approach
+                                <br />
+                                to everyday packaging.
+                              </>
+                            ) : (
+                              briefContent.business
+                            )}
+                          </p>
                         )}
                       </div>
                     </div>
@@ -1510,16 +1670,6 @@ export const CaseStudyDetail: React.FC = () => {
               </div>
             </article>
 
-            {isGreenCross && (
-              <article className="case-study-detail__panel">
-                <img
-                  className="full-bleed-media case-study-detail__store-image"
-                  src={briefContent.postBriefImage}
-                  alt={briefContent.postBriefAlt}
-                />
-              </article>
-            )}
-
             {isAmioLayout && (
               <article className="case-study-detail__text-panel case-study-detail__text-panel--amio-intro" aria-label="Āmio meaning">
                 <p className="case-study-detail__amio-intro-quote">
@@ -1557,20 +1707,22 @@ export const CaseStudyDetail: React.FC = () => {
                 {isGreenCross ? (
                   <>
                     <h3>Research</h3>
-                    <p>With a tight timeline, I focused on what would directly impact the outcome.</p>
-                    <h4>Sustainability and material</h4>
-                    <p>
-                      I reviewed recycled bag design. Many relied on bright greens and leaf symbols that felt
-                      surface-level.
+                    <p className="case-study-detail__display-subhead">
+                      With a tight timeline,
+                      <br />
+                      I focused on what would directly impact the outcome.
                     </p>
+                    <h4>Sustainability and material</h4>
+                    <p>I explored how sustainability messaging could support each brand without dominating the design.</p>
                     <p>
-                      I focused on kraft behaviour in print, ink absorption, fibre strength, dielines, and detail limits,
-                      grounding decisions in production and avoiding greenwashing.
+                      Research into kraft paper, ink absorption, fibre strength, and print limits informed production
+                      decisions and kept sustainability claims grounded.
                     </p>
                     <h4>How people see a bag</h4>
-                    <p>Bags aren’t studied. They’re glimpsed.</p>
+                    <p>Bags are often glimpsed, not studied.</p>
                     <p>
-                      Insights from Nielsen Norman Group shaped layouts. Hierarchy and contrast drive instant recognition.
+                      Scale, contrast, and typographic hierarchy helped create distinctive, recognisable packaging in busy
+                      retail environments.
                     </p>
                   </>
                 ) : isMegaToy ? (
@@ -1682,21 +1834,25 @@ export const CaseStudyDetail: React.FC = () => {
                 )}
               </div>
               <figure
-                className={`media-side${usesPlaceholderMedia ? ' case-study-detail__media--placeholder' : ''}`}
+                className={`media-side${usesPlaceholderMedia && !isGreenCross ? ' case-study-detail__media--placeholder' : ''}`}
               >
-                <img
-                  src={
-                    isGreenCross
-                      ? PALE_YELLOW_PLACEHOLDER
-                      : isMegaToy
-                        ? TOY_IMG.researchBoard
-                        : isAmioLayout
-                          ? PALE_YELLOW_PLACEHOLDER
-                          : IMG.research
-                  }
-                  alt={usesPlaceholderMedia ? '' : 'Research visual'}
-                  aria-hidden={usesPlaceholderMedia ? true : undefined}
-                />
+                {isGreenCross ? (
+                  <>
+                    <ResponsivePicture image={GCH_IMG.research} />
+                    <EnlargeTrigger image={GCH_IMG.research} />
+                  </>
+                ) : isMegaToy ? (
+                  <>
+                    <img src={TOY_IMG.researchBoard} alt="Mega Toy research board" />
+                    <EnlargeTrigger image={TOY_IMG.researchBoard} alt="Mega Toy research board" />
+                  </>
+                ) : (
+                  <img
+                    src={isAmioLayout ? PALE_YELLOW_PLACEHOLDER : IMG.research}
+                    alt={usesPlaceholderMedia ? '' : 'Research visual'}
+                    aria-hidden={usesPlaceholderMedia ? true : undefined}
+                  />
+                )}
               </figure>
             </article>
 
@@ -1718,6 +1874,39 @@ export const CaseStudyDetail: React.FC = () => {
               </section>
             )}
 
+            {isGreenCross ? (
+              <GchBrandPair
+                id="process"
+                sectionRef={(el) => {
+                  sectionsRef.current.process = el;
+                }}
+                eyebrow="Process and approach"
+                heading="A new creative direction, developed in four days."
+                tablistLabel="Process moodboard brand"
+                sharedParagraphs={[
+                  'The project began with initial concepts from an external agency. I saw an opportunity to explore a different approach and proposed developing an alternative concept in-house.',
+                  'With management’s support, I developed a new direction centred on warmth, clarity, and cultural relevance. The concept was approved and became the foundation for the final packaging system.',
+                ]}
+                life={{
+                  title: 'Life Pharmacy direction',
+                  paragraphs: [
+                    'The moodboard brought together delicate, expressive ideas centred on beauty and care.',
+                    'Burano lace, paper-cut artists Karen Bit Vejle and Maude White, and Japanese kirie inspired delicate forms and layered detail.',
+                    '“Aroha nui” (much love) in te reo Māori inspired care and connection, while negative space and clean geometry gave the papercraft structure.',
+                  ],
+                  image: GCH_BRAND_IMAGES.lifeMoodboard,
+                }}
+                unichem={{
+                  title: 'Unichem direction',
+                  paragraphs: [
+                    'The moodboard investigated a bold, structured direction centred on health and clarity.',
+                    'Health-led typography and paper-cutting inspired contrast and precise forms.',
+                    '“Kia ora” connected the greeting to the brand’s purpose, while negative space and clean geometry created a system designed for clarity.',
+                  ],
+                  image: GCH_BRAND_IMAGES.unichemMoodboard,
+                }}
+              />
+            ) : (
             <article
               id="process"
               ref={(el) => {
@@ -1732,30 +1921,16 @@ export const CaseStudyDetail: React.FC = () => {
               >
                 <img
                   src={
-                    isGreenCross
+                    isMegaToy || isAmioLayout
                       ? PALE_YELLOW_PLACEHOLDER
-                      : isMegaToy
-                        ? PALE_YELLOW_PLACEHOLDER
-                        : isAmioLayout
-                          ? PALE_YELLOW_PLACEHOLDER
-                          : IMG.process
+                      : IMG.process
                   }
                   alt={usesPlaceholderMedia ? '' : 'Process visual'}
                   aria-hidden={usesPlaceholderMedia ? true : undefined}
                 />
               </figure>
               <div className={`text-side case-study-detail__text-stack ${isAmioLayout ? 'case-study-detail__text-stack--amio-flow' : ''}`}>
-                {isGreenCross ? (
-                  <>
-                    <h3>Process &amp; approach</h3>
-                    <p>{processContent.paragraphs[0]}</p>
-                    <p>{processContent.paragraphs[1]}</p>
-                    <h4>Direction</h4>
-                    <p>{processContent.paragraphs[2]}</p>
-                    <p>{processContent.paragraphs[3]}</p>
-                    <p>{processContent.paragraphs[4]}</p>
-                  </>
-                ) : isMegaToy ? (
+                {isMegaToy ? (
                   <>
                     <h3>Process &amp; Approach</h3>
                     <h4>TV commercial concept</h4>
@@ -1829,6 +2004,7 @@ export const CaseStudyDetail: React.FC = () => {
                 )}
               </div>
             </article>
+            )}
 
             {isAmioLayout && (
               <>
@@ -1929,6 +2105,7 @@ export const CaseStudyDetail: React.FC = () => {
                 <div className="case-study-detail__toy-tv">
                   <img className="case-study-detail__toy-tv-frame" src={TOY_IMG.tvFrame} alt="Mega Toy TV campaign still" />
                 </div>
+                <EnlargeTrigger image={TOY_IMG.tvFrame} alt="Mega Toy TV campaign still" />
               </article>
             )}
 
@@ -1936,27 +2113,38 @@ export const CaseStudyDetail: React.FC = () => {
               <article
                 className={
                   isGreenCross
-                    ? 'case-study-detail__panel case-study-detail__panel--gch-image case-study-detail__panel--gch-image-550'
+                    ? 'case-study-detail__gch-captioned'
                     : 'case-study-detail__panel case-study-detail__composite-panel case-study-detail__composite-panel--typography'
                 }
               >
                 {isGreenCross ? (
-                  <img className="case-study-detail__gch-section-image" src={GCH_IMG.brief} alt="Typography reference board" />
+                  <>
+                    <div className="case-study-detail__panel case-study-detail__panel--gch-image case-study-detail__panel--gch-image-550">
+                      <ResponsivePicture image={GCH_IMG.typography} className="case-study-detail__gch-section-image" />
+                      <EnlargeTrigger image={GCH_IMG.typography} />
+                    </div>
+                    <GchImageCaption title="Typography exploration">
+                      Contrasting type styles helped establish two distinct brand voices, balancing expression and
+                      clarity on kraft paper.
+                    </GchImageCaption>
+                  </>
                 ) : (
                   <>
-                    <figure className="case-study-detail__typography-specimen">
+                    <figure className="case-study-detail__typography-specimen case-study-enlarge">
                       <img
                         className="case-study-detail__typography-specimen-image"
                         src={IMG.typographySpecimen}
                         alt="Typography specimen board"
                       />
+                      <EnlargeTrigger image={IMG.typographySpecimen} alt="Typography specimen board" />
                     </figure>
-                    <figure className="case-study-detail__typography-banner">
+                    <figure className="case-study-detail__typography-banner case-study-enlarge">
                       <img
                         className="case-study-detail__typography-banner-image"
                         src={IMG.typographyBanner}
                         alt="Summer savings banner"
                       />
+                      <EnlargeTrigger image={IMG.typographyBanner} alt="Summer savings banner" />
                     </figure>
                   </>
                 )}
@@ -1967,12 +2155,21 @@ export const CaseStudyDetail: React.FC = () => {
               <article
                 className={
                   isGreenCross
-                    ? 'case-study-detail__panel case-study-detail__panel--gch-image case-study-detail__panel--gch-image-555'
+                    ? 'case-study-detail__gch-captioned'
                     : 'case-study-detail__panel case-study-detail__color-panel'
                 }
               >
                 {isGreenCross ? (
-                  <img className="case-study-detail__gch-section-image" src={GCH_IMG.research} alt="Colour palette board" />
+                  <>
+                    <div className="case-study-detail__panel case-study-detail__panel--gch-image case-study-detail__panel--gch-image-555">
+                      <ResponsivePicture image={GCH_IMG.colours} className="case-study-detail__gch-section-image" />
+                      <EnlargeTrigger image={GCH_IMG.colours} />
+                    </div>
+                    <GchImageCaption title="Colour on kraft">
+                      Exploring colour against the natural paper stock helped establish contrast, legibility, and a
+                      consistent visual relationship between the two brands.
+                    </GchImageCaption>
+                  </>
                 ) : (
                   <div className="case-study-detail__color-bars" aria-hidden="true">
                     <span />
@@ -1988,7 +2185,22 @@ export const CaseStudyDetail: React.FC = () => {
               </article>
             )}
 
-            {isMegaToy ? (
+            {isGreenCross ? (
+              <article className="case-study-detail__text-panel">
+                <h4>Messaging</h4>
+                <p>I refined copy into short, high-impact lines designed to land instantly in busy retail:</p>
+                <ul>
+                  <li>Life Pharmacy. &quot;It&apos;s what&apos;s on the inside that counts&quot;</li>
+                  <li>Unichem. &quot;Our greatest wealth is health&quot;</li>
+                </ul>
+                <p>
+                  Clear, human, and easy to absorb in motion.
+                  <br />
+                  Side panels carried Living Rewards and sustainability details, keeping the main faces focused and
+                  uncluttered.
+                </p>
+              </article>
+            ) : isMegaToy ? (
               <article className="case-study-detail__split-card case-study-detail__split-card--reverse case-study-detail__split-card--mega-fluid">
                 <div className="text-side case-study-detail__text-stack">
                   <h4>Connected play experience</h4>
@@ -2019,36 +2231,19 @@ export const CaseStudyDetail: React.FC = () => {
               </article>
             ) : isAmioLayout ? null : (
               <article className="case-study-detail__text-panel">
-                <h4>{isGreenCross ? 'Messaging' : 'Balancing brand attitude'}</h4>
-                {isGreenCross ? (
-                  <>
-                    <p>I refined copy into short, high-impact lines designed to land instantly in busy retail:</p>
-                    <ul>
-                      <li>Life Pharmacy. "It's what's on the inside that counts"</li>
-                      <li>Unichem. "Our greatest wealth is health"</li>
-                    </ul>
-                    <p>Clear, human, and easy to absorb in motion. <br></br>
-                    Side panels carried Living Rewards and sustainability details, keeping the main faces focused and uncluttered.</p>
-                  </>
-                ) : (
-                  <>
-                    <p>
-                      In partnership with TBWA, a global creative agency, the campaign embraced a confident “small spender”
-                      attitude. Easy to overplay.
-                    </p>
-                    <p>Too confident risks distance. Too soft loses impact.</p>
-                  </>
-                )}
+                <h4>Balancing brand attitude</h4>
+                <p>
+                  In partnership with TBWA, a global creative agency, the campaign embraced a confident “small spender”
+                  attitude. Easy to overplay.
+                </p>
+                <p>Too confident risks distance. Too soft loses impact.</p>
               </article>
             )}
 
-            {isGreenCross ? (
-              <article className="case-study-detail__panel case-study-detail__panel--gch-image case-study-detail__panel--gch-image-764">
-                <img className="case-study-detail__gch-section-image" src={GCH_IMG.process} alt="Bag messaging section image" />
-              </article>
-            ) : isMegaToy ? (
+            {isGreenCross ? null : isMegaToy ? (
               <article className="case-study-detail__panel case-study-detail__panel--gch-image case-study-detail__panel--gch-image-550">
                 <img className="case-study-detail__gch-section-image" src={IMG.typographySpecimen} alt="Typeface board" />
+                <EnlargeTrigger image={IMG.typographySpecimen} alt="Typeface board" />
               </article>
             ) : isAmioLayout ? null : (
               <section className="case-study-detail__two-up case-study-detail__two-up--featured">
@@ -2065,35 +2260,41 @@ export const CaseStudyDetail: React.FC = () => {
               </section>
             )}
 
-            {!isMegaToy && !isAmioLayout && (
+            {isGreenCross ? (
               <article className="case-study-detail__text-panel">
-                <h4>{isGreenCross ? 'Te reo Māori' : 'Finding the balance'}</h4>
-                {isGreenCross ? (
-                  <>
-                    <p>
-                      I introduced te reo Māori to bring warmth and cultural meaning into the system, in a way that felt
-                      authentic, not decorative:
-                    </p>
-                    <ul>
-                      <li>Life Pharmacy. "Aroha nui" (much love)</li>
-                      <li>Unichem. "Kia ora" (a welcoming greeting)</li>
-                    </ul>
-                    <p>These phrases grounded the design in Aotearoa and reinforced tone, identity, and emotional connection.</p>
-                  </>
-                ) : (
-                  <>
-                    <p>
-                      Where possible, lower camera angles gave talent presence while keeping it open and approachable.
-                    </p>
-                    <p>The result. Bold, spirited imagery that still felt warm and human.</p>
-                  </>
-                )}
+                <h4>Te reo Māori</h4>
+                <p>
+                  I introduced te reo Māori to bring warmth and cultural meaning into the system, in a way that felt
+                  authentic, not decorative:
+                </p>
+                <ul>
+                  <li>Life Pharmacy. &quot;Aroha nui&quot; (much love)</li>
+                  <li>Unichem. &quot;Kia ora&quot; (a welcoming greeting)</li>
+                </ul>
+                <p>
+                  These phrases grounded the design in Aotearoa and reinforced tone, identity, and emotional connection.
+                </p>
               </article>
-            )}
+            ) : !isMegaToy && !isAmioLayout ? (
+              <article className="case-study-detail__text-panel">
+                <h4>Finding the balance</h4>
+                <p>
+                  Where possible, lower camera angles gave talent presence while keeping it open and approachable.
+                </p>
+                <p>The result. Bold, spirited imagery that still felt warm and human.</p>
+              </article>
+            ) : null}
 
             {isGreenCross ? (
-              <article className="case-study-detail__panel case-study-detail__panel--gch-image case-study-detail__panel--gch-image-624">
-                <img className="case-study-detail__gch-section-image" src={GCH_IMG.paperBagDesign} alt="Paper bag design section image" />
+              <article className="case-study-detail__gch-captioned">
+                <div className="case-study-detail__panel case-study-detail__panel--gch-image case-study-detail__panel--gch-image-624">
+                  <ResponsivePicture image={GCH_IMG.exploring} className="case-study-detail__gch-section-image" />
+                  <EnlargeTrigger image={GCH_IMG.exploring} />
+                </div>
+                <GchImageCaption title="Exploring the possibilities">
+                  Early concepts tested how typography, messaging, and graphic motifs could give each brand its own
+                  personality within a shared packaging system.
+                </GchImageCaption>
               </article>
             ) : isMegaToy ? (
               <>
@@ -2103,10 +2304,12 @@ export const CaseStudyDetail: React.FC = () => {
                     src={TOY_IMG.processImage}
                     alt="Mega Toy toolkit board"
                   />
+                  <EnlargeTrigger image={TOY_IMG.processImage} alt="Mega Toy toolkit board" />
                 </article>
                 <article className="case-study-detail__panel case-study-detail__panel--gch-image case-study-detail__panel--gch-image-1112">
                   <div className="case-study-detail__toy-girl-panel">
                     <img className="case-study-detail__gch-section-image" src={TOY_IMG.girlImage} alt="Girl holding flyer" />
+                    <EnlargeTrigger image={TOY_IMG.girlImage} alt="Girl holding flyer" />
                     <img
                       className="case-study-detail__toy-girl-overlay"
                       src={TOY_IMG.girlBookOverlay}
@@ -2328,16 +2531,59 @@ export const CaseStudyDetail: React.FC = () => {
               </>
             )}
 
+            {isGreenCross ? (
+              <div className="case-study-detail__gch-captioned">
+                <article
+                  id="solution"
+                  ref={(el) => {
+                    sectionsRef.current.solution = el;
+                  }}
+                  className="case-study-detail__split-card case-study-detail__split-card--reverse case-study-detail__split-card--solution case-study-detail__split-card--solution-gch"
+                >
+                  <figure className="media-side case-study-detail__solution-media">
+                    <ResponsivePicture image={GCH_BRAND_IMAGES.unichemBags} />
+                    <EnlargeTrigger image={GCH_BRAND_IMAGES.unichemBags} />
+                  </figure>
+                  <div className="text-side case-study-detail__text-stack">
+                    <h3>Design solution</h3>
+                    <h4 className="case-study-detail__display-subhead">
+                      One sustainable system, shaped around two distinct brand voices.
+                    </h4>
+                    <p>
+                      Life Pharmacy takes a warmer, more expressive approach. Brush-stroke typography and
+                      papercut-inspired motifs create a boutique feel, with Aroha nui acting as a clear, human focal
+                      point.
+                    </p>
+                    <p>
+                      Unichem is more structured and knowledge-led.{' '}
+                      <br />
+                      Kia ora is broken down across two lines, making it both welcoming and informative, with stencil
+                      and lace-inspired details adding character.
+                    </p>
+                    <p>
+                      Negative space and high contrast improve readability across both brands, helping messages stand
+                      out <br />
+                      in-store and beyond.
+                    </p>
+                    <p>
+                      Across four bag sizes for each brand, the system adapts to different formats while preserving a
+                      clear and consistent visual language.
+                    </p>
+                  </div>
+                </article>
+                <GchImageCaption title="Brand messaging">
+                  Four messages, two for each brand, bringing their distinct identities to life.
+                </GchImageCaption>
+              </div>
+            ) : (
             <article
               id="solution"
               ref={(el) => {
                 sectionsRef.current.solution = el;
               }}
               className={
-                isGreenCross
-                  ? 'case-study-detail__split-card case-study-detail__split-card--solution case-study-detail__split-card--reverse case-study-detail__split-card--solution-gch'
-                  : isMegaToy
-                    ? 'case-study-detail__split-card case-study-detail__split-card--solution case-study-detail__split-card--reverse case-study-detail__split-card--solution-toy'
+                isMegaToy
+                  ? 'case-study-detail__split-card case-study-detail__split-card--solution case-study-detail__split-card--reverse case-study-detail__split-card--solution-toy'
                   : isAmioLayout
                     ? 'case-study-detail__split-card case-study-detail__split-card--solution case-study-detail__split-card--amio-solution-main'
                     : 'case-study-detail__split-card case-study-detail__split-card--solution'
@@ -2350,7 +2596,7 @@ export const CaseStudyDetail: React.FC = () => {
               >
                 <img
                   src={
-                    isGreenCross || isMegaToy || isAmioLayout
+                    isMegaToy || isAmioLayout
                       ? SOFT_PEACH_PLACEHOLDER
                       : IMG.solution
                   }
@@ -2360,15 +2606,7 @@ export const CaseStudyDetail: React.FC = () => {
               </figure>
               <div className={`text-side case-study-detail__text-stack ${isAmioLayout ? 'case-study-detail__text-stack--amio-flow' : ''}`}>
                 <h3>{isMegaToy || isAmioLayout ? 'Design Solution' : 'Design solution'}</h3>
-                {isGreenCross ? (
-                  <>
-                    <p>The final system separates the two brands clearly while keeping sustainability, clarity, and usability at the core.</p>
-                    <p>Life Pharmacy takes a warmer, more expressive approach. Brush-stroke typography and papercut-inspired motifs create a boutique feel, with Aroha nui acting as a clear, human focal point.</p>
-                    <p>Unichem is more structured and knowledge-led. Kia ora is broken down across two lines, making it both welcoming and informative, while maintaining consistency with the shared stencil and lace style.</p>
-                    <p>Across both, negative space and high contrast improve readability on kraft, helping messages cut through quickly in-store.</p>
-                    <p>The system scales cleanly across all six bag sizes, balancing visual impact with real-world production constraints.</p>
-                  </>
-                ) : isMegaToy ? (
+                {isMegaToy ? (
                   <>
                     <h4>Turning play into a system that drives purchase</h4>
                     <p>
@@ -2448,6 +2686,7 @@ export const CaseStudyDetail: React.FC = () => {
                 )}
               </div>
             </article>
+            )}
 
             {isAmio && (
               <>
@@ -2577,9 +2816,18 @@ export const CaseStudyDetail: React.FC = () => {
             )}
 
             {isGreenCross && (
-              <article className="case-study-detail__panel case-study-detail__panel--gch-image case-study-detail__panel--gch-image-595">
-                <img className="case-study-detail__gch-section-image" src={GCH_IMG.unichemFrontBack} alt="Unichem bag front and back" />
-              </article>
+              <GchFaceSwitcher
+                front={{
+                  image: GCH_IMG.front.webp,
+                  alt: GCH_IMG.front.alt,
+                }}
+                back={{
+                  image: GCH_IMG.back.webp,
+                  alt: GCH_IMG.back.alt,
+                }}
+                captionTitle="One system, multiple formats"
+                caption="The artwork adapts across four bag sizes for each brand, preserving a consistent visual language while accommodating different messages and formats."
+              />
             )}
 
             {isMegaToy && (
@@ -2639,7 +2887,7 @@ export const CaseStudyDetail: React.FC = () => {
                 </article>
 
                 <article className="case-study-detail__toy-website-mockup-panel">
-                  <figure className="case-study-detail__toy-website-mockup-figure">
+                  <figure className="case-study-detail__toy-website-mockup-figure case-study-enlarge">
                     <img
                       className="case-study-detail__toy-website-mockup-img"
                       src={TOY_IMG.websiteCraftLaptop}
@@ -2647,6 +2895,10 @@ export const CaseStudyDetail: React.FC = () => {
                       width={984}
                       height={596}
                       decoding="async"
+                    />
+                    <EnlargeTrigger
+                      image={TOY_IMG.websiteCraftLaptop}
+                      alt="Laptop screen showing website: craft online"
                     />
                   </figure>
                 </article>
@@ -2657,7 +2909,7 @@ export const CaseStudyDetail: React.FC = () => {
                 >
                   <div className="case-study-detail__toy-activity-stills">
                     {TOY_ACTIVITY_STILLS.map((still) => (
-                      <figure key={still.src} className="case-study-detail__toy-activity-stills-figure">
+                      <figure key={still.src} className="case-study-detail__toy-activity-stills-figure case-study-enlarge">
                         <img
                           className="case-study-detail__toy-activity-stills-img"
                           src={still.src}
@@ -2666,6 +2918,7 @@ export const CaseStudyDetail: React.FC = () => {
                           height={still.height}
                           decoding="async"
                         />
+                        <EnlargeTrigger image={still.src} alt={still.alt} />
                       </figure>
                     ))}
                   </div>
@@ -2781,7 +3034,7 @@ export const CaseStudyDetail: React.FC = () => {
               }}
               className={
                 isGreenCross
-                  ? 'case-study-detail__split-card case-study-detail__split-card--reverse case-study-detail__split-card--impact case-study-detail__split-card--impact-gch'
+                  ? 'case-study-detail__split-card case-study-detail__split-card--impact case-study-detail__split-card--impact-gch'
                   : isMegaToy
                     ? 'case-study-detail__split-card case-study-detail__split-card--reverse case-study-detail__split-card--impact case-study-detail__split-card--impact-toy'
                   : 'case-study-detail__split-card case-study-detail__split-card--reverse case-study-detail__split-card--impact'
@@ -2789,30 +3042,43 @@ export const CaseStudyDetail: React.FC = () => {
             >
               <figure
                 className={`media-side case-study-detail__impact-media${
-                  usesPlaceholderMedia ? ' case-study-detail__media--placeholder' : ''
+                  usesPlaceholderMedia && !isGreenCross ? ' case-study-detail__media--placeholder' : ''
                 }`}
               >
-                <img
-                  src={
-                    usesPlaceholderMedia ? PALE_YELLOW_PLACEHOLDER
-                      : IMG.impact
-                  }
-                  alt={usesPlaceholderMedia ? '' : 'Impact visual'}
-                  aria-hidden={usesPlaceholderMedia ? true : undefined}
-                />
+                {isGreenCross ? (
+                  <>
+                    <ResponsivePicture image={GCH_IMG.impact} />
+                    <EnlargeTrigger image={GCH_IMG.impact} />
+                  </>
+                ) : (
+                  <img
+                    src={
+                      usesPlaceholderMedia ? PALE_YELLOW_PLACEHOLDER
+                        : IMG.impact
+                    }
+                    alt={usesPlaceholderMedia ? '' : 'Impact visual'}
+                    aria-hidden={usesPlaceholderMedia ? true : undefined}
+                  />
+                )}
               </figure>
               <div className={`text-side case-study-detail__text-stack ${isAmioLayout ? 'case-study-detail__text-stack--amio-impact' : ''}`}>
                 <h3>{isPalmy ? 'Impact and learnings' : 'Impact & learnings'}</h3>
                 {isGreenCross ? (
                   <>
-                    <p>The redesign rolled out across ~360 pharmacies, turning a functional item into a high-frequency brand touchpoint.</p>
-                    <p>Each bag replaced single-use plastic while reinforcing brand, culture, and sustainability in everyday moments.</p><br></br>
+                    <p className="case-study-detail__display-subhead">
+                      Rolled out across ~360 pharmacies, the bags became an everyday brand presence.
+                    </p>
+                    <p>
+                      The bags turned everyday packaging into a visible brand touchpoint, replacing single-use plastic
+                      with distinct designs that brought brand identity, local references, and sustainability messaging
+                      into daily use.
+                    </p>
                     <ul>
-                      <li>Strengthened loyalty through Living Rewards messaging</li>
-                      <li>Embedded te reo Māori and local motifs to build cultural presence</li>
-                      <li>Designed for rollout, with production decisions supporting consistency at scale</li>
-                    </ul><br></br>
-                    <p>By elevating a disposable item, the system built brand equity in places most campaigns never reach.</p>
+                      <li>Integrated Living Rewards messaging to support the loyalty programme</li>
+                      <li>Incorporated te reo Māori and local motifs to express a sense of place</li>
+                      <li>Designed for nationwide rollout, balancing production needs with brand consistency</li>
+                    </ul>
+                    <p>By elevating a disposable item, the system extended the brands into places most campaigns never reach.</p>
                   </>
                 ) : isMegaToy ? (
                   <>
@@ -2980,21 +3246,29 @@ export const CaseStudyDetail: React.FC = () => {
 
             {isGreenCross ? (
               <>
-                <section className="case-study-detail__gch-testimonials" aria-label="Testimonials">
-                  <article className="case-study-detail__gch-testimonial case-study-detail__gch-testimonial--top">
-                    <img
-                      className="case-study-detail__gch-testimonial-shape"
-                      src="/case-study-gch/c02ec373ed4968fbd436f0ce057fa158c90daaaa.svg"
-                      alt=""
-                      aria-hidden="true"
-                    />
-                    <div className="case-study-detail__gch-testimonial-content case-study-detail__gch-testimonial-content--top">
-                      <p className="case-study-detail__gch-testimonial-quote">
-                        Customers comment on them more than the old ones. Especially the wording on the side.
-                      </p>
-                      <p className="case-study-detail__gch-testimonial-author">Pharmacy assistant, Auckland</p>
-                    </div>
-                  </article>
+                <section className="case-study-detail__gch-block" aria-label="Feedback from the field">
+                  <h3 className="case-study-detail__gch-block-heading">Feedback from the field</h3>
+                  <div
+                    ref={gchQuotesRef}
+                    className="case-study-detail__gch-testimonials"
+                  >
+                    <article className="case-study-detail__gch-testimonial case-study-detail__gch-testimonial--top">
+                      <img
+                        className="case-study-detail__gch-testimonial-shape"
+                        src="/case-study-gch/c02ec373ed4968fbd436f0ce057fa158c90daaaa.svg"
+                        alt=""
+                        aria-hidden="true"
+                      />
+                      <div className="case-study-detail__gch-testimonial-content case-study-detail__gch-testimonial-content--top">
+                        <p className="case-study-detail__gch-testimonial-quote">
+                          <span className="case-study-detail__gch-testimonial-em">Customers</span> comment on them more
+                          than the old ones.{' '}
+                          <span className="case-study-detail__gch-testimonial-em">Especially</span> the{' '}
+                          <span className="case-study-detail__gch-testimonial-em">wording</span> on the side.
+                        </p>
+                        <p className="case-study-detail__gch-testimonial-author">Pharmacy assistant, Auckland</p>
+                      </div>
+                    </article>
 
                   <article className="case-study-detail__gch-testimonial case-study-detail__gch-testimonial--bottom">
                     <img
@@ -3005,7 +3279,12 @@ export const CaseStudyDetail: React.FC = () => {
                     />
                     <div className="case-study-detail__gch-testimonial-content case-study-detail__gch-testimonial-content--bottom">
                       <p className="case-study-detail__gch-testimonial-quote case-study-detail__gch-testimonial-quote--bottom">
-                        It&apos;s good to see something a bit more responsible, especially from a big chain.
+                        It&apos;s good to <span className="case-study-detail__gch-testimonial-em">see something</span> a
+                        bit
+                        <br />
+                        more <span className="case-study-detail__gch-testimonial-em">responsible</span>, especially from
+                        <br />
+                        a <span className="case-study-detail__gch-testimonial-em">big chain</span>
                       </p>
                       <p className="case-study-detail__gch-testimonial-author">Customer, Auckland</p>
                     </div>
@@ -3020,33 +3299,44 @@ export const CaseStudyDetail: React.FC = () => {
                     />
                     <div className="case-study-detail__gch-testimonial-content case-study-detail__gch-testimonial-content--right">
                       <p className="case-study-detail__gch-testimonial-quote case-study-detail__gch-testimonial-quote--right">
-                        I liked the &lsquo;Kia ora&rsquo; on the bag. I didn&apos;t know the exact meaning until I saw it, and it
-                        feels really Kiwi. It&apos;s nice seeing te reo Māori used more.
+                        I liked the
+                        <br />
+                        <span className="case-study-detail__gch-testimonial-em">&lsquo;Kia ora&rsquo;</span> on
+                        <br />
+                        the bag. I didn&apos;t
+                        <br />
+                        know the <span className="case-study-detail__gch-testimonial-em">exact</span>
+                        <br />
+                        <span className="case-study-detail__gch-testimonial-em">meaning</span> until
+                        <br />
+                        I saw it, and it
+                        <br />
+                        feels really
+                        <br />
+                        <span className="case-study-detail__gch-testimonial-em">Kiwi.</span> It&apos;s nice
+                        <br />
+                        seeing te reo
+                        <br />
+                        Māori used more.
                       </p>
                       <p className="case-study-detail__gch-testimonial-author">Customer, Auckland</p>
                     </div>
                   </article>
+                  </div>
                 </section>
-                <section className="case-study-detail__insight-trio" aria-label="Key insights">
+                <section className="case-study-detail__gch-block" aria-label="Three key learnings">
+                  <h3 className="case-study-detail__gch-block-heading">Three key learnings</h3>
+                  <div className="case-study-detail__insight-trio">
                   {GCH_INSIGHTS.map((item) => (
                     <article key={item.number} className="case-study-detail__insight-card">
                       <p className="case-study-detail__insight-num">{item.number}</p>
                       <div className="case-study-detail__insight-copy">
                         <h4 className="case-study-detail__insight-title">{item.title}</h4>
-                        <p className="case-study-detail__insight-body">
-                          {item.number === '3' ? (
-                            <>
-                              Strong teamwork allows design to scale
-                              <br />
-                              beyond concept
-                            </>
-                          ) : (
-                            item.body
-                          )}
-                        </p>
+                        <p className="case-study-detail__insight-body">{item.body}</p>
                       </div>
                     </article>
                   ))}
+                  </div>
                 </section>
               </>
             ) : isMegaToy ? (
@@ -3062,7 +3352,7 @@ export const CaseStudyDetail: React.FC = () => {
                 </section>
                 <article className="case-study-detail__toy-tvc-panel">
                   <figure
-                    className="case-study-detail__toy-tvc-panel__figure"
+                    className="case-study-detail__toy-tvc-panel__figure case-study-enlarge"
                     aria-label="Mega Toy Month TVC key visual (Figma 2363:2716)"
                   >
                     <img
@@ -3072,6 +3362,10 @@ export const CaseStudyDetail: React.FC = () => {
                       width={984}
                       height={554}
                       decoding="async"
+                    />
+                    <EnlargeTrigger
+                      image={TOY_IMG.tvcStill}
+                      alt="TVC frame: children playing with toys in a living room, rainbow flare across the scene"
                     />
                   </figure>
                 </article>
@@ -3097,7 +3391,7 @@ export const CaseStudyDetail: React.FC = () => {
               }}
               className={
                 isGreenCross
-                  ? 'case-study-detail__split-card case-study-detail__split-card--reflection case-study-detail__split-card--reflection-gch'
+                  ? 'case-study-detail__split-card case-study-detail__split-card--reverse case-study-detail__split-card--reflection case-study-detail__split-card--reflection-gch'
                   : isMegaToy
                     ? 'case-study-detail__split-card case-study-detail__split-card--reflection case-study-detail__split-card--reflection-toy'
                   : isAmioLayout
@@ -3120,17 +3414,22 @@ export const CaseStudyDetail: React.FC = () => {
                         }`
                 }
               >
-                <img
-                  src={
-                    isGreenCross
-                      ? SOFT_PEACH_PLACEHOLDER
-                      : isMegaToy || isAmioLayout || isSummer
+                {isGreenCross ? (
+                  <>
+                    <ResponsivePicture image={GCH_IMG.reflection} />
+                    <EnlargeTrigger image={GCH_IMG.reflection} />
+                  </>
+                ) : (
+                  <img
+                    src={
+                      isMegaToy || isAmioLayout || isSummer
                         ? PALE_YELLOW_PLACEHOLDER
                         : IMG.reflection
-                  }
-                  alt={usesPlaceholderMedia ? '' : 'Reflection visual'}
-                  aria-hidden={usesPlaceholderMedia ? true : undefined}
-                />
+                    }
+                    alt={usesPlaceholderMedia ? '' : 'Reflection visual'}
+                    aria-hidden={usesPlaceholderMedia ? true : undefined}
+                  />
+                )}
               </figure>
               <div
                 className={`text-side case-study-detail__text-stack ${isAmioLayout ? 'case-study-detail__text-stack--amio-reflection' : ''}${
@@ -3140,16 +3439,22 @@ export const CaseStudyDetail: React.FC = () => {
                 <h3>Reflection</h3>
                 {isGreenCross ? (
                   <>
-                    <p>This project reinforced how much impact small, everyday touchpoints can carry when tied to strategy.</p>
-                    <p>The bags are simple, but they deliver brand, culture, and consistency at scale. Clear, recognisable, and grounded in Aotearoa.</p>
+                    <p className="case-study-detail__display-subhead">
+                      Small, daily touchpoints
+                      <br />
+                      can carry real impact
+                      <br />
+                      when shaped by strategy.
+                    </p>
+                    <p>The project reinforced the value of keeping the bags simple while delivering brand, culture, and consistency at scale. Clear, recognisable, and grounded in Aotearoa.</p>
                     <p>It also highlighted the balance between creative ambition, cultural respect, and real-world feasibility, and how much strong collaboration shapes the final outcome.</p>
-                    <p>Looking ahead, there's opportunity to extend the system further:</p><br></br>
+                    <p>Looking ahead, there’s opportunity to extend the system further:</p>
                     <ul>
                       <li>Seasonal or rotating phrases tied to key moments like Matariki or Christmas</li>
                       <li>Deeper links into fashion and beauty culture through collaborations</li>
                       <li>A premium, fully sustainable line that elevates the everyday bag</li>
-                    </ul><br></br>
-                    <p>For me, it reinforced a core belief. The most effective design isn't always the most visible, it's the most considered.</p>
+                    </ul>
+                    <p>It affirmed a core belief: effective design isn’t always the most visible. It’s the most considered.</p>
                   </>
                 ) : isMegaToy ? (
                   <>
@@ -3244,15 +3549,13 @@ export const CaseStudyDetail: React.FC = () => {
                   isPalmy ? ' case-study-detail__text-stack--palmy-sources' : ''
                 }`}
               >
-                <h3>Sources &amp; credits</h3>
+                <h3>{isGreenCross ? 'Sources and credits' : 'Sources & credits'}</h3>
                 {isGreenCross ? (
                   <>
-                    <br></br>
                     <ul>
-                      <li>Nielsen Norman Group. Scan-reading and visual hierarchy research</li>
                       <li>TAPPI. Kraft paper and print performance studies</li>
                       <li>Ministry for the Environment (NZ). Plastic bag ban and sustainability guidance</li>
-                      <li>Outdoor Advertising Association of America (OAAA). Visibility and readability research</li>
+                      <li>The York Paper Company</li>
                       <li>Papercut traditions (Kirie, European lacework) and artists including Karen Bit Vejle and Maude White</li>
                     </ul>
                   </>
@@ -3409,16 +3712,23 @@ export const CaseStudyDetail: React.FC = () => {
                         usesPlaceholderMedia ? ' case-study-detail__media--placeholder' : ''
                       }`
                 }
-                aria-hidden={usesPlaceholderMedia ? true : undefined}
+                aria-hidden={usesPlaceholderMedia && !isGreenCross ? true : undefined}
               >
-                <img
-                  src={
-                    usesPlaceholderMedia ? PALE_YELLOW_PLACEHOLDER
-                      : IMG.sources
-                  }
-                  alt={usesPlaceholderMedia ? '' : 'Sources visual'}
-                  decoding="async"
-                />
+                {isGreenCross ? (
+                  <>
+                    <ResponsivePicture image={GCH_IMG.credits} />
+                    <EnlargeTrigger image={GCH_IMG.credits} />
+                  </>
+                ) : (
+                  <img
+                    src={
+                      usesPlaceholderMedia ? PALE_YELLOW_PLACEHOLDER
+                        : IMG.sources
+                    }
+                    alt={usesPlaceholderMedia ? '' : 'Sources visual'}
+                    decoding="async"
+                  />
+                )}
               </figure>
             </article>
 
@@ -3466,7 +3776,7 @@ export const CaseStudyDetail: React.FC = () => {
             </button>
             <div className="case-study-detail__overview-modal__body">
               <h2 id="case-study-overview-modal-title" className="case-study-detail__overview-modal__title">
-                Overview
+                {isGreenCross ? 'Project summary' : 'Overview'}
               </h2>
               {overviewSummaryItems.map(({ label, value, size }, idx, arr) => (
                 <React.Fragment key={label}>
@@ -3487,5 +3797,6 @@ export const CaseStudyDetail: React.FC = () => {
 
       <SiteFooter />
     </section>
+    </CaseStudyEnlargeProvider>
   );
 };

@@ -874,6 +874,7 @@ export const CaseStudyDetail: React.FC = () => {
   const heroImageRef = useRef<HTMLImageElement>(null);
   const heroCardRef = useRef<HTMLElement>(null);
   const sidebarRef = useRef<HTMLElement>(null);
+  const listenRailRef = useRef<HTMLDivElement>(null);
   const navSentinelRef = useRef<HTMLDivElement>(null);
   const scrollNavRef = useRef<HTMLDivElement>(null);
   const tabsNavRef = useRef<HTMLElement>(null);
@@ -1244,7 +1245,7 @@ export const CaseStudyDetail: React.FC = () => {
     };
   }, [id]);
 
-  useCaseStudyListenHeroSync(heroCardRef, sidebarRef, [id, overview.title, overview.body]);
+  useCaseStudyListenHeroSync(heroCardRef, listenRailRef, [id, overview.title, overview.body]);
   const navPinned = useCaseStudyScrollPinNav(navSentinelRef, scrollNavRef, sidebarRef);
   useCaseStudyActiveTabScroll(tabsNavRef, activeSection);
 
@@ -1468,6 +1469,9 @@ export const CaseStudyDetail: React.FC = () => {
               </nav>
             </div>
 
+          </div>
+
+          <div ref={listenRailRef} className="case-study-detail__listen-rail">
             <button type="button" className="case-study-detail__listen" aria-label="Listen to case study">
               <span className="case-study-detail__listen-icon" aria-hidden="true">
                 <SpeakerHigh size={24} weight="regular" color="currentColor" />

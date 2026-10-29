@@ -141,6 +141,7 @@ export const CaseStudyDetailGch: React.FC = () => {
   const sectionsRef = useRef<Record<string, HTMLElement | null>>({});
   const heroCardRef = useRef<HTMLElement>(null);
   const sidebarRef = useRef<HTMLElement>(null);
+  const listenRailRef = useRef<HTMLDivElement>(null);
   const navSentinelRef = useRef<HTMLDivElement>(null);
   const scrollNavRef = useRef<HTMLDivElement>(null);
   const tabsNavRef = useRef<HTMLElement>(null);
@@ -204,7 +205,7 @@ export const CaseStudyDetailGch: React.FC = () => {
     return () => observer.disconnect();
   }, []);
 
-  useCaseStudyListenHeroSync(heroCardRef, sidebarRef, [id]);
+  useCaseStudyListenHeroSync(heroCardRef, listenRailRef, [id]);
   const navPinned = useCaseStudyScrollPinNav(navSentinelRef, scrollNavRef, sidebarRef);
   useCaseStudyActiveTabScroll(tabsNavRef, activeSection);
 
@@ -282,6 +283,9 @@ export const CaseStudyDetailGch: React.FC = () => {
               </nav>
             </div>
 
+          </div>
+
+          <div ref={listenRailRef} className="case-study-detail__listen-rail">
             <button type="button" className="case-study-detail__listen" aria-label="Listen to case study">
               <span className="case-study-detail__listen-icon" aria-hidden="true">
                 <SpeakerHigh size={24} weight="regular" color="currentColor" />

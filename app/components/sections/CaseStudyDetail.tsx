@@ -22,6 +22,7 @@ import { GchBrandPair } from '../GchBrandPair';
 import { GchFaceSwitcher } from '../GchFaceSwitcher';
 import { ResponsivePicture } from '../ResponsivePicture';
 import { CaseStudyEnlargeProvider, EnlargeTrigger } from '../CaseStudyEnlarge';
+import { CaseStudyMockupVideo } from '../CaseStudyMockupVideo';
 import type { RasterImageSources } from '../../utils/imageFormats';
 import './CaseStudyDetail.css';
 import './case-study-detail-responsive.css';
@@ -149,10 +150,15 @@ const GCH_IMG = {
     'green-cross-health-reflection-case',
     'Person walking away through a mall carrying two Unichem bags, one reading kia ora and one Good health starts inside',
   ),
-  brief: gchPack(
-    'green-cross-health-group-front-case',
-    'Life Pharmacy and Unichem paper bags in four sizes, showing the front faces of the system',
+  brief: gchBags(
+    'green-cross-health-design-solution-case',
+    'Person in cream standing at a Life Pharmacy counter beside a Health Beauty Wellness bag',
   ),
+  solutionVideo: {
+    avif: '/Images/Green Cross bags/Static for video/green-cross-health-design-solution-card.avif',
+    webp: '/Images/Green Cross bags/Static for video/green-cross-health-design-solution-card copy.webp',
+    alt: 'Person in cream holding a Unichem bag that reads Good health starts inside, beside a pharmacy cross',
+  },
   research: gchPack(
     'green-cross-health-influence-card',
     'Paper-cut moodboard with lace, fantail, kōwhai, and kraft studies for the Green Cross Health bag system',
@@ -162,6 +168,9 @@ const GCH_IMG = {
     'Life Pharmacy Treat yourself bag beside a Unichem kia ora bag on a cream studio background',
   ),
 };
+
+/** Drop the Vimeo id or mp4 here when the Design solution film is ready. */
+const GCH_SOLUTION_VIDEO: { src?: string; vimeoId?: string } = {};
 
 const GCH_BRAND_IMAGES = {
   lifeMoodboard: gchPack(
@@ -2540,9 +2549,17 @@ export const CaseStudyDetail: React.FC = () => {
                   }}
                   className="case-study-detail__split-card case-study-detail__split-card--reverse case-study-detail__split-card--solution case-study-detail__split-card--solution-gch"
                 >
-                  <figure className="media-side case-study-detail__solution-media">
-                    <ResponsivePicture image={GCH_BRAND_IMAGES.unichemBags} />
-                    <EnlargeTrigger image={GCH_BRAND_IMAGES.unichemBags} />
+                  <figure className="media-side case-study-detail__solution-media case-study-detail__solution-media--video case-study-enlarge">
+                    <CaseStudyMockupVideo
+                      variant="frame"
+                      poster={GCH_IMG.solutionVideo}
+                      src={GCH_SOLUTION_VIDEO.src}
+                      vimeoId={GCH_SOLUTION_VIDEO.vimeoId}
+                      label="Green Cross Health design solution"
+                    />
+                    {GCH_SOLUTION_VIDEO.src || GCH_SOLUTION_VIDEO.vimeoId ? null : (
+                      <EnlargeTrigger image={GCH_IMG.solutionVideo} />
+                    )}
                   </figure>
                   <div className="text-side case-study-detail__text-stack">
                     <h3>Design solution</h3>

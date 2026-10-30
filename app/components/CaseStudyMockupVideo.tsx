@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useId, useRef, useState } from 'react';
 import Player from '@vimeo/player';
+import './sections/CaseStudies.css';
 import {
   ClosedCaptioning,
   CornersIn,
@@ -17,10 +18,20 @@ type TranscriptCue = {
   text: string;
 };
 
+const PLAYER_ICON_SIZE = 24;
+
+type VideoPoster = {
+  avif: string;
+  webp: string;
+  alt: string;
+};
+
 type CaseStudyMockupVideoProps = {
   src?: string;
   vimeoId?: string;
   mockupSrc?: string;
+  poster?: VideoPoster;
+  variant?: 'mockup' | 'frame';
   label: string;
   captionsSrc?: string;
   transcript?: TranscriptCue[];
@@ -107,6 +118,8 @@ function ChromeTooltip({ label }: { label: string }) {
 export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
   src,
   vimeoId,
+  poster,
+  variant = 'mockup',
   label,
   captionsSrc,
   transcript = [],
@@ -133,6 +146,7 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
   const [scrubHint, setScrubHint] = useState<number | null>(null);
   const [prefs, setPrefs] = useState<PlayerPrefs>(loadPrefs);
   const usesFile = Boolean(src);
+  const hasMedia = Boolean(src || vimeoId);
   const hasCaptions = Boolean(captionsSrc);
   const hasTranscript = transcript.length > 0;
   const volumePercent = Math.round((isMuted ? 0 : volume) * 100);
@@ -410,7 +424,10 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
   const VolumeIcon = isMuted || volumePercent === 0 ? SpeakerSlash : volumePercent < 40 ? SpeakerLow : SpeakerHigh;
 
   return (
-    <div className="case-study-mockup-video" aria-label={`${label} mockup video`}>
+    <div
+      className={`case-study-mockup-video${variant === 'frame' ? ' case-study-mockup-video--frame' : ''}`}
+      aria-label={`${label} mockup video`}
+    >
       <div className="case-study-mockup-video__stage">
         <div
           ref={screenRef}
@@ -425,6 +442,12 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
             }
           }}
         >
+          {poster ? (
+            <picture className="case-study-mockup-video__poster">
+              <source type="image/avif" srcSet={encodeURI(poster.avif)} />
+              <img src={encodeURI(poster.webp)} alt={poster.alt} />
+            </picture>
+          ) : null}
           {hasStarted && src ? (
             <video
               ref={videoRef}
@@ -478,14 +501,14 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
             </p>
           ) : null}
 
-          {!isPlaying ? (
+          {hasMedia && !isPlaying ? (
             <button
               type="button"
               className="case-study-mockup-video__play"
               onClick={togglePlayback}
               aria-label={`Play ${label} video`}
             >
-              <Play size={22} weight="fill" aria-hidden="true" />
+              <Play size={PLAYER_ICON_SIZE} weight="fill" aria-hidden="true" />
               <ChromeTooltip label="Play" />
             </button>
           ) : null}
@@ -503,7 +526,7 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
                     onClick={togglePlayback}
                     aria-label={isPlaying ? `Pause ${label} video` : `Play ${label} video`}
                   >
-                    {isPlaying ? <Pause size={16} weight="fill" aria-hidden="true" /> : <Play size={16} weight="fill" aria-hidden="true" />}
+                    {isPlaying ? <Pause size={PLAYER_ICON_SIZE} weight="fill" aria-hidden="true" /> : <Play size={PLAYER_ICON_SIZE} weight="fill" aria-hidden="true" />}
                     <ChromeTooltip label={isPlaying ? 'Pause' : 'Play'} />
                   </button>
                   <span className="case-study-mockup-video__time">{formatTime(currentTime)}</span>
@@ -577,7 +600,7 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
                       }}
                       aria-label={isMuted ? 'Unmute' : 'Mute'}
                     >
-                      <VolumeIcon size={16} weight="regular" aria-hidden="true" />
+                      <VolumeIcon size={PLAYER_ICON_SIZE} weight="regular" aria-hidden="true" />
                       <ChromeTooltip label={`Volume ${volumePercent}%`} />
                     </button>
                     {panel === 'volume' ? (
@@ -606,7 +629,7 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
                     aria-pressed={prefs.captionsOn}
                     aria-label={hasCaptions ? 'Closed captions' : 'Closed captions unavailable'}
                   >
-                    <ClosedCaptioning size={16} weight={prefs.captionsOn ? 'fill' : 'regular'} aria-hidden="true" />
+                    <ClosedCaptioning size={PLAYER_ICON_SIZE} weight={prefs.captionsOn ? 'fill' : 'regular'} aria-hidden="true" />
                     <ChromeTooltip label={hasCaptions ? (prefs.captionsOn ? 'Captions on' : 'Captions off') : 'Captions coming'} />
                   </button>
 
@@ -616,7 +639,7 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
                     onClick={() => void toggleFullscreen()}
                     aria-label={isFullscreen ? 'Exit fullscreen' : 'Enlarge'}
                   >
-                    {isFullscreen ? <CornersIn size={16} weight="regular" aria-hidden="true" /> : <CornersOut size={16} weight="regular" aria-hidden="true" />}
+                    {isFullscreen ? <CornersIn size={PLAYER_ICON_SIZE} weight="regular" aria-hidden="true" /> : <CornersOut size={PLAYER_ICON_SIZE} weight="regular" aria-hidden="true" />}
                     <ChromeTooltip label={isFullscreen ? 'Exit fullscreen' : 'Enlarge'} />
                   </button>
 
@@ -629,7 +652,7 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
                       aria-controls={prefsId}
                       aria-label="Settings and preferences"
                     >
-                      <DotsThreeVertical size={16} weight="bold" aria-hidden="true" />
+                      <DotsThreeVertical size={PLAYER_ICON_SIZE} weight="bold" aria-hidden="true" />
                       <ChromeTooltip label="Settings" />
                     </button>
                     {panel === 'settings' ? (
@@ -752,7 +775,7 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
               <div className="case-study-mockup-video__transcript-head">
                 <p>Transcript</p>
                 <button type="button" className="case-study-mockup-video__chrome-btn" onClick={() => setPanel('none')} aria-label="Close transcript">
-                  <CornersIn size={14} weight="bold" aria-hidden="true" />
+                  <CornersIn size={PLAYER_ICON_SIZE} weight="bold" aria-hidden="true" />
                 </button>
               </div>
               {hasTranscript ? (

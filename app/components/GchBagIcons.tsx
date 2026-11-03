@@ -19,40 +19,42 @@ function BagIcon({
       aria-hidden="true"
     >
       <title>{title}</title>
-      {filled ? (
-        <path
-          d="M8.6 9.85c0-2.55 1.45-4.35 3.4-4.35s3.4 1.8 3.4 4.35H8.6Z"
-          fill="currentColor"
-        />
-      ) : (
-        <path
-          d="M8.6 10.1c0-2.55 1.45-4.35 3.4-4.35s3.4 1.8 3.4 4.35"
+      <g transform="translate(0 -1.4)">
+        {filled ? (
+          <path
+            d="M8.6 9.85c0-2.55 1.45-4.35 3.4-4.35s3.4 1.8 3.4 4.35H8.6Z"
+            fill="currentColor"
+          />
+        ) : (
+          <path
+            d="M8.6 10.1c0-2.55 1.45-4.35 3.4-4.35s3.4 1.8 3.4 4.35"
+            stroke="currentColor"
+            strokeWidth="1.6"
+            strokeLinecap="round"
+          />
+        )}
+        <rect
+          x="4"
+          y="9.35"
+          width="16"
+          height="10.9"
+          rx="2.1"
+          fill={filled ? 'currentColor' : 'none'}
           stroke="currentColor"
           strokeWidth="1.6"
-          strokeLinecap="round"
         />
-      )}
-      <rect
-        x="4"
-        y="9.35"
-        width="16"
-        height="10.9"
-        rx="2.1"
-        fill={filled ? 'currentColor' : 'none'}
-        stroke="currentColor"
-        strokeWidth="1.6"
-      />
-      <text
-        x="12"
-        y="17.45"
-        textAnchor="middle"
-        fill={filled ? '#ffffff' : 'currentColor'}
-        fontFamily="Atkinson Hyperlegible Next, Arial, sans-serif"
-        fontSize="8.5"
-        fontWeight="700"
-      >
-        {letter}
-      </text>
+        <text
+          x="12"
+          y="17.45"
+          textAnchor="middle"
+          fill={filled ? '#ffffff' : 'currentColor'}
+          fontFamily="Atkinson Hyperlegible Next, Arial, sans-serif"
+          fontSize="8.5"
+          fontWeight="700"
+        >
+          {letter}
+        </text>
+      </g>
     </svg>
   );
 }

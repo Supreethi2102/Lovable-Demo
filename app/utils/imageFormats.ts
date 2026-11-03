@@ -9,6 +9,15 @@ export type RasterImageSources = {
   frameZoom?: number;
 };
 
+/** Encode a public asset path once, even if it is already percent-encoded. */
+export function encodeAssetUrl(path: string): string {
+  try {
+    return encodeURI(decodeURI(path));
+  } catch {
+    return encodeURI(path);
+  }
+}
+
 export type PublicationImage = string | RasterImageSources;
 
 export function isRasterImageSources(value: PublicationImage): value is RasterImageSources {

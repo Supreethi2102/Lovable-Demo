@@ -381,6 +381,19 @@
   align-items: start;
 }
 
+.case-study-detail--gch .case-study-detail__top {
+  align-items: stretch;
+}
+
+.case-study-detail--gch .case-study-detail__hero-card {
+  align-self: stretch;
+  height: auto;
+}
+
+.case-study-detail--gch .case-study-detail__summary--layout {
+  align-self: stretch;
+}
+
 .case-study-detail__hero-card {
   background: #f7f8f9;
   border: 1px solid #b0b3b8;
@@ -616,6 +629,10 @@
   width: 324px;
 }
 
+.case-study-detail--gch .case-study-detail__summary-item p {
+  width: 340px;
+}
+
 .case-study-detail__summary-divider {
   width: 301px;
   height: 0;
@@ -806,6 +823,11 @@
 .case-study-detail__solution-media--video .case-study-mockup-video--frame {
   position: absolute;
   inset: 0;
+}
+
+.case-study-detail--gch .case-study-mockup-video--frame .case-study-mockup-video__poster img {
+  object-fit: cover;
+  object-position: 46% 36%;
 }
 
 .case-study-detail__split-card--solution-toy .case-study-detail__solution-media {
@@ -1854,21 +1876,66 @@
   margin-top: 16px;
 }
 
+.case-study-detail--gch .case-study-detail__split-card--solution-gch .text-side {
+  padding: 52px;
+}
+
+.case-study-detail--gch .case-study-detail__split-card--solution-gch .case-study-detail__text-stack > h3 + h4,
 .case-study-detail--gch .case-study-detail__split-card--solution-gch .case-study-detail__text-stack > h4.case-study-detail__display-subhead + p,
 .case-study-detail--gch .case-study-detail__split-card--reflection-gch .case-study-detail__text-stack > p.case-study-detail__display-subhead + p {
   margin-top: 28px;
+}
+
+.case-study-detail--gch .case-study-detail__split-card--solution-gch .case-study-detail__text-stack > p + p {
+  margin-top: 16px;
 }
 
 .case-study-detail--gch .case-study-detail__text-stack > p.case-study-detail__display-subhead + p {
   margin-top: 16px;
 }
 
-.case-study-detail--gch .gch-brand-pair__copy > p + h4 {
+.case-study-detail--gch .gch-brand-pair__copy > p + .gch-brand-pair__brand-copy {
   margin-top: 16px;
+}
+
+.case-study-detail--gch .gch-brand-pair__brand-panel > h4 + p {
+  margin-top: 4px;
+}
+
+.case-study-detail--gch .gch-brand-pair__brand-panel > p + p {
+  margin-top: 16px;
+}
+
+.case-study-detail--gch .case-study-detail__split-card--sources-gch .text-side {
+  padding: 52px;
+  align-self: stretch;
 }
 
 .case-study-detail--gch .case-study-detail__split-card--sources-gch .case-study-detail__text-stack > h3 + ul {
   margin-top: 16px;
+}
+
+.case-study-detail--gch .case-study-detail__split-card--sources-gch .case-study-detail__text-stack li + li {
+  margin-top: 8px;
+}
+
+/* Figma 4752:945 — 52 inset, 28 after title/subhead, 16 between body. */
+.case-study-detail--gch .case-study-detail__split-card--reflection-gch .text-side {
+  padding: 52px;
+}
+
+.case-study-detail--gch .case-study-detail__split-card--reflection-gch .case-study-detail__text-stack > h3 + p {
+  margin-top: 28px;
+}
+
+.case-study-detail--gch .case-study-detail__split-card--reflection-gch .case-study-detail__text-stack > p + p,
+.case-study-detail--gch .case-study-detail__split-card--reflection-gch .case-study-detail__text-stack > p + ul,
+.case-study-detail--gch .case-study-detail__split-card--reflection-gch .case-study-detail__text-stack > ul + p {
+  margin-top: 16px;
+}
+
+.case-study-detail--gch .case-study-detail__split-card--reflection-gch .case-study-detail__text-stack li + li {
+  margin-top: 8px;
 }
 
 .case-study-detail--gch .case-study-detail__brief-intro {
@@ -1877,9 +1944,135 @@
 
 .case-study-detail--gch .case-study-detail__brief-content,
 .case-study-detail--gch .case-study-detail__brief-top-group,
-.case-study-detail--gch .case-study-detail__brief-business {
+.case-study-detail--gch .case-study-detail__brief-business,
+.case-study-detail--gch .case-study-detail__brief-priorities,
+.case-study-detail--gch .case-study-detail__brief-intro {
   height: auto;
   min-height: 0;
+  width: 100%;
+}
+
+/* White-box splits hug copy: 52px inset on every side. Photos crop to the text column. */
+.case-study-detail--gch .case-study-detail__split-card {
+  min-height: 0;
+  height: auto;
+  align-items: stretch;
+}
+
+.case-study-detail--gch .case-study-detail__brief-text,
+.case-study-detail--gch .case-study-detail__split-card .text-side {
+  padding: 52px;
+  height: auto;
+  min-height: 0;
+  align-self: start;
+  box-sizing: border-box;
+}
+
+.case-study-detail--gch .case-study-detail__split-card .media-side {
+  min-height: 0 !important;
+  height: auto;
+  align-self: stretch;
+  overflow: hidden;
+}
+
+.case-study-detail--gch .case-study-detail__split-card .media-side > picture {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.case-study-detail--gch .case-study-detail__split-card .media-side > picture img,
+.case-study-detail--gch .case-study-detail__split-card .media-side > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  min-height: 0;
+  max-width: none;
+  object-fit: cover;
+  object-position: center center;
+}
+
+.case-study-detail--gch .case-study-detail__split-card .case-study-detail__brief-media > picture img,
+.case-study-detail--gch .case-study-detail__split-card .case-study-detail__brief-media > img {
+  /* Figma 4752:691 — keep the person/purse, clip the black clothing strip on the right. */
+  position: absolute;
+  inset: auto;
+  width: 128%;
+  height: 114%;
+  left: -4%;
+  top: -5%;
+  object-fit: cover;
+  object-position: 16% 18%;
+}
+
+/* Figma 4752:958 — keep the plant at left and both bags inside the frame. */
+.case-study-detail--gch .case-study-detail__split-card .case-study-detail__reflection-media--gch > picture img,
+.case-study-detail--gch .case-study-detail__split-card .case-study-detail__reflection-media--gch > img {
+  position: absolute;
+  inset: auto;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  object-fit: cover;
+  object-position: 42% 46%;
+}
+
+/* Figma 4752:944 — 492×392, nearly the full credits still. */
+.case-study-detail--gch .case-study-detail__split-card .case-study-detail__sources-media--gch > picture img,
+.case-study-detail--gch .case-study-detail__split-card .case-study-detail__sources-media--gch > img {
+  position: absolute;
+  inset: auto;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  object-fit: cover;
+  object-position: 50% 46%;
+}
+
+/* Figma 4752:944 — keep the 492×392 still; 52px text inset sits in the matching column. */
+@media (min-width: 1301px) {
+  .case-study-detail--gch .case-study-detail__split-card.case-study-detail__split-card--sources-gch {
+    min-height: 392px;
+    height: 392px;
+  }
+
+  .case-study-detail--gch .case-study-detail__split-card.case-study-detail__split-card--sources-gch .text-side {
+    padding: 52px;
+    align-self: stretch;
+    height: 100%;
+  }
+
+  .case-study-detail--gch .case-study-detail__split-card.case-study-detail__split-card--sources-gch .media-side {
+    min-height: 392px !important;
+    height: 392px;
+  }
+}
+
+/* Figma 4752:707 — Research: 52 inset, 28 after title/subhead, 4 under h4, 16 between body. */
+.case-study-detail--gch .case-study-detail__split-card#research .text-side {
+  padding: 52px;
+}
+
+.case-study-detail--gch .case-study-detail__split-card#research .case-study-detail__text-stack > h3 + p {
+  margin-top: 28px;
+}
+
+.case-study-detail--gch .case-study-detail__split-card#research .case-study-detail__text-stack > p.case-study-detail__display-subhead + h4,
+.case-study-detail--gch .case-study-detail__split-card#research .case-study-detail__text-stack > p + h4 {
+  margin-top: 28px;
+}
+
+.case-study-detail--gch .case-study-detail__split-card#research .case-study-detail__text-stack > h4 + p {
+  margin-top: 4px;
+}
+
+.case-study-detail--gch .case-study-detail__split-card#research .case-study-detail__text-stack > p + p {
+  margin-top: 16px;
 }
 
 .case-study-detail__text-stack h4 {
@@ -1958,6 +2151,32 @@
 
 .case-study-detail__panel--gch-image-550 {
   height: 550px;
+}
+
+/* Figma 4752:753 — 979×693 typography still */
+.case-study-detail__panel--gch-image-typography {
+  height: auto;
+  aspect-ratio: 979 / 693;
+}
+
+.case-study-detail__panel--gch-image-typography .case-study-detail__gch-section-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* Figma 4752:757 — 979×715 colour still */
+.case-study-detail__panel--gch-image-colours {
+  height: auto;
+  aspect-ratio: 979 / 715;
+}
+
+.case-study-detail__panel--gch-image-colours .case-study-detail__gch-section-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .case-study-detail__panel--gch-image-555 {
@@ -2039,8 +2258,9 @@
   position: absolute;
   inset: 0;
   background-color: #fff;
-  background-size: cover;
-  background-position: center;
+  /* Figma 4752:781 — same crop on Front and Back, image a fraction larger in the frame. */
+  background-size: 112%;
+  background-position: center 46%;
   background-repeat: no-repeat;
   will-change: transform, opacity;
   transform: translateZ(0);
@@ -3329,24 +3549,24 @@
 }
 
 .case-study-detail__gch-testimonial--top {
-  left: 0;
-  top: 0;
+  left: 2px;
+  top: 3px;
   width: 644px;
-  height: 248px;
+  height: 246px;
 }
 
 .case-study-detail__gch-testimonial--bottom {
-  left: 0;
-  top: 276px;
-  width: 600px;
+  left: 2px;
+  top: 291px;
+  width: 599px;
   height: 240px;
 }
 
 .case-study-detail__gch-testimonial--right {
-  left: 672px;
+  left: 679px;
   top: 0;
-  width: 312px;
-  height: 532px;
+  width: 306px;
+  height: 531px;
 }
 
 .case-study-detail__gch-testimonial-shape {
@@ -3360,7 +3580,6 @@
 
 .case-study-detail__gch-testimonial-content {
   position: absolute;
-  inset: 0;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -3371,21 +3590,23 @@
   box-sizing: border-box;
 }
 
-.case-study-detail__gch-testimonial-content--right {
-  padding: 48px 36px;
+.case-study-detail__gch-testimonial-content--top {
+  inset: 0 0 30px;
+  padding: 48px 32px;
 }
 
 .case-study-detail__gch-testimonial-content--bottom {
-  padding: 48px;
+  inset: 0 31px 0 0;
 }
 
-.case-study-detail__gch-testimonial-content--top {
-  padding: 36px 36px 48px;
+.case-study-detail__gch-testimonial-content--right {
+  inset: 0 0 0 30px;
+  padding: 48px 34px;
 }
 
 .case-study-detail__gch-testimonial-quote {
   margin: 0;
-  width: 520px;
+  width: 100%;
   max-width: 100%;
   color: #111213;
   font-family: var(--font-family-display);
@@ -3393,24 +3614,24 @@
   font-style: italic;
   font-weight: 500;
   font-synthesis: none;
-  line-height: 2.375rem;
-  letter-spacing: 0.02em;
+  line-height: 2.25rem;
+  letter-spacing: 0.01em;
 }
 
 .case-study-detail__gch-testimonial-em {
   font-style: normal;
   font-weight: 500;
   font-synthesis: none;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   text-transform: uppercase;
 }
 
 .case-study-detail__gch-testimonial-quote--bottom {
-  width: 100%;
+  width: 472px;
 }
 
 .case-study-detail__gch-testimonial-quote--right {
-  width: 216px;
+  width: 208px;
 }
 
 .case-study-detail__gch-testimonial-author {
@@ -3562,6 +3783,10 @@
 .case-study-detail__split-card--sources-gch {
   grid-template-columns: 492px 492px;
   grid-template-areas: 'media copy';
+  min-height: 392px;
+}
+
+.case-study-detail--gch .case-study-detail__split-card--sources-gch {
   min-height: 392px;
 }
 
@@ -3915,9 +4140,11 @@
 }
 
 .gch-switch-tabs__tab svg {
+  display: block;
   flex-shrink: 0;
   width: 24px;
   height: 24px;
+  translate: 0 -1px;
 }
 
 .gch-switch-tabs__tab:focus {
@@ -3938,16 +4165,27 @@
   }
 }
 
+.gch-brand-pair__brand-copy {
+  display: grid;
+}
+
+.gch-brand-pair__brand-panel {
+  grid-area: 1 / 1;
+}
+
+.gch-brand-pair__brand-panel:not(.is-active) {
+  visibility: hidden;
+  pointer-events: none;
+}
+
 .gch-brand-pair__media img,
-.gch-brand-pair__copy > h4:nth-of-type(2),
-.gch-brand-pair__copy > h4:nth-of-type(2) ~ p {
+.gch-brand-pair__brand-panel.is-active {
   animation: gch-brand-fade 0.22s ease;
 }
 
 @media (prefers-reduced-motion: reduce) {
   .gch-brand-pair__media img,
-  .gch-brand-pair__copy > h4:nth-of-type(2),
-  .gch-brand-pair__copy > h4:nth-of-type(2) ~ p {
+  .gch-brand-pair__brand-panel.is-active {
     animation: none;
   }
 }

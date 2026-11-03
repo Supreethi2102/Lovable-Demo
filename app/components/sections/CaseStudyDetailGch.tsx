@@ -489,32 +489,6 @@ export const CaseStudyDetailGch: React.FC = () => {
               <img className="full-bleed-media" src={IMG.typographyBanner} alt="Design system exploration boards" />
             </article>
 
-            <article className="case-study-detail__text-panel">
-              <h4>Messaging</h4>
-              <p>I refined copy into short, high-impact lines designed to land instantly in busy retail:</p>
-              <ul>
-                <li>Life Pharmacy. “It’s what’s on the inside that counts”</li>
-                <li>Unichem. “Our greatest wealth is health”</li>
-              </ul>
-              <p>
-                Clear, human, and easy to absorb in motion. Side panels carried Living Rewards and sustainability details,
-                keeping the main faces focused and uncluttered.
-              </p>
-            </article>
-
-            <article className="case-study-detail__text-panel">
-              <h4>Te reo Māori</h4>
-              <p>
-                I introduced te reo Māori to bring warmth and cultural meaning into the system, in a way that felt
-                authentic, not decorative:
-              </p>
-              <ul>
-                <li>Life Pharmacy. “Aroha nui” (much love)</li>
-                <li>Unichem. “Kia ora” (a welcoming greeting)</li>
-              </ul>
-              <p>These phrases grounded the design in Aotearoa and reinforced tone, identity, and emotional connection.</p>
-            </article>
-
             <article className="case-study-detail__panel">
               <img className="full-bleed-media" src={IMG.duo3} alt="Paper bag design development" />
             </article>

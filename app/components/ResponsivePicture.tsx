@@ -1,5 +1,5 @@
 import React from 'react';
-import { isRasterImageSources, type PublicationImage } from '../utils/imageFormats';
+import { encodeAssetUrl, isRasterImageSources, type PublicationImage } from '../utils/imageFormats';
 
 type ResponsivePictureProps = {
   image: PublicationImage;
@@ -26,7 +26,7 @@ export const ResponsivePicture: React.FC<ResponsivePictureProps> = ({
   if (!isRasterImageSources(image)) {
     return (
       <img
-        src={encodeURI(image)}
+        src={encodeAssetUrl(image)}
         alt={alt}
         className={className}
         loading={loading}
@@ -40,9 +40,9 @@ export const ResponsivePicture: React.FC<ResponsivePictureProps> = ({
 
   return (
     <picture>
-      <source type="image/avif" srcSet={encodeURI(image.avif)} />
+      <source type="image/avif" srcSet={encodeAssetUrl(image.avif)} />
       <img
-        src={encodeURI(image.webp)}
+        src={encodeAssetUrl(image.webp)}
         alt={alt}
         className={className}
         loading={loading}

@@ -91,10 +91,24 @@ export const GchBrandPair: React.FC<GchBrandPairProps> = ({
           {sharedParagraphs.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}
-          <h4 key={`${active}-title`}>{panel.title}</h4>
-          {panel.paragraphs.map((paragraph) => (
-            <p key={`${active}-${paragraph}`}>{paragraph}</p>
-          ))}
+          <div className="gch-brand-pair__brand-copy">
+            {TABS.map(({ id: brandId }) => {
+              const item = brandId === 'life' ? life : unichem;
+              const isActive = active === brandId;
+              return (
+                <div
+                  key={brandId}
+                  className={`gch-brand-pair__brand-panel${isActive ? ' is-active' : ''}`}
+                  aria-hidden={isActive ? undefined : true}
+                >
+                  <h4>{item.title}</h4>
+                  {item.paragraphs.map((paragraph) => (
+                    <p key={paragraph}>{paragraph}</p>
+                  ))}
+                </div>
+              );
+            })}
+          </div>
           {closingParagraphs?.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>
           ))}

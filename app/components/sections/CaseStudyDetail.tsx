@@ -159,9 +159,9 @@ const GCH_IMG = {
     webp: '/Images/Green Cross bags/Static for video/green-cross-health-design-solution-card copy.webp',
     alt: 'Person in cream holding a Unichem bag that reads Good health starts inside, beside a pharmacy cross',
   },
-  research: gchPack(
-    'green-cross-health-influence-card',
-    'Paper-cut moodboard with lace, fantail, kōwhai, and kraft studies for the Green Cross Health bag system',
+  research: gchBags(
+    'green-cross-health-research-case',
+    'Stack of kraft bags with handwritten notes on ink, fibre, colour, and print contrast',
   ),
   credits: gchBags(
     'green-cross-health-credits-case',
@@ -500,7 +500,7 @@ export const CaseStudyDetail: React.FC = () => {
         { label: 'Role', value: 'Lead Designer & Art Direction', size: 'summary-item--24' },
         {
           label: 'Context',
-          value: 'Green Cross Health plastic bag ban, requiring a scalable nationwide rollout across a large retail network.',
+          value: 'Green Cross Health plastic bag ban, requiring a scalable nationwide rollout across a large retail network',
           size: 'summary-item--72',
         },
         { label: 'Tools', value: 'InDesign, Illustrator, Photoshop', size: 'summary-item--24' },
@@ -512,19 +512,13 @@ export const CaseStudyDetail: React.FC = () => {
         },
         {
           label: 'Audience',
-          value: (
-            <>
-              Women 40–60, primary household decision-makers,
-              <br />
-              community-focused
-            </>
-          ),
+          value: 'Women 40–60, primary household decision-makers,\u00A0community\u2011focused',
           size: 'summary-item--48',
         },
         {
           label: 'Focus',
           value:
-            'Sustainable, brand-led paper bags drawing on te reo Māori and New Zealand motifs, balancing usability, brand expression, and a thoughtful retail experience.',
+            'Sustainable, brand-led paper bags drawing on te reo Māori and New Zealand motifs, balancing usability, brand expression, and a thoughtful retail experience',
           size: 'summary-item--auto',
         },
         {
@@ -2128,13 +2122,13 @@ export const CaseStudyDetail: React.FC = () => {
               >
                 {isGreenCross ? (
                   <>
-                    <div className="case-study-detail__panel case-study-detail__panel--gch-image case-study-detail__panel--gch-image-550">
+                    <div className="case-study-detail__panel case-study-detail__panel--gch-image case-study-detail__panel--gch-image-typography">
                       <ResponsivePicture image={GCH_IMG.typography} className="case-study-detail__gch-section-image" />
                       <EnlargeTrigger image={GCH_IMG.typography} />
                     </div>
                     <GchImageCaption title="Typography exploration">
                       Contrasting type styles helped establish two distinct brand voices, balancing expression and
-                      clarity on kraft paper.
+                      clarity on kraft paper
                     </GchImageCaption>
                   </>
                 ) : (
@@ -2170,13 +2164,13 @@ export const CaseStudyDetail: React.FC = () => {
               >
                 {isGreenCross ? (
                   <>
-                    <div className="case-study-detail__panel case-study-detail__panel--gch-image case-study-detail__panel--gch-image-555">
+                    <div className="case-study-detail__panel case-study-detail__panel--gch-image case-study-detail__panel--gch-image-colours">
                       <ResponsivePicture image={GCH_IMG.colours} className="case-study-detail__gch-section-image" />
                       <EnlargeTrigger image={GCH_IMG.colours} />
                     </div>
                     <GchImageCaption title="Colour on kraft">
                       Exploring colour against the natural paper stock helped establish contrast, legibility, and a
-                      consistent visual relationship between the two brands.
+                      consistent visual relationship between the two brands
                     </GchImageCaption>
                   </>
                 ) : (
@@ -2194,22 +2188,7 @@ export const CaseStudyDetail: React.FC = () => {
               </article>
             )}
 
-            {isGreenCross ? (
-              <article className="case-study-detail__text-panel">
-                <h4>Messaging</h4>
-                <p>I refined copy into short, high-impact lines designed to land instantly in busy retail:</p>
-                <ul>
-                  <li>Life Pharmacy. &quot;It&apos;s what&apos;s on the inside that counts&quot;</li>
-                  <li>Unichem. &quot;Our greatest wealth is health&quot;</li>
-                </ul>
-                <p>
-                  Clear, human, and easy to absorb in motion.
-                  <br />
-                  Side panels carried Living Rewards and sustainability details, keeping the main faces focused and
-                  uncluttered.
-                </p>
-              </article>
-            ) : isMegaToy ? (
+            {isGreenCross ? null : isMegaToy ? (
               <article className="case-study-detail__split-card case-study-detail__split-card--reverse case-study-detail__split-card--mega-fluid">
                 <div className="text-side case-study-detail__text-stack">
                   <h4>Connected play experience</h4>
@@ -2269,22 +2248,7 @@ export const CaseStudyDetail: React.FC = () => {
               </section>
             )}
 
-            {isGreenCross ? (
-              <article className="case-study-detail__text-panel">
-                <h4>Te reo Māori</h4>
-                <p>
-                  I introduced te reo Māori to bring warmth and cultural meaning into the system, in a way that felt
-                  authentic, not decorative:
-                </p>
-                <ul>
-                  <li>Life Pharmacy. &quot;Aroha nui&quot; (much love)</li>
-                  <li>Unichem. &quot;Kia ora&quot; (a welcoming greeting)</li>
-                </ul>
-                <p>
-                  These phrases grounded the design in Aotearoa and reinforced tone, identity, and emotional connection.
-                </p>
-              </article>
-            ) : !isMegaToy && !isAmioLayout ? (
+            {isGreenCross ? null : !isMegaToy && !isAmioLayout ? (
               <article className="case-study-detail__text-panel">
                 <h4>Finding the balance</h4>
                 <p>
@@ -2296,13 +2260,15 @@ export const CaseStudyDetail: React.FC = () => {
 
             {isGreenCross ? (
               <article className="case-study-detail__gch-captioned">
-                <div className="case-study-detail__panel case-study-detail__panel--gch-image case-study-detail__panel--gch-image-624">
-                  <ResponsivePicture image={GCH_IMG.exploring} className="case-study-detail__gch-section-image" />
-                  <EnlargeTrigger image={GCH_IMG.exploring} />
+                <div
+                  className="case-study-detail__panel case-study-detail__panel--gch-image case-study-detail__panel--gch-image-624 case-study-detail__media--placeholder"
+                  aria-hidden="true"
+                >
+                  <img src={PALE_YELLOW_PLACEHOLDER} alt="" />
                 </div>
                 <GchImageCaption title="Exploring the possibilities">
                   Early concepts tested how typography, messaging, and graphic motifs could give each brand its own
-                  personality within a shared packaging system.
+                  personality within a shared packaging system
                 </GchImageCaption>
               </article>
             ) : isMegaToy ? (
@@ -2557,9 +2523,6 @@ export const CaseStudyDetail: React.FC = () => {
                       vimeoId={GCH_SOLUTION_VIDEO.vimeoId}
                       label="Green Cross Health design solution"
                     />
-                    {GCH_SOLUTION_VIDEO.src || GCH_SOLUTION_VIDEO.vimeoId ? null : (
-                      <EnlargeTrigger image={GCH_IMG.solutionVideo} />
-                    )}
                   </figure>
                   <div className="text-side case-study-detail__text-stack">
                     <h3>Design solution</h3>
@@ -2589,7 +2552,7 @@ export const CaseStudyDetail: React.FC = () => {
                   </div>
                 </article>
                 <GchImageCaption title="Brand messaging">
-                  Four messages, two for each brand, bringing their distinct identities to life.
+                  Four messages, two for each brand, bringing their distinct identities to life
                 </GchImageCaption>
               </div>
             ) : (
@@ -2843,7 +2806,7 @@ export const CaseStudyDetail: React.FC = () => {
                   alt: GCH_IMG.back.alt,
                 }}
                 captionTitle="One system, multiple formats"
-                caption="The artwork adapts across four bag sizes for each brand, preserving a consistent visual language while accommodating different messages and formats."
+                caption="The artwork adapts across four bag sizes for each brand, preserving a consistent visual language while accommodating different messages and formats"
               />
             )}
 
@@ -3316,25 +3279,12 @@ export const CaseStudyDetail: React.FC = () => {
                     />
                     <div className="case-study-detail__gch-testimonial-content case-study-detail__gch-testimonial-content--right">
                       <p className="case-study-detail__gch-testimonial-quote case-study-detail__gch-testimonial-quote--right">
-                        I liked the
-                        <br />
-                        <span className="case-study-detail__gch-testimonial-em">&lsquo;Kia ora&rsquo;</span> on
-                        <br />
-                        the bag. I didn&apos;t
-                        <br />
-                        know the <span className="case-study-detail__gch-testimonial-em">exact</span>
-                        <br />
-                        <span className="case-study-detail__gch-testimonial-em">meaning</span> until
-                        <br />
-                        I saw it, and it
-                        <br />
-                        feels really
-                        <br />
-                        <span className="case-study-detail__gch-testimonial-em">Kiwi.</span> It&apos;s nice
-                        <br />
-                        seeing te reo
-                        <br />
-                        Māori used more.
+                        I liked the <span className="case-study-detail__gch-testimonial-em">&lsquo;Kia ora&rsquo;</span>{' '}
+                        on the bag. I didn&apos;t know the{' '}
+                        <span className="case-study-detail__gch-testimonial-em">exact</span>{' '}
+                        <span className="case-study-detail__gch-testimonial-em">meaning</span> until I saw it, and it
+                        feels really <span className="case-study-detail__gch-testimonial-em">Kiwi.</span> It&apos;s nice
+                        seeing te reo Māori used more.
                       </p>
                       <p className="case-study-detail__gch-testimonial-author">Customer, Auckland</p>
                     </div>

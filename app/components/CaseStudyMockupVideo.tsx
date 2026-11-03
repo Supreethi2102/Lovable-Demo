@@ -501,7 +501,7 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
             </p>
           ) : null}
 
-          {hasMedia && !isPlaying ? (
+          {(hasMedia || (variant === 'frame' && poster)) && !isPlaying ? (
             <button
               type="button"
               className="case-study-mockup-video__play"

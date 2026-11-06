@@ -35,6 +35,7 @@ type CaseStudyMockupVideoProps = {
   label: string;
   captionsSrc?: string;
   transcript?: TranscriptCue[];
+  loop?: boolean;
 };
 
 type CaptionSize = 's' | 'm' | 'l';
@@ -83,12 +84,13 @@ function savePrefs(prefs: PlayerPrefs) {
   }
 }
 
-function buildVimeoSrc(vimeoId: string) {
+function buildVimeoSrc(vimeoId: string, loop = false) {
   const params = new URLSearchParams({
     autoplay: '1',
-    loop: '0',
+    loop: loop ? '1' : '0',
     muted: '0',
     autopause: '0',
+    badge: '0',
     controls: '0',
     api: '1',
     texttrack: 'en',
@@ -123,6 +125,7 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
   label,
   captionsSrc,
   transcript = [],
+  loop = false,
 }) => {
   const screenRef = useRef<HTMLDivElement>(null);
   const videoRef = useRef<HTMLVideoElement>(null);
@@ -228,6 +231,7 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
       controls: false,
       pip: false,
       keyboard: false,
+      loop,
     });
     vimeoRef.current = player;
 
@@ -246,9 +250,11 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
       const [length, seconds] = await Promise.all([player.getDuration(), player.getCurrentTime()]);
       if (length > 0) setDuration(length);
       setCurrentTime(seconds);
+      await player.setLoop(loop).catch(() => undefined);
       await player.setVolume(isMuted ? 0 : volume).catch(() => undefined);
       if (prefs.captionsOn) await player.enableTextTrack('en').catch(() => undefined);
       else await player.disableTextTrack().catch(() => undefined);
+      await player.play().catch(() => setIsPlaying(false));
     });
 
     player.on('play', () => {
@@ -261,6 +267,10 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
       setIsPlaying(false);
     });
     player.on('ended', () => {
+      if (loop) {
+        void player.setCurrentTime(0).then(() => player.play()).catch(() => undefined);
+        return;
+      }
       clockRef.current.playing = false;
       setIsPlaying(false);
     });
@@ -290,7 +300,7 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
       player.off('seeked');
       vimeoRef.current = null;
     };
-  }, [hasStarted, src, vimeoId]);
+  }, [hasStarted, src, vimeoId, loop]);
 
   useEffect(() => {
     const onFullscreen = () => {
@@ -454,6 +464,7 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
               className="case-study-mockup-video__player"
               src={src}
               playsInline
+              loop={loop}
               preload="metadata"
               controls={false}
               controlsList="nodownload noplaybackrate noremoteplayback"
@@ -487,9 +498,9 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
             <iframe
               ref={iframeRef}
               className="case-study-mockup-video__player"
-              src={buildVimeoSrc(vimeoId)}
+              src={buildVimeoSrc(vimeoId, loop)}
               title={`${label} interface demonstration`}
-              allow="autoplay"
+              allow="autoplay; fullscreen"
               tabIndex={-1}
               onContextMenu={blockMediaMenu}
             />

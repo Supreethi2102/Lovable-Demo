@@ -169,8 +169,9 @@ const GCH_IMG = {
   ),
 };
 
-/** Drop the Vimeo id or mp4 here when the Design solution film is ready. */
-const GCH_SOLUTION_VIDEO: { src?: string; vimeoId?: string } = {};
+const GCH_SOLUTION_VIDEO: { src?: string; vimeoId?: string } = {
+  vimeoId: '1237579035',
+};
 
 const GCH_BRAND_IMAGES = {
   lifeMoodboard: gchPack(
@@ -2521,6 +2522,7 @@ export const CaseStudyDetail: React.FC = () => {
                       poster={GCH_IMG.solutionVideo}
                       src={GCH_SOLUTION_VIDEO.src}
                       vimeoId={GCH_SOLUTION_VIDEO.vimeoId}
+                      loop
                       label="Green Cross Health design solution"
                     />
                   </figure>

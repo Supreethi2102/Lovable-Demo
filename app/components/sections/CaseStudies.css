@@ -855,6 +855,16 @@
   border-radius: inherit;
 }
 
+.case-study-mockup-video--frame .case-study-mockup-video__player {
+  /* Cover-crop the 3:4 Vimeo still so letterboxing never shows in the split. */
+  inset: auto;
+  top: 50%;
+  left: 50%;
+  width: max(100%, calc(100cqh * 3 / 4));
+  height: max(100%, calc(100cqw * 4 / 3));
+  transform: translate(-50%, -50%);
+}
+
 .case-study-mockup-video__play {
   position: absolute;
   z-index: 3;

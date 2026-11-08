@@ -92,6 +92,7 @@ function buildVimeoSrc(vimeoId: string, loop = false) {
     autopause: '0',
     badge: '0',
     controls: '0',
+    download: '0',
     api: '1',
     texttrack: 'en',
     title: '0',
@@ -437,6 +438,7 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
     <div
       className={`case-study-mockup-video${variant === 'frame' ? ' case-study-mockup-video--frame' : ''}`}
       aria-label={`${label} mockup video`}
+      onContextMenu={blockMediaMenu}
     >
       <div className="case-study-mockup-video__stage">
         <div

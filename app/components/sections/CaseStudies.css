@@ -978,10 +978,10 @@
 .case-study-mockup-video__time {
   color: #fff;
   font-family: var(--font-family-ui, inherit);
-  font-size: 11px;
+  font-size: 16px;
   font-weight: 400;
   letter-spacing: 0.01em;
-  line-height: 1;
+  line-height: 24px;
   font-variant-numeric: tabular-nums;
   white-space: nowrap;
 }
@@ -1310,12 +1310,14 @@
 
 .case-study-mockup-video__screen:fullscreen .case-study-mockup-video__time,
 .case-study-mockup-video__screen:-webkit-full-screen .case-study-mockup-video__time {
-  font-size: 13px;
+  font-size: 18px;
+  line-height: 24px;
 }
 
 @container (max-width: 240px) {
   .case-study-mockup-video__time {
-    font-size: 9px;
+    font-size: 13px;
+    line-height: 20px;
   }
 
   .case-study-mockup-video__chrome {

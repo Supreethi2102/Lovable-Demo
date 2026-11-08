@@ -382,12 +382,21 @@
 }
 
 .case-study-detail--gch .case-study-detail__top {
-  align-items: stretch;
+  align-items: start;
 }
 
 .case-study-detail--gch .case-study-detail__hero-card {
-  align-self: stretch;
+  align-self: start;
   height: auto;
+}
+
+.case-study-detail--gch .case-study-detail__hero-copy {
+  padding: 24px 52px;
+}
+
+.case-study-detail--gch .case-study-detail__hero-body {
+  min-height: 0;
+  margin-bottom: 24px;
 }
 
 .case-study-detail--gch .case-study-detail__summary--layout {
@@ -1908,7 +1917,8 @@
 
 .case-study-detail--gch .case-study-detail__split-card--sources-gch .text-side {
   padding: 52px;
-  align-self: stretch;
+  align-self: start;
+  height: fit-content;
 }
 
 .case-study-detail--gch .case-study-detail__split-card--sources-gch .case-study-detail__text-stack > h3 + ul {
@@ -2008,7 +2018,7 @@
   object-position: 16% 18%;
 }
 
-/* Figma 4752:958 — keep the plant at left and both bags inside the frame. */
+/* Keep both bags in frame and sit the figure on the centre line. */
 .case-study-detail--gch .case-study-detail__split-card .case-study-detail__reflection-media--gch > picture img,
 .case-study-detail--gch .case-study-detail__split-card .case-study-detail__reflection-media--gch > img {
   position: absolute;
@@ -2018,7 +2028,7 @@
   left: 0;
   top: 0;
   object-fit: cover;
-  object-position: 42% 46%;
+  object-position: 62% 46%;
 }
 
 /* Figma 4752:944 — 492×392, nearly the full credits still. */
@@ -2034,22 +2044,23 @@
   object-position: 50% 46%;
 }
 
-/* Figma 4752:944 — keep the 492×392 still; 52px text inset sits in the matching column. */
+/* Hug the credits list — the old 392px lock left an empty band under the last bullet. */
 @media (min-width: 1301px) {
   .case-study-detail--gch .case-study-detail__split-card.case-study-detail__split-card--sources-gch {
-    min-height: 392px;
-    height: 392px;
+    min-height: 0;
+    height: auto;
   }
 
   .case-study-detail--gch .case-study-detail__split-card.case-study-detail__split-card--sources-gch .text-side {
     padding: 52px;
-    align-self: stretch;
-    height: 100%;
+    align-self: start;
+    height: fit-content;
   }
 
   .case-study-detail--gch .case-study-detail__split-card.case-study-detail__split-card--sources-gch .media-side {
-    min-height: 392px !important;
-    height: 392px;
+    min-height: 0 !important;
+    height: auto;
+    align-self: stretch;
   }
 }
 
@@ -2258,9 +2269,9 @@
   position: absolute;
   inset: 0;
   background-color: #fff;
-  /* Figma 4752:781 — same crop on Front and Back, image a fraction larger in the frame. */
-  background-size: 112%;
-  background-position: center 46%;
+  /* Full still in the 984×595 frame — 112% cropped the handles and floor too tightly. */
+  background-size: 100%;
+  background-position: center center;
   background-repeat: no-repeat;
   will-change: transform, opacity;
   transform: translateZ(0);
@@ -3783,11 +3794,11 @@
 .case-study-detail__split-card--sources-gch {
   grid-template-columns: 492px 492px;
   grid-template-areas: 'media copy';
-  min-height: 392px;
+  min-height: 0;
 }
 
 .case-study-detail--gch .case-study-detail__split-card--sources-gch {
-  min-height: 392px;
+  min-height: 0;
 }
 
 .case-study-detail__split-card--sources-gch .media-side {

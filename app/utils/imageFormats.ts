@@ -29,6 +29,11 @@ export function publicationImageSrc(image: PublicationImage): string {
   return isRasterImageSources(image) ? image.webp : image;
 }
 
+/** Preferred file to warm in cache — AVIF when the pair exists. */
+export function publicationImagePreloadSrc(image: PublicationImage): string {
+  return isRasterImageSources(image) ? image.avif : image;
+}
+
 export function publicationImageAlt(image: PublicationImage, fallback: string): string {
   return isRasterImageSources(image) ? image.alt : fallback;
 }

@@ -9,9 +9,10 @@ import './Publications.css';
 
 interface PublicationCardProps {
   publication: PublicationDetail;
+  loading?: 'lazy' | 'eager';
 }
 
-const PublicationCard: React.FC<PublicationCardProps> = ({ publication }) => {
+const PublicationCard: React.FC<PublicationCardProps> = ({ publication, loading = 'lazy' }) => {
   const navigate = useNavigate();
 
   return (
@@ -32,7 +33,7 @@ const PublicationCard: React.FC<PublicationCardProps> = ({ publication }) => {
         <ResponsivePicture
           image={publication.image}
           className="publication-card__image"
-          loading="lazy"
+          loading={loading}
           fallbackAlt={`${publication.title} cover`}
         />
       </figure>
@@ -67,8 +68,12 @@ export const Publications: React.FC = () => {
         role="list"
         aria-label="Publication portfolio"
       >
-        {visiblePublications.map((pub) => (
-          <PublicationCard key={pub.id} publication={pub} />
+        {visiblePublications.map((pub, index) => (
+          <PublicationCard
+            key={pub.id}
+            publication={pub}
+            loading={index < 2 ? 'eager' : 'lazy'}
+          />
         ))}
       </div>
 

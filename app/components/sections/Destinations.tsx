@@ -290,6 +290,8 @@ const DestinationCard: React.FC<DestinationCardProps> = ({
             src={destination.image} 
             alt={`Photo of ${destination.city}, ${destination.country}`}
             className="destination-card__image"
+            loading="lazy"
+            decoding="async"
           />
         </picture>
       </div>
@@ -334,6 +336,8 @@ const SmallCard: React.FC<SmallCardProps> = ({ destination, onClick }) => (
           src={destination.gridImage ?? destination.image} 
           alt={`Photo of ${destination.city}, ${destination.country}`}
           className="destination-small__image"
+          loading="lazy"
+          decoding="async"
         />
       </picture>
     </div>

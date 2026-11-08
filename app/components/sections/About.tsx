@@ -22,7 +22,7 @@ const AboutBlock1: React.FC<AboutBlock1Props> = ({ onMoreClick, isExpanded }) =>
     <article className="about-block1" aria-labelledby="about-title-1">
       <div className="about-block1__pair">
         <div className="about-block1__illustration">
-          <ResponsivePicture image={ABOUT_PORTRAIT} loading="eager" width={392} height={523} />
+          <ResponsivePicture image={ABOUT_PORTRAIT} loading="eager" fetchPriority="high" width={392} height={523} />
         </div>
 
         <div className="about-block1__content">

@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { GchBagBackIcon, GchBagFrontIcon } from './GchBagIcons';
 import { GchSwitchTabs } from './GchSwitchTabs';
 import { useSwipeToggle, useTeaserSlide } from './useTeaserSlide';
+import { preloadImages } from '../utils/preloadImage';
 
 type FaceId = 'front' | 'back';
 
@@ -31,6 +32,10 @@ export const GchFaceSwitcher: React.FC<GchFaceSwitcherProps> = ({
   const [active, setActive] = useState<FaceId>('front');
   const panel = active === 'front' ? front : back;
   const { layerARef, layerBRef, slideTo } = useTeaserSlide(front.image);
+
+  useEffect(() => {
+    preloadImages([front.image, back.image]);
+  }, [front.image, back.image]);
 
   const select = (next: FaceId) => {
     if (next === active) return;

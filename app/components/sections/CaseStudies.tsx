@@ -16,6 +16,7 @@ import {
 import './CaseStudies.css';
 import { CaseStudyCard, type CaseStudyCardStudy } from '../CaseStudyCard';
 import { canUseHover } from '../../utils/canUseHover';
+import { preloadImagesWhenNear } from '../../utils/preloadImage';
 
 /** Cards shown before “View all cases”; remainder loads without sticky-stack scrolling. */
 const INITIAL_CASE_STUDIES_VISIBLE = 3;
@@ -341,6 +342,19 @@ export const CaseStudies: React.FC = () => {
       behavior: 'smooth',
     });
   };
+
+  useEffect(() => {
+    const urls = caseStudies.slice(0, INITIAL_CASE_STUDIES_VISIBLE).flatMap((study) => [
+      study.image,
+      study.frontTabs?.challenge.image,
+      study.frontTabs?.focus.image,
+      study.frontTabs?.impact.image,
+      study.backTabs?.place.image,
+      study.backTabs?.influence.image,
+      study.backTabs?.discoveries.image,
+    ]);
+    return preloadImagesWhenNear(caseStudiesSectionRef.current, urls);
+  }, []);
 
   useEffect(() => {
     const wrap = filterWrapRef.current;

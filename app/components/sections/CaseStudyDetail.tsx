@@ -24,6 +24,8 @@ import { ResponsivePicture } from '../ResponsivePicture';
 import { CaseStudyEnlargeProvider, EnlargeTrigger } from '../CaseStudyEnlarge';
 import { CaseStudyMockupVideo } from '../CaseStudyMockupVideo';
 import type { RasterImageSources } from '../../utils/imageFormats';
+import { publicationImagePreloadSrc } from '../../utils/imageFormats';
+import { preloadImages } from '../../utils/preloadImage';
 import './CaseStudyDetail.css';
 import './case-study-detail-responsive.css';
 import { useCaseStudyListenHeroSync } from './useCaseStudyListenHeroSync';
@@ -1258,6 +1260,17 @@ export const CaseStudyDetail: React.FC = () => {
     };
   }, []);
 
+  useEffect(() => {
+    if (!isGreenCross) return;
+    const timer = window.setTimeout(() => {
+      preloadImages([
+        ...Object.values(GCH_IMG).map(publicationImagePreloadSrc),
+        ...Object.values(GCH_BRAND_IMAGES).map(publicationImagePreloadSrc),
+      ]);
+    }, 120);
+    return () => window.clearTimeout(timer);
+  }, [isGreenCross]);
+
   const scrollToNavSection = useCallback((sectionId: NavSectionId) => {
     const el = sectionsRef.current[sectionId];
     if (!el) return;
@@ -1558,7 +1571,7 @@ export const CaseStudyDetail: React.FC = () => {
               >
                 {isGreenCross ? (
                   <>
-                    <ResponsivePicture image={GCH_IMG.brief} />
+                    <ResponsivePicture image={GCH_IMG.brief} loading="eager" fetchPriority="high" />
                     <EnlargeTrigger image={GCH_IMG.brief} />
                   </>
                 ) : (

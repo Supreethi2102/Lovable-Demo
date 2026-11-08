@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useLayoutEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 
 export function encodeCssUrl(url: string) {
@@ -35,7 +35,7 @@ export function useTeaserSlide(initialUrl: string) {
     el.style.backgroundImage = encodeCssUrl(url);
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     paint(layerARef.current, initialUrl);
     paint(layerBRef.current, initialUrl);
     gsap.set(layerARef.current, { x: '0%', opacity: 1 });

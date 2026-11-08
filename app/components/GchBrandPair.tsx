@@ -1,6 +1,8 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FirstAid, Heart } from '@phosphor-icons/react';
 import type { RasterImageSources } from '../utils/imageFormats';
+import { publicationImagePreloadSrc } from '../utils/imageFormats';
+import { preloadImages } from '../utils/preloadImage';
 import { GchSwitchTabs } from './GchSwitchTabs';
 import { useSwipeToggle, useTeaserSlide } from './useTeaserSlide';
 
@@ -48,6 +50,13 @@ export const GchBrandPair: React.FC<GchBrandPairProps> = ({
   const panel = active === 'life' ? life : unichem;
   const panelId = `${id}-brand-panel`;
   const { layerARef, layerBRef, slideTo } = useTeaserSlide(life.image.webp);
+
+  useEffect(() => {
+    preloadImages([
+      publicationImagePreloadSrc(life.image),
+      publicationImagePreloadSrc(unichem.image),
+    ]);
+  }, [life.image, unichem.image]);
 
   const select = (next: GchBrandId) => {
     if (next === active) return;

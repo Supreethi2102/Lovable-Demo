@@ -17,6 +17,8 @@ import {
 } from '@phosphor-icons/react';
 import { gsap } from 'gsap';
 import { canUseHover } from '../utils/canUseHover';
+import { encodeAssetUrl } from '../utils/imageFormats';
+import { preloadImages } from '../utils/preloadImage';
 import { CaseStudyMockupVideo } from './CaseStudyMockupVideo';
 import './sections/CaseStudies.css';
 
@@ -219,6 +221,17 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
     setLayerBg(imgBRef.current, getTabImage('challenge'));
     setBackLayer(backImgARef.current, 'place');
     setBackLayer(backImgBRef.current, 'place');
+    preloadImages(
+      [
+        frontTabs.challenge.image,
+        frontTabs.focus.image,
+        frontTabs.impact.image,
+        backTabs.place.image,
+        backTabs.influence.image,
+        backTabs.discoveries.image,
+      ],
+      'low',
+    );
 
     gsap.set(imgARef.current, { x: '0%', opacity: 1 });
     gsap.set(imgBRef.current, { x: '-120%', opacity: 1 });
@@ -524,7 +537,11 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               }}
             >
               <div ref={imgARef} className="case-study-card__image-layer" aria-hidden="true">
-                <div className="case-study-card__image-media" aria-hidden="true" />
+                <div
+                  className="case-study-card__image-media"
+                  aria-hidden="true"
+                  style={{ backgroundImage: `url("${encodeAssetUrl(getTabImage('challenge'))}")` }}
+                />
               </div>
               <div ref={imgBRef} className="case-study-card__image-layer" aria-hidden="true">
                 <div className="case-study-card__image-media" aria-hidden="true" />
@@ -692,7 +709,15 @@ export const CaseStudyCard: React.FC<CaseStudyCardProps> = ({ study }) => {
               }}
             >
               <div ref={backImgARef} className="case-study-card__image-layer" aria-hidden="true">
-                <div className="case-study-card__image-media" aria-hidden="true" />
+                <div
+                  className="case-study-card__image-media"
+                  aria-hidden="true"
+                  style={
+                    backTabs.place.image
+                      ? { backgroundImage: `url("${encodeAssetUrl(backTabs.place.image)}")` }
+                      : undefined
+                  }
+                />
               </div>
               <div ref={backImgBRef} className="case-study-card__image-layer" aria-hidden="true">
                 <div className="case-study-card__image-media" aria-hidden="true" />

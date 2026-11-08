@@ -1,0 +1,13 @@
+.responsive-picture__img {
+  transition:
+    opacity 280ms ease,
+    transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.responsive-picture__img--pending {
+  opacity: 0;
+}
+
+.responsive-picture__img--ready {
+  opacity: 1;
+}

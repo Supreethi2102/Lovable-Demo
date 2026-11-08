@@ -382,21 +382,17 @@
 }
 
 .case-study-detail--gch .case-study-detail__top {
-  align-items: start;
+  align-items: stretch;
 }
 
 .case-study-detail--gch .case-study-detail__hero-card {
-  align-self: start;
+  align-self: stretch;
   height: auto;
 }
 
 .case-study-detail--gch .case-study-detail__hero-copy {
-  padding: 24px 52px;
-}
-
-.case-study-detail--gch .case-study-detail__hero-body {
-  min-height: 0;
-  margin-bottom: 24px;
+  flex: 1 1 auto;
+  justify-content: center;
 }
 
 .case-study-detail--gch .case-study-detail__summary--layout {
@@ -2005,6 +2001,12 @@
   object-position: center center;
 }
 
+.case-study-detail--gch .case-study-detail__split-card .case-study-detail__impact-media > picture img,
+.case-study-detail--gch .case-study-detail__split-card .case-study-detail__impact-media > img {
+  object-fit: cover;
+  object-position: 100% 50%;
+}
+
 .case-study-detail--gch .case-study-detail__split-card .case-study-detail__brief-media > picture img,
 .case-study-detail--gch .case-study-detail__split-card .case-study-detail__brief-media > img {
   /* Figma 4752:691 — keep the person/purse, clip the black clothing strip on the right. */
@@ -2031,17 +2033,17 @@
   object-position: 62% 46%;
 }
 
-/* Figma 4752:944 — 492×392, nearly the full credits still. */
+/* Sit the two bags in the middle of the frame — the still is weighted to the top. */
 .case-study-detail--gch .case-study-detail__split-card .case-study-detail__sources-media--gch > picture img,
 .case-study-detail--gch .case-study-detail__split-card .case-study-detail__sources-media--gch > img {
   position: absolute;
   inset: auto;
   width: 100%;
-  height: 100%;
+  height: 118%;
   left: 0;
-  top: 0;
+  top: -4%;
   object-fit: cover;
-  object-position: 50% 46%;
+  object-position: 50% 28%;
 }
 
 /* Hug the credits list — the old 392px lock left an empty band under the last bullet. */
@@ -2269,9 +2271,9 @@
   position: absolute;
   inset: 0;
   background-color: #fff;
-  /* Full still in the 984×595 frame — 112% cropped the handles and floor too tightly. */
-  background-size: 100%;
-  background-position: center center;
+  /* Keep handles; nudge down so the extra floor under the small bags is cropped. */
+  background-size: 107%;
+  background-position: center 8%;
   background-repeat: no-repeat;
   will-change: transform, opacity;
   transform: translateZ(0);

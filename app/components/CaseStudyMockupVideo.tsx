@@ -91,12 +91,11 @@ function buildVimeoSrc(vimeoId: string, loop = false) {
     muted: '0',
     autopause: '0',
     badge: '0',
+    byline: '0',
     controls: '0',
     download: '0',
     api: '1',
-    texttrack: 'en',
     title: '0',
-    byline: '0',
     portrait: '0',
     dnt: '1',
     transparent: '0',
@@ -106,6 +105,10 @@ function buildVimeoSrc(vimeoId: string, loop = false) {
     keyboard: '0',
     vimeo_logo: '0',
     quality_selector: '0',
+    sidedock: '0',
+    fullscreen: '0',
+    playsinline: '1',
+    background: '1',
   });
   return `https://player.vimeo.com/video/${vimeoId}?${params.toString()}`;
 }
@@ -219,7 +222,7 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
     const track = video.textTracks[0];
     if (!track) return;
     track.mode = prefs.captionsOn ? 'showing' : 'hidden';
-    if (prefs.captionsOn) void vimeoRef.current?.enableTextTrack('en').catch(() => undefined);
+    if (prefs.captionsOn && captionsSrc) void vimeoRef.current?.enableTextTrack('en').catch(() => undefined);
     else void vimeoRef.current?.disableTextTrack().catch(() => undefined);
   }, [hasStarted, prefs.captionsOn, captionsSrc]);
 
@@ -229,6 +232,7 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
     if (!iframe) return;
 
     const player = new Player(iframe, {
+      background: true,
       controls: false,
       pip: false,
       keyboard: false,
@@ -252,9 +256,10 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
       if (length > 0) setDuration(length);
       setCurrentTime(seconds);
       await player.setLoop(loop).catch(() => undefined);
+      await player.setMuted(isMuted).catch(() => undefined);
       await player.setVolume(isMuted ? 0 : volume).catch(() => undefined);
-      if (prefs.captionsOn) await player.enableTextTrack('en').catch(() => undefined);
-      else await player.disableTextTrack().catch(() => undefined);
+      await player.disableTextTrack().catch(() => undefined);
+      if (prefs.captionsOn && captionsSrc) await player.enableTextTrack('en').catch(() => undefined);
       await player.play().catch(() => setIsPlaying(false));
     });
 
@@ -502,9 +507,17 @@ export const CaseStudyMockupVideo: React.FC<CaseStudyMockupVideoProps> = ({
               className="case-study-mockup-video__player"
               src={buildVimeoSrc(vimeoId, loop)}
               title={`${label} interface demonstration`}
-              allow="autoplay; fullscreen"
+              allow="autoplay"
               tabIndex={-1}
               onContextMenu={blockMediaMenu}
+            />
+          ) : null}
+          {hasStarted && vimeoId ? (
+            <button
+              type="button"
+              className="case-study-mockup-video__shield"
+              aria-label={isPlaying ? `Pause ${label} video` : `Play ${label} video`}
+              onClick={togglePlayback}
             />
           ) : null}
 

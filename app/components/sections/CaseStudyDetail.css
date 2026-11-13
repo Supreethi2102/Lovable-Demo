@@ -2004,7 +2004,7 @@
 .case-study-detail--gch .case-study-detail__split-card .case-study-detail__impact-media > picture img,
 .case-study-detail--gch .case-study-detail__split-card .case-study-detail__impact-media > img {
   object-fit: cover;
-  object-position: 100% 50%;
+  object-position: 70% 50%;
 }
 
 .case-study-detail--gch .case-study-detail__split-card .case-study-detail__brief-media > picture img,
@@ -2030,7 +2030,7 @@
   left: 0;
   top: 0;
   object-fit: cover;
-  object-position: 62% 46%;
+  object-position: 86% 48%;
 }
 
 /* Sit the two bags in the middle of the frame — the still is weighted to the top. */
